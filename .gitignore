@@ -1,0 +1,7 @@
+Cheffile.lock
+.bundle
+.cache
+.rvmrc
+*.swp
+/cookbooks
+/tmp

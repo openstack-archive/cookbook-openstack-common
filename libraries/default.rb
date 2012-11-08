@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 #
 # Cookbook Name:: openstack-common
 # library:: default
@@ -23,7 +21,7 @@ module Openstack
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)
   def endpoint(name)
-    @node["openstack"]["endpoints"][name]
+    @node['openstack']['endpoints'][name]
   rescue
     nil
   end
@@ -34,7 +32,7 @@ module Openstack
   # and construct the URI object from the endpoint parts.
   def endpoint_uri(name)
     ep = endpoint(name)
-    if ep and ep.has_key?("uri")
+    if ep && ep.has_key?("uri")
       ep["uri"]
     elsif ep
       ::Openstack::get_uri_from_mash(ep).to_s
@@ -43,7 +41,7 @@ module Openstack
 
   # Useful for iterating over the OpenStack endpoints
   def endpoints(&block)
-    @node["openstack"]["endpoints"].each do | name, info |
+    @node['openstack']['endpoints'].each do | name, info |
       block.call(name, info)
     end
   end

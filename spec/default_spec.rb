@@ -19,8 +19,7 @@ describe ::Openstack do
     end
     it "returns endpoint hash when found" do
       @subject.instance_variable_set(:@node, @chef_run.node)
-      result = @subject.endpoint("compute-api")
-      result.should be_nil
+      @subject.endpoint("compute-api")['host'].should == "127.0.0.1"
     end
   end
 end

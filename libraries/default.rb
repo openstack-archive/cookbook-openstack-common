@@ -44,5 +44,7 @@ module Openstack
     @node['openstack']['endpoints'].each do | name, info |
       block.call(name, info)
     end
+  rescue
+    nil
   end
 end

@@ -74,4 +74,26 @@ describe ::Openstack do
       @subject.endpoint_uri("compute-api").should eq "http://localhost"
     end
   end
+  describe "#endpoints" do
+    it "does nothing when no endpoints" do
+      @subject.instance_variable_set(:@node, {})
+      @subject.endpoints.should be_nil
+    end
+    it "does nothing when empty endpoints" do
+      @subject.instance_variable_set(:@node, {"openstack" => { "endpoints" => {}}})
+      @count = 0
+      @subject.endpoints do | ep |
+        @count += 1
+      end
+      @count.should eq 0
+    end
+    it "executes block count when have endpoints" do
+      @subject.instance_variable_set(:@node, @chef_run.node)
+      @count = 0
+      @subject.endpoints do | ep |
+        @count += 1
+      end
+      @count.should >= 1
+    end
+  end
 end

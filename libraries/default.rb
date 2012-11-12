@@ -47,4 +47,23 @@ module Openstack
   rescue
     nil
   end
+
+  # Instead of specifying the verbose node["openstack"]["db"][service],
+  # this shortcut allows the simpler and shorter db(service), where
+  # service is one of 'compute', 'image', 'identity', 'network',
+  # and 'volume'
+  def db(service)
+    @node['openstack']['db'][service]
+  rescue
+    nil
+  end
+
+  # Shortcut to get the SQLAlchemy DB URI for a named service.
+  def db_uri(service, user, pass)
+    info = db(service)
+    if info
+      result = info['db_type'] + '://' + user + ':' + pass
+      result = result + '@' + info['host'] + ':' + info['port'].to_s + '/' + info['db_name']
+    end
+  end
 end

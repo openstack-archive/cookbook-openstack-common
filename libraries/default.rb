@@ -76,6 +76,7 @@ module Openstack
         # SQLite uses filepaths not db name
         path = info['path']
         result = "sqlite://#{path}"
+      end
     end
   end
 end

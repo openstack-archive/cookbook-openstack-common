@@ -136,3 +136,75 @@ default['openstack']['endpoints']['image-registry']['path'] = "/v2"
 # default['openstack']['endpoints']['compute-volume']['uri']       = "https://volume.example.com:8776/"v1/%(tenant_id)s"
 # default['openstack']['endpoints']['image-api']['uri']            = "https://image.example.com:9292/v2"
 # default['openstack']['endpoints']['image-registry']['uri']       = "https://image.example.com:9191/v2"
+
+# ======================== OpenStack DB Support ================================
+#
+# This section of node attributes stores information about the database hosts
+# used in an OpenStack deployment.
+# 
+# There is no 'scheme' key. Instead, there is a 'db_type' key that should
+# contain one of 'sqlite', 'mysql', or 'postgresql'
+#
+# The ::Openstack::db(<SERVICE_NAME>) library routine allows a lookup from any recipe
+# to this array, returning the host information for the server that contains
+# the database for <SERVICE_NAME>, where <SERVICE_NAME> is one of 'compute' (Nova),
+# 'image' (Glance), 'identity' (Keystone), 'network' (Quantum), or 'volume' (Cinder)
+#
+# The ::Openstack::db_connection(<SERVICE_NAME>, <USER>, <PASSWORD>) library routine
+# returns the SQLAlchemy DB URI for <SERVICE_NAME>, with the supplied user and password
+# that a calling service might be using when connecting to the database.
+#
+# For example, let's assume that the database that is used by the OpenStack Identity
+# service (Keystone) is configured as follows:
+#
+#   host: 192.168.0.3
+#   port: 3306
+#   db_type: mysql
+#   db_name: keystone
+#
+# Further suppose that a node running the OpenStack Identity API service needs to
+# connect to the above identity database server. It has the following in it's node
+# attributes:
+#
+#   node['db']['user'] = 'keystone'
+#   node['db']['password'] = 'password'
+#
+# In a "keystone" recipe, you might find the following code:
+#
+#   user = node['db']['user']
+#   pass = node['db']['password']
+#
+#   sql_connection = ::Openstack::db_uri('identity', user, pass)
+#
+# The sql_connection variable would then be set to "mysql://keystone:password@192.168.0.3:keystone"
+# and could then be written to the keystone.conf file in a template.
+
+# Database used by the OpenStack Compute (Nova) service
+default['openstack']['db']['compute']['db_type'] = "mysql"
+default['openstack']['db']['compute']['host'] = "127.0.0.1"
+default['openstack']['db']['compute']['port'] = 3306
+default['openstack']['db']['compute']['db_name'] = "nova"
+
+# Database used by the OpenStack Identity (Keystone) service
+default['openstack']['db']['identity']['db_type'] = "mysql"
+default['openstack']['db']['identity']['host'] = "127.0.0.1"
+default['openstack']['db']['identity']['port'] = 3306
+default['openstack']['db']['identity']['db_name'] = "keystone"
+
+# Database used by the OpenStack Image (Glance) service
+default['openstack']['db']['image']['db_type'] = "mysql"
+default['openstack']['db']['image']['host'] = "127.0.0.1"
+default['openstack']['db']['image']['port'] = 3306
+default['openstack']['db']['image']['db_name'] = "glance"
+
+# Database used by the OpenStack Network (Quantum) service
+default['openstack']['db']['network']['db_type'] = "mysql"
+default['openstack']['db']['network']['host'] = "127.0.0.1"
+default['openstack']['db']['network']['port'] = 3306
+default['openstack']['db']['network']['db_name'] = "quantum"
+
+# Database used by the OpenStack Volume (Cinder) service
+default['openstack']['db']['volume']['db_type'] = "mysql"
+default['openstack']['db']['volume']['host'] = "127.0.0.1"
+default['openstack']['db']['volume']['port'] = 3306
+default['openstack']['db']['volume']['db_name'] = "cinder"

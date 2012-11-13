@@ -74,6 +74,7 @@ describe ::Openstack do
       @subject.endpoint_uri("compute-api").should eq "http://localhost"
     end
   end
+
   describe "#endpoints" do
     it "does nothing when no endpoints" do
       @subject.instance_variable_set(:@node, {})
@@ -94,6 +95,38 @@ describe ::Openstack do
         @count += 1
       end
       @count.should >= 1
+    end
+  end
+
+  describe "#db" do
+    it "returns nil when no openstack.db not in node attrs" do
+      @subject.instance_variable_set(:@node, {})
+      @subject.db("nonexisting").should be_nil
+    end
+    it "returns nil when no such service was found" do
+      @subject.instance_variable_set(:@node, @chef_run.node)
+      @subject.db("nonexisting").should be_nil
+    end
+    it "returns db info hash when service found" do
+      @subject.instance_variable_set(:@node, @chef_run.node)
+      @subject.db("compute")['host'].should == "127.0.0.1"
+      @subject.db("compute").has_key?("uri").should be_false
+    end
+  end
+
+  describe "#db_uri" do
+    it "returns nil when no openstack.db not in node attrs" do
+      @subject.instance_variable_set(:@node, {})
+      @subject.db_uri("nonexisting", "user", "pass").should be_nil
+    end
+    it "returns nil when no such service was found" do
+      @subject.instance_variable_set(:@node, @chef_run.node)
+      @subject.db_uri("nonexisting", "user", "pass").should be_nil
+    end
+    it "returns db info hash when service found" do
+      @subject.instance_variable_set(:@node, @chef_run.node)
+      expect = "mysql://user:pass@127.0.0.1:3306/nova"
+      @subject.db_uri("compute", "user", "pass").should eq expect
     end
   end
 end

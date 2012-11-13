@@ -58,12 +58,24 @@ module Openstack
     nil
   end
 
-  # Shortcut to get the SQLAlchemy DB URI for a named service.
+  # Shortcut to get the SQLAlchemy DB URI for a named service
   def db_uri(service, user, pass)
     info = db(service)
     if info
-      result = info['db_type'] + '://' + user + ':' + pass
-      result = result + '@' + info['host'] + ':' + info['port'].to_s + '/' + info['db_name']
+      host = info['host']
+      port = info['port'].to_s
+      type = info['db_type']
+      name = info['db_name']
+      if type == 'postgresql'
+        # Normalize to the SQLAlchemy standard db type identifier
+        type = 'pgsql'
+      end
+      if type == 'mysql' or type == 'pgsql'
+        result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
+      elsif type == 'sqlite'
+        # SQLite uses filepaths not db name
+        path = info['path']
+        result = "sqlite://#{path}"
     end
   end
 end

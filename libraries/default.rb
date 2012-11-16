@@ -79,4 +79,61 @@ module Openstack
       end
     end
   end
+
+  # Library routine that uses the database cookbook to create the
+  # service's database and grant read/write access to the
+  # given user and password. A privileged "super user" and password
+  # is supplied, which is needed to create the database and user
+  # records. Returns the db info from the db() library call.
+  def db_create_with_user(service, super_user, super_pass, user, pass)
+    info = db(service)
+    if info
+      host = info['host']
+      port = info['port'].to_s
+      type = info['db_type']
+      db_name = info['db_name']
+      connection_info = {
+        'host' => host,
+        'port' => port,
+        'username' => super_user,
+        'password' => super_pass
+      }
+      prov = case type
+      when 'postgresql', 'pgsql'
+        Chef::Provider::Database::Postgresql
+      when 'mysql'
+        Chef::Provider::Database::Mysql
+      else
+        Chef::Log.error("Unsupported database type #{type}")
+      end
+
+      # create database
+      database "create #{db_name} database" do
+        provider prov
+        connection connection_info
+        database_name db_name
+        action :create
+      end
+      
+      # create user
+      database_user username do
+        provider prov
+        connection connection_info
+        password pass
+        action :create
+      end
+      
+      # grant privs to user
+      database_user username do
+        provider prov
+        connection connection_info
+        password pass
+        database_name db_name
+        host '%'
+        privileges [:all]
+        action :grant
+      end
+    end
+    info
+  end
 end

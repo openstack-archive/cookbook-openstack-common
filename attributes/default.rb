@@ -53,13 +53,13 @@
 # the Keystone Service endpoint...
 default['openstack']['endpoints']['identity-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['identity-api']['scheme'] = "https"
-default['openstack']['endpoints']['identity-api']['port'] = 35357
+default['openstack']['endpoints']['identity-api']['port'] = "35357"
 default['openstack']['endpoints']['identity-api']['path'] = "/v2.0"
 
 # The OpenStack Identity (Keystone) Admin API endpoint
 default['openstack']['endpoints']['identity-admin']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['identity-admin']['scheme'] = "https"
-default['openstack']['endpoints']['identity-admin']['port'] = 5000
+default['openstack']['endpoints']['identity-admin']['port'] = "5000"
 default['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
 
 # ****************** OpenStack Compute Endpoints ******************************
@@ -67,38 +67,38 @@ default['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
 # The OpenStack Compute (Nova) Native API endpoint
 default['openstack']['endpoints']['compute-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-api']['scheme'] = "https"
-default['openstack']['endpoints']['compute-api']['port'] = 8774
+default['openstack']['endpoints']['compute-api']['port'] = "8774"
 default['openstack']['endpoints']['compute-api']['path'] = "/v2/%(tenant_id)s"
 
 # The OpenStack Compute (Nova) EC2 API endpoint
 default['openstack']['endpoints']['compute-ec2-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-ec2-api']['scheme'] = "https"
-default['openstack']['endpoints']['compute-ec2-api']['port'] = 8773
+default['openstack']['endpoints']['compute-ec2-api']['port'] = "8773"
 default['openstack']['endpoints']['compute-ec2-api']['path'] = "/services/Cloud"
 
 # The OpenStack Compute (Nova) EC2 Admin API endpoint
 default['openstack']['endpoints']['compute-ec2-admin']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-ec2-admin']['scheme'] = "https"
-default['openstack']['endpoints']['compute-ec2-admin']['port'] = 8773
+default['openstack']['endpoints']['compute-ec2-admin']['port'] = "8773"
 default['openstack']['endpoints']['compute-ec2-admin']['path'] = "/services/Admin"
 
 # The OpenStack Compute (Nova) XVPvnc endpoint
 default['openstack']['endpoints']['compute-xvpvnc']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-xvpvnc']['scheme'] = "https"
-default['openstack']['endpoints']['compute-xvpvnc']['port'] = 6081
+default['openstack']['endpoints']['compute-xvpvnc']['port'] = "6081"
 default['openstack']['endpoints']['compute-xvpvnc']['path'] = "/console"
 
 # The OpenStack Compute (Nova) novnc endpoint
 default['openstack']['endpoints']['compute-novnc']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-novnc']['scheme'] = "https"
-default['openstack']['endpoints']['compute-novnc']['port'] = 6080
+default['openstack']['endpoints']['compute-novnc']['port'] = "6080"
 default['openstack']['endpoints']['compute-novnc']['path'] = "/vnc_auto.html"
 
 # The OpenStack Compute (Nova) novnc server endpoint
 # TODO(jaypipes) Is this necessary? It's the same as the novnc endpoint...
 default['openstack']['endpoints']['compute-novnc-server']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-novnc-server']['scheme'] = "https"
-default['openstack']['endpoints']['compute-novnc-server']['port'] = 6080
+default['openstack']['endpoints']['compute-novnc-server']['port'] = "6080"
 default['openstack']['endpoints']['compute-novnc-server']['path'] = "/vnc_auto.html"
 
 # The OpenStack Compute (Nova) Volume endpoint
@@ -106,7 +106,7 @@ default['openstack']['endpoints']['compute-novnc-server']['path'] = "/vnc_auto.h
 # older nova-volume service.
 default['openstack']['endpoints']['compute-volume']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-volume']['scheme'] = "https"
-default['openstack']['endpoints']['compute-volume']['port'] = 8776
+default['openstack']['endpoints']['compute-volume']['port'] = "8776"
 default['openstack']['endpoints']['compute-volume']['path'] = "/v1/%(tenant_id)s"
 
 # ******************** OpenStack Image Endpoints ******************************
@@ -114,13 +114,13 @@ default['openstack']['endpoints']['compute-volume']['path'] = "/v1/%(tenant_id)s
 # The OpenStack Image (Glance) API endpoint
 default['openstack']['endpoints']['image-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['image-api']['scheme'] = "https"
-default['openstack']['endpoints']['image-api']['port'] = 9292
+default['openstack']['endpoints']['image-api']['port'] = "9292"
 default['openstack']['endpoints']['image-api']['path'] = "/v2"
 
 # The OpenStack Image (Glance) Registry API endpoint
 default['openstack']['endpoints']['image-registry']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['image-registry']['scheme'] = "https"
-default['openstack']['endpoints']['image-registry']['port'] = 9191
+default['openstack']['endpoints']['image-registry']['port'] = "9191"
 default['openstack']['endpoints']['image-registry']['path'] = "/v2"
 
 # Alternately, if you used some standardized DNS naming scheme, you could
@@ -182,29 +182,29 @@ default['openstack']['endpoints']['image-registry']['path'] = "/v2"
 # Database used by the OpenStack Compute (Nova) service
 default['openstack']['db']['compute']['db_type'] = "mysql"
 default['openstack']['db']['compute']['host'] = "127.0.0.1"
-default['openstack']['db']['compute']['port'] = 3306
+default['openstack']['db']['compute']['port'] = "3306"
 default['openstack']['db']['compute']['db_name'] = "nova"
 
 # Database used by the OpenStack Identity (Keystone) service
 default['openstack']['db']['identity']['db_type'] = "mysql"
 default['openstack']['db']['identity']['host'] = "127.0.0.1"
-default['openstack']['db']['identity']['port'] = 3306
+default['openstack']['db']['identity']['port'] = "3306"
 default['openstack']['db']['identity']['db_name'] = "keystone"
 
 # Database used by the OpenStack Image (Glance) service
 default['openstack']['db']['image']['db_type'] = "mysql"
 default['openstack']['db']['image']['host'] = "127.0.0.1"
-default['openstack']['db']['image']['port'] = 3306
+default['openstack']['db']['image']['port'] = "3306"
 default['openstack']['db']['image']['db_name'] = "glance"
 
 # Database used by the OpenStack Network (Quantum) service
 default['openstack']['db']['network']['db_type'] = "mysql"
 default['openstack']['db']['network']['host'] = "127.0.0.1"
-default['openstack']['db']['network']['port'] = 3306
+default['openstack']['db']['network']['port'] = "3306"
 default['openstack']['db']['network']['db_name'] = "quantum"
 
 # Database used by the OpenStack Volume (Cinder) service
 default['openstack']['db']['volume']['db_type'] = "mysql"
 default['openstack']['db']['volume']['host'] = "127.0.0.1"
-default['openstack']['db']['volume']['port'] = 3306
+default['openstack']['db']['volume']['port'] = "3306"
 default['openstack']['db']['volume']['db_name'] = "cinder"

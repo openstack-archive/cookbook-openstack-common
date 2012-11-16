@@ -116,7 +116,7 @@ module Openstack
       end
       
       # create user
-      database_user username do
+      database_user user do
         provider prov
         connection connection_info
         password pass
@@ -124,7 +124,7 @@ module Openstack
       end
       
       # grant privs to user
-      database_user username do
+      database_user user do
         provider prov
         connection connection_info
         password pass

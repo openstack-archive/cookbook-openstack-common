@@ -97,29 +97,34 @@ module Openstack
       db_name = info['db_name']
       case type
       when 'postgresql', 'pgsql'
-        prov = Chef::Provider::Database::Postgresql
+        db_prov = Chef::Provider::Database::Postgresql
+        user_prov = Chef::Provider::Database::PostgresqlUser
         # See https://github.com/opscode-cookbooks/postgresql/blob/master/recipes/server.rb#L41
         super_user = 'postgres'
         super_password = node['postgresql']['password']['postgres']
       when 'mysql'
-        prov = Chef::Provider::Database::Mysql
+        db_prov = Chef::Provider::Database::Mysql
+        user_prov = Chef::Provider::Database::MysqlUser
         # See https://github.com/opscode-cookbooks/mysql/blob/master/recipes/server.rb#L40
         super_user = 'root'
+
+        # For some reason, setting this to anything other than localhost fails miserably :(
+        host = 'localhost'
         super_password = node['mysql']['server_root_password']
       else
-        prov = Chef::Log.error("Unsupported database type #{type}")
+        Chef::Log.error("Unsupported database type #{type}")
       end
 
       connection_info = {
         :host => host,
-        :port => port,
+        :port => port.to_i,
         :username => super_user,
         :password => super_password
       }
 
       # create database
       database "create #{db_name} database" do
-        provider prov
+        provider db_prov
         connection connection_info
         database_name db_name
         action :create
@@ -127,7 +132,7 @@ module Openstack
       
       # create user
       database_user user do
-        provider prov
+        provider user_prov
         connection connection_info
         password pass
         action :create
@@ -135,7 +140,7 @@ module Openstack
       
       # grant privs to user
       database_user user do
-        provider prov
+        provider user_prov
         connection connection_info
         password pass
         database_name db_name

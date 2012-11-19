@@ -111,10 +111,10 @@ module Openstack
       end
 
       connection_info = {
-        'host' => host,
-        'port' => port,
-        'username' => super_user,
-        'password' => super_password
+        :host => host,
+        :port => port,
+        :username => super_user,
+        :password => super_password
       }
 
       # create database

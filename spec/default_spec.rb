@@ -133,11 +133,11 @@ describe ::Openstack do
   describe "#db_create_with_user" do
     it "returns nil when no openstack.db not in node attrs" do
       @subject.instance_variable_set(:@node, {})
-      @subject.db_create_with_user("nonexisting", "superuser", "superpass", "user", "pass").should be_nil
+      @subject.db_create_with_user("nonexisting", "user", "pass").should be_nil
     end
     it "returns nil when no such service was found" do
       @subject.instance_variable_set(:@node, @chef_run.node)
-      @subject.db_create_with_user("nonexisting", "superuser", "superpass", "user", "pass").should be_nil
+      @subject.db_create_with_user("nonexisting", "user", "pass").should be_nil
     end
     it "returns db info and creates database with user when service found" do
       stub_const("Chef::Provider::Database::Mysql", nil)
@@ -147,7 +147,7 @@ describe ::Openstack do
         'host' => '127.0.0.1',
         'port' => 3306
       }
-      result = @subject.db_create_with_user("compute", "superuser", "superpass", "user", "pass")
+      result = @subject.db_create_with_user("compute", "user", "pass")
       result.should eq expect
     end
   end

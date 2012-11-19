@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: openstack-utils
+# Cookbook Name:: openstack-common
 # library:: default
 #
 # Copyright 2012, Jay Pipes

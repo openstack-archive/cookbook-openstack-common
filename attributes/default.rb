@@ -53,13 +53,13 @@
 # the Keystone Service endpoint...
 default['openstack']['endpoints']['identity-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['identity-api']['scheme'] = "https"
-default['openstack']['endpoints']['identity-api']['port'] = "35357"
+default['openstack']['endpoints']['identity-api']['port'] = "5000"
 default['openstack']['endpoints']['identity-api']['path'] = "/v2.0"
 
 # The OpenStack Identity (Keystone) Admin API endpoint
 default['openstack']['endpoints']['identity-admin']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['identity-admin']['scheme'] = "https"
-default['openstack']['endpoints']['identity-admin']['port'] = "5000"
+default['openstack']['endpoints']['identity-admin']['port'] = "35357"
 default['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
 
 # ****************** OpenStack Compute Endpoints ******************************

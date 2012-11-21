@@ -3,7 +3,10 @@ require ::File.join ::File.dirname(__FILE__), "..", "libraries", "default"
 
 describe ::Openstack do
   before do
-    @chef_run = ::ChefSpec::ChefRunner.new.converge "openstack-common::default"
+    @chef_run = ::ChefSpec::ChefRunner.new do |n|
+      n.set['mysql'] = {}
+      n.set['mysql']['server_root_password'] = "pass"
+    end.converge "openstack-common::default"
     @subject = ::Object.new.extend(::Openstack)
   end
 
@@ -67,7 +70,7 @@ describe ::Openstack do
               "host" => "localhost"
             }
           }
-        }
+       }
       }
       ::Openstack.stub(:uri_from_hash).and_return "http://localhost"
       @subject.instance_variable_set(:@node, uri_hash)
@@ -140,15 +143,12 @@ describe ::Openstack do
       @subject.db_create_with_user("nonexisting", "user", "pass").should be_nil
     end
     it "returns db info and creates database with user when service found" do
-      stub_const("Chef::Provider::Database::Mysql", nil)
-      Chef::Recipe.any_instance.stub(:database).and_return(Hash.new)
+      @subject.stub(:database).and_return(Hash.new)
+      @subject.stub(:database_user).and_return(Hash.new)
       @subject.instance_variable_set(:@node, @chef_run.node)
-      expect = {
-        'host' => '127.0.0.1',
-        'port' => 3306
-      }
       result = @subject.db_create_with_user("compute", "user", "pass")
-      result.should eq expect
+      result['host'].should eq "127.0.0.1"
+      result['port'].should eq "3306"
     end
   end
 end

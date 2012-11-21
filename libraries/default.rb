@@ -101,7 +101,7 @@ module Openstack
         user_prov = Chef::Provider::Database::PostgresqlUser
         # See https://github.com/opscode-cookbooks/postgresql/blob/master/recipes/server.rb#L41
         super_user = 'postgres'
-        super_password = node['postgresql']['password']['postgres']
+        super_password = @node['postgresql']['password']['postgres']
       when 'mysql'
         db_prov = Chef::Provider::Database::Mysql
         user_prov = Chef::Provider::Database::MysqlUser
@@ -110,7 +110,7 @@ module Openstack
 
         # For some reason, setting this to anything other than localhost fails miserably :(
         host = 'localhost'
-        super_password = node['mysql']['server_root_password']
+        super_password = @node['mysql']['server_root_password']
       else
         Chef::Log.error("Unsupported database type #{type}")
       end
@@ -129,7 +129,7 @@ module Openstack
         database_name db_name
         action :create
       end
-      
+
       # create user
       database_user user do
         provider user_prov
@@ -137,7 +137,7 @@ module Openstack
         password pass
         action :create
       end
-      
+
       # grant privs to user
       database_user user do
         provider user_prov

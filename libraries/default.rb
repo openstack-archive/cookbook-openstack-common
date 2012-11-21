@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+require "uri"
+
 module ::Openstack
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)
@@ -30,12 +32,12 @@ module ::Openstack
   # set in the endpoint hash, we use the ::Openstack.get_uri_from_mash
   # library routine from the openstack-utils cookbook to grab a URI object
   # and construct the URI object from the endpoint parts.
-  def endpoint_uri name
+  def endpoint_uri name, raw=false
     ep = endpoint(name)
     if ep && ep.has_key?("uri")
-      ep["uri"]
+      raw ? ::URI.parse(ep["uri"]) : ep["uri"]
     elsif ep
-      uri_from_hash(ep).to_s
+      raw ? uri_from_hash(ep) : uri_from_hash(ep).to_s
     end
   end
 

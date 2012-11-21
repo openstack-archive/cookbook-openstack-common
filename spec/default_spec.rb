@@ -73,7 +73,6 @@ describe ::Openstack do
           }
        }
       }
-      ::Openstack.stub(:uri_from_hash).and_return "http://localhost"
       @subject.instance_variable_set :@node, uri_hash
       @subject.endpoint_uri("compute-api").should eq "http://localhost"
     end

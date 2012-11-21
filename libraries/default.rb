@@ -35,7 +35,7 @@ module Openstack
     if ep && ep.has_key?("uri")
       ep["uri"]
     elsif ep
-      ::Openstack::uri_from_hash(ep).to_s
+      uri_from_hash(ep).to_s
     end
   end
 

@@ -20,7 +20,7 @@
 module Openstack
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)
-  def endpoint(name)
+  def endpoint name
     @node['openstack']['endpoints'][name]
   rescue
     nil
@@ -30,7 +30,7 @@ module Openstack
   # set in the endpoint hash, we use the Openstack::get_uri_from_mash
   # library routine from the openstack-utils cookbook to grab a URI object
   # and construct the URI object from the endpoint parts.
-  def endpoint_uri(name)
+  def endpoint_uri name
     ep = endpoint(name)
     if ep && ep.has_key?("uri")
       ep["uri"]
@@ -40,7 +40,7 @@ module Openstack
   end
 
   # Useful for iterating over the OpenStack endpoints
-  def endpoints(&block)
+  def endpoints &block
     @node['openstack']['endpoints'].each do | name, info |
       block.call(name, info)
     end
@@ -52,27 +52,27 @@ module Openstack
   # this shortcut allows the simpler and shorter db(service), where
   # service is one of 'compute', 'image', 'identity', 'network',
   # and 'volume'
-  def db(service)
+  def db service
     @node['openstack']['db'][service]
   rescue
     nil
   end
 
   # Shortcut to get the SQLAlchemy DB URI for a named service
-  def db_uri(service, user, pass)
+  def db_uri service, user, pass
     info = db(service)
     if info
       host = info['host']
       port = info['port'].to_s
       type = info['db_type']
       name = info['db_name']
-      if type == 'postgresql'
+      if type == "postgresql"
         # Normalize to the SQLAlchemy standard db type identifier
-        type = 'pgsql'
+        type = "pgsql"
       end
-      if type == 'mysql' or type == 'pgsql'
+      if type == "mysql" or type == "pgsql"
         result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
-      elsif type == 'sqlite'
+      elsif type == "sqlite"
         # SQLite uses filepaths not db name
         path = info['path']
         result = "sqlite://#{path}"
@@ -88,28 +88,28 @@ module Openstack
   # underlying database cookbooks. For instance, if a MySQL database
   # is used, the node["mysql"]["server_root_password"] is used along
   # with the "root" (super)user.
-  def db_create_with_user(service, user, pass)
-    info = db(service)
+  def db_create_with_user service, user, pass
+    info = db service
     if info
       host = info['host']
       port = info['port'].to_s
       type = info['db_type']
       db_name = info['db_name']
       case type
-      when 'postgresql', 'pgsql'
+      when "postgresql", "pgsql"
         db_prov = Chef::Provider::Database::Postgresql
         user_prov = Chef::Provider::Database::PostgresqlUser
         # See https://github.com/opscode-cookbooks/postgresql/blob/master/recipes/server.rb#L41
-        super_user = 'postgres'
+        super_user = "postgres"
         super_password = @node['postgresql']['password']['postgres']
-      when 'mysql'
+      when "mysql"
         db_prov = Chef::Provider::Database::Mysql
         user_prov = Chef::Provider::Database::MysqlUser
         # See https://github.com/opscode-cookbooks/mysql/blob/master/recipes/server.rb#L40
-        super_user = 'root'
+        super_user = "root"
 
         # For some reason, setting this to anything other than localhost fails miserably :(
-        host = 'localhost'
+        host = "localhost"
         super_password = @node['mysql']['server_root_password']
       else
         Chef::Log.error("Unsupported database type #{type}")

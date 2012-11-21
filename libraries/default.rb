@@ -32,12 +32,12 @@ module ::Openstack
   # set in the endpoint hash, we use the ::Openstack.get_uri_from_mash
   # library routine from the openstack-utils cookbook to grab a URI object
   # and construct the URI object from the endpoint parts.
-  def endpoint_uri name, raw=false
+  def endpoint_uri name
     ep = endpoint(name)
     if ep && ep.has_key?("uri")
-      raw ? ::URI.parse(ep["uri"]) : ep["uri"]
+      ::URI.parse ep["uri"]
     elsif ep
-      raw ? uri_from_hash(ep) : uri_from_hash(ep).to_s
+      uri_from_hash(ep)
     end
   end
 

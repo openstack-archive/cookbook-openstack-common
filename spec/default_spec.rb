@@ -36,20 +36,7 @@ describe ::Openstack do
       @subject.instance_variable_set :@node, @chef_run.node
       @subject.endpoint_uri("nonexisting").should be_nil
     end
-    it "returns endpoint URI string when uri key in endpoint hash" do
-      uri_hash = {
-        "openstack" => {
-          "endpoints" => {
-            "compute-api" => {
-              "uri" => "http://localhost"
-            }
-          }
-        }
-      }
-      @subject.instance_variable_set :@node, uri_hash
-      @subject.endpoint_uri("compute-api").should eq "http://localhost"
-    end
-    it "returns raw URI object when uri key in endpoint hash" do
+    it "returns endpoint URI object when uri key in endpoint hash" do
       uri_hash = {
         "openstack" => {
           "endpoints" => {
@@ -60,7 +47,7 @@ describe ::Openstack do
         }
       }
       @subject.instance_variable_set :@node, uri_hash
-      result = @subject.endpoint_uri("compute-api", raw=true)
+      result = @subject.endpoint_uri("compute-api")
       result.port.should == 8080
     end
     it "returns endpoint URI string when uri key in endpoint hash and host also in hash" do
@@ -75,22 +62,9 @@ describe ::Openstack do
         }
       }
       @subject.instance_variable_set :@node, uri_hash
-      @subject.endpoint_uri("compute-api").should eq "http://localhost"
+      @subject.endpoint_uri("compute-api").to_s.should eq "http://localhost"
     end
-    it "returns raw URI object when uri key not in endpoint hash but host is in hash" do
-      uri_hash = {
-        "openstack" => {
-          "endpoints" => {
-            "compute-api" => {
-              "host" => "localhost"
-            }
-          }
-        }
-      }
-      @subject.instance_variable_set :@node, uri_hash
-      @subject.endpoint_uri("compute-api").should eq "http://localhost"
-    end
-    it "returns endpoint URI string when uri key not in endpoint hash but host is in hash" do
+    it "returns endpoint URI object when uri key not in endpoint hash but host is in hash" do
       uri_hash = {
         "openstack" => {
           "endpoints" => {
@@ -102,7 +76,7 @@ describe ::Openstack do
         }
       }
       @subject.instance_variable_set :@node, uri_hash
-      result = @subject.endpoint_uri("compute-api", raw=true)
+      result = @subject.endpoint_uri("compute-api")
       result.port.should == 8080
     end
   end

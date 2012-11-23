@@ -20,22 +20,6 @@ describe ::Openstack do
       @subject.instance_variable_set :@node, @chef_run.node
       @subject.endpoint("nonexisting").should be_nil
     end
-    it "returns endpoint hash when found" do
-      @subject.instance_variable_set :@node, @chef_run.node
-      @subject.endpoint("compute-api")['host'].should == "127.0.0.1"
-      @subject.endpoint("compute-api").has_key?("uri").should be_false
-    end
-  end
-
-  describe "#endpoint_uri" do
-    it "returns nil when no openstack.endpoints not in node attrs" do
-      @subject.instance_variable_set :@node, {}
-      @subject.endpoint_uri("nonexisting").should be_nil
-    end
-    it "returns nil when no such endpoint was found" do
-      @subject.instance_variable_set :@node, @chef_run.node
-      @subject.endpoint_uri("nonexisting").should be_nil
-    end
     it "returns endpoint URI object when uri key in endpoint hash" do
       uri_hash = {
         "openstack" => {
@@ -47,7 +31,7 @@ describe ::Openstack do
         }
       }
       @subject.instance_variable_set :@node, uri_hash
-      result = @subject.endpoint_uri("compute-api")
+      result = @subject.endpoint "compute-api"
       result.port.should == 8080
     end
     it "returns endpoint URI string when uri key in endpoint hash and host also in hash" do
@@ -62,7 +46,7 @@ describe ::Openstack do
         }
       }
       @subject.instance_variable_set :@node, uri_hash
-      @subject.endpoint_uri("compute-api").to_s.should eq "http://localhost"
+      @subject.endpoint("compute-api").to_s.should eq "http://localhost"
     end
     it "returns endpoint URI object when uri key not in endpoint hash but host is in hash" do
       uri_hash = {
@@ -76,7 +60,7 @@ describe ::Openstack do
         }
       }
       @subject.instance_variable_set :@node, uri_hash
-      result = @subject.endpoint_uri("compute-api")
+      result = @subject.endpoint "compute-api"
       result.port.should == 8080
     end
   end

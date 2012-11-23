@@ -20,24 +20,16 @@
 require "uri"
 
 module ::Openstack
-  # Instead of specifying the verbose node["openstack"]["endpoints"][name],
-  # this shortcut allows the simpler and shorter endpoint(name)
-  def endpoint name
-    @node['openstack']['endpoints'][name]
-  rescue
-    nil
-  end
-
   # Shortcut to get the full URI for an endpoint. If the "uri" key isn't
   # set in the endpoint hash, we use the ::Openstack.get_uri_from_mash
   # library routine from the openstack-utils cookbook to grab a URI object
   # and construct the URI object from the endpoint parts.
-  def endpoint_uri name
-    ep = endpoint(name)
+  def endpoint name
+    ep = endpoint_for name
     if ep && ep.has_key?("uri")
       ::URI.parse ep["uri"]
     elsif ep
-      uri_from_hash(ep)
+      uri_from_hash ep
     end
   end
 
@@ -152,5 +144,14 @@ module ::Openstack
       end
     end
     info
+  end
+
+private
+  # Instead of specifying the verbose node["openstack"]["endpoints"][name],
+  # this shortcut allows the simpler and shorter endpoint(name)
+  def endpoint_for name
+    @node['openstack']['endpoints'][name]
+  rescue
+    nil
   end
 end

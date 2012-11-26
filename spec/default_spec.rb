@@ -20,6 +20,20 @@ describe ::Openstack do
       @subject.instance_variable_set :@node, @chef_run.node
       @subject.endpoint("nonexisting").should be_nil
     end
+    it "handles a URI needing escaped" do
+      uri_hash = {
+        "openstack" => {
+          "endpoints" => {
+            "compute-api" => {
+              "uri" => "http://localhost:8080/v2/%(tenant_id)s"
+            }
+          }
+        }
+      }
+      @subject.instance_variable_set :@node, uri_hash
+      result = @subject.endpoint "compute-api"
+      result.path.should == "/v2/%25(tenant_id)s"
+    end
     it "returns endpoint URI object when uri key in endpoint hash" do
       uri_hash = {
         "openstack" => {

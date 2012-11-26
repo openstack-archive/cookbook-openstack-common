@@ -26,8 +26,8 @@ module ::Openstack
   # and construct the URI object from the endpoint parts.
   def endpoint name
     ep = endpoint_for name
-    if ep && ep.has_key?("uri")
-      ::URI.parse ep["uri"]
+    if ep && ep['uri']
+      ::URI.parse ::URI.encode(ep['uri'])
     elsif ep
       uri_from_hash ep
     end

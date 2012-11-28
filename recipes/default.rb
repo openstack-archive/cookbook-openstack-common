@@ -16,3 +16,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+if node["platform_family"] == "debian"
+
+  package "ubuntu-cloud-keyring" do
+    action :install
+  end
+
+  apt_uri = node["openstack"]["apt"]["uri"]
+  ::Chef::Log.info("Setting APT repository to #{apt_uri}, with components:")
+
+  apt_components = node["openstack"]["apt"]["components"]
+
+  # Simple variable substitution for LSB codename and OpenStack release
+  apt_components.each do | comp |
+    comp = comp.gsub "%release%", node["openstack"]["release"]
+    comp = comp.gsub "%codename%", node["lsb"]["codename"]
+    ::Chef::Log.info("  #{comp}")
+  end
+
+  apt_repository "openstack-ppa" do
+    uri node["openstack"]["apt"]["uri"]
+    distribution node["lsb"]["codename"]
+    components apt_components
+  end
+
+end

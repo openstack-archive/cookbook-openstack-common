@@ -17,6 +17,27 @@
 # limitations under the License.
 #
 
+# ========================= Package and Repository Setup ======================
+#
+# Various Linux distributions provide OpenStack packages and repositories.
+# The provide some sensible defaults, but feel free to override per your
+# needs.
+
+# The coordinated release of OpenStack codename
+default["openstack"]["release"] = "folsom"
+
+# The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
+# more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
+# In the component strings, %codename% will be replaced by the value of
+# the node["lsb"]["codename"] Ohai value and %release% will be replaced
+# by the value of node["openstack"]["release"]
+default["openstack"]["apt"]["uri"] = "http://ubuntu-cloud.archive.canonical.com/ubuntu"
+default["openstack"]["apt"]["components"] = [ "%codename%-updates/%release%", "main" ]
+# For the SRU packaging, use this:
+# default["openstack"]["apt"]["components"] = [ "%codename%-proposed/%release%", "main" ]
+
+#TODO(jaypipes): Do RHEL/Fedora platform family YUM setup
+
 # ======================== OpenStack Endpoints ================================
 #
 # OpenStack recipes often need information about the various service

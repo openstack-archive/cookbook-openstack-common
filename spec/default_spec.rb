@@ -1,6 +1,27 @@
 require "chefspec"
 require ::File.join ::File.dirname(__FILE__), "..", "libraries", "default"
 
+describe "openstack-common::default" do
+  before do
+    @chef_run = ::ChefSpec::ChefRunner.new.converge "openstack-common::default"
+  end
+
+  describe "apt setup" do
+    it "sets apt repositories correctly" do
+      Chef::Recipe.any_instance.stub(:apt_repository)
+      @chef_run = ::ChefSpec::ChefRunner.new(:log_level => :info) do |n|
+        n.set["platform_family"] = "debian"
+        n.set["lsb"]["codename"] = "precise"
+        n.set["openstack"]["release"] = "folsom"
+      end
+      @chef_run.converge "openstack-common::default"
+      @chef_run.should install_package "ubuntu-cloud-keyring"
+      @chef_run.should log "  precise-updates/folsom"
+      @chef_run.should log "  main"
+    end
+  end
+end
+
 describe ::Openstack do
   before do
     @chef_run = ::ChefSpec::ChefRunner.new do |n|

@@ -32,7 +32,7 @@ default["openstack"]["release"] = "folsom"
 # the node["lsb"]["codename"] Ohai value and %release% will be replaced
 # by the value of node["openstack"]["release"]
 default["openstack"]["apt"]["uri"] = "http://ubuntu-cloud.archive.canonical.com/ubuntu"
-default["openstack"]["apt"]["components"] = [ "%codename%-updates/%release%", "main" ]
+default["openstack"]["apt"]["components"] = [ "precise-updates/folsom", "main" ]
 # For the SRU packaging, use this:
 # default["openstack"]["apt"]["components"] = [ "%codename%-proposed/%release%", "main" ]
 

@@ -37,7 +37,6 @@ if node["platform_family"] == "debian"
 
   apt_repository "openstack-ppa" do
     uri node["openstack"]["apt"]["uri"]
-    distribution node["lsb"]["codename"]
     components apt_components
   end
 

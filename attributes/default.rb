@@ -122,14 +122,6 @@ default['openstack']['endpoints']['compute-novnc-server']['scheme'] = "https"
 default['openstack']['endpoints']['compute-novnc-server']['port'] = "6080"
 default['openstack']['endpoints']['compute-novnc-server']['path'] = "/vnc_auto.html"
 
-# The OpenStack Compute (Nova) Volume endpoint
-# Note that this endpoint is NOT a Cinder endpoint. This is the
-# older nova-volume service.
-default['openstack']['endpoints']['compute-volume']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['compute-volume']['scheme'] = "https"
-default['openstack']['endpoints']['compute-volume']['port'] = "8776"
-default['openstack']['endpoints']['compute-volume']['path'] = "/v1/%(tenant_id)s"
-
 # ******************** OpenStack Image Endpoints ******************************
 
 # The OpenStack Image (Glance) API endpoint
@@ -144,6 +136,14 @@ default['openstack']['endpoints']['image-registry']['scheme'] = "https"
 default['openstack']['endpoints']['image-registry']['port'] = "9191"
 default['openstack']['endpoints']['image-registry']['path'] = "/v2"
 
+# ******************** OpenStack Volume Endpoints *****************************
+
+# The OpenStack Volume (Cinder) API endpoint
+default['openstack']['endpoints']['volume-api']['host'] = "127.0.0.1"
+default['openstack']['endpoints']['volume-api']['scheme'] = "https"
+default['openstack']['endpoints']['volume-api']['port'] = "8776"
+default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
+
 # Alternately, if you used some standardized DNS naming scheme, you could
 # do something like this, which would override any part-wise specifications above.
 #
@@ -154,9 +154,9 @@ default['openstack']['endpoints']['image-registry']['path'] = "/v2"
 # default['openstack']['endpoints']['compute-ec2-admin']['uri']    = "https://ec2.example.com:8773/services/Admin"
 # default['openstack']['endpoints']['compute-xvpvnc']['uri']       = "https://xvpvnc.example.com:6081/console"
 # default['openstack']['endpoints']['compute-novnc']['uri']        = "https://novnc.example.com:6080/vnc_auto.html"
-# default['openstack']['endpoints']['compute-volume']['uri']       = "https://volume.example.com:8776/"v1/%(tenant_id)s"
 # default['openstack']['endpoints']['image-api']['uri']            = "https://image.example.com:9292/v2"
 # default['openstack']['endpoints']['image-registry']['uri']       = "https://image.example.com:9191/v2"
+# default['openstack']['endpoints']['volume-api']['uri']           = "https://volume.example.com:8776/"v1/%(tenant_id)s"
 
 # ======================== OpenStack DB Support ================================
 #

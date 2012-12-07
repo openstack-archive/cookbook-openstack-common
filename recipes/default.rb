@@ -24,7 +24,7 @@ if node["platform_family"] == "debian"
   end
 
   apt_uri = node["openstack"]["apt"]["uri"]
-  ::Chef::Log.info("Setting APT repository to #{apt_uri}, with components:")
+  log("Setting APT repository to #{apt_uri}, with components:") { level :info }
 
   apt_components = node["openstack"]["apt"]["components"]
 
@@ -32,7 +32,7 @@ if node["platform_family"] == "debian"
   apt_components.each do | comp |
     comp = comp.gsub "%release%", node["openstack"]["release"]
     comp = comp.gsub "%codename%", node["lsb"]["codename"]
-    ::Chef::Log.info("  #{comp}")
+    log("  #{comp}") { level :info }
   end
 
   apt_repository "openstack-ppa" do

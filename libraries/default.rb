@@ -35,7 +35,7 @@ module ::Openstack
 
   # Useful for iterating over the OpenStack endpoints
   def endpoints &block
-    @node['openstack']['endpoints'].each do | name, info |
+    node['openstack']['endpoints'].each do | name, info |
       block.call(name, info)
     end
   rescue
@@ -47,7 +47,7 @@ module ::Openstack
   # service is one of 'compute', 'image', 'identity', 'network',
   # and 'volume'
   def db service
-    @node['openstack']['db'][service]
+    node['openstack']['db'][service]
   rescue
     nil
   end
@@ -95,7 +95,7 @@ module ::Openstack
         user_prov = Chef::Provider::Database::PostgresqlUser
         # See https://github.com/opscode-cookbooks/postgresql/blob/master/recipes/server.rb#L41
         super_user = "postgres"
-        super_password = @node['postgresql']['password']['postgres']
+        super_password = node['postgresql']['password']['postgres']
       when "mysql"
         db_prov = Chef::Provider::Database::Mysql
         user_prov = Chef::Provider::Database::MysqlUser
@@ -104,7 +104,7 @@ module ::Openstack
 
         # For some reason, setting this to anything other than localhost fails miserably :(
         host = "localhost"
-        super_password = @node['mysql']['server_root_password']
+        super_password = node['mysql']['server_root_password']
       else
         Chef::Log.error("Unsupported database type #{type}")
       end
@@ -150,7 +150,7 @@ private
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)
   def endpoint_for name
-    @node['openstack']['endpoints'][name]
+    node['openstack']['endpoints'][name]
   rescue
     nil
   end

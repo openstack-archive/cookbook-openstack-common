@@ -35,9 +35,9 @@ default["openstack"]["developer_mode"] = false
 # values in the data bag.
 default["openstack"]["secret"]["key_path"] = "/etc/chef/openstack_data_bag_secret"
 
-# The section name in the encrypted data bag that stores DB passwords, with
-# each key in the section corresponding to a named OpenStack database, like
-# "compute", "image", "identity", etc.
+# The section name in the encrypted data bag that stores service user passwords, with
+# each key in the section corresponding to a named OpenStack service, like
+# "nova", "cinder", etc.
 default["openstack"]["secret"]["service_passwords_section"] = "service_passwords"
 
 # The section name in the encrypted data bag that stores DB passwords, with

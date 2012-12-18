@@ -146,6 +146,34 @@ module ::Openstack
     info
   end
 
+  # Library routine that returns an encrypted data bag value
+  # for a supplied string. The key used in decrypting the
+  # encrypted value should be located at
+  # node["openstack"]["secret"]["key_path"].
+  #
+  # Note that if node["openstack"]["developer_mode"] is true,
+  # then the value of the index parameter is just returned as-is. This
+  # means that in developer mode, if a cookbook does this:
+  #
+  # class Chef
+  #   class Recipe
+  #     include ::Openstack
+  #    end
+  # end
+  #
+  # nova_password = secret "passwords", "nova"
+  #
+  # That means nova_password will == "nova".
+  def secret section, index
+    if node["openstack"]["developer_mode"]
+      return index
+    end
+    bag_name = node["openstack"]["secret"]["bag_name"]
+    key_path = node["openstack"]["secret"]["key_path"]
+    ::Chef::Log.info("Loading encrypted databag #{section}.#{index} using key at #{key_path}")
+    ::Chef::EncryptedDataBagItem.load(section, index, key_path)
+  end
+
 private
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)

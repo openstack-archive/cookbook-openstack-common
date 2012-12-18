@@ -17,6 +17,63 @@ of all the settable attributes for this cookbook.
 
 Note that all attributes are in the `default["openstack"]` "namespace"
 
+Libraries
+=========
+
+This cookbook exposes a set of default library routines:
+
+ * `endpoint` -- Used to return a `::URI` object representing the named OpenStack endpoint
+ * `endpoints` -- Useful for operating on all OpenStack endpoints
+ * `db` -- Returns a Hash of information about a named OpenStack database
+ * `db_uri` -- Returns the SQLAlchemy RFC-1738 DB URI (see: http://rfc.net/rfc1738.html) for a named OpenStack database
+ * `db_create_with_user` -- Creates a database and database user for a named OpenStack database
+ * `secret` -- Returns the value of an encrypted data bag for a named OpenStack secret key and key-section
+
+Usage
+-----
+
+The following are code examples showing the above library routines in action.
+Remember when using the library routines exposed by this library to include
+the Openstack routines in your recipe's `::Chef::Recipe` namespace, like so:
+
+```ruby
+class ::Chef::Recipe
+  include ::Openstack
+end
+```
+
+Example of using the `endpoint` routine:
+
+```ruby
+nova_api_ep = endpoint "compute-api"
+::Chef::Log.info("Using Openstack Compute API endpoint at #{nova_api_ep.to_s}")
+
+# Note that endpoint URIs may contain variable interpolation markers such
+# as `%(tenant_id)s`, so you may need to decode them. Do so like this:
+
+require "uri"
+
+puts ::URI.decode nova_api_ap.to_s
+```
+
+Example of using the `secret` and `db\_uri` routine:
+
+```ruby
+db_pass = secret "passwords", "cinder"
+db_user = node["cinder"]["db"]["user"]
+sql_connection = db_uri "volume", db_user, db_pass
+
+template "/etc/cinder/cinder.conf" do
+  source "cinder.conf.erb"
+  owner  node["cinder"]["user"]
+  group  node["cinder"]["group"]
+  mode   00644
+  variables(
+    "sql_connection" => sql_connection
+  )
+end
+```
+
 Testing
 =====
 

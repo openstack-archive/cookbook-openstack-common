@@ -174,6 +174,24 @@ module ::Openstack
     ::Chef::EncryptedDataBagItem.load(section, index, key_path)
   end
 
+  # Ease-of-use/standardization routine that returns a service password
+  # for a named OpenStack service. Not that databases are named
+  # after the OpeNStack project nickname, like "nova" or "glance", but services
+  # are typically named after the official API, like "compute", "image", or "identity"
+  def service_password service
+    section = node["openstack"]["secret"]["service_passwords_section"]
+    secret section, service
+  end
+
+  # Ease-of-use/standardization routine that returns a database password
+  # for a named OpenStack database. Note that databases are named
+  # after the OpeNStack project nickname, like "nova" or "glance", but services
+  # are typically named after the official API, like "compute", "image", or "identity"
+  def db_password service
+    section = node["openstack"]["secret"]["db_passwords_section"]
+    secret section, service
+  end
+
 private
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)

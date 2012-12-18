@@ -17,6 +17,24 @@
 # limitations under the License.
 #
 
+# Setting this to True means that database passwords and service user
+# passwords for Keystone will be easy-to-remember values -- they will be
+# the same value as the key. For instance, if a cookbook calls the
+# ::Openstack::secret routine like so:
+#
+# pass = secret "passwords", "nova"
+#
+# The value of pass will be "nova"
+default["openstack"]["developer_mode"] = false
+
+# ========================= Encrypted Databag Setup ===========================
+#
+# The openstack-common cookbook's default library contains a `secret`
+# routine that looks up the value of encrypted databag values. This routine
+# uses the secret key file located at the following location to decrypt the
+# values in the data bag.
+default["openstack"]["secret"]["key_path"] = "/etc/chef/openstack_data_bag_secret"
+
 # ========================= Package and Repository Setup ======================
 #
 # Various Linux distributions provide OpenStack packages and repositories.
@@ -188,12 +206,11 @@ default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
 # attributes:
 #
 #   node['db']['user'] = 'keystone'
-#   node['db']['password'] = 'password'
 #
 # In a "keystone" recipe, you might find the following code:
 #
 #   user = node['db']['user']
-#   pass = node['db']['password']
+#   pass = secret 'passwords', 'keystone'
 #
 #   sql_connection = ::Openstack::db_uri('identity', user, pass)
 #

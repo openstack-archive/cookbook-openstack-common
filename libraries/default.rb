@@ -175,9 +175,8 @@ module ::Openstack
   end
 
   # Ease-of-use/standardization routine that returns a service password
-  # for a named OpenStack service. Not that databases are named
-  # after the OpeNStack project nickname, like "nova" or "glance", but services
-  # are typically named after the official API, like "compute", "image", or "identity"
+  # for a named OpenStack service. Note that databases are named
+  # after the OpenStack project nickname, like "nova" or "glance"
   def service_password service
     section = node["openstack"]["secret"]["service_passwords_section"]
     secret section, service
@@ -185,8 +184,7 @@ module ::Openstack
 
   # Ease-of-use/standardization routine that returns a database password
   # for a named OpenStack database. Note that databases are named
-  # after the OpeNStack project nickname, like "nova" or "glance", but services
-  # are typically named after the official API, like "compute", "image", or "identity"
+  # after the OpenStack project nickname, like "nova" or "glance"
   def db_password service
     section = node["openstack"]["secret"]["db_passwords_section"]
     secret section, service

@@ -190,6 +190,13 @@ module ::Openstack
     secret section, service
   end
 
+  # Ease-of-use/standardization routine that returns a password
+  # for a Keystone user.
+  def user_password user
+    section = node["openstack"]["secret"]["user_passwords_section"]
+    secret section, user
+  end
+
 private
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)

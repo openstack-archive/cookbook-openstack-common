@@ -45,6 +45,10 @@ default["openstack"]["secret"]["service_passwords_section"] = "service_passwords
 # "nova", "cinder", etc.
 default["openstack"]["secret"]["db_passwords_section"] = "db_passwords"
 
+# The section name in the encrypted data bag that stores Keystone user passwords, with
+# each key in the section corresponding to a user in Keystone.
+default["openstack"]["secret"]["user_passwords_section"] = "user_passwords"
+
 # ========================= Package and Repository Setup ======================
 #
 # Various Linux distributions provide OpenStack packages and repositories.

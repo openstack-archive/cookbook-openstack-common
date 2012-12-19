@@ -30,6 +30,7 @@ This cookbook exposes a set of default library routines:
  * `secret` -- Returns the value of an encrypted data bag for a named OpenStack secret key and key-section
   * `db_password` -- Ease-of-use helper that returns the decrypted database password for a named OpenStack database
   * `service_password` -- Ease-of-use helper that returns the decrypted service password for named OpenStack service
+  * `user_password` -- Ease-of-use helper that returns the decrypted password for a Keystone user
 
 Usage
 -----

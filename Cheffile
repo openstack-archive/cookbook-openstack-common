@@ -3,5 +3,3 @@
 site "http://community.opscode.com/api/v1"
 
 cookbook "database"
-cookbook "openstack-utils",
-  :git => "git@github.com:att-cloud/cookbook-openstack-utils.git"

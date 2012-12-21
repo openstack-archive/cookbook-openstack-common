@@ -35,19 +35,19 @@ default["openstack"]["developer_mode"] = false
 # values in the data bag.
 default["openstack"]["secret"]["key_path"] = "/etc/chef/openstack_data_bag_secret"
 
-# The section name in the encrypted data bag that stores service user passwords, with
-# each key in the section corresponding to a named OpenStack service, like
+# The name of the encrypted data bag that stores service user passwords, with
+# each key in the data bag corresponding to a named OpenStack service, like
 # "nova", "cinder", etc.
-default["openstack"]["secret"]["service_passwords_section"] = "service_passwords"
+default["openstack"]["secret"]["service_passwords_data bag"] = "service_passwords"
 
-# The section name in the encrypted data bag that stores DB passwords, with
-# each key in the section corresponding to a named OpenStack database, like
+# The name of the encrypted data bag that stores DB passwords, with
+# each key in the data bag corresponding to a named OpenStack database, like
 # "nova", "cinder", etc.
-default["openstack"]["secret"]["db_passwords_section"] = "db_passwords"
+default["openstack"]["secret"]["db_passwords_data bag"] = "db_passwords"
 
-# The section name in the encrypted data bag that stores Keystone user passwords, with
-# each key in the section corresponding to a user in Keystone.
-default["openstack"]["secret"]["user_passwords_section"] = "user_passwords"
+# The name of the encrypted data bag that stores Keystone user passwords, with
+# each key in the data bag corresponding to a user (Keystone or otherwise).
+default["openstack"]["secret"]["user_passwords_data_bag"] = "user_passwords"
 
 # ========================= Package and Repository Setup ======================
 #

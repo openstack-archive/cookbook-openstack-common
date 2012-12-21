@@ -87,6 +87,7 @@ describe ::Openstack do
       @subject.endpoint("compute-api").to_s.should eq "http://localhost"
     end
     it "returns endpoint URI object when uri key not in endpoint hash but host is in hash" do
+      @subject.should_receive(:uri_from_hash).with({"host"=>"localhost", "port"=>"8080"})
       uri_hash = {
         "openstack" => {
           "endpoints" => {
@@ -98,8 +99,7 @@ describe ::Openstack do
         }
       }
       @subject.stub(:node).and_return uri_hash
-      result = @subject.endpoint "compute-api"
-      result.port.should == 8080
+      @subject.endpoint "compute-api"
     end
   end
 

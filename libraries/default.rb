@@ -164,37 +164,36 @@ module ::Openstack
   # nova_password = secret "passwords", "nova"
   #
   # That means nova_password will == "nova".
-  def secret section, index
+  def secret bag_name, index
     if node["openstack"]["developer_mode"]
       return index
     end
-    bag_name = node["openstack"]["secret"]["bag_name"]
     key_path = node["openstack"]["secret"]["key_path"]
-    ::Chef::Log.info("Loading encrypted databag #{section}.#{index} using key at #{key_path}")
-    ::Chef::EncryptedDataBagItem.load(section, index, key_path)
+    ::Chef::Log.info("Loading encrypted databag #{bag_name}.#{index} using key at #{key_path}")
+    ::Chef::EncryptedDataBagItem.load(bag_name, index, key_path)[index]
   end
 
   # Ease-of-use/standardization routine that returns a service password
   # for a named OpenStack service. Note that databases are named
   # after the OpenStack project nickname, like "nova" or "glance"
   def service_password service
-    section = node["openstack"]["secret"]["service_passwords_section"]
-    secret section, service
+    bag = node["openstack"]["secret"]["service_passwords_data_bag"]
+    secret bag, service
   end
 
   # Ease-of-use/standardization routine that returns a database password
   # for a named OpenStack database. Note that databases are named
   # after the OpenStack project nickname, like "nova" or "glance"
   def db_password service
-    section = node["openstack"]["secret"]["db_passwords_section"]
-    secret section, service
+    bag = node["openstack"]["secret"]["db_passwords_data_bag"]
+    secret bag, service
   end
 
   # Ease-of-use/standardization routine that returns a password
-  # for a Keystone user.
+  # for a user.
   def user_password user
-    section = node["openstack"]["secret"]["user_passwords_section"]
-    secret section, user
+    bag = node["openstack"]["secret"]["user_passwords_data_bag"]
+    secret bag, user
   end
 
 private

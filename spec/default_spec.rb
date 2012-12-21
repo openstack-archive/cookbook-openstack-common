@@ -27,6 +27,9 @@ describe ::Openstack do
     @chef_run = ::ChefSpec::ChefRunner.new do |n|
       n.set['mysql'] = {}
       n.set['mysql']['server_root_password'] = "password"
+      n.set["openstack"]["secret"]["service_passwords_data_bag"] = "service_passwords"
+      n.set["openstack"]["secret"]["db_passwords_data_bag"] = "db_passwords"
+      n.set["openstack"]["secret"]["user_passwords_data_bag"] = "user_passwords"
     end
     @chef_run.converge "openstack-common::default"
     @subject = ::Object.new.extend(::Openstack)
@@ -185,11 +188,11 @@ describe ::Openstack do
       result.should eq "nova"
     end
     it "returns databag when developer_mode is false" do
-      value = "this"
+      value = {"nova" => "this"}
       ::Chef::EncryptedDataBagItem.stub(:load).with("passwords", "nova", "/etc/chef/openstack_data_bag_secret").and_return value
       @subject.stub(:node).and_return @chef_run.node
       result = @subject.secret("passwords", "nova")
-      result.should eq value
+      result.should eq "this"
     end
   end
 
@@ -204,11 +207,11 @@ describe ::Openstack do
       result.should eq "nova"
     end
     it "returns databag when developer_mode is false" do
-      value = "this"
+      value = {"nova" => "this"}
       ::Chef::EncryptedDataBagItem.stub(:load).with("service_passwords", "nova", "/etc/chef/openstack_data_bag_secret").and_return value
       @subject.stub(:node).and_return @chef_run.node
       result = @subject.service_password("nova")
-      result.should eq value
+      result.should eq "this"
     end
   end
 
@@ -223,11 +226,11 @@ describe ::Openstack do
       result.should eq "nova"
     end
     it "returns databag when developer_mode is false" do
-      value = "this"
+      value = {"nova" => "this"}
       ::Chef::EncryptedDataBagItem.stub(:load).with("db_passwords", "nova", "/etc/chef/openstack_data_bag_secret").and_return value
       @subject.stub(:node).and_return @chef_run.node
       result = @subject.db_password("nova")
-      result.should eq value
+      result.should eq "this"
     end
   end
 
@@ -242,11 +245,11 @@ describe ::Openstack do
       result.should eq "nova"
     end
     it "returns databag when developer_mode is false" do
-      value = "this"
+      value = {"nova" => "this"}
       ::Chef::EncryptedDataBagItem.stub(:load).with("user_passwords", "nova", "/etc/chef/openstack_data_bag_secret").and_return value
       @subject.stub(:node).and_return @chef_run.node
       result = @subject.user_password("nova")
-      result.should eq value
+      result.should eq "this"
     end
   end
 end

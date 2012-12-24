@@ -260,3 +260,9 @@ default['openstack']['db']['volume']['db_type'] = "mysql"
 default['openstack']['db']['volume']['host'] = "127.0.0.1"
 default['openstack']['db']['volume']['port'] = "3306"
 default['openstack']['db']['volume']['db_name'] = "cinder"
+
+# Database used by the OpenStack Dashboard (Horizon)
+default['openstack']['db']['dashboard']['db_type'] = "mysql"
+default['openstack']['db']['dashboard']['host'] = "127.0.0.1"
+default['openstack']['db']['dashboard']['port'] = "3306"
+default['openstack']['db']['dashboard']['db_name'] = "horizon"

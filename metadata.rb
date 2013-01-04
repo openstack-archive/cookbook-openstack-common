@@ -8,6 +8,10 @@ version          "0.1.5"
 
 recipe           "opentack-common", "Execute common recipes"
 
+%w{ ubuntu fedora redhat centos }.each do |os|
+  supports os
+end
+
 depends          "apt"
 depends          "database"
 depends          "openstack-utils"

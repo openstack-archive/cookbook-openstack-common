@@ -41,12 +41,12 @@ default["openstack"]["secret"]["key_path"] = "/etc/chef/openstack_data_bag_secre
 # The name of the encrypted data bag that stores service user passwords, with
 # each key in the data bag corresponding to a named OpenStack service, like
 # "nova", "cinder", etc.
-default["openstack"]["secret"]["service_passwords_data bag"] = "service_passwords"
+default["openstack"]["secret"]["service_passwords_data_bag"] = "service_passwords"
 
 # The name of the encrypted data bag that stores DB passwords, with
 # each key in the data bag corresponding to a named OpenStack database, like
 # "nova", "cinder", etc.
-default["openstack"]["secret"]["db_passwords_data bag"] = "db_passwords"
+default["openstack"]["secret"]["db_passwords_data_bag"] = "db_passwords"
 
 # The name of the encrypted data bag that stores Keystone user passwords, with
 # each key in the data bag corresponding to a user (Keystone or otherwise).

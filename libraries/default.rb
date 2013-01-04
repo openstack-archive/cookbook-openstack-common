@@ -170,7 +170,8 @@ module ::Openstack
     end
     key_path = node["openstack"]["secret"]["key_path"]
     ::Chef::Log.info("Loading encrypted databag #{bag_name}.#{index} using key at #{key_path}")
-    ::Chef::EncryptedDataBagItem.load(bag_name, index, key_path)[index]
+    secret = ::Chef::EncryptedDataBagItem.load_secret(key_path)
+    ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
   end
 
   # Ease-of-use/standardization routine that returns a service password

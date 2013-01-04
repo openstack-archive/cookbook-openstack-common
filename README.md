@@ -9,6 +9,15 @@ Requirements
 
 * Chef 0.8+
 
+Cookbooks
+---------
+
+The following cookbooks are dependencies:
+
+* apt
+* database
+* openstack-utils
+
 Attributes
 ==========
 
@@ -22,15 +31,15 @@ Libraries
 
 This cookbook exposes a set of default library routines:
 
- * `endpoint` -- Used to return a `::URI` object representing the named OpenStack endpoint
- * `endpoints` -- Useful for operating on all OpenStack endpoints
- * `db` -- Returns a Hash of information about a named OpenStack database
- * `db_uri` -- Returns the SQLAlchemy RFC-1738 DB URI (see: http://rfc.net/rfc1738.html) for a named OpenStack database
- * `db_create_with_user` -- Creates a database and database user for a named OpenStack database
- * `secret` -- Returns the value of an encrypted data bag for a named OpenStack secret key and key-section
-  * `db_password` -- Ease-of-use helper that returns the decrypted database password for a named OpenStack database
-  * `service_password` -- Ease-of-use helper that returns the decrypted service password for named OpenStack service
-  * `user_password` -- Ease-of-use helper that returns the decrypted password for a Keystone user
+* `endpoint` -- Used to return a `::URI` object representing the named OpenStack endpoint
+* `endpoints` -- Useful for operating on all OpenStack endpoints
+* `db` -- Returns a Hash of information about a named OpenStack database
+* `db_uri` -- Returns the SQLAlchemy RFC-1738 DB URI (see: http://rfc.net/rfc1738.html) for a named OpenStack database
+* `db_create_with_user` -- Creates a database and database user for a named OpenStack database
+* `secret` -- Returns the value of an encrypted data bag for a named OpenStack secret key and key-section
+* `db_password` -- Ease-of-use helper that returns the decrypted database password for a named OpenStack database
+* `service_password` -- Ease-of-use helper that returns the decrypted service password for named OpenStack service
+* `user_password` -- Ease-of-use helper that returns the decrypted password for a Keystone user
 
 Usage
 -----

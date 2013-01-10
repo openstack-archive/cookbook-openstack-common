@@ -27,6 +27,12 @@
 # The value of pass will be "nova"
 default["openstack"]["developer_mode"] = false
 
+# The type of token signing to use -- can only enable one.
+default["openstack"]["signing"] = {
+  "uuid" => true,
+  "pki" => false
+}
+
 # ========================= Encrypted Databag Setup ===========================
 #
 # The openstack-common cookbook's default library contains a `secret`

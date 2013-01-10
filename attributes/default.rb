@@ -27,11 +27,8 @@
 # The value of pass will be "nova"
 default["openstack"]["developer_mode"] = false
 
-# The type of token signing to use -- can only enable one.
-default["openstack"]["signing"] = {
-  "uuid" => true,
-  "pki" => false
-}
+# The type of token signing to use (uuid or pki)
+default["openstack"]["auth"]["strategy"] = "uuid"
 
 # ========================= Encrypted Databag Setup ===========================
 #

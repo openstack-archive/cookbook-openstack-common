@@ -30,6 +30,9 @@ default["openstack"]["developer_mode"] = false
 # The type of token signing to use (uuid or pki)
 default["openstack"]["auth"]["strategy"] = "uuid"
 
+# Set to true where using self-signed certs (in testing environments)
+default["openstack"]["auth"]["validate_certs"] = true
+
 # ========================= Encrypted Databag Setup ===========================
 #
 # The openstack-common cookbook's default library contains a `secret`

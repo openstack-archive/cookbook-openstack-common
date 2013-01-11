@@ -30,6 +30,9 @@ default["openstack"]["developer_mode"] = false
 # The type of token signing to use (uuid or pki)
 default["openstack"]["auth"]["strategy"] = "uuid"
 
+# Set to true where using self-signed certs (in testing environments)
+default["openstack"]["auth"]["validate_certs"] = true
+
 # ========================= Encrypted Databag Setup ===========================
 #
 # The openstack-common cookbook's default library contains a `secret`
@@ -41,12 +44,12 @@ default["openstack"]["secret"]["key_path"] = "/etc/chef/openstack_data_bag_secre
 # The name of the encrypted data bag that stores service user passwords, with
 # each key in the data bag corresponding to a named OpenStack service, like
 # "nova", "cinder", etc.
-default["openstack"]["secret"]["service_passwords_data bag"] = "service_passwords"
+default["openstack"]["secret"]["service_passwords_data_bag"] = "service_passwords"
 
 # The name of the encrypted data bag that stores DB passwords, with
 # each key in the data bag corresponding to a named OpenStack database, like
 # "nova", "cinder", etc.
-default["openstack"]["secret"]["db_passwords_data bag"] = "db_passwords"
+default["openstack"]["secret"]["db_passwords_data_bag"] = "db_passwords"
 
 # The name of the encrypted data bag that stores Keystone user passwords, with
 # each key in the data bag corresponding to a user (Keystone or otherwise).

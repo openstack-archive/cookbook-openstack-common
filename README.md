@@ -16,7 +16,6 @@ The following cookbooks are dependencies:
 
 * apt
 * database
-* openstack-utils
 
 Attributes
 ==========
@@ -86,6 +85,61 @@ template "/etc/cinder/cinder.conf" do
 end
 ```
 
+OpenStack Role Operations      
+-------------------------      
+  
+To find a hash (or partial hash) of configuration information given a named Chef
+role, use the `Openstack::config_by_role` routine. This routine takes as its 
+first parameter the name of the Chef role to look for. An optional second parameter
+is the section of the node hash to return. If nil, the whole node hash is returned.
+
+```ruby
+role_name = node["openstack"]["chef_roles"]["identity_server"]
+identity_conf = ::Openstack::config_by_role(role_name)
+identity_conf_creds_section = ::Openstack::config_by_role(role_name, "creds")
+```
+
+URI Operations
+--------------
+
+Use the `Openstack::uri_from_hash` routine to helpfully return a `::URI::Generic`
+object for a hash that contains any of the following keys:
+
+* `host`
+* `uri`
+* `port`
+* `path`
+* `scheme`
+
+If the `uri` key is in the hash, that will be used as the URI, otherwise the URI will be
+constructed from the various parts of the hash corresponding to the keys above.
+
+```ruby
+# Suppose node hash contains the following subhash in the :identity_service key:
+# {⋅
+#   :host => 'identity.example.com',
+#   :port => 5000,
+#   :scheme => 'https'
+# }
+uri = ::Openstack::uri_from_hash(node[:identity_service])
+# uri.to_s would == "https://identity.example.com:5000"
+```
+
+The routine will return nil if neither a `uri` or `host` key exists in the supplied hash.
+
+Using the library without prefixing with ::Openstack
+----------------------------------------------------
+
+Don't like prefixing calls to the library's routines with `::Openstack`? Do this:
+
+```ruby
+class ::Chef::Recipe
+  include ::Openstack
+end
+```
+
+in your recipe.
+
 Testing
 =====
 
@@ -102,6 +156,7 @@ License and Author
 ==================
 
 Author:: Jay Pipes (<jaypipes@gmail.com>)
+Author:: John Dewey (<john@dewey.ws>)
 
 Copyright 2012, Jay Pipes
 

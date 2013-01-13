@@ -1,10 +1,10 @@
-# CHANGELOG for cookbook-openstack-utils
+# CHANGELOG for cookbook-openstack-common
 
-This file is used to list changes made in each version of cookbook-openstack-utils.
+This file is used to list changes made in each version of cookbook-openstack-common.
 
 ## 0.0.1:
 
-* Initial release of cookbook-openstack-utils
+* Initial release of cookbook-openstack-common
 
 - - - 
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

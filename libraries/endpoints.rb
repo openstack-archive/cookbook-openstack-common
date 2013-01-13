@@ -22,7 +22,7 @@ require "uri"
 module ::Openstack
   # Shortcut to get the full URI for an endpoint. If the "uri" key isn't
   # set in the endpoint hash, we use the ::Openstack.get_uri_from_mash
-  # library routine from the openstack-utils cookbook to grab a URI object
+  # library routine from the openstack-common cookbook to grab a URI object
   # and construct the URI object from the endpoint parts.
   def endpoint name
     ep = endpoint_for name

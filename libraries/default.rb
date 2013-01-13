@@ -17,63 +17,7 @@
 # limitations under the License.
 #
 
-require "uri"
-
 module ::Openstack
-  # Shortcut to get the full URI for an endpoint. If the "uri" key isn't
-  # set in the endpoint hash, we use the ::Openstack.get_uri_from_mash
-  # library routine from the openstack-utils cookbook to grab a URI object
-  # and construct the URI object from the endpoint parts.
-  def endpoint name
-    ep = endpoint_for name
-    if ep && ep['uri']
-      ::URI.parse ::URI.encode(ep['uri'])
-    elsif ep
-      uri_from_hash ep
-    end
-  end
-
-  # Useful for iterating over the OpenStack endpoints
-  def endpoints &block
-    node['openstack']['endpoints'].each do | name, info |
-      block.call(name, info)
-    end
-  rescue
-    nil
-  end
-
-  # Instead of specifying the verbose node["openstack"]["db"][service],
-  # this shortcut allows the simpler and shorter db(service), where
-  # service is one of 'compute', 'image', 'identity', 'network',
-  # and 'volume'
-  def db service
-    node['openstack']['db'][service]
-  rescue
-    nil
-  end
-
-  # Shortcut to get the SQLAlchemy DB URI for a named service
-  def db_uri service, user, pass
-    info = db(service)
-    if info
-      host = info['host']
-      port = info['port'].to_s
-      type = info['db_type']
-      name = info['db_name']
-      if type == "postgresql"
-        # Normalize to the SQLAlchemy standard db type identifier
-        type = "pgsql"
-      end
-      if type == "mysql" or type == "pgsql"
-        result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
-      elsif type == "sqlite"
-        # SQLite uses filepaths not db name
-        path = info['path']
-        result = "sqlite://#{path}"
-      end
-    end
-  end
-
   # Library routine that uses the database cookbook to create the
   # service's database and grant read/write access to the
   # given user and password.
@@ -144,65 +88,5 @@ module ::Openstack
       end
     end
     info
-  end
-
-  # Library routine that returns an encrypted data bag value
-  # for a supplied string. The key used in decrypting the
-  # encrypted value should be located at
-  # node["openstack"]["secret"]["key_path"].
-  #
-  # Note that if node["openstack"]["developer_mode"] is true,
-  # then the value of the index parameter is just returned as-is. This
-  # means that in developer mode, if a cookbook does this:
-  #
-  # class Chef
-  #   class Recipe
-  #     include ::Openstack
-  #    end
-  # end
-  #
-  # nova_password = secret "passwords", "nova"
-  #
-  # That means nova_password will == "nova".
-  def secret bag_name, index
-    if node["openstack"]["developer_mode"]
-      return index
-    end
-    key_path = node["openstack"]["secret"]["key_path"]
-    ::Chef::Log.info("Loading encrypted databag #{bag_name}.#{index} using key at #{key_path}")
-    secret = ::Chef::EncryptedDataBagItem.load_secret(key_path)
-    ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
-  end
-
-  # Ease-of-use/standardization routine that returns a service password
-  # for a named OpenStack service. Note that databases are named
-  # after the OpenStack project nickname, like "nova" or "glance"
-  def service_password service
-    bag = node["openstack"]["secret"]["service_passwords_data_bag"]
-    secret bag, service
-  end
-
-  # Ease-of-use/standardization routine that returns a database password
-  # for a named OpenStack database. Note that databases are named
-  # after the OpenStack project nickname, like "nova" or "glance"
-  def db_password service
-    bag = node["openstack"]["secret"]["db_passwords_data_bag"]
-    secret bag, service
-  end
-
-  # Ease-of-use/standardization routine that returns a password
-  # for a user.
-  def user_password user
-    bag = node["openstack"]["secret"]["user_passwords_data_bag"]
-    secret bag, user
-  end
-
-private
-  # Instead of specifying the verbose node["openstack"]["endpoints"][name],
-  # this shortcut allows the simpler and shorter endpoint(name)
-  def endpoint_for name
-    node['openstack']['endpoints'][name]
-  rescue
-    nil
   end
 end

@@ -74,6 +74,12 @@ module ::Openstack
     end
   end
 
+  def memcached_servers
+    search(:node, "roles:infra-caching").map do |c_node|
+      "#{c_node['memcached']['listen']}:11211"
+    end
+  end
+
 private
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)

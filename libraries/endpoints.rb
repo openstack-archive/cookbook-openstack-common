@@ -74,8 +74,11 @@ module ::Openstack
     end
   end
 
-  def memcached_servers
-    search(:node, "roles:infra-caching").map do |c_node|
+  # Returns list of memcached servers in environment in format '<ip>:<port>'
+  # env - sets environment where to search
+  # role - sets role that is used to filter out memcached nodes
+  def memcached_servers(env=node.chef_environment, role="infra-caching")
+    search(:node, "chef_environment:#{env} AND roles:#{role}").map do |c_node|
       "#{c_node['memcached']['listen']}:11211"
     end
   end

@@ -129,4 +129,17 @@ describe ::Openstack do
       @subject.db_uri("compute", "user", "pass").should == expect
     end
   end
+
+  describe "#memcached_servers" do
+    it "returns proper pairs" do
+      nodes = [
+        { "memcached" => { "listen" => "1.1.1.1" }},
+        { "memcached" => { "listen" => "2.2.2.2" }},
+      ]
+      @subject.stub(:search).
+        with(:node, "chef_environment:test_env AND roles:test_role").and_return nodes
+      @subject.memcached_servers("test_env", "test_role").
+        should == ["1.1.1.1:11211", "2.2.2.2:11211"]
+    end
+  end
 end

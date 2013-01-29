@@ -78,8 +78,16 @@ module ::Openstack
   # env - sets environment where to search
   # role - sets role that is used to filter out memcached nodes
   def memcached_servers(env=node.chef_environment, role="infra-caching")
-    search(:node, "chef_environment:#{env} AND roles:#{role}").map do |c_node|
-      "#{c_node['memcached']['listen']}:11211"
+    if Chef::Config[:solo]
+      if node['memcached']
+        ["#{node['memcached']['listen']}:11211"]
+      else
+        []
+      end
+    else
+      search(:node, "chef_environment:#{env} AND roles:#{role}").map do |c_node|
+        "#{c_node['memcached']['listen']}:11211"
+      end
     end
   end
 

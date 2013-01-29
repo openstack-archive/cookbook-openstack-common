@@ -182,6 +182,14 @@ default['openstack']['endpoints']['volume-api']['scheme'] = "https"
 default['openstack']['endpoints']['volume-api']['port'] = "8776"
 default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
 
+# ******************** OpenStack Metering Endpoints ***************************
+
+# The OpenStack Metering (Ceilometer) API endpoint
+default['openstack']['endpoints']['metering-api']['host'] = "127.0.0.1"
+default['openstack']['endpoints']['metering-api']['scheme'] = "https"
+default['openstack']['endpoints']['metering-api']['port'] = "9000"
+default['openstack']['endpoints']['metering-api']['path'] = "/v1"
+
 # Alternately, if you used some standardized DNS naming scheme, you could
 # do something like this, which would override any part-wise specifications above.
 #
@@ -194,7 +202,8 @@ default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
 # default['openstack']['endpoints']['compute-novnc']['uri']        = "https://novnc.example.com:6080/vnc_auto.html"
 # default['openstack']['endpoints']['image-api']['uri']            = "https://image.example.com:9292/v2"
 # default['openstack']['endpoints']['image-registry']['uri']       = "https://image.example.com:9191/v2"
-# default['openstack']['endpoints']['volume-api']['uri']           = "https://volume.example.com:8776/"v1/%(tenant_id)s"
+# default['openstack']['endpoints']['volume-api']['uri']           = "https://volume.example.com:8776/v1/%(tenant_id)s"
+# default['openstack']['endpoints']['metering-api']['uri']         = "https://metering.example.com:9000/v1"
 
 # ======================== OpenStack DB Support ================================
 #
@@ -272,3 +281,9 @@ default['openstack']['db']['dashboard']['db_type'] = "mysql"
 default['openstack']['db']['dashboard']['host'] = "127.0.0.1"
 default['openstack']['db']['dashboard']['port'] = "3306"
 default['openstack']['db']['dashboard']['db_name'] = "horizon"
+
+# Database used by OpenStack Metering (Ceilometer)
+default['openstack']['db']['metering']['db_type'] = "mysql"
+default['openstack']['db']['metering']['host'] = "127.0.0.1"
+default['openstack']['db']['metering']['port'] = "3306"
+default['openstack']['db']['metering']['db_name'] = "ceilometer"

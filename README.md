@@ -143,14 +143,11 @@ in your recipe.
 Testing
 =====
 
-This cookbook is using [ChefSpec](https://github.com/acrmp/chefspec) for testing.
+This cookbook is using [ChefSpec](https://github.com/acrmp/chefspec) for
+testing. Should run the following before commiting. It will run your tests,
+and check for lint errors.
 
-    $ cd $repo
-    $ bundle
-    $ librarian-chef install
-    $ ln -s ../ cookbooks/$short_repo_name # doesn't contain "cookbook-"
-    $ foodcritic cookbooks/$short_repo_name
-    $ bundle exec rspec cookbooks/$short_repo_name
+    % ./run_tests.bash
 
 License and Author
 ==================

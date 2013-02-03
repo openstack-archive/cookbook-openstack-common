@@ -287,3 +287,11 @@ default['openstack']['db']['metering']['db_type'] = "mysql"
 default['openstack']['db']['metering']['host'] = "127.0.0.1"
 default['openstack']['db']['metering']['port'] = "3306"
 default['openstack']['db']['metering']['db_name'] = "ceilometer"
+
+# Switch to store the MySQL root password in a databag instead of
+# using the generated OpenSSL cookbook secure_password one.
+default['openstack']['db']['root_user_use_databag'] = false
+
+# If above root_user_use_databag is true, the below string
+# will be passed to the user_password library routine.
+default['openstack']['db']['root_user_key'] = 'mysqlroot'

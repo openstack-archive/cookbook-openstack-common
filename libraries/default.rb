@@ -27,6 +27,7 @@ module ::Openstack
   # is used, the node["mysql"]["server_root_password"] is used along
   # with the "root" (super)user.
   def db_create_with_user service, user, pass
+    root_user_use_databag = node['openstack']['db']['root_user_use_databag']
     info = db service
     if info
       host = info['host']
@@ -39,7 +40,12 @@ module ::Openstack
         user_prov = Chef::Provider::Database::PostgresqlUser
         # See https://github.com/opscode-cookbooks/postgresql/blob/master/recipes/server.rb#L41
         super_user = "postgres"
-        super_password = node['postgresql']['password']['postgres']
+        if root_user_use_databag
+          user_key = node['openstack']['db']['root_user_key']
+          super_password = user_password user_key
+        else
+          super_password = node['postgresql']['password']['postgres']
+        end
       when "mysql"
         db_prov = Chef::Provider::Database::Mysql
         user_prov = Chef::Provider::Database::MysqlUser
@@ -48,7 +54,12 @@ module ::Openstack
 
         # For some reason, setting this to anything other than localhost fails miserably :(
         host = "localhost"
-        super_password = node['mysql']['server_root_password']
+        if root_user_use_databag
+          user_key = node['openstack']['db']['root_user_key']
+          super_password = user_password user_key
+        else
+          super_password = node['mysql']['server_root_password']
+        end
       else
         Chef::Log.error("Unsupported database type #{type}")
       end

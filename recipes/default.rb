@@ -41,10 +41,35 @@ when "debian"
   end
 
 when "suse"
+  if node["lsb"]["description"].nil?
+  # Workaround for SLE11
+  #
+  # On SLE11 ohai is broken and prefers lsb-release. We need to
+  # install it to be able to detect if recipe is run on openSUSE or SLES.
+  #
+  # https://bugzilla.novell.com/show_bug.cgi?id=809129
+  #
+  #
+    install_lsb_release = package "lsb-release" do
+      action :nothing
+    end
+    reload_ohai = ohai "reload_lsb" do
+      action :nothing
+    end
+    install_lsb_release.run_action(:install)
+    reload_ohai.run_action(:reload)
+  end
+  if node["lsb"]["description"][/^SUSE Linux Enterprise Server/]
+    release, patchlevel = node["platform_version"].split(".")
+    zypp_release = "SLE_#{release}_SP#{patchlevel}"
+  elsif node["lsb"]["description"][/^openSUSE/]
+    zypp_release = "openSUSE_" + node["lsb"]["release"]
+  end
   zypp = node["openstack"]["zypp"]
   repo_uri = zypp["uri"].gsub(
     "%release%", node["openstack"]["release"].capitalize)
-  repo_uri.gsub! "%suse-release%", zypp["release"]
+  repo_uri.gsub! "%suse-release%", zypp_release
+  repo_alias = "Cloud:OpenStack:" + node["openstack"]["release"].capitalize
 
   # TODO(iartarisi) this should be moved to its own cookbook
   bash "add repository key" do
@@ -60,7 +85,7 @@ when "suse"
   end
 
   execute "add repository" do
-    command "zypper addrepo --check #{repo_uri} Cloud:OpenStack"
+    command "zypper addrepo --check #{repo_uri} #{repo_alias}"
     not_if { `zypper repos --export -`.include? repo_uri }
   end
 end

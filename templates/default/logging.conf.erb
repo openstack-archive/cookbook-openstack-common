@@ -1,28 +1,28 @@
 [loggers]
-keys=root,ceilometer,cinder,glance,horizon,keystone,nova,swift
+keys=root,ceilometer,cinder,glance,horizon,keystone,nova,swift,amqplib,sqlalchemy,boto,suds,eventletwsgi
 
 [formatters]
-keys=normal,syslog_with_name,debug
+keys=normal,normal_with_name,debug,syslog_with_name,syslog_debug
 
 [handlers]
-keys=devel,ceilometer_prod,cinder_prod,glance_prod,horizon_prod,keystone_prod,nova_prod,swift_prod,ceilometer_debug,cinder_debug,glance_debug,horizon_debug,keystone_debug,nova_debug,swift_debug
+keys=stderr,devel,ceilometer_prod,cinder_prod,glance_prod,horizon_prod,keystone_prod,nova_prod,swift_prod,ceilometer_debug,cinder_debug,glance_debug,horizon_debug,keystone_debug,nova_debug,swift_debug
 
 ## FORMATTERS ##
+
+[formatter_debug]
+format=[%(name)s]: %(asctime)s %(levelname)s %(module)s.%(funcName)s %(message)s
 
 [formatter_normal]
 format=%(asctime)s %(levelname)s %(message)s
 
 [formatter_normal_with_name]
-format=(%(name)s): %(levelname)s %(message)s
-
-[formatter_debug]
-format=(%(name)s): %(levelname)s %(module)s %(funcName)s %(message)s
+format=[%(name)s]: %(asctime)s %(levelname)s %(message)s
 
 [formatter_syslog_with_name]
-format=(%(name)s): %(asctime)s %(levelname)s %(message)s
+format=[%(name)s]: %(levelname)s %(message)s
 
 [formatter_syslog_debug]
-format=(%(name)s): %(asctime)s %(levelname)s %(module)s %(funcName)s %(message)s
+format=[%(name)s]: %(levelname)s %(module)s.%(funcName)s %(message)s
 
 ## LOGGERS ##
 
@@ -94,6 +94,11 @@ handlers=swift_prod,swift_debug
 qualname=swift
 
 ## HANDLERS ##
+
+[handler_stderr]
+class = StreamHandler
+args = (sys.stderr,)
+formatter = debug
 
 [handler_devel]
 class=StreamHandler

@@ -2,7 +2,7 @@
 keys=root,ceilometer,cinder,glance,horizon,keystone,nova,swift
 
 [formatters]
-keys=normal,normal_with_name,debug
+keys=normal,syslog_with_name,debug
 
 [handlers]
 keys=devel,ceilometer_prod,cinder_prod,glance_prod,horizon_prod,keystone_prod,nova_prod,swift_prod,ceilometer_debug,cinder_debug,glance_debug,horizon_debug,keystone_debug,nova_debug,swift_debug
@@ -13,12 +13,46 @@ keys=devel,ceilometer_prod,cinder_prod,glance_prod,horizon_prod,keystone_prod,no
 format=%(asctime)s %(levelname)s %(message)s
 
 [formatter_normal_with_name]
-format=(%(name)s): %(asctime)s %(levelname)s %(message)s
+format=(%(name)s): %(levelname)s %(message)s
 
 [formatter_debug]
+format=(%(name)s): %(levelname)s %(module)s %(funcName)s %(message)s
+
+[formatter_syslog_with_name]
+format=(%(name)s): %(asctime)s %(levelname)s %(message)s
+
+[formatter_syslog_debug]
 format=(%(name)s): %(asctime)s %(levelname)s %(module)s %(funcName)s %(message)s
 
 ## LOGGERS ##
+
+[logger_amqplib]
+level = WARNING
+handlers = stderr
+qualname = amqplib
+
+[logger_sqlalchemy]
+level = WARNING
+handlers = stderr
+qualname = sqlalchemy
+# "level = INFO" logs SQL queries.
+# "level = DEBUG" logs SQL queries and results.
+# "level = WARNING" logs neither.  (Recommended for production systems.)
+
+[logger_boto]
+level = WARNING
+handlers = stderr
+qualname = boto
+
+[logger_suds]
+level = INFO
+handlers = stderr
+qualname = suds
+
+[logger_eventletwsgi]
+level = WARNING
+handlers = stderr
+qualname = eventlet.wsgi.server
 
 [logger_root]
 level=NOTSET
@@ -70,89 +104,89 @@ args=(sys.stdout,)
 [handler_file]
 class=FileHandler
 level=DEBUG
-formatter=normal_with_name
+formatter=debug
 args=('/var/log/openstack/openstack.log', 'w')
 
 [handler_ceilometer_prod]
 class=handlers.SysLogHandler
 level=ERROR
-formatter=normal_with_name
+formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL0)
 
 [handler_ceilometer_debug]
 class=handlers.SysLogHandler
 level=DEBUG
-formatter=debug
+formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL0)
 
 [handler_cinder_prod]
 class=handlers.SysLogHandler
 level=ERROR
-formatter=normal_with_name
+formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL1)
 
 [handler_cinder_debug]
 class=handlers.SysLogHandler
 level=DEBUG
-formatter=debug
+formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL1)
 
 [handler_glance_prod]
 class=handlers.SysLogHandler
 level=ERROR
-formatter=normal_with_name
+formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL2)
 
 [handler_glance_debug]
 class=handlers.SysLogHandler
 level=DEBUG
-formatter=debug
+formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL2)
 
 [handler_horizon_prod]
 class=handlers.SysLogHandler
 level=ERROR
-formatter=normal_with_name
+formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL3)
 
 [handler_horizon_debug]
 class=handlers.SysLogHandler
 level=DEBUG
-formatter=debug
+formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL3)
 
 [handler_keystone_prod]
 class=handlers.SysLogHandler
 level=ERROR
-formatter=normal_with_name
+formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL4)
 
 [handler_keystone_debug]
 class=handlers.SysLogHandler
 level=DEBUG
-formatter=debug
+formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL4)
 
 [handler_nova_prod]
 class=handlers.SysLogHandler
 level=ERROR
-formatter=normal_with_name
+formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL5)
 
 [handler_nova_debug]
 class=handlers.SysLogHandler
 level=DEBUG
-formatter=debug
+formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL5)
 
 [handler_swift_prod]
 class=handlers.SysLogHandler
 level=ERROR
-formatter=normal_with_name
+formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL6)
 
 [handler_swift_debug]
 class=handlers.SysLogHandler
 level=DEBUG
-formatter=debug
+formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL6)

@@ -1,11 +1,11 @@
 [loggers]
-keys=root,ceilometer,cinder,glance,horizon,keystone,nova,swift,amqplib,sqlalchemy,boto,suds,eventletwsgi
+keys=root,ceilometer,cinder,glance,horizon,keystone,nova,swift,amqplib,sqlalchemy,boto,suds,eventletwsgi,<%= node["openstack"]["logging"]["ignore"].map{|k,v| k.gsub(/\W/, '_')}.join(',') %>
 
 [formatters]
 keys=normal,normal_with_name,debug,syslog_with_name,syslog_debug
 
 [handlers]
-keys=stderr,devel,ceilometer_prod,cinder_prod,glance_prod,horizon_prod,keystone_prod,nova_prod,swift_prod,ceilometer_debug,cinder_debug,glance_debug,horizon_debug,keystone_debug,nova_debug,swift_debug
+keys=stderr,devel,prod,debug
 
 ## FORMATTERS ##
 
@@ -19,10 +19,10 @@ format=%(asctime)s %(levelname)s %(message)s
 format=[%(name)s]: %(asctime)s %(levelname)s %(message)s
 
 [formatter_syslog_with_name]
-format=[%(name)s]: %(levelname)s %(message)s
+format=%(name)s: %(levelname)s %(message)s
 
 [formatter_syslog_debug]
-format=[%(name)s]: %(levelname)s %(module)s.%(funcName)s %(message)s
+format=%(name)s: %(levelname)s %(module)s.%(funcName)s %(message)s
 
 ## LOGGERS ##
 
@@ -49,6 +49,13 @@ level = INFO
 handlers = stderr
 qualname = suds
 
+<% node["openstack"]["logging"]["ignore"].each do |k,v| %>
+[logger_<%= k.gsub(/\W/, '_') %>]
+level = <%= v %>
+handlers = prod,debug
+qualname = <%= k %>
+
+<% end %>
 [logger_eventletwsgi]
 level = WARNING
 handlers = stderr
@@ -58,39 +65,39 @@ qualname = eventlet.wsgi.server
 level=NOTSET
 handlers=devel
 
-[logger_ceilometer] # LOCAL0
+[logger_ceilometer]
 level=DEBUG
-handlers=ceilometer_prod,ceilometer_debug
+handlers=prod,debug
 qualname=ceilometer
 
-[logger_cinder] # LOCAL1
+[logger_cinder]
 level=DEBUG
-handlers=cinder_prod,cinder_debug
+handlers=prod,debug
 qualname=cinder
 
-[logger_glance] # LOCAL2
+[logger_glance]
 level=DEBUG
-handlers=glance_prod,glance_debug
+handlers=prod,debug
 qualname=glance
 
-[logger_horizon] # LOCAL3
+[logger_horizon]
 level=DEBUG
-handlers=horizon_prod,horizon_debug
+handlers=prod,debug
 qualname=horizon
 
-[logger_keystone] # LOCAL4
+[logger_keystone]
 level=DEBUG
-handlers=keystone_prod,keystone_debug
+handlers=prod,debug
 qualname=keystone
 
-[logger_nova] # LOCAL5
+[logger_nova]
 level=DEBUG
-handlers=nova_prod,nova_debug
+handlers=prod,debug
 qualname=nova
 
-[logger_swift] # LOCAL6
+[logger_swift]
 level=DEBUG
-handlers=swift_prod,swift_debug
+handlers=prod,debug
 qualname=swift
 
 ## HANDLERS ##
@@ -108,90 +115,17 @@ args=(sys.stdout,)
 
 [handler_file]
 class=FileHandler
-level=DEBUG
 formatter=debug
 args=('/var/log/openstack/openstack.log', 'w')
 
-[handler_ceilometer_prod]
+[handler_prod]
+level=INFO
 class=handlers.SysLogHandler
-level=ERROR
 formatter=syslog_with_name
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL0)
 
-[handler_ceilometer_debug]
-class=handlers.SysLogHandler
+[handler_debug]
 level=DEBUG
-formatter=syslog_debug
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL0)
-
-[handler_cinder_prod]
 class=handlers.SysLogHandler
-level=ERROR
-formatter=syslog_with_name
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL1)
-
-[handler_cinder_debug]
-class=handlers.SysLogHandler
-level=DEBUG
 formatter=syslog_debug
 args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL1)
-
-[handler_glance_prod]
-class=handlers.SysLogHandler
-level=ERROR
-formatter=syslog_with_name
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL2)
-
-[handler_glance_debug]
-class=handlers.SysLogHandler
-level=DEBUG
-formatter=syslog_debug
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL2)
-
-[handler_horizon_prod]
-class=handlers.SysLogHandler
-level=ERROR
-formatter=syslog_with_name
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL3)
-
-[handler_horizon_debug]
-class=handlers.SysLogHandler
-level=DEBUG
-formatter=syslog_debug
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL3)
-
-[handler_keystone_prod]
-class=handlers.SysLogHandler
-level=ERROR
-formatter=syslog_with_name
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL4)
-
-[handler_keystone_debug]
-class=handlers.SysLogHandler
-level=DEBUG
-formatter=syslog_debug
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL4)
-
-[handler_nova_prod]
-class=handlers.SysLogHandler
-level=ERROR
-formatter=syslog_with_name
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL5)
-
-[handler_nova_debug]
-class=handlers.SysLogHandler
-level=DEBUG
-formatter=syslog_debug
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL5)
-
-[handler_swift_prod]
-class=handlers.SysLogHandler
-level=ERROR
-formatter=syslog_with_name
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL6)
-
-[handler_swift_debug]
-class=handlers.SysLogHandler
-level=DEBUG
-formatter=syslog_debug
-args=(('/dev/log'), handlers.SysLogHandler.LOG_LOCAL6)

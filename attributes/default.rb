@@ -296,6 +296,6 @@ default['openstack']['db']['root_user_use_databag'] = false
 # will be passed to the user_password library routine.
 default['openstack']['db']['root_user_key'] = 'mysqlroot'
 
-# logging.conf list keypairs module_name => severity to ignore
+# logging.conf list keypairs module_name => log level to write
 default['openstack']['logging']['ignore'] = {'nova.api.openstack.wsgi' => 'WARNING',
                                              'nova.osapi_compute.wsgi.server' => 'WARNING'}

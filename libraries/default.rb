@@ -38,7 +38,6 @@ module ::Openstack
       when "postgresql", "pgsql"
         db_prov = Chef::Provider::Database::Postgresql
         user_prov = Chef::Provider::Database::PostgresqlUser
-        # See https://github.com/opscode-cookbooks/postgresql/blob/master/recipes/server.rb#L41
         super_user = "postgres"
         if root_user_use_databag
           user_key = node['openstack']['db']['root_user_key']
@@ -51,7 +50,6 @@ module ::Openstack
         include_recipe "database::mysql"
         db_prov = Chef::Provider::Database::Mysql
         user_prov = Chef::Provider::Database::MysqlUser
-        # See https://github.com/opscode-cookbooks/mysql/blob/master/recipes/server.rb#L40
         super_user = "root"
 
         # For some reason, setting this to anything other than localhost fails miserably :(

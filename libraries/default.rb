@@ -47,6 +47,8 @@ module ::Openstack
           super_password = node['postgresql']['password']['postgres']
         end
       when "mysql"
+        # we have to install the 'mysql' gem, otherwise the provider won't work
+        include_recipe "database::mysql"
         db_prov = Chef::Provider::Database::Mysql
         user_prov = Chef::Provider::Database::MysqlUser
         # See https://github.com/opscode-cookbooks/mysql/blob/master/recipes/server.rb#L40

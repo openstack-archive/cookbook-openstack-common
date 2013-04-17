@@ -60,13 +60,14 @@ module ::Openstack
       port = info['port'].to_s
       type = info['db_type']
       name = info['db_name']
-      if type == "postgresql"
+      if type == "pgsql"
         # Normalize to the SQLAlchemy standard db type identifier
-        type = "pgsql"
+        type = "postgresql"
       end
-      if type == "mysql" or type == "pgsql"
+      case type
+      when "mysql", "postgresql"
         result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
-      elsif type == "sqlite"
+      when "sqlite"
         # SQLite uses filepaths not db name
         path = info['path']
         result = "sqlite://#{path}"

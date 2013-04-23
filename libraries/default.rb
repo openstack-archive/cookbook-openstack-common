@@ -36,6 +36,7 @@ module ::Openstack
       db_name = info['db_name']
       case type
       when "postgresql", "pgsql"
+        include_recipe "database::postgresql"
         db_prov = Chef::Provider::Database::Postgresql
         user_prov = Chef::Provider::Database::PostgresqlUser
         super_user = "postgres"

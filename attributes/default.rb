@@ -156,13 +156,6 @@ default['openstack']['endpoints']['compute-novnc']['scheme'] = "https"
 default['openstack']['endpoints']['compute-novnc']['port'] = "6080"
 default['openstack']['endpoints']['compute-novnc']['path'] = "/vnc_auto.html"
 
-# The OpenStack Compute (Nova) novnc server endpoint
-# TODO(jaypipes) Is this necessary? It's the same as the novnc endpoint...
-default['openstack']['endpoints']['compute-novnc-server']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['compute-novnc-server']['scheme'] = "https"
-default['openstack']['endpoints']['compute-novnc-server']['port'] = "6080"
-default['openstack']['endpoints']['compute-novnc-server']['path'] = "/vnc_auto.html"
-
 # ******************** OpenStack Image Endpoints ******************************
 
 # The OpenStack Image (Glance) API endpoint

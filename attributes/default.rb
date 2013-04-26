@@ -190,7 +190,7 @@ default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
 # The OpenStack Metering (Ceilometer) API endpoint
 default['openstack']['endpoints']['metering-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['metering-api']['scheme'] = "https"
-default['openstack']['endpoints']['metering-api']['port'] = "9000"
+default['openstack']['endpoints']['metering-api']['port'] = "8777"
 default['openstack']['endpoints']['metering-api']['path'] = "/v1"
 
 # Alternately, if you used some standardized DNS naming scheme, you could

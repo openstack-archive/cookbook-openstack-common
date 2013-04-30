@@ -2,6 +2,15 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.2.0:
+
+* First release of cookbook-openstack-common that aligns with the Grizzly packaging
+* Adds OpenStack Network endpoints
+
+## 0.1.x:
+
+* Folsom-based packaging
+
 ## 0.0.1:
 
 * Initial release of cookbook-openstack-common

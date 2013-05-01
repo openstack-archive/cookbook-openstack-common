@@ -62,7 +62,7 @@ default["openstack"]["secret"]["user_passwords_data_bag"] = "user_passwords"
 # needs.
 
 # The coordinated release of OpenStack codename
-default["openstack"]["release"] = "folsom"
+default["openstack"]["release"] = "grizzly"
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -70,7 +70,7 @@ default["openstack"]["release"] = "folsom"
 # the node["lsb"]["codename"] Ohai value and %release% will be replaced
 # by the value of node["openstack"]["release"]
 default["openstack"]["apt"]["uri"] = "http://ubuntu-cloud.archive.canonical.com/ubuntu"
-default["openstack"]["apt"]["components"] = [ "precise-updates/folsom", "main" ]
+default["openstack"]["apt"]["components"] = [ "precise-updates/grizzly", "main" ]
 # For the SRU packaging, use this:
 # default["openstack"]["apt"]["components"] = [ "%codename%-proposed/%release%", "main" ]
 
@@ -155,6 +155,14 @@ default['openstack']['endpoints']['compute-novnc']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-novnc']['scheme'] = "https"
 default['openstack']['endpoints']['compute-novnc']['port'] = "6080"
 default['openstack']['endpoints']['compute-novnc']['path'] = "/vnc_auto.html"
+
+# ******************** OpenStack Network Endpoints ****************************
+
+# The OpenStack Network (Quantum) API endpoint.
+default['openstack']['endpoints']['network-api']['host'] = "127.0.0.1"
+default['openstack']['endpoints']['network-api']['scheme'] = "https"
+default['openstack']['endpoints']['network-api']['port'] = "9696"
+default['openstack']['endpoints']['network-api']['path'] = "/v2"
 
 # ******************** OpenStack Image Endpoints ******************************
 

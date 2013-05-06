@@ -7,7 +7,7 @@ an OpenStack deployment.
 Requirements
 ============
 
-* Chef 0.8+
+Chef 0.10.0 or higher required (for Chef environment use).
 
 Cookbooks
 ---------
@@ -42,6 +42,28 @@ This cookbook exposes a set of default library routines:
 
 Usage
 -----
+
+default
+----
+
+Installs/Configures common recipes
+
+```json
+"run_list": [
+    "recipe[openstack-common]"
+]
+```
+
+logging
+----
+
+Installs/Configures common logging
+
+```json
+"run_list": [
+    "recipe[openstack-common::logging]"
+]
+```
 
 The following are code examples showing the above library routines in action.
 Remember when using the library routines exposed by this library to include
@@ -85,11 +107,11 @@ template "/etc/cinder/cinder.conf" do
 end
 ```
 
-OpenStack Role Operations      
--------------------------      
-  
+OpenStack Role Operations
+-------------------------
+
 To find a hash (or partial hash) of configuration information given a named Chef
-role, use the `Openstack::config_by_role` routine. This routine takes as its 
+role, use the `Openstack::config_by_role` routine. This routine takes as its
 first parameter the name of the Chef role to look for. An optional second parameter
 is the section of the node hash to return. If nil, the whole node hash is returned.
 
@@ -147,15 +169,15 @@ This cookbook is using [ChefSpec](https://github.com/acrmp/chefspec) for
 testing. Should run the following before commiting. It will run your tests,
 and check for lint errors.
 
-    % ./run_tests.bash
+    $ ./run_tests.bash
 
 License and Author
 ==================
 
-Author:: Jay Pipes (<jaypipes@gmail.com>)
-Author:: John Dewey (<john@dewey.ws>)
+Author:: Jay Pipes (<jaypipes@att.com>)
+Author:: John Dewey (<jdewey2@att.com>)
 
-Copyright 2012-2013, Jay Pipes
+Copyright 2012-2013, AT&T Services, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -24,15 +24,12 @@ when "debian"
   end
 
   apt_uri = node["openstack"]["apt"]["uri"]
-  log("Setting APT repository to #{apt_uri}, with components:") { level :info }
-
   apt_components = node["openstack"]["apt"]["components"]
 
   # Simple variable substitution for LSB codename and OpenStack release
   apt_components.each do | comp |
     comp = comp.gsub "%release%", node["openstack"]["release"]
     comp = comp.gsub "%codename%", node["lsb"]["codename"]
-    log("  #{comp}") { level :info }
   end
 
   apt_repository "openstack-ppa" do

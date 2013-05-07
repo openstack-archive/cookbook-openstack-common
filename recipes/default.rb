@@ -2,7 +2,7 @@
 # Cookbook Name:: openstack-common
 # library:: default
 #
-# Copyright 2012, Jay Pipes
+# Copyright 2012-2013, AT&T Services, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,15 +24,12 @@ when "debian"
   end
 
   apt_uri = node["openstack"]["apt"]["uri"]
-  log("Setting APT repository to #{apt_uri}, with components:") { level :info }
-
   apt_components = node["openstack"]["apt"]["components"]
 
   # Simple variable substitution for LSB codename and OpenStack release
   apt_components.each do | comp |
     comp = comp.gsub "%release%", node["openstack"]["release"]
     comp = comp.gsub "%codename%", node["lsb"]["codename"]
-    log("  #{comp}") { level :info }
   end
 
   apt_repository "openstack-ppa" do

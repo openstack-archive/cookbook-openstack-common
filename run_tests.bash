@@ -5,8 +5,15 @@
 set -e
 
 COOKBOOK=$(awk '/^name/ {print $NF}' metadata.rb |tr -d \"\')
+if [ -z $COOKBOOK ]; then
+    echo "Cookbook name not defined in metadata.rb"
+    exit 1
+fi
 
-bundle install
-bundle exec berks install --path .cookbooks
-bundle exec foodcritic -f any -t ~FC003 -t ~FC023 .cookbooks/${COOKBOOK}
-bundle exec rspec .cookbooks/${COOKBOOK}
+BUNDLE_PATH=${BUNDLE_PATH:-.bundle}
+BERKSHELF_PATH=${BERKSHELF_PATH:-.cookbooks}
+
+bundle install --path=${BUNDLE_PATH}
+bundle exec berks install --path=${BERKSHELF_PATH}
+bundle exec foodcritic -f any -t ~FC003 -t ~FC023 ${BERKSHELF_PATH}/${COOKBOOK}
+bundle exec rspec ${BERKSHELF_PATH}/${COOKBOOK}

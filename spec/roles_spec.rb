@@ -4,7 +4,8 @@ require ::File.join ::File.dirname(__FILE__), "..", "libraries", "roles"
 
 describe ::Openstack do
   before do
-    @chef_run = ::ChefSpec::ChefRunner.new.converge "openstack-common::default"
+    @chef_run = ::ChefSpec::ChefRunner.new ::CHEFSPEC_OPTS
+    @chef_run.converge "openstack-common::default"
     @subject = ::Object.new.extend ::Openstack
   end
 

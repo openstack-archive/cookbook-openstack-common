@@ -2,7 +2,7 @@
 # Cookbook Name:: openstack-common
 # library:: default
 #
-# Copyright 2012, Jay Pipes
+# Copyright 2012-2013, AT&T Services, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,8 +37,8 @@ module ::Openstack
       case type
       when "postgresql", "pgsql"
         include_recipe "database::postgresql"
-        db_prov = Chef::Provider::Database::Postgresql
-        user_prov = Chef::Provider::Database::PostgresqlUser
+        db_prov = ::Chef::Provider::Database::Postgresql
+        user_prov = ::Chef::Provider::Database::PostgresqlUser
         super_user = "postgres"
         if root_user_use_databag
           user_key = node['openstack']['db']['root_user_key']
@@ -49,8 +49,8 @@ module ::Openstack
       when "mysql"
         # we have to install the 'mysql' gem, otherwise the provider won't work
         include_recipe "database::mysql"
-        db_prov = Chef::Provider::Database::Mysql
-        user_prov = Chef::Provider::Database::MysqlUser
+        db_prov = ::Chef::Provider::Database::Mysql
+        user_prov = ::Chef::Provider::Database::MysqlUser
         super_user = "root"
 
         # For some reason, setting this to anything other than localhost fails miserably :(
@@ -62,7 +62,7 @@ module ::Openstack
           super_password = node['mysql']['server_root_password']
         end
       else
-        Chef::Log.error("Unsupported database type #{type}")
+        ::Chef::Log.error("Unsupported database type #{type}")
       end
 
       connection_info = {

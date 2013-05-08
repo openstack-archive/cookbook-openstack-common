@@ -7,7 +7,7 @@ an OpenStack deployment.
 Requirements
 ============
 
-Chef 0.10.0 or higher required (for Chef environment use).
+* Chef 0.10.0 or higher required (for Chef environment use).
 
 Cookbooks
 ---------

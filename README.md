@@ -1,8 +1,7 @@
 Description
 ===========
 
-Cookbook containing common setup recipes and attributes that describe
-an OpenStack deployment.
+This cookbook provides common setup recipes, helper methods and attributes that describe an OpenStack deployment as part of the OpenStack reference deployment Chef for OpenStack.
 
 Requirements
 ============
@@ -174,10 +173,14 @@ and check for lint errors.
 License and Author
 ==================
 
-Author:: Jay Pipes (<jaypipes@att.com>)
-Author:: John Dewey (<jdewey2@att.com>)
-
-Copyright 2012-2013, AT&T Services, Inc.
+|                      |                                                    |
+|:---------------------|:---------------------------------------------------|
+| **Author**           |  Jay Pipes (<jaypipes@att.com>)                    |
+| **Author**           |  John Dewey (<jdewey@att.com>)                     |
+| **Author**           |  Matt Ray (<matt@opscode.com>)                     |
+|                      |                                                    |
+| **Copyright**        |  Copyright (c) 2012-2013, AT&T Services, Inc.      |
+| **Copyright**        |  Copyright (c) 2013, Opscode, Inc.                 |
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -56,4 +56,30 @@ describe ::Openstack do
       result.to_s.should == uri
     end
   end
+
+  describe "#uri_join_paths" do
+    it "returns nil when no paths are passed in" do
+      @subject.uri_join_paths().should be_nil
+    end
+    it "preserves absolute path when only absolute path passed in" do
+      path = "/abspath"
+      result = @subject.uri_join_paths(path)
+      result.should == path
+    end
+    it "preserves relative path when only relative path passed in" do
+      path = "abspath/"
+      result = @subject.uri_join_paths(path)
+      result.should == path
+    end
+    it "preserves leadng and trailing slashes" do
+      expected = "/path/to/resource/"
+      result = @subject.uri_join_paths("/path", "to", "resource/")
+      result.should == expected
+    end
+    it "removes extraneous intermediate slashes" do
+      expected = "/path/to/resource"
+      result = @subject.uri_join_paths("/path", "//to/", "/resource")
+      result.should == expected
+    end
+  end
 end

@@ -40,4 +40,17 @@ module ::Openstack
       ::URI::Generic.new scheme, nil, host, port, nil, path, nil, nil, nil
     end
   end
+
+  # Helper for joining URI paths. The standard URI::join method is not
+  # intended for joining URI relative path segments. This function merely
+  # helps to accurately join supplied paths.
+  def uri_join_paths(*paths)
+    return nil if paths.length == 0
+    leadingslash = paths[0][0] == '/' ? '/' : ''
+    trailingslash = paths[-1][-1] == '/' ? '/' : ''
+    paths.map! { |path|
+      path = path.sub(/^\/+/,'').sub(/\/+$/,'')
+    }
+    leadingslash + paths.join('/') + trailingslash
+  end
 end

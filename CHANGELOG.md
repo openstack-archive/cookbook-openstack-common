@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.2.1:
+* Adds a prettytable_to_array function for parsing OpenStack CLI output
+
 ## 0.2.0:
 
 * First release of cookbook-openstack-common that aligns with the Grizzly packaging

@@ -178,9 +178,11 @@ License and Author
 | **Author**           |  Jay Pipes (<jaypipes@att.com>)                    |
 | **Author**           |  John Dewey (<jdewey@att.com>)                     |
 | **Author**           |  Matt Ray (<matt@opscode.com>)                     |
+| **Author**           |  Craig Tracey (<craigtracey@gmail.com>)            |
 |                      |                                                    |
 | **Copyright**        |  Copyright (c) 2012-2013, AT&T Services, Inc.      |
 | **Copyright**        |  Copyright (c) 2013, Opscode, Inc.                 |
+| **Copyright**        |  Copyright (c) 2013, Craig Tracey                  |
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

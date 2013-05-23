@@ -4,7 +4,7 @@ maintainer_email "cookbooks@lists.tfoundry.com"
 license          "Apache 2.0"
 description      "Common OpenStack attributes, libraries and recipes."
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.2.1"
+version          "0.2.2"
 
 recipe           "opentack-common", "Installs/Configures common recipes"
 recipe           "opentack-common::logging", "Installs/Configures common logging"

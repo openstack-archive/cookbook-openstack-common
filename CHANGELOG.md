@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.2.2:
+* Provides a mechanism to override memcache_servers search logic through node attributes
+
 ## 0.2.1:
 * Adds a prettytable_to_array function for parsing OpenStack CLI output
 

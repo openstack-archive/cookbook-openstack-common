@@ -213,7 +213,7 @@ default['openstack']['endpoints']['metering-api']['path'] = "/v1"
 #
 # This section of node attributes stores information about the database hosts
 # used in an OpenStack deployment.
-# 
+#
 # There is no 'scheme' key. Instead, there is a 'db_type' key that should
 # contain one of 'sqlite', 'mysql', or 'postgresql'
 #
@@ -303,3 +303,6 @@ default['openstack']['db']['root_user_key'] = 'mysqlroot'
 # logging.conf list keypairs module_name => log level to write
 default['openstack']['logging']['ignore'] = {'nova.api.openstack.wsgi' => 'WARNING',
                                              'nova.osapi_compute.wsgi.server' => 'WARNING'}
+
+# override search for memcache_servers by setting this attribute
+default['openstack']['memcache_servers'] = nil

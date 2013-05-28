@@ -87,7 +87,7 @@ module ::Openstack
       end
     else
       node['openstack']['memcache_servers'].length != 0 ?
-        node['openstack']['memcache_servers'] : nil
+        node['openstack']['memcache_servers'] : []
     end
   end
 

@@ -153,7 +153,7 @@ describe ::Openstack do
       @subject.memcached_servers("test_env", "test_role").
         should == ["1.1.1.1:11211", "2.2.2.2:11211"]
     end
-    it "returns nil when list of servers is empty" do
+    it "returns empty list when list of servers is empty" do
       nodes = {
         "openstack" => {
           "memcache_servers" => []
@@ -161,7 +161,7 @@ describe ::Openstack do
       }
       @subject.stub(:node).and_return @chef_run.node.merge(nodes)
       @subject.memcached_servers("test_env", "test_role").
-        should == nil
+        should == []
     end
   end
 end

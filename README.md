@@ -137,7 +137,7 @@ constructed from the various parts of the hash corresponding to the keys above.
 
 ```ruby
 # Suppose node hash contains the following subhash in the :identity_service key:
-# {⋅
+# {
 #   :host => 'identity.example.com',
 #   :port => 5000,
 #   :scheme => 'https'

@@ -6,8 +6,8 @@ description      "Common OpenStack attributes, libraries and recipes."
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.2.2"
 
-recipe           "opentack-common", "Installs/Configures common recipes"
-recipe           "opentack-common::logging", "Installs/Configures common logging"
+recipe           "openstack-common", "Installs/Configures common recipes"
+recipe           "openstack-common::logging", "Installs/Configures common logging"
 
 %w{ ubuntu suse }.each do |os|
   supports os

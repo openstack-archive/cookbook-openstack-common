@@ -1,5 +1,4 @@
-require "chefspec"
-require "hashie"
+require_relative "spec_helper"
 require ::File.join ::File.dirname(__FILE__), "..", "libraries", "roles"
 
 describe ::Openstack do

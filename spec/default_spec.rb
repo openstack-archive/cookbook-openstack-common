@@ -1,4 +1,4 @@
-require "spec_helper"
+require_relative "spec_helper"
 require ::File.join ::File.dirname(__FILE__), "..", "libraries", "default"
 
 describe "openstack-common::default" do

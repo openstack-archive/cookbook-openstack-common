@@ -1,6 +1,6 @@
-require "chefspec"
-require "uri"
+require_relative "spec_helper"
 require ::File.join ::File.dirname(__FILE__), "..", "libraries", "uri"
+require "uri"
 
 describe ::Openstack do
   before do

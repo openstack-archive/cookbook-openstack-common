@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.2.3:
+* Sort the results returned by #memcached_servers
+
 ## 0.2.2:
 * Provides a mechanism to override memcache_servers search logic through node attributes
 

@@ -75,22 +75,6 @@ module ::Openstack
     end
   end
 
-  # Returns list of memcached servers in environment in format '<ip>:<port>'.
-  # If the attribute ["openstack"]["memcache_servers"] is set we will use it
-  # otherwise we will search based upon role.
-  # env - sets environment where to search
-  # role - sets role that is used to filter out memcached nodes
-  def memcached_servers(env=node.chef_environment, role="infra-caching")
-    unless node['openstack']['memcache_servers']
-      search(:node, "chef_environment:#{env} AND roles:#{role}").map do |n|
-        "#{n['memcached']['listen']}:11211"
-      end.sort
-    else
-      node['openstack']['memcache_servers'].length != 0 ?
-        node['openstack']['memcache_servers'] : []
-    end
-  end
-
 private
   # Instead of specifying the verbose node["openstack"]["endpoints"][name],
   # this shortcut allows the simpler and shorter endpoint(name)

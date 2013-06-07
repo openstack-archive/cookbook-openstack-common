@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.2.4:
+* Break out #memcached_servers into separate library
+
 ## 0.2.3:
 * Sort the results returned by #memcached_servers
 

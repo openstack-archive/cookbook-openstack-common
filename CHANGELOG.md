@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.2.5:
+* Moved the default library to database, to better represent its duties
+
 ## 0.2.4:
 * Break out #memcached_servers into separate library
 

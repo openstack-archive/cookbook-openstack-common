@@ -28,7 +28,7 @@ module ::Openstack
   # If no node is found having the supplied role, nil is
   # returned.
   def config_by_role role, section=nil
-    if node['roles'].include?(role)
+    if node.run_list.roles.include?(role)
       # If we're on a node that contains the searched-for role, just
       # return the node hash or subsection
       section.nil? ? node : node[section]

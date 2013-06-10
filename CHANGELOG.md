@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.2.6:
+* Update Chef dependency to Chef 11
+
 ## 0.2.5:
 * Moved the default library to database, to better represent its duties
 

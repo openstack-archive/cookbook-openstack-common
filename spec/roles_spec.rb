@@ -11,16 +11,17 @@ describe ::Openstack do
   describe "#config_by_role" do
     it "returns nil when section not in node hash" do
       node = @chef_run.node
-      node['roles'] << "role1"
+      node.run_list << "role[role1]"
       @subject.stub(:node).and_return node
       @subject.config_by_role("role1", "foo").should be_nil
     end
     it "returns section when section in node hash" do
       ::Chef::Search::Query.stub(:new)
       node = @chef_run.node
-      node['roles'] << "role1"
+      node.run_list << "role[role1]"
       node.set['foo'] = "bar"
       @subject.stub(:node).and_return node
+
       @subject.config_by_role("role1", "foo").should == "bar"
     end
     it "returns nil when no such role found" do
@@ -28,7 +29,7 @@ describe ::Openstack do
         [ [], nil, nil ]
       )
       node = @chef_run.node
-      node['roles'] << "role1"
+      node.run_list << "role[role1]"
       @subject.stub(:node).and_return node
       @subject.config_by_role("role1", "bar").should be_nil
     end

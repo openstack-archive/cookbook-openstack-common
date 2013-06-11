@@ -13,8 +13,10 @@ describe ::Openstack do
       node = @chef_run.node
       node.run_list << "role[role1]"
       @subject.stub(:node).and_return node
-      @subject.config_by_role("role1", "foo").should be_nil
+
+      expect(@subject.config_by_role("role1", "foo")).to be_nil
     end
+
     it "returns section when section in node hash" do
       ::Chef::Search::Query.stub(:new)
       node = @chef_run.node
@@ -22,34 +24,42 @@ describe ::Openstack do
       node.set['foo'] = "bar"
       @subject.stub(:node).and_return node
 
-      @subject.config_by_role("role1", "foo").should == "bar"
+      expect(@subject.config_by_role("role1", "foo")).to eq "bar"
     end
+
     it "returns nil when no such role found" do
-      ::Chef::Search::Query.stub(:new).with(:search).and_return(
-        [ [], nil, nil ]
-      )
+      @subject.stub(:search_for).
+        with("role1").
+        and_return []
       node = @chef_run.node
       node.run_list << "role[role1]"
       @subject.stub(:node).and_return node
-      @subject.config_by_role("role1", "bar").should be_nil
+
+      expect(@subject.config_by_role("role1", "bar")).to be_nil
     end
+
     it "returns section when section in first search result" do
-      ::Chef::Search::Query.stub(:new).and_return Hashie::Mash.new(
-        :search => [
-          [ { "foo" => "bar" } ], nil, nil
-        ]
-      )
+      nodes = [
+        { "foo" => "bar" }
+      ]
+      @subject.stub(:search_for).
+        with("role1").
+        and_return nodes
       @subject.stub(:node).and_return @chef_run.node
-      @subject.config_by_role("role1", "foo").should == "bar"
+
+      expect(@subject.config_by_role("role1", "foo")).to eq "bar"
     end
+
     it "returns full node hash when search match but no section supplied" do
-      ::Chef::Search::Query.stub(:new).and_return Hashie::Mash.new(
-        :search => [
-          [ { "foo" => "bar" } ], nil, nil
-        ]
-      )
+      nodes = [
+        { "foo" => "bar" }
+      ]
+      @subject.stub(:search_for).
+        with("role1").
+        and_return nodes
       @subject.stub(:node).and_return @chef_run.node
-      @subject.config_by_role("role1").should == { "foo" => "bar" }
+
+      expect(@subject.config_by_role("role1")).to eq("foo" => "bar")
     end
   end
 end

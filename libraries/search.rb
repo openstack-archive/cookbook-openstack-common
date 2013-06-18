@@ -29,14 +29,14 @@ module ::Openstack
   end
 
   # Search for memcache servers.  Will return the value for
-  # ["openstack"]["memcache_servers"] when set, otherwise
+  # ["openstack"]["memcached_servers"] when set, otherwise
   # will perform the search.
   #
   # @param [String] role The role to be found (optional).
   # @return [Array] A list of memcached servers in format
   # '<ip>:<port>'.
   def memcached_servers role="infra-caching"
-    unless node['openstack']['memcache_servers']
+    unless node['openstack']['memcached_servers']
       search_for(role).map do |n|
         listen = n['memcached']['listen']
         port = n['memcached']['port'] || "11211"
@@ -44,8 +44,8 @@ module ::Openstack
         "#{listen}:#{port}"
       end.sort
     else
-      node['openstack']['memcache_servers'].length != 0 ?
-        node['openstack']['memcache_servers'] : []
+      node['openstack']['memcached_servers'].length != 0 ?
+        node['openstack']['memcached_servers'] : []
     end
   end
 

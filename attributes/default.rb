@@ -304,5 +304,5 @@ default['openstack']['db']['root_user_key'] = 'mysqlroot'
 default['openstack']['logging']['ignore'] = {'nova.api.openstack.wsgi' => 'WARNING',
                                              'nova.osapi_compute.wsgi.server' => 'WARNING'}
 
-# override search for memcache_servers by setting this attribute
-default['openstack']['memcache_servers'] = nil
+# override search for memcached_servers by setting this attribute
+default['openstack']['memcached_servers'] = nil

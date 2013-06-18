@@ -76,7 +76,7 @@ describe ::Openstack do
     it "returns memcached servers as defined by attributes" do
       nodes = {
         "openstack" => {
-          "memcache_servers" => ["1.1.1.1:11211", "2.2.2.2:11211"]
+          "memcached_servers" => ["1.1.1.1:11211", "2.2.2.2:11211"]
         }
       }
       @subject.stub(:node).and_return @chef_run.node.merge nodes
@@ -88,7 +88,7 @@ describe ::Openstack do
     it "returns empty memcached servers as defined by attributes" do
       nodes = {
         "openstack" => {
-          "memcache_servers" => []
+          "memcached_servers" => []
         }
       }
       @subject.stub(:node).and_return @chef_run.node.merge nodes

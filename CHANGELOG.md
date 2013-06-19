@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.3.0:
+* Added `#rabbit_servers` method, which returns a list of rabbit servers.
+* The `#memcached_servers` method no longer accepts an environment.
+* Re-factored methods which search to a generic `#search_for`.
+
 ## 0.2.6:
 * Update Chef dependency to Chef 11.
 

@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-require "chef/search/query"
-
 module ::Openstack
   # Returns the hash for a node that has the supplied
   # role in its run list. An optional section parameter
@@ -35,8 +33,7 @@ module ::Openstack
     else
       # Otherwise, let's look up the role based on the Chef environment
       # of the current node and the searched-for role
-      query = "roles:#{role} AND chef_environment:#{node.chef_environment}"
-      result, _, _ = ::Chef::Search::Query.new.search :node, query
+      result = search_for role
 
       if result.empty?
         log("Searched for role #{role} by found no nodes with that role in run list.") { level :debug }

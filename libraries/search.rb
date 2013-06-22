@@ -28,9 +28,8 @@ module ::Openstack
     search(:node, query, &block).first
   end
 
-  # Search for memcache servers.  Will return the value for
-  # ["openstack"]["memcached_servers"] when set, otherwise
-  # will perform the search.
+  # Returns the value for ["openstack"]["memcached_servers"] when
+  # set, otherwise will perform a search.
   #
   # @param [String] role The role to be found (optional).
   # @return [Array] A list of memcached servers in format
@@ -49,17 +48,46 @@ module ::Openstack
     end
   end
 
-  # Search for rabbit servers.
+  # Returns all rabbit servers.
+  # Uses the value for ["openstack"]["mq"]["servers"] when set, otherwise
+  # will perform a search.
   #
-  # @param [String] role The role to be found (optional).
-  # @return [Array] A list of rabbit servers in format
-  # '<ip>:<port>'.
-  def rabbit_servers role="infra-messaging"
-    search_for(role).map do |n|
-      address = n['rabbitmq']['address']
-      port = n['rabbitmq']['port'] || "5672"
+  # @return [String] Rabbit servers joined by a comma in
+  # the format of '<ip>:<port>'.
+  def rabbit_servers
+    if node["openstack"]["mq"]["servers"]
+      servers = node["openstack"]["mq"]["servers"]
+      port = node["openstack"]["mq"]["port"]
 
-      "#{address}:#{port}"
-    end.sort
+      servers.map { |s| "#{s}:#{port}" }.join ","
+    else
+      role = node["openstack"]["mq"]["server_role"]
+      search_for(role).map do |n|
+        # The listen attribute should be saved to the node
+        # in the wrapper cookbook.  See the reference cookbook
+        # openstack-ops-messaging.
+        address = n["openstack"]["mq"]["listen"]
+        port = n["openstack"]["mq"]["port"]
+
+        "#{address}:#{port}"
+      end.sort.join ","
+    end
+  end
+
+  # Returns a single rabbit server.
+  # Uses the value for ["openstack"]["mq"]["host"] when set, otherwise
+  # will perform a search.
+  #
+  # @return [String] Rabbit server in the format of '<ip>:<port>'.
+  def rabbit_server
+    if node["openstack"]["mq"]["host"]
+      host = node["openstack"]["mq"]["host"]
+      port = node["openstack"]["mq"]["port"]
+
+      "#{host}:#{port}"
+    else
+      node.override["openstack"]["mq"]["servers"] = nil # safe
+      rabbit_servers.split(",")[0]
+    end
   end
 end

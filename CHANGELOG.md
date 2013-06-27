@@ -8,6 +8,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 * Re-factored methods which search to a generic `#search_for`.
 * Added `#address_for` method, which returns the IPv4 (default) address of the given
   interface.
+* Added global mysql setting of port and db type, for use with wrapper cookbooks.
 
 ## 0.2.6:
 * Update Chef dependency to Chef 11.

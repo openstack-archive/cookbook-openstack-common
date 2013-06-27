@@ -250,46 +250,51 @@ default['openstack']['endpoints']['metering-api']['path'] = "/v1"
 # The sql_connection variable would then be set to "mysql://keystone:password@192.168.0.3:keystone"
 # and could then be written to the keystone.conf file in a template.
 
+# Default database attributes
+default['openstack']['db']['server_role'] = "os-ops-database"
+default['openstack']['db']['service_type'] = "mysql"
+default['openstack']['db']['port'] = "3306"
+
 # Database used by the OpenStack Compute (Nova) service
-default['openstack']['db']['compute']['db_type'] = "mysql"
+default['openstack']['db']['compute']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['compute']['host'] = "127.0.0.1"
-default['openstack']['db']['compute']['port'] = "3306"
+default['openstack']['db']['compute']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['compute']['db_name'] = "nova"
 
 # Database used by the OpenStack Identity (Keystone) service
-default['openstack']['db']['identity']['db_type'] = "mysql"
+default['openstack']['db']['identity']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['identity']['host'] = "127.0.0.1"
-default['openstack']['db']['identity']['port'] = "3306"
+default['openstack']['db']['identity']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['identity']['db_name'] = "keystone"
 
 # Database used by the OpenStack Image (Glance) service
-default['openstack']['db']['image']['db_type'] = "mysql"
+default['openstack']['db']['image']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['image']['host'] = "127.0.0.1"
-default['openstack']['db']['image']['port'] = "3306"
+default['openstack']['db']['image']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['image']['db_name'] = "glance"
 
 # Database used by the OpenStack Network (Quantum) service
-default['openstack']['db']['network']['db_type'] = "mysql"
+default['openstack']['db']['network']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['network']['host'] = "127.0.0.1"
-default['openstack']['db']['network']['port'] = "3306"
+default['openstack']['db']['network']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['network']['db_name'] = "quantum"
 
 # Database used by the OpenStack Volume (Cinder) service
-default['openstack']['db']['volume']['db_type'] = "mysql"
+default['openstack']['db']['volume']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['volume']['host'] = "127.0.0.1"
-default['openstack']['db']['volume']['port'] = "3306"
+default['openstack']['db']['volume']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['volume']['db_name'] = "cinder"
 
 # Database used by the OpenStack Dashboard (Horizon)
-default['openstack']['db']['dashboard']['db_type'] = "mysql"
+default['openstack']['db']['dashboard']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['dashboard']['host'] = "127.0.0.1"
-default['openstack']['db']['dashboard']['port'] = "3306"
+default['openstack']['db']['dashboard']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['dashboard']['db_name'] = "horizon"
 
 # Database used by OpenStack Metering (Ceilometer)
-default['openstack']['db']['metering']['db_type'] = "mysql"
+default['openstack']['db']['metering']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['metering']['host'] = "127.0.0.1"
-default['openstack']['db']['metering']['port'] = "3306"
+default['openstack']['db']['metering']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['metering']['db_name'] = "ceilometer"
 
 # Switch to store the MySQL root password in a databag instead of

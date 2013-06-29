@@ -127,33 +127,4 @@ describe ::Openstack do
       expect(resp).to eq "1.1.1.1:5672,2.2.2.2:5672"
     end
   end
-
-  describe "#rabbit_server" do
-    it "returns a rabbit server" do
-      @subject.stub(:node).and_return @chef_run.node
-      @subject.stub(:rabbit_servers).
-        and_return "1.1.1.1:5672"
-      resp = @subject.rabbit_server
-
-      expect(resp).to eq "1.1.1.1:5672"
-    end
-
-    it "returns a rabbit server when multiple servers returned" do
-      @subject.stub(:node).and_return @chef_run.node
-      @subject.stub(:rabbit_servers).
-        and_return "1.1.1.1:5672,2.2.2.2:5672"
-      resp = @subject.rabbit_server
-
-      expect(resp).to eq "1.1.1.1:5672"
-    end
-
-    it "returns a rabbit server when not searching" do
-      node = @chef_run.node
-      node.set["openstack"]["mq"]["host"] = "1.1.1.1"
-      @subject.stub(:node).and_return @chef_run.node
-      resp = @subject.rabbit_server
-
-      expect(resp).to eq "1.1.1.1:5672"
-    end
-  end
 end

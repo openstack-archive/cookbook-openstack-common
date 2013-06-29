@@ -5,8 +5,6 @@ This file is used to list changes made in each version of cookbook-openstack-com
 ## 0.3.0:
 * Added `#rabbit_servers` method, which returns a comma-delimited string of rabbit
   servers in the format of host:port.
-* Added `#rabbit_server` method, which returns a single rabbit server in the format
-  of host:port.
 * The `#memcached_servers` method no longer accepts an environment.
 * Re-factored methods which search to a generic `#search_for`.
 * Added `#address_for` method, which returns the IPv4 (default) address of the given

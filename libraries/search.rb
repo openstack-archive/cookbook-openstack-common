@@ -73,21 +73,4 @@ module ::Openstack
       end.sort.join ","
     end
   end
-
-  # Returns a single rabbit server.
-  # Uses the value for ["openstack"]["mq"]["host"] when set, otherwise
-  # will perform a search.
-  #
-  # @return [String] Rabbit server in the format of '<ip>:<port>'.
-  def rabbit_server
-    if node["openstack"]["mq"]["host"]
-      host = node["openstack"]["mq"]["host"]
-      port = node["openstack"]["mq"]["port"]
-
-      "#{host}:#{port}"
-    else
-      node.override["openstack"]["mq"]["servers"] = nil # safe
-      rabbit_servers.split(",")[0]
-    end
-  end
 end

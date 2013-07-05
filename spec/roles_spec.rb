@@ -39,24 +39,20 @@ describe ::Openstack do
     end
 
     it "returns section when section in first search result" do
-      nodes = [
-        { "foo" => "bar" }
-      ]
+      node = { "foo" => "bar" }
       @subject.stub(:search_for).
         with("role1").
-        and_return nodes
+        and_return node
       @subject.stub(:node).and_return @chef_run.node
 
       expect(@subject.config_by_role("role1", "foo")).to eq "bar"
     end
 
     it "returns full node hash when search match but no section supplied" do
-      nodes = [
-        { "foo" => "bar" }
-      ]
+      node = { "foo" => "bar" }
       @subject.stub(:search_for).
         with("role1").
-        and_return nodes
+        and_return node
       @subject.stub(:node).and_return @chef_run.node
 
       expect(@subject.config_by_role("role1")).to eq("foo" => "bar")

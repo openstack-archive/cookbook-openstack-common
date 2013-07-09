@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.3.1:
+* Corrected a faulty Chef search query with `#config_by_role`.  The search returns a
+  Hash, not an array.
+
 ## 0.3.0:
 * Added `#rabbit_servers` method, which returns a comma-delimited string of rabbit
   servers in the format of host:port.

@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.3.2:
+* Fix network-api endpoint path
+
 ## 0.3.1:
 * Corrected a faulty Chef search query with `#config_by_role`.  The search returns a
   Hash, not an array.

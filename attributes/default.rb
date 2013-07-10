@@ -3,6 +3,7 @@
 # Attributes:: default
 #
 # Copyright 2012-2013, AT&T Services, Inc.
+# Copyright 2013, SUSE Linux GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -162,7 +163,9 @@ default['openstack']['endpoints']['compute-novnc']['path'] = "/vnc_auto.html"
 default['openstack']['endpoints']['network-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['network-api']['scheme'] = "https"
 default['openstack']['endpoints']['network-api']['port'] = "9696"
-default['openstack']['endpoints']['network-api']['path'] = "/v2"
+# quantumclient appends the protocol version to the endpoint URL, so the
+# path needs to be empty
+default['openstack']['endpoints']['network-api']['path'] = ""
 
 # ******************** OpenStack Image Endpoints ******************************
 

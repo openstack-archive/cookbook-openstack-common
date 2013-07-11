@@ -33,6 +33,16 @@ describe ::Openstack do
 
       expect(resp).to eq []
     end
+
+    it "always returns empty results" do
+      @subject.stub(:node).and_return @chef_run.node
+      @subject.stub(:search).
+        with(:node, "chef_environment:_default AND roles:empty-role").
+        and_return nil
+      resp = @subject.search_for("empty-role")
+
+      expect(resp).to eq []
+    end
   end
 
   describe "#memcached_servers" do

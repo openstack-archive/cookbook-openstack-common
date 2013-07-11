@@ -25,7 +25,8 @@ module ::Openstack
   def search_for role, &block
     query = "chef_environment:#{node.chef_environment} AND roles:#{role}"
 
-    search(:node, query, &block)
+    resp = search(:node, query, &block)
+    resp ? resp : []
   end
 
   # Returns the value for ["openstack"]["memcached_servers"] when

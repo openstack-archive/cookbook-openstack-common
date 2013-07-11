@@ -18,7 +18,7 @@ describe ::Openstack do
       @subject.stub(:node).and_return @chef_run.node
       @subject.stub(:search).
         with(:node, "chef_environment:_default AND roles:role").
-        and_return [[@chef_run.node], nil, nil]
+        and_return [@chef_run.node]
       resp = @subject.search_for("role")
 
       expect(resp[0]['fqdn']).to eq "chefspec.local"
@@ -28,7 +28,7 @@ describe ::Openstack do
       @subject.stub(:node).and_return @chef_run.node
       @subject.stub(:search).
         with(:node, "chef_environment:_default AND roles:empty-role").
-        and_return [[], nil, nil]
+        and_return []
       resp = @subject.search_for("empty-role")
 
       expect(resp).to eq []

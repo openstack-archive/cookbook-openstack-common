@@ -39,7 +39,7 @@ module ::Openstack
         log("Searched for role #{role} by found no nodes with that role in run list.") { level :debug }
         nil
       else
-        section.nil? ? result : result[section]
+        section.nil? ? result.first : result.first[section]
       end
     end
   end

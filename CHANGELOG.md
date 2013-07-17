@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.3.5:
+* Reverted change made in 8311869e5b99fecefd567ce3f1ad1cbdf8d5c5c6.
+
 ## 0.3.4:
 * Allow `#search_for` to always returns an array.
 

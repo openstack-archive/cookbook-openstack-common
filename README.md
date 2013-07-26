@@ -106,20 +106,6 @@ template "/etc/cinder/cinder.conf" do
 end
 ```
 
-OpenStack Role Operations
--------------------------
-
-To find a hash (or partial hash) of configuration information given a named Chef
-role, use the `Openstack::config_by_role` routine. This routine takes as its
-first parameter the name of the Chef role to look for. An optional second parameter
-is the section of the node hash to return. If nil, the whole node hash is returned.
-
-```ruby
-role_name = node["openstack"]["chef_roles"]["identity_server"]
-identity_conf = ::Openstack::config_by_role(role_name)
-identity_conf_creds_section = ::Openstack::config_by_role(role_name, "creds")
-```
-
 URI Operations
 --------------
 

@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.4.0:
+* Remove `#config_by_role` as it is no longer used and no longer suits our needs.
+
 ## 0.3.5:
 * Reverted change made in 8311869e5b99fecefd567ce3f1ad1cbdf8d5c5c6.
 

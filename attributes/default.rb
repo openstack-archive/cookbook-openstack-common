@@ -115,13 +115,13 @@ default["openstack"]["zypp"]["uri"] = "http://download.opensuse.org/repositories
 # The OpenStack Identity (Keystone) API endpoint. This is commonly called
 # the Keystone Service endpoint...
 default['openstack']['endpoints']['identity-api']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['identity-api']['scheme'] = "https"
+default['openstack']['endpoints']['identity-api']['scheme'] = "http"
 default['openstack']['endpoints']['identity-api']['port'] = "5000"
 default['openstack']['endpoints']['identity-api']['path'] = "/v2.0"
 
 # The OpenStack Identity (Keystone) Admin API endpoint
 default['openstack']['endpoints']['identity-admin']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['identity-admin']['scheme'] = "https"
+default['openstack']['endpoints']['identity-admin']['scheme'] = "http"
 default['openstack']['endpoints']['identity-admin']['port'] = "35357"
 default['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
 
@@ -129,31 +129,31 @@ default['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
 
 # The OpenStack Compute (Nova) Native API endpoint
 default['openstack']['endpoints']['compute-api']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['compute-api']['scheme'] = "https"
+default['openstack']['endpoints']['compute-api']['scheme'] = "http"
 default['openstack']['endpoints']['compute-api']['port'] = "8774"
 default['openstack']['endpoints']['compute-api']['path'] = "/v2/%(tenant_id)s"
 
 # The OpenStack Compute (Nova) EC2 API endpoint
 default['openstack']['endpoints']['compute-ec2-api']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['compute-ec2-api']['scheme'] = "https"
+default['openstack']['endpoints']['compute-ec2-api']['scheme'] = "http"
 default['openstack']['endpoints']['compute-ec2-api']['port'] = "8773"
 default['openstack']['endpoints']['compute-ec2-api']['path'] = "/services/Cloud"
 
 # The OpenStack Compute (Nova) EC2 Admin API endpoint
 default['openstack']['endpoints']['compute-ec2-admin']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['compute-ec2-admin']['scheme'] = "https"
+default['openstack']['endpoints']['compute-ec2-admin']['scheme'] = "http"
 default['openstack']['endpoints']['compute-ec2-admin']['port'] = "8773"
 default['openstack']['endpoints']['compute-ec2-admin']['path'] = "/services/Admin"
 
 # The OpenStack Compute (Nova) XVPvnc endpoint
 default['openstack']['endpoints']['compute-xvpvnc']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['compute-xvpvnc']['scheme'] = "https"
+default['openstack']['endpoints']['compute-xvpvnc']['scheme'] = "http"
 default['openstack']['endpoints']['compute-xvpvnc']['port'] = "6081"
 default['openstack']['endpoints']['compute-xvpvnc']['path'] = "/console"
 
 # The OpenStack Compute (Nova) novnc endpoint
 default['openstack']['endpoints']['compute-novnc']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['compute-novnc']['scheme'] = "https"
+default['openstack']['endpoints']['compute-novnc']['scheme'] = "http"
 default['openstack']['endpoints']['compute-novnc']['port'] = "6080"
 default['openstack']['endpoints']['compute-novnc']['path'] = "/vnc_auto.html"
 
@@ -161,7 +161,7 @@ default['openstack']['endpoints']['compute-novnc']['path'] = "/vnc_auto.html"
 
 # The OpenStack Network (Quantum) API endpoint.
 default['openstack']['endpoints']['network-api']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['network-api']['scheme'] = "https"
+default['openstack']['endpoints']['network-api']['scheme'] = "http"
 default['openstack']['endpoints']['network-api']['port'] = "9696"
 # quantumclient appends the protocol version to the endpoint URL, so the
 # path needs to be empty
@@ -171,13 +171,13 @@ default['openstack']['endpoints']['network-api']['path'] = ""
 
 # The OpenStack Image (Glance) API endpoint
 default['openstack']['endpoints']['image-api']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['image-api']['scheme'] = "https"
+default['openstack']['endpoints']['image-api']['scheme'] = "http"
 default['openstack']['endpoints']['image-api']['port'] = "9292"
 default['openstack']['endpoints']['image-api']['path'] = "/v2"
 
 # The OpenStack Image (Glance) Registry API endpoint
 default['openstack']['endpoints']['image-registry']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['image-registry']['scheme'] = "https"
+default['openstack']['endpoints']['image-registry']['scheme'] = "http"
 default['openstack']['endpoints']['image-registry']['port'] = "9191"
 default['openstack']['endpoints']['image-registry']['path'] = "/v2"
 
@@ -185,7 +185,7 @@ default['openstack']['endpoints']['image-registry']['path'] = "/v2"
 
 # The OpenStack Volume (Cinder) API endpoint
 default['openstack']['endpoints']['volume-api']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['volume-api']['scheme'] = "https"
+default['openstack']['endpoints']['volume-api']['scheme'] = "http"
 default['openstack']['endpoints']['volume-api']['port'] = "8776"
 default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
 
@@ -193,7 +193,7 @@ default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
 
 # The OpenStack Metering (Ceilometer) API endpoint
 default['openstack']['endpoints']['metering-api']['host'] = "127.0.0.1"
-default['openstack']['endpoints']['metering-api']['scheme'] = "https"
+default['openstack']['endpoints']['metering-api']['scheme'] = "http"
 default['openstack']['endpoints']['metering-api']['port'] = "8777"
 default['openstack']['endpoints']['metering-api']['path'] = "/v1"
 

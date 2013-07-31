@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.4.2:
+* Remove hardcoded localhost for mysql host specification.
+
 ## 0.4.1:
 * Changed endpoint attributes to use http for default scheme.  this is inline with
   default settings in keystone.  fine for dev,  but should be ssl for prod.

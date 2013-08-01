@@ -53,8 +53,6 @@ module ::Openstack
         user_prov = ::Chef::Provider::Database::MysqlUser
         super_user = "root"
 
-        # For some reason, setting this to anything other than localhost fails miserably :(
-        host = "localhost"
         if root_user_use_databag
           user_key = node['openstack']['db']['root_user_key']
           super_password = user_password user_key

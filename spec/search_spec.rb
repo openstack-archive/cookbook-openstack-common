@@ -17,7 +17,7 @@ describe ::Openstack do
     it "returns results" do
       @subject.stub(:node).and_return @chef_run.node
       @subject.stub(:search).
-        with(:node, "chef_environment:_default AND roles:role").
+        with(:node, "chef_environment:_default AND roles:role OR chef_environment:_default AND recipes:role").
         and_return [@chef_run.node]
       resp = @subject.search_for("role")
 
@@ -27,7 +27,7 @@ describe ::Openstack do
     it "returns empty results" do
       @subject.stub(:node).and_return @chef_run.node
       @subject.stub(:search).
-        with(:node, "chef_environment:_default AND roles:empty-role").
+        with(:node, "chef_environment:_default AND roles:empty-role OR chef_environment:_default AND recipes:empty-role").
         and_return []
       resp = @subject.search_for("empty-role")
 
@@ -37,7 +37,7 @@ describe ::Openstack do
     it "always returns empty results" do
       @subject.stub(:node).and_return @chef_run.node
       @subject.stub(:search).
-        with(:node, "chef_environment:_default AND roles:empty-role").
+        with(:node, "chef_environment:_default AND roles:empty-role OR chef_environment:_default AND recipes:empty-role").
         and_return nil
       resp = @subject.search_for("empty-role")
 

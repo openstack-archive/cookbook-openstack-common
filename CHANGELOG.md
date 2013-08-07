@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.4.3:
+* Corrected `#search_for` role and recipe queries.
+
 ## 0.4.2:
 * Remove hardcoded localhost for mysql host specification.
 

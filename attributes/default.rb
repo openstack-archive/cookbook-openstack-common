@@ -102,13 +102,16 @@ default["openstack"]["zypp"]["uri"] = "http://download.opensuse.org/repositories
 #  - host
 #  - port
 #  - path
+#  - bind_interface
 #
 # If the uri key is set, its value is used as the full URI for the endpoint.
 # If the uri key is not set, the endpoint's full URI is constructed from the
 # component parts. This allows setups that use some standardized DNS names for
 # OpenStack service endpoints in a deployment zone as well as setups that
 # instead assign IP addresses (for an actual node or a load balanced virtual
-# IP) in a network to a particular OpenStack service endpoint.
+# IP) in a network to a particular OpenStack service endpoint. If the
+# bind_interface is set, it will set the host IP in the
+# set_endpoints_by_interface recipe.
 
 # ******************** OpenStack Identity Endpoints ***************************
 
@@ -118,12 +121,14 @@ default['openstack']['endpoints']['identity-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['identity-api']['scheme'] = "http"
 default['openstack']['endpoints']['identity-api']['port'] = "5000"
 default['openstack']['endpoints']['identity-api']['path'] = "/v2.0"
+default['openstack']['endpoints']['identity-api']['bind_interface'] = nil
 
 # The OpenStack Identity (Keystone) Admin API endpoint
 default['openstack']['endpoints']['identity-admin']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['identity-admin']['scheme'] = "http"
 default['openstack']['endpoints']['identity-admin']['port'] = "35357"
 default['openstack']['endpoints']['identity-admin']['path'] = "/v2.0"
+default['openstack']['endpoints']['identity-admin']['bind_interface'] = nil
 
 # ****************** OpenStack Compute Endpoints ******************************
 
@@ -132,30 +137,35 @@ default['openstack']['endpoints']['compute-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-api']['scheme'] = "http"
 default['openstack']['endpoints']['compute-api']['port'] = "8774"
 default['openstack']['endpoints']['compute-api']['path'] = "/v2/%(tenant_id)s"
+default['openstack']['endpoints']['compute-api']['bind_interface'] = nil
 
 # The OpenStack Compute (Nova) EC2 API endpoint
 default['openstack']['endpoints']['compute-ec2-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-ec2-api']['scheme'] = "http"
 default['openstack']['endpoints']['compute-ec2-api']['port'] = "8773"
 default['openstack']['endpoints']['compute-ec2-api']['path'] = "/services/Cloud"
+default['openstack']['endpoints']['compute-ec2-api']['bind_interface'] = nil
 
 # The OpenStack Compute (Nova) EC2 Admin API endpoint
 default['openstack']['endpoints']['compute-ec2-admin']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-ec2-admin']['scheme'] = "http"
 default['openstack']['endpoints']['compute-ec2-admin']['port'] = "8773"
 default['openstack']['endpoints']['compute-ec2-admin']['path'] = "/services/Admin"
+default['openstack']['endpoints']['compute-ec2-admin']['bind_interface'] = nil
 
 # The OpenStack Compute (Nova) XVPvnc endpoint
 default['openstack']['endpoints']['compute-xvpvnc']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-xvpvnc']['scheme'] = "http"
 default['openstack']['endpoints']['compute-xvpvnc']['port'] = "6081"
 default['openstack']['endpoints']['compute-xvpvnc']['path'] = "/console"
+default['openstack']['endpoints']['compute-xvpvnc']['bind_interface'] = nil
 
 # The OpenStack Compute (Nova) novnc endpoint
 default['openstack']['endpoints']['compute-novnc']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['compute-novnc']['scheme'] = "http"
 default['openstack']['endpoints']['compute-novnc']['port'] = "6080"
 default['openstack']['endpoints']['compute-novnc']['path'] = "/vnc_auto.html"
+default['openstack']['endpoints']['compute-novnc']['bind_interface'] = nil
 
 # ******************** OpenStack Network Endpoints ****************************
 
@@ -166,6 +176,7 @@ default['openstack']['endpoints']['network-api']['port'] = "9696"
 # quantumclient appends the protocol version to the endpoint URL, so the
 # path needs to be empty
 default['openstack']['endpoints']['network-api']['path'] = ""
+default['openstack']['endpoints']['network-api']['bind_interface'] = nil
 
 # ******************** OpenStack Image Endpoints ******************************
 
@@ -174,12 +185,14 @@ default['openstack']['endpoints']['image-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['image-api']['scheme'] = "http"
 default['openstack']['endpoints']['image-api']['port'] = "9292"
 default['openstack']['endpoints']['image-api']['path'] = "/v2"
+default['openstack']['endpoints']['image-api']['bind_interface'] = nil
 
 # The OpenStack Image (Glance) Registry API endpoint
 default['openstack']['endpoints']['image-registry']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['image-registry']['scheme'] = "http"
 default['openstack']['endpoints']['image-registry']['port'] = "9191"
 default['openstack']['endpoints']['image-registry']['path'] = "/v2"
+default['openstack']['endpoints']['image-registry']['bind_interface'] = nil
 
 # ******************** OpenStack Volume Endpoints *****************************
 
@@ -188,6 +201,7 @@ default['openstack']['endpoints']['volume-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['volume-api']['scheme'] = "http"
 default['openstack']['endpoints']['volume-api']['port'] = "8776"
 default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
+default['openstack']['endpoints']['volume-api']['bind_interface'] = nil
 
 # ******************** OpenStack Metering Endpoints ***************************
 
@@ -196,6 +210,7 @@ default['openstack']['endpoints']['metering-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['metering-api']['scheme'] = "http"
 default['openstack']['endpoints']['metering-api']['port'] = "8777"
 default['openstack']['endpoints']['metering-api']['path'] = "/v1"
+default['openstack']['endpoints']['metering-api']['bind_interface'] = nil
 
 # Alternately, if you used some standardized DNS naming scheme, you could
 # do something like this, which would override any part-wise specifications above.
@@ -314,7 +329,7 @@ default['openstack']['logging']['ignore'] = {'nova.api.openstack.wsgi' => 'WARNI
 
 default['openstack']['memcached_servers'] = nil
 
-# Default database attributes
+# Default messaging attributes
 default["openstack"]["mq"]["server_role"] = "os-ops-messaging"
 default["openstack"]["mq"]["service_type"] = "rabbitmq"
 default["openstack"]["mq"]["port"] = "5672"

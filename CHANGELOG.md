@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.4.5:
+* Added `openstack-common::set_endpoints_by_interface` to enable using
+  `bind_interface` with endpoints rather than hard-code the IP addresses in an
+  Environment.
+
 ## 0.4.4:
 * Add support for openstack-common::sysctl and managing sysctl settings via the
   node['openstack']['sysctl'] hash, written out to /etc/sysctl.d/60-openstack.conf

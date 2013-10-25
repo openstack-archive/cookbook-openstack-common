@@ -49,6 +49,21 @@ Installs/Configures common logging
 ]
 ```
 
+set_endpoints_by_interface
+----
+
+Iterates over the contents of the `node['openstack']['endpoints']` hash and
+finds any occurrence of `bind_interface` to set the IP address
+(`node['openstack']['endpoints']['identity']['bind_interface'] = 'eth0'` for
+example, overriding `node['openstack']['endpoints']['identity']['host']`). If
+`bind_interface` isn't set, the value of `host` is not modified.
+
+```json
+"run_list": [
+    "recipe[openstack-common::set_endpoints_by_interface]"
+]
+```
+
 sysctl
 ----
 

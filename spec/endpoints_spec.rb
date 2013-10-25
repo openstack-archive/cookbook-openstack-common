@@ -4,7 +4,7 @@ require ::File.join ::File.dirname(__FILE__), "..", "libraries", "endpoints"
 describe ::Openstack do
   before do
     @chef_run = ::ChefSpec::ChefRunner.new ::CHEFSPEC_OPTS
-    @chef_run.converge "openstack-common::default"
+    @chef_run.converge "openstack-common::set_endpoints_by_interface"
     @subject = ::Object.new.extend ::Openstack
   end
 
@@ -73,6 +73,35 @@ describe ::Openstack do
       }
       @subject.stub(:node).and_return uri_hash
       @subject.endpoint "compute-api"
+    end
+    it "endpoints recipe bind_interface sets host" do
+      @subject.stub('address_for').and_return '10.0.0.100'
+      chef_run = ::ChefSpec::ChefRunner.new ::UBUNTU_OPTS
+      chef_run.node.set['openstack']['endpoints']['identity-api']['bind_interface'] = 'eth0'
+      chef_run.node.set['network'] = {
+        'interfaces' => {
+          'lo' => {
+            'addresses' => {
+              '127.0.0.1'=> {
+                'family' => 'inet',
+                'netmask' => '255.0.0.0',
+                'scope' => 'Node'
+              }
+            }
+          },
+          'eth0' => {
+            'addresses' => {
+              '10.0.0.100'=> {
+                'family' => 'inet',
+                'netmask' => '255.255.255.0',
+                'scope' => 'Global'
+              }
+            }
+          }
+        }
+      }
+      chef_run.converge 'openstack-common::set_endpoints_by_interface'
+      expect(chef_run.node['openstack']['endpoints']['identity-api']['host']).to eql('10.0.0.100')
     end
   end
 

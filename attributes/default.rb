@@ -320,3 +320,7 @@ default["openstack"]["mq"]["service_type"] = "rabbitmq"
 default["openstack"]["mq"]["port"] = "5672"
 default["openstack"]["mq"]["user"] = "guest"
 default["openstack"]["mq"]["vhost"] = "/"
+
+# Default sysctl settings
+default['openstack']['sysctl']['net.ipv4.conf.all.rp_filter'] = 0
+default['openstack']['sysctl']['net.ipv4.conf.default.rp_filter'] = 0

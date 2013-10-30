@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.4.4:
+* Add support for openstack-common::sysctl and managing sysctl settings via the
+  node['openstack']['sysctl'] hash, written out to /etc/sysctl.d/60-openstack.conf
+
 ## 0.4.3:
 * Corrected `#search_for` role and recipe queries.
 

@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.4.6:
+### Bug
+* Ensuring `#db_uri` returns a valid sqlite connection string
+  * relative path example: 'path' = 'path/to/foo.db' -- will return sqlite:///foo.db
+  * absolute path example: 'path' = '/path/to/foo.db' -- will return sqlite:////foo.db
+
 ## 0.4.5:
 * Added `openstack-common::set_endpoints_by_interface` to enable using
   `bind_interface` with endpoints rather than hard-code the IP addresses in an

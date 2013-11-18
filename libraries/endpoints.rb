@@ -69,8 +69,11 @@ module ::Openstack
         result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
       when "sqlite"
         # SQLite uses filepaths not db name
+        # README(galstrom): 3 slashes is a relative path, 4 slashes is an absolute path
+        #  example: info['path'] = 'path/to/foo.db' -- will return sqlite:///foo.db
+        #  example: info['path'] = '/path/to/foo.db' -- will return sqlite:////foo.db
         path = info['path']
-        result = "sqlite://#{path}"
+        result = "sqlite:///#{path}"
       end
     end
   end

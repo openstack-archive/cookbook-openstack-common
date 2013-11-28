@@ -221,6 +221,30 @@ default['openstack']['endpoints']['metering-api']['port'] = "8777"
 default['openstack']['endpoints']['metering-api']['path'] = "/v1"
 default['openstack']['endpoints']['metering-api']['bind_interface'] = nil
 
+# ******************** OpenStack Orchestration Endpoints ***************************
+
+# The OpenStack Orchestration (Heat) API endpoint
+default['openstack']['endpoints']['orchestration-api']['host'] = "127.0.0.1"
+default['openstack']['endpoints']['orchestration-api']['scheme'] = "http"
+default['openstack']['endpoints']['orchestration-api']['port'] = "8004"
+default['openstack']['endpoints']['orchestration-api']['path'] = "/v1/%(tenant_id)s"
+default['openstack']['endpoints']['orchestration-api']['bind_interface'] = nil
+
+# The OpenStack Orchestration (Heat) CloudFormation API endpoint
+default['openstack']['endpoints']['orchestration-api-cfn']['host'] = "127.0.0.1"
+default['openstack']['endpoints']['orchestration-api-cfn']['scheme'] = "http"
+default['openstack']['endpoints']['orchestration-api-cfn']['port'] = "8000"
+default['openstack']['endpoints']['orchestration-api-cfn']['path'] = "/v1"
+default['openstack']['endpoints']['orchestration-api-cfn']['bind_interface'] = nil
+
+# The OpenStack Orchestration (Heat) CloudWatch API endpoint
+default['openstack']['endpoints']['orchestration-api-cloudwatch']['host'] = "127.0.0.1"
+default['openstack']['endpoints']['orchestration-api-cloudwatch']['scheme'] = "http"
+default['openstack']['endpoints']['orchestration-api-cloudwatch']['port'] = "8003"
+default['openstack']['endpoints']['orchestration-api-cloudwatch']['path'] = "/v1"
+default['openstack']['endpoints']['orchestration-api-cloudwatch']['bind_interface'] = nil
+
+
 # Alternately, if you used some standardized DNS naming scheme, you could
 # do something like this, which would override any part-wise specifications above.
 #
@@ -235,6 +259,9 @@ default['openstack']['endpoints']['metering-api']['bind_interface'] = nil
 # default['openstack']['endpoints']['image-registry']['uri']       = "https://image.example.com:9191/v2"
 # default['openstack']['endpoints']['volume-api']['uri']           = "https://volume.example.com:8776/v1/%(tenant_id)s"
 # default['openstack']['endpoints']['metering-api']['uri']         = "https://metering.example.com:9000/v1"
+# default['openstack']['endpoints']['orchestration-api']['uri']               = "https://orchestration.example.com:8004//v1/%(tenant_id)s"
+# default['openstack']['endpoints']['orchestration-api-cfn']['uri']           = "https://orchestration.example.com:8000/v1"
+# default['openstack']['endpoints']['orchestration-api-cloudwatch']['uri']    = "https://orchestration.example.com:8003/v1"
 
 # ======================== OpenStack DB Support ================================
 #
@@ -323,6 +350,12 @@ default['openstack']['db']['metering']['db_type'] = node['openstack']['db']['ser
 default['openstack']['db']['metering']['host'] = "127.0.0.1"
 default['openstack']['db']['metering']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['metering']['db_name'] = "ceilometer"
+
+# Database used by OpenStack Orchestration (Heat)
+default['openstack']['db']['orchestration']['db_type'] = node['openstack']['db']['service_type']
+default['openstack']['db']['orchestration']['host'] = "127.0.0.1"
+default['openstack']['db']['orchestration']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['orchestration']['db_name'] = "heat"
 
 # Switch to store the MySQL root password in a databag instead of
 # using the generated OpenSSL cookbook secure_password one.

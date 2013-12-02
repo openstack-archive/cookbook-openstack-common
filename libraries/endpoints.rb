@@ -65,8 +65,10 @@ module ::Openstack
         type = "postgresql"
       end
       case type
-      when "mysql", "postgresql"
+      when "postgresql"
         result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
+      when "mysql"
+        result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
       when "sqlite"
         # SQLite uses filepaths not db name
         # README(galstrom): 3 slashes is a relative path, 4 slashes is an absolute path

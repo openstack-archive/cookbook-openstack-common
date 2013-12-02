@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 0.4.7:
+### Bug
+* Change `#db_uri` to hand out UTF8 MySQL URIs; i.e. append '?charset=utf8' to mysql URIs
+
 ## 0.4.6:
 ### Bug
 * Ensuring `#db_uri` returns a valid sqlite connection string

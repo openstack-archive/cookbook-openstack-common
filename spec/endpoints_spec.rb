@@ -155,7 +155,7 @@ describe ::Openstack do
     end
     it "returns db info hash when service found" do
       @subject.stub(:node).and_return @chef_run.node
-      expect = "mysql://user:pass@127.0.0.1:3306/nova"
+      expect = "mysql://user:pass@127.0.0.1:3306/nova?charset=utf8"
       @subject.db_uri("compute", "user", "pass").should == expect
     end
   end

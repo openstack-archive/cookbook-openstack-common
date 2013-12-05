@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.0.1:
+### Bug
+* Add sleep to search_for function, so that node can be searched
+
 ## 8.0.0:
 * Upgrading to Havana
 * Upgrading gems

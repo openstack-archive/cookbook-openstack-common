@@ -26,8 +26,16 @@ module ::Openstack
     role_query = "(chef_environment:#{node.chef_environment} AND roles:#{r})"
     recipe_query = "(chef_environment:#{node.chef_environment} AND recipes:#{r})".sub("::","\\:\\:")
     query = "#{role_query} OR #{recipe_query}"
-
-    resp = search(:node, query, &block)
+    count = 1
+    sum = 7
+    while count < sum do
+      resp = search(:node, query, &block)
+      if resp != nil
+        break
+      end
+      sleep 2**count
+      count += 1
+    end
     resp ? resp : []
   end
 

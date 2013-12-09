@@ -3,7 +3,7 @@ require ::File.join ::File.dirname(__FILE__), "..", "libraries", "database"
 
 describe ::Openstack do
   before do
-    @chef_run = ::ChefSpec::ChefRunner.new ::CHEFSPEC_OPTS
+    @chef_run = ::ChefSpec::Runner.new ::CHEFSPEC_OPTS
     @chef_run.converge "openstack-common::default"
     @subject = ::Object.new.extend ::Openstack
     @subject.stub :include_recipe

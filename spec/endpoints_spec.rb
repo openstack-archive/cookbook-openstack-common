@@ -3,7 +3,7 @@ require ::File.join ::File.dirname(__FILE__), "..", "libraries", "endpoints"
 
 describe ::Openstack do
   before do
-    @chef_run = ::ChefSpec::ChefRunner.new ::CHEFSPEC_OPTS
+    @chef_run = ::ChefSpec::Runner.new ::CHEFSPEC_OPTS
     @chef_run.converge "openstack-common::set_endpoints_by_interface"
     @subject = ::Object.new.extend ::Openstack
   end
@@ -76,7 +76,7 @@ describe ::Openstack do
     end
     it "endpoints recipe bind_interface sets host" do
       @subject.stub('address_for').and_return '10.0.0.100'
-      chef_run = ::ChefSpec::ChefRunner.new ::UBUNTU_OPTS
+      chef_run = ::ChefSpec::Runner.new ::UBUNTU_OPTS
       chef_run.node.set['openstack']['endpoints']['identity-api']['bind_interface'] = 'eth0'
       chef_run.node.set['network'] = {
         'interfaces' => {

@@ -3,7 +3,7 @@ require_relative "spec_helper"
 describe "openstack-common::sysctl" do
   describe "ubuntu" do
     before do
-      @chef_run = ::ChefSpec::ChefRunner.new ::UBUNTU_OPTS
+      @chef_run = ::ChefSpec::Runner.new ::UBUNTU_OPTS
       @chef_run.converge "openstack-common::sysctl"
     end
 
@@ -13,7 +13,8 @@ describe "openstack-common::sysctl" do
       end
 
       it "has proper owner" do
-        expect(@file).to be_owned_by "root", "root"
+        expect(@file.owner).to eq("root")
+        expect(@file.group).to eq("root")
       end
 
       it "has proper modes" do
@@ -21,13 +22,13 @@ describe "openstack-common::sysctl" do
       end
 
       it "sets the all.rp_filter" do
-        expect(@chef_run).to create_file_with_content @file.name,
-          'net.ipv4.conf.all.rp_filter = 0'
+        match = 'net.ipv4.conf.all.rp_filter = 0'
+        expect(@chef_run).to render_file(@file.name).with_content(match)
       end
 
       it "sets the default.rp_filter" do
-        expect(@chef_run).to create_file_with_content @file.name,
-          'net.ipv4.conf.default.rp_filter = 0'
+        match = 'net.ipv4.conf.default.rp_filter = 0'
+        expect(@chef_run).to render_file(@file.name).with_content(match)
       end
     end
   end

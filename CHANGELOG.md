@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.0.0:
+* Upgrading to Havana
+* Upgrading gems
+  * ChefSpec -> 3.0.2
+  * Foodcritic -> 3.0.3
+  * Berkshelf -> 2.0.10
+
 ## 0.4.7:
 ### Bug
 * Change `#db_uri` to hand out UTF8 MySQL URIs; i.e. append '?charset=utf8' to mysql URIs

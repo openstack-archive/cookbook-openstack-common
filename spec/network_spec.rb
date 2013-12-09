@@ -3,7 +3,7 @@ require ::File.join ::File.dirname(__FILE__), "..", "libraries", "network"
 
 describe ::Openstack do
   before do
-    @chef_run = ::ChefSpec::ChefRunner.new(::CHEFSPEC_OPTS) do |n|
+    @chef_run = ::ChefSpec::Runner.new(::CHEFSPEC_OPTS) do |n|
       n.set["network"] = {
         "interfaces" => {
           "lo" => {

@@ -3,14 +3,14 @@ require ::File.join ::File.dirname(__FILE__), "..", "libraries", "passwords"
 
 describe ::Openstack do
   before do
-    @chef_run = ::ChefSpec::ChefRunner.new ::CHEFSPEC_OPTS
+    @chef_run = ::ChefSpec::Runner.new ::CHEFSPEC_OPTS
     @chef_run.converge "openstack-common::default"
     @subject = ::Object.new.extend(::Openstack)
   end
 
   describe "#secret" do
     it "returns index param when developer_mode is true" do
-      @chef_run = ::ChefSpec::ChefRunner.new(::CHEFSPEC_OPTS) do |n|
+      @chef_run = ::ChefSpec::Runner.new(::CHEFSPEC_OPTS) do |n|
         n.set["openstack"]["developer_mode"] = true
       end
       @chef_run.converge "openstack-common::default"
@@ -30,7 +30,7 @@ describe ::Openstack do
 
   describe "#service_password" do
     it "returns index param when developer_mode is true" do
-      @chef_run = ::ChefSpec::ChefRunner.new(::CHEFSPEC_OPTS) do |n|
+      @chef_run = ::ChefSpec::Runner.new(::CHEFSPEC_OPTS) do |n|
         n.set["openstack"]["developer_mode"] = true
       end
       @chef_run.converge "openstack-common::default"
@@ -50,7 +50,7 @@ describe ::Openstack do
 
   describe "#db_password" do
     it "returns index param when developer_mode is true" do
-      @chef_run = ::ChefSpec::ChefRunner.new(::CHEFSPEC_OPTS) do |n|
+      @chef_run = ::ChefSpec::Runner.new(::CHEFSPEC_OPTS) do |n|
         n.set["openstack"]["developer_mode"] = true
       end
       @chef_run.converge "openstack-common::default"
@@ -70,7 +70,7 @@ describe ::Openstack do
 
   describe "#user_password" do
     it "returns index param when developer_mode is true" do
-      @chef_run = ::ChefSpec::ChefRunner.new(::CHEFSPEC_OPTS) do |n|
+      @chef_run = ::ChefSpec::Runner.new(::CHEFSPEC_OPTS) do |n|
         n.set["openstack"]["developer_mode"] = true
       end
       @chef_run.converge "openstack-common::default"

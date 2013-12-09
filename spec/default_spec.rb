@@ -4,7 +4,7 @@ describe "openstack-common::default" do
   describe "ubuntu" do
     before do
       opts = ::UBUNTU_OPTS.merge :step_into => ["apt_repository"]
-      @chef_run = ::ChefSpec::ChefRunner.new(opts) do |n|
+      @chef_run = ::ChefSpec::Runner.new(opts) do |n|
         n.set["lsb"]["codename"] = "precise"
       end
       @chef_run.converge "openstack-common::default"
@@ -16,9 +16,9 @@ describe "openstack-common::default" do
 
     it "configures openstack repository" do
       file = "/etc/apt/sources.list.d/openstack-ppa.list"
-      expected = "deb     http://ubuntu-cloud.archive.canonical.com/ubuntu  precise-updates/grizzly main"
+      expected = "deb     http://ubuntu-cloud.archive.canonical.com/ubuntu  precise-updates/havana main"
 
-      expect(@chef_run).to create_file_with_content file, expected
+      expect(@chef_run).to render_file(file).with_content(expected)
     end
   end
 end

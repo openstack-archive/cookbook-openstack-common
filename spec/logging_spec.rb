@@ -3,7 +3,7 @@ require_relative "spec_helper"
 describe "openstack-common::logging" do
   describe "ubuntu" do
     before do
-      @chef_run = ::ChefSpec::ChefRunner.new ::UBUNTU_OPTS
+      @chef_run = ::ChefSpec::Runner.new ::UBUNTU_OPTS
       @chef_run.converge "openstack-common::logging"
     end
 
@@ -13,7 +13,8 @@ describe "openstack-common::logging" do
       end
 
       it "has proper owner" do
-        expect(@dir).to be_owned_by "root", "root"
+        expect(@dir.owner).to eq("root")
+        expect(@dir.group).to eq("root")
       end
 
       it "has proper modes" do
@@ -27,7 +28,8 @@ describe "openstack-common::logging" do
       end
 
       it "has proper owner" do
-        expect(@chef_run.template(@file)).to be_owned_by "root", "root"
+        expect(@chef_run.template(@file).owner).to eq("root")
+        expect(@chef_run.template(@file).group).to eq("root")
       end
 
       it "has proper modes" do
@@ -36,7 +38,7 @@ describe "openstack-common::logging" do
       end
 
       it "templates openstack.logging.ignore block" do
-        chef_run = ::ChefSpec::ChefRunner.new ::UBUNTU_OPTS
+        chef_run = ::ChefSpec::Runner.new ::UBUNTU_OPTS
         chef_run.converge "openstack-common::logging"
         node = chef_run.node
         node.set["openstack"]["logging"]["ignore"] = {
@@ -49,7 +51,7 @@ describe "openstack-common::logging" do
           "handlers = prod,debug",
           "qualname = test.nova.api.openstack.wsgi"
         ]
-        expect(chef_run).to create_file_with_content @file, tmp.join("\n")
+        expect(chef_run).to render_file(@file).with_content(tmp.join("\n"))
       end
     end
   end

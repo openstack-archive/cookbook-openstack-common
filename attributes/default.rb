@@ -63,7 +63,7 @@ default["openstack"]["secret"]["user_passwords_data_bag"] = "user_passwords"
 # needs.
 
 # The coordinated release of OpenStack codename
-default["openstack"]["release"] = "grizzly"
+default["openstack"]["release"] = "havana"
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -71,7 +71,7 @@ default["openstack"]["release"] = "grizzly"
 # the node["lsb"]["codename"] Ohai value and %release% will be replaced
 # by the value of node["openstack"]["release"]
 default["openstack"]["apt"]["uri"] = "http://ubuntu-cloud.archive.canonical.com/ubuntu"
-default["openstack"]["apt"]["components"] = [ "precise-updates/grizzly", "main" ]
+default["openstack"]["apt"]["components"] = [ "precise-updates/#{node["openstack"]["release"]}", "main" ]
 # For the SRU packaging, use this:
 # default["openstack"]["apt"]["components"] = [ "%codename%-proposed/%release%", "main" ]
 

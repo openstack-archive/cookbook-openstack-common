@@ -203,6 +203,15 @@ default['openstack']['endpoints']['volume-api']['port'] = "8776"
 default['openstack']['endpoints']['volume-api']['path'] = "/v1/%(tenant_id)s"
 default['openstack']['endpoints']['volume-api']['bind_interface'] = nil
 
+# ******************** OpenStack Object Storage Endpoint *****************************
+
+# The OpenStack Object Storage (Swift) API endpoint
+default['openstack']['endpoints']['object-storage-api']['host'] = "127.0.0.1"
+default['openstack']['endpoints']['object-storage-api']['scheme'] = "http"
+default['openstack']['endpoints']['object-storage-api']['port'] = "8080"
+default['openstack']['endpoints']['object-storage-api']['path'] = "/v1/"
+default['openstack']['endpoints']['object-storage-api']['bind_interface'] = nil
+
 # ******************** OpenStack Metering Endpoints ***************************
 
 # The OpenStack Metering (Ceilometer) API endpoint

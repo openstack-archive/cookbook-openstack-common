@@ -169,11 +169,11 @@ default['openstack']['endpoints']['compute-novnc']['bind_interface'] = nil
 
 # ******************** OpenStack Network Endpoints ****************************
 
-# The OpenStack Network (Quantum) API endpoint.
+# The OpenStack Network (Neutron) API endpoint.
 default['openstack']['endpoints']['network-api']['host'] = "127.0.0.1"
 default['openstack']['endpoints']['network-api']['scheme'] = "http"
 default['openstack']['endpoints']['network-api']['port'] = "9696"
-# quantumclient appends the protocol version to the endpoint URL, so the
+# neutronclient appends the protocol version to the endpoint URL, so the
 # path needs to be empty
 default['openstack']['endpoints']['network-api']['path'] = ""
 default['openstack']['endpoints']['network-api']['bind_interface'] = nil
@@ -238,7 +238,7 @@ default['openstack']['endpoints']['metering-api']['bind_interface'] = nil
 # The ::Openstack::db(<SERVICE_NAME>) library routine allows a lookup from any recipe
 # to this array, returning the host information for the server that contains
 # the database for <SERVICE_NAME>, where <SERVICE_NAME> is one of 'compute' (Nova),
-# 'image' (Glance), 'identity' (Keystone), 'network' (Quantum), or 'volume' (Cinder)
+# 'image' (Glance), 'identity' (Keystone), 'network' (Neutron), or 'volume' (Cinder)
 #
 # The ::Openstack::db_connection(<SERVICE_NAME>, <USER>, <PASSWORD>) library routine
 # returns the SQLAlchemy DB URI for <SERVICE_NAME>, with the supplied user and password
@@ -291,11 +291,11 @@ default['openstack']['db']['image']['host'] = "127.0.0.1"
 default['openstack']['db']['image']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['image']['db_name'] = "glance"
 
-# Database used by the OpenStack Network (Quantum) service
+# Database used by the OpenStack Network (Neutron) service
 default['openstack']['db']['network']['db_type'] = node['openstack']['db']['service_type']
 default['openstack']['db']['network']['host'] = "127.0.0.1"
 default['openstack']['db']['network']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['network']['db_name'] = "quantum"
+default['openstack']['db']['network']['db_name'] = "neutron"
 
 # Database used by the OpenStack Volume (Cinder) service
 default['openstack']['db']['volume']['db_type'] = node['openstack']['db']['service_type']

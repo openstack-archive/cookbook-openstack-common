@@ -75,7 +75,7 @@ default["openstack"]["apt"]["components"] = [ "precise-updates/#{node["openstack
 # For the SRU packaging, use this:
 # default["openstack"]["apt"]["components"] = [ "%codename%-proposed/%release%", "main" ]
 
-default["openstack"]["zypp"]["repo-key"] = "05F4861F"  # 32 bit key ID
+default["openstack"]["zypp"]["repo-key"] = "d85f9316"  # 32 bit key ID
 default["openstack"]["zypp"]["uri"] = "http://download.opensuse.org/repositories/Cloud:/OpenStack:/%release%/%suse-release%/"
 
 #TODO(jaypipes): Do RHEL/Fedora platform family YUM setup

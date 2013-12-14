@@ -1,5 +1,5 @@
 [loggers]
-keys=root,ceilometer,cinder,glance,horizon,keystone,nova,quantum,swift,amqplib,sqlalchemy,boto,suds,eventletwsgi,<%= node["openstack"]["logging"]["ignore"].map{|k,v| k.gsub(/\W/, '_')}.join(',') %>
+keys=root,ceilometer,cinder,glance,horizon,keystone,nova,neutron,swift,amqplib,sqlalchemy,boto,suds,eventletwsgi,<%= node["openstack"]["logging"]["ignore"].map{|k,v| k.gsub(/\W/, '_')}.join(',') %>
 
 [formatters]
 keys=normal,normal_with_name,debug,syslog_with_name,syslog_debug
@@ -95,10 +95,10 @@ level=DEBUG
 handlers=prod,debug
 qualname=nova
 
-[logger_quantum]
+[logger_neutron]
 level=DEBUG
 handlers=prod,debug
-qualname=quantum
+qualname=neutron
 
 [logger_swift]
 level=DEBUG

@@ -76,6 +76,8 @@ module ::Openstack
         #  example: info['path'] = '/path/to/foo.db' -- will return sqlite:////foo.db
         path = info['path']
         result = "sqlite:///#{path}"
+      when "db2"
+        result = "ibm_db_sa://#{user}:#{pass}@#{host}:#{port}/#{name}"
       end
     end
   end

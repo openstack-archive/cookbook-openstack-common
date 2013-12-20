@@ -59,6 +59,20 @@ module ::Openstack
         else
           super_password = node['mysql']['server_root_password']
         end
+      when "db2"
+        db2_database "create database" do
+          db_name db_name
+          action :create
+        end
+
+        db2_user "create database user" do
+          db_user user
+          db_pass pass
+          db_name db_name
+          action :create
+        end
+
+        return info
       else
         ::Chef::Log.error("Unsupported database type #{type}")
       end

@@ -78,11 +78,11 @@ when "suse"
       rm -f cloud.asc
     EOH
 
-    not_if { Mixlib::ShellOut.new("rpm -qa gpg-pubkey*").include? zypp["repo-key"].downcase }
+    not_if { Mixlib::ShellOut.new("rpm -qa gpg-pubkey*").run_command.stdout.include? zypp["repo-key"].downcase }
   end
 
   execute "add repository" do
     command "zypper addrepo --check #{repo_uri} #{repo_alias}"
-    not_if { Mixlib::ShellOut.new("zypper repos --export -").include? repo_uri }
+    not_if { Mixlib::ShellOut.new("zypper repos --export -").run_command.stdout.include? repo_uri }
   end
 end

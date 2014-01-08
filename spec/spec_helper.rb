@@ -1,4 +1,5 @@
 require "chefspec"
+require "chefspec/berkshelf"
 
 ::LOG_LEVEL = :fatal
 ::UBUNTU_OPTS = {

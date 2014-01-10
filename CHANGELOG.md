@@ -5,6 +5,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 ## 8.0.1:
 ### Bug
 * Add sleep to search_for function, so that node can be searched
+* Add CentOS/RHEL support
 
 ## 8.0.0:
 * Upgrading to Havana

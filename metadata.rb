@@ -11,9 +11,10 @@ recipe           'openstack-common::set_endpoints_by_interface', 'Set endpoints 
 recipe           'openstack-common::logging', 'Installs/Configures common logging'
 recipe           'openstack-common::sysctl', 'Configures sysctl settings'
 
-%w{ ubuntu suse }.each do |os|
+%w{ ubuntu suse redhat centos }.each do |os|
   supports os
 end
 
 depends          'apt'
 depends          'database'
+depends          'yum'

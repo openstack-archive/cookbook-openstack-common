@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: openstack-common
 # recipe:: set_endpoints_by_interface

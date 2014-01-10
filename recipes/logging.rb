@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: openstack-common
 # library:: logging
@@ -17,16 +18,16 @@
 # limitations under the License.
 #
 
-directory "/etc/openstack" do
-  owner "root"
-  group "root"
+directory '/etc/openstack' do
+  owner 'root'
+  group 'root'
   mode 00755
   action :create
 end
 
-template "/etc/openstack/logging.conf" do
-  source "logging.conf.erb"
-  owner  "root"
-  group  "root"
+template '/etc/openstack/logging.conf' do
+  source 'logging.conf.erb'
+  owner  'root'
+  group  'root'
   mode   00644
 end

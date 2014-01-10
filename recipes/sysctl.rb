@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: openstack-common
 # recipe:: sysctl
@@ -17,20 +18,20 @@
 # limitations under the License.
 #
 
-directory "/etc/sysctl.d" do
-  owner "root"
-  group "root"
+directory '/etc/sysctl.d' do
+  owner 'root'
+  group 'root'
   mode 00755
 end
 
-template "/etc/sysctl.d/60-openstack.conf" do
-  source "60-openstack.conf.erb"
-  owner "root"
-  group "root"
+template '/etc/sysctl.d/60-openstack.conf' do
+  source '60-openstack.conf.erb'
+  owner 'root'
+  group 'root'
   mode 00644
 end
 
-execute "sysctl -p /etc/sysctl.d/60-openstack.conf" do
+execute 'sysctl -p /etc/sysctl.d/60-openstack.conf' do
   action :nothing
-  subscribes :run, "template[/etc/sysctl.d/60-openstack.conf]", :immediately
+  subscribes :run, 'template[/etc/sysctl.d/60-openstack.conf]', :immediately
 end

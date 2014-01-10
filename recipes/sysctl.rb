@@ -17,6 +17,12 @@
 # limitations under the License.
 #
 
+directory "/etc/sysctl.d" do
+  owner "root"
+  group "root"
+  mode 00755
+end
+
 template "/etc/sysctl.d/60-openstack.conf" do
   source "60-openstack.conf.erb"
   owner "root"

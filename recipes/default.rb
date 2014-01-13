@@ -37,6 +37,20 @@ when "debian"
     components apt_components
   end
 
+when "rhel"
+
+  yum_key "RPM-GPG-KEY-RDO-#{node["openstack"]["release"]}" do
+    url node["openstack"]["yum"]["repo-key"]
+    action :add
+  end
+
+  yum_repository "RDO-#{node["openstack"]["release"]}" do
+    description "OpenStack RDO repo for #{node["openstack"]["release"]}"
+    key "RPM-GPG-KEY-RDO-#{node["openstack"]["release"]}"
+    url node["openstack"]["yum"]["uri"]
+    enabled 1
+  end
+
 when "suse"
   if node["lsb"]["description"].nil?
   # Workaround for SLE11

@@ -39,9 +39,15 @@ when 'debian'
 
 when 'rhel'
 
+  if node['openstack']['yum']['rdo_enabled']
+    repo_action = :add
+  else
+    repo_action = :remove
+  end
+
   yum_key "RPM-GPG-KEY-RDO-#{node['openstack']['release']}" do
     url node['openstack']['yum']['repo-key']
-    action :add
+    action repo_action
   end
 
   yum_repository "RDO-#{node['openstack']['release']}" do
@@ -49,6 +55,7 @@ when 'rhel'
     key "RPM-GPG-KEY-RDO-#{node['openstack']['release']}"
     url node['openstack']['yum']['uri']
     enabled 1
+    action repo_action
   end
 
 when 'suse'

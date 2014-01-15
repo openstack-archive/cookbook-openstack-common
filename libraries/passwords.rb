@@ -46,6 +46,16 @@ module ::Openstack
     ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
   end
 
+  def get_password type, key
+    if ["db", "user", "service"].include?(type)
+      secret node["openstack"]["secret"]["#{type}_passwords_data_bag"], key
+    else
+      ::Chef::Log.error("Unsupported type for get_password: #{type}")
+    end
+  end
+
+  # TODO(andymccr): Remove these once other changes have merged to use get_password
+
   # Ease-of-use/standardization routine that returns a service password
   # for a named OpenStack service. Note that databases are named
   # after the OpenStack project nickname, like "nova" or "glance"

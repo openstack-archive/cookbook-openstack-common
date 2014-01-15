@@ -42,7 +42,7 @@ module ::Openstack
         super_user = "postgres"
         if root_user_use_databag
           user_key = node['openstack']['db']['root_user_key']
-          super_password = user_password user_key
+          super_password = get_password "user", user_key
         else
           super_password = node['postgresql']['password']['postgres']
         end
@@ -55,7 +55,7 @@ module ::Openstack
 
         if root_user_use_databag
           user_key = node['openstack']['db']['root_user_key']
-          super_password = user_password user_key
+          super_password = get_password "user", user_key
         else
           super_password = node['mysql']['server_root_password']
         end

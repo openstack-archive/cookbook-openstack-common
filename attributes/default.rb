@@ -363,7 +363,7 @@ default['openstack']['db']['orchestration']['db_name'] = 'heat'
 default['openstack']['db']['root_user_use_databag'] = false
 
 # If above root_user_use_databag is true, the below string
-# will be passed to the user_password library routine.
+# will be passed to the get_password library routine.
 default['openstack']['db']['root_user_key'] = 'mysqlroot'
 
 # logging.conf list keypairs module_name => log level to write

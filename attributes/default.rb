@@ -199,11 +199,11 @@ default['openstack']['endpoints']['image-registry']['bind_interface'] = nil
 # ******************** OpenStack Volume Endpoints *****************************
 
 # The OpenStack Volume (Cinder) API endpoint
-default['openstack']['endpoints']['volume-api']['host'] = '127.0.0.1'
-default['openstack']['endpoints']['volume-api']['scheme'] = 'http'
-default['openstack']['endpoints']['volume-api']['port'] = '8776'
-default['openstack']['endpoints']['volume-api']['path'] = '/v1/%(tenant_id)s'
-default['openstack']['endpoints']['volume-api']['bind_interface'] = nil
+default['openstack']['endpoints']['block-storage-api']['host'] = '127.0.0.1'
+default['openstack']['endpoints']['block-storage-api']['scheme'] = 'http'
+default['openstack']['endpoints']['block-storage-api']['port'] = '8776'
+default['openstack']['endpoints']['block-storage-api']['path'] = '/v1/%(tenant_id)s'
+default['openstack']['endpoints']['block-storage-api']['bind_interface'] = nil
 
 # ******************** OpenStack Object Storage Endpoint *****************************
 
@@ -258,126 +258,17 @@ default['openstack']['endpoints']['orchestration-api-cloudwatch']['bind_interfac
 # default['openstack']['endpoints']['compute-novnc']['uri']        = 'https://novnc.example.com:6080/vnc_auto.html'
 # default['openstack']['endpoints']['image-api']['uri']            = 'https://image.example.com:9292/v2'
 # default['openstack']['endpoints']['image-registry']['uri']       = 'https://image.example.com:9191/v2'
-# default['openstack']['endpoints']['volume-api']['uri']           = 'https://volume.example.com:8776/v1/%(tenant_id)s'
+# default['openstack']['endpoints']['block-storage-api']['uri']           = 'https://volume.example.com:8776/v1/%(tenant_id)s'
 # default['openstack']['endpoints']['metering-api']['uri']         = 'https://metering.example.com:9000/v1'
 # default['openstack']['endpoints']['orchestration-api']['uri']               = 'https://orchestration.example.com:8004//v1/%(tenant_id)s'
 # default['openstack']['endpoints']['orchestration-api-cfn']['uri']           = 'https://orchestration.example.com:8000/v1'
 # default['openstack']['endpoints']['orchestration-api-cloudwatch']['uri']    = 'https://orchestration.example.com:8003/v1'
-
-# ======================== OpenStack DB Support ================================
-#
-# This section of node attributes stores information about the database hosts
-# used in an OpenStack deployment.
-#
-# There is no 'scheme' key. Instead, there is a 'db_type' key that should
-# contain one of 'sqlite', 'mysql', or 'postgresql'
-#
-# The ::Openstack::db(<SERVICE_NAME>) library routine allows a lookup from any recipe
-# to this array, returning the host information for the server that contains
-# the database for <SERVICE_NAME>, where <SERVICE_NAME> is one of 'compute' (Nova),
-# 'image' (Glance), 'identity' (Keystone), 'network' (Neutron), or 'volume' (Cinder)
-#
-# The ::Openstack::db_connection(<SERVICE_NAME>, <USER>, <PASSWORD>) library routine
-# returns the SQLAlchemy DB URI for <SERVICE_NAME>, with the supplied user and password
-# that a calling service might be using when connecting to the database.
-#
-# For example, let's assume that the database that is used by the OpenStack Identity
-# service (Keystone) is configured as follows:
-#
-#   host: 192.168.0.3
-#   port: 3306
-#   db_type: mysql
-#   db_name: keystone
-#
-# Further suppose that a node running the OpenStack Identity API service needs to
-# connect to the above identity database server. It has the following in it's node
-# attributes:
-#
-#   node['db']['user'] = 'keystone'
-#
-# In a "keystone" recipe, you might find the following code:
-#
-#   user = node['db']['user']
-#   pass = secret 'passwords', 'keystone'
-#
-#   sql_connection = ::Openstack::db_uri('identity', user, pass)
-#
-# The sql_connection variable would then be set to "mysql://keystone:password@192.168.0.3:keystone"
-# and could then be written to the keystone.conf file in a template.
-
-# Default database attributes
-default['openstack']['db']['server_role'] = 'os-ops-database'
-default['openstack']['db']['service_type'] = 'mysql'
-default['openstack']['db']['port'] = '3306'
-
-# Database used by the OpenStack Compute (Nova) service
-default['openstack']['db']['compute']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['compute']['host'] = '127.0.0.1'
-default['openstack']['db']['compute']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['compute']['db_name'] = 'nova'
-
-# Database used by the OpenStack Identity (Keystone) service
-default['openstack']['db']['identity']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['identity']['host'] = '127.0.0.1'
-default['openstack']['db']['identity']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['identity']['db_name'] = 'keystone'
-
-# Database used by the OpenStack Image (Glance) service
-default['openstack']['db']['image']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['image']['host'] = '127.0.0.1'
-default['openstack']['db']['image']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['image']['db_name'] = 'glance'
-
-# Database used by the OpenStack Network (Neutron) service
-default['openstack']['db']['network']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['network']['host'] = '127.0.0.1'
-default['openstack']['db']['network']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['network']['db_name'] = 'neutron'
-
-# Database used by the OpenStack Volume (Cinder) service
-default['openstack']['db']['volume']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['volume']['host'] = '127.0.0.1'
-default['openstack']['db']['volume']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['volume']['db_name'] = 'cinder'
-
-# Database used by the OpenStack Dashboard (Horizon)
-default['openstack']['db']['dashboard']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['dashboard']['host'] = '127.0.0.1'
-default['openstack']['db']['dashboard']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['dashboard']['db_name'] = 'horizon'
-
-# Database used by OpenStack Metering (Ceilometer)
-default['openstack']['db']['metering']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['metering']['host'] = '127.0.0.1'
-default['openstack']['db']['metering']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['metering']['db_name'] = 'ceilometer'
-
-# Database used by OpenStack Orchestration (Heat)
-default['openstack']['db']['orchestration']['db_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['orchestration']['host'] = '127.0.0.1'
-default['openstack']['db']['orchestration']['port'] = node['openstack']['db']['port']
-default['openstack']['db']['orchestration']['db_name'] = 'heat'
-
-# Switch to store the MySQL root password in a databag instead of
-# using the generated OpenSSL cookbook secure_password one.
-default['openstack']['db']['root_user_use_databag'] = false
-
-# If above root_user_use_databag is true, the below string
-# will be passed to the get_password library routine.
-default['openstack']['db']['root_user_key'] = 'mysqlroot'
 
 # logging.conf list keypairs module_name => log level to write
 default['openstack']['logging']['ignore'] = { 'nova.api.openstack.wsgi' => 'WARNING',
                                               'nova.osapi_compute.wsgi.server' => 'WARNING' }
 
 default['openstack']['memcached_servers'] = nil
-
-# Default messaging attributes
-default['openstack']['mq']['server_role'] = 'os-ops-messaging'
-default['openstack']['mq']['service_type'] = 'rabbitmq'
-default['openstack']['mq']['port'] = '5672'
-default['openstack']['mq']['user'] = 'guest'
-default['openstack']['mq']['vhost'] = '/'
 
 # Default sysctl settings
 default['openstack']['sysctl']['net.ipv4.conf.all.rp_filter'] = 0

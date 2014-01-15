@@ -58,7 +58,7 @@ module ::Openstack
     if info
       host = info['host']
       port = info['port'].to_s
-      type = info['db_type']
+      type = info['service_type']
       name = info['db_name']
       if type == "pgsql"
         # Normalize to the SQLAlchemy standard db type identifier

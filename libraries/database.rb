@@ -32,7 +32,7 @@ module ::Openstack
     if info
       host = info['host']
       port = info['port'].to_s
-      type = info['db_type']
+      type = info['service_type']
       db_name = info['db_name']
       case type
       when "postgresql", "pgsql"

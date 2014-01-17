@@ -77,7 +77,7 @@ module ::Openstack
         path = info['path']
         result = "sqlite:///#{path}"
       when "db2"
-        result = "ibm_db_sa://#{user}:#{pass}@#{host}:#{port}/#{name}"
+        result = "ibm_db_sa://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
       end
     end
   end

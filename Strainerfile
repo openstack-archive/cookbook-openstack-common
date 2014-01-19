@@ -1,6 +1,7 @@
 # Strainerfile
 rubocop: bundle exec rubocop $SANDBOX/$COOKBOOK/Gemfile $SANDBOX/$COOKBOOK/metadata.rb --config $SANDBOX/$COOKBOOK/.rubocop.yml
 rubocop: bundle exec rubocop $SANDBOX/$COOKBOOK/attributes/  --config $SANDBOX/$COOKBOOK/attributes/.rubocop.yml
+rubocop: bundle exec rubocop $SANDBOX/$COOKBOOK/recipes/  --config $SANDBOX/$COOKBOOK/recipes/.rubocop.yml
 # rubocop: bundle exec rubocop $SANDBOX/$COOKBOOK
 knife test: bundle exec knife cookbook test $COOKBOOK
 foodcritic: bundle exec foodcritic -f any -t ~FC003 -t ~FC023 $SANDBOX/$COOKBOOK

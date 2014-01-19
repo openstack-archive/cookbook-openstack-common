@@ -1,0 +1,3 @@
+# embedded attributes make for long lines
+LineLength:
+  Enabled: false

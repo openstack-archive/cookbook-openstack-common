@@ -46,36 +46,14 @@ module ::Openstack
     ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
   end
 
+  # Ease-of-use/standarization routine that returns a service/database/user
+  # password for a named OpenStack service/database/user. Accepts "user",
+  # "service" or "db" as the type.
   def get_password type, key
     if ["db", "user", "service"].include?(type)
       secret node["openstack"]["secret"]["#{type}_passwords_data_bag"], key
     else
       ::Chef::Log.error("Unsupported type for get_password: #{type}")
     end
-  end
-
-  # TODO(andymccr): Remove these once other changes have merged to use get_password
-
-  # Ease-of-use/standardization routine that returns a service password
-  # for a named OpenStack service. Note that databases are named
-  # after the OpenStack project nickname, like "nova" or "glance"
-  def service_password service
-    bag = node["openstack"]["secret"]["service_passwords_data_bag"]
-    secret bag, service
-  end
-
-  # Ease-of-use/standardization routine that returns a database password
-  # for a named OpenStack database. Note that databases are named
-  # after the OpenStack project nickname, like "nova" or "glance"
-  def db_password service
-    bag = node["openstack"]["secret"]["db_passwords_data_bag"]
-    secret bag, service
-  end
-
-  # Ease-of-use/standardization routine that returns a password
-  # for a user.
-  def user_password user
-    bag = node["openstack"]["secret"]["user_passwords_data_bag"]
-    secret bag, user
   end
 end

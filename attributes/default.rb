@@ -274,3 +274,23 @@ default['openstack']['memcached_servers'] = nil
 # Default sysctl settings
 default['openstack']['sysctl']['net.ipv4.conf.all.rp_filter'] = 0
 default['openstack']['sysctl']['net.ipv4.conf.default.rp_filter'] = 0
+
+# Default Ceph settings
+default['openstack']['ceph']['key-url'] = 'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc'
+
+case platform
+when 'ubuntu'
+  default['openstack']['ceph']['platform']['uri'] = 'http://ceph.com/debian-emperor'
+when 'fedora', 'redhat', 'centos', 'suse' # :pragma-foodcritic: ~FC024 - won't fix this
+  default['openstack']['ceph']['platform']['uri'] = 'http://ceph.com/rpm-emperor'
+end
+
+default['openstack']['ceph']['global'] = {
+  fsid: '00000000-0000-0000-0000-000000000000',
+  mon_initial_members: [],
+  mon_host: [],
+  auth_cluster_required: 'cephx',
+  auth_service_required: 'cephx',
+  auth_client_required: 'cephx',
+  filestore_xattr_use_omap: true
+}

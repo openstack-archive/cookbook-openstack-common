@@ -1,0 +1,8 @@
+[global]
+<% @global.each do |k,v| -%>
+<%   if v.is_a? Array -%>
+<%= k %> = <%= v.join ", " %>
+<%   else -%>
+<%= k %> = <%= v %>
+<%   end -%>
+<% end -%>

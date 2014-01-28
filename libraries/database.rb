@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 #
 # Cookbook Name:: openstack-common
 # library:: default
@@ -22,11 +24,11 @@ module ::Openstack
   # service's database and grant read/write access to the
   # given user and password.
   #
-  # A privileged "super user" and password is determined from the
+  # A privileged 'super user' and password is determined from the
   # underlying database cookbooks. For instance, if a MySQL database
-  # is used, the node["mysql"]["server_root_password"] is used along
-  # with the "root" (super)user.
-  def db_create_with_user service, user, pass
+  # is used, the node['mysql']['server_root_password'] is used along
+  # with the 'root' (super)user.
+  def db_create_with_user(service, user, pass) # rubocop:disable CyclomaticComplexity, MethodLength
     root_user_use_databag = node['openstack']['db']['root_user_use_databag']
     info = db service
     if info
@@ -35,37 +37,37 @@ module ::Openstack
       type = info['db_type']
       db_name = info['db_name']
       case type
-      when "postgresql", "pgsql"
-        include_recipe "database::postgresql"
+      when 'postgresql', 'pgsql'
+        include_recipe 'database::postgresql'
         db_prov = ::Chef::Provider::Database::Postgresql
         user_prov = ::Chef::Provider::Database::PostgresqlUser
-        super_user = "postgres"
+        super_user = 'postgres'
         if root_user_use_databag
           user_key = node['openstack']['db']['root_user_key']
-          super_password = get_password "user", user_key
+          super_password = get_password 'user', user_key
         else
           super_password = node['postgresql']['password']['postgres']
         end
-      when "mysql"
+      when 'mysql'
         # we have to install the 'mysql' gem, otherwise the provider won't work
-        include_recipe "database::mysql"
+        include_recipe 'database::mysql'
         db_prov = ::Chef::Provider::Database::Mysql
         user_prov = ::Chef::Provider::Database::MysqlUser
-        super_user = "root"
+        super_user = 'root'
 
         if root_user_use_databag
           user_key = node['openstack']['db']['root_user_key']
-          super_password = get_password "user", user_key
+          super_password = get_password 'user', user_key
         else
           super_password = node['mysql']['server_root_password']
         end
-      when "db2"
-        db2_database "create database" do
+      when 'db2'
+        db2_database 'create database' do
           db_name db_name
           action :create
         end
 
-        db2_user "create database user" do
+        db2_user 'create database user' do
           db_user user
           db_pass pass
           db_name db_name
@@ -78,10 +80,10 @@ module ::Openstack
       end
 
       connection_info = {
-        :host => host,
-        :port => port.to_i,
-        :username => super_user,
-        :password => super_password
+        host: host,
+        port: port.to_i,
+        username: super_user,
+        password: super_password
       }
 
       # create database

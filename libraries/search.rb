@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: openstack-common
 # library:: search
@@ -22,66 +23,67 @@ module ::Openstack
   #
   # @param [String] The role or recipe to be found.
   # @return [Array] The matching result or an empty list.
-  def search_for r, &block
+  def search_for(r, &block) # rubocop:disable MethodLength
     role_query = "(chef_environment:#{node.chef_environment} AND roles:#{r})"
-    recipe_query = "(chef_environment:#{node.chef_environment} AND recipes:#{r})".sub("::","\\:\\:")
+    recipe_query = "(chef_environment:#{node.chef_environment} AND recipes:#{r})".sub('::', '\:\:')
     query = "#{role_query} OR #{recipe_query}"
     count = 1
     sum = 7
-    while count < sum do
+    while count < sum
       resp = search(:node, query, &block)
-      if resp != nil
-        break
-      end
+      break unless resp.nil?
       sleep 2**count
       count += 1
     end
     resp ? resp : []
   end
 
-  # Returns the value for ["openstack"]["memcached_servers"] when
+  # Returns the value for ['openstack']['memcached_servers'] when
   # set, otherwise will perform a search.
   #
   # @param [String] role The role to be found (optional).
   # @return [Array] A list of memcached servers in format
   # '<ip>:<port>'.
-  def memcached_servers role="infra-caching"
-    unless node['openstack']['memcached_servers']
+  def memcached_servers(role = 'infra-caching') # rubocop:disable MethodLength
+    if !node['openstack']['memcached_servers']
       search_for(role).map do |n|
         listen = n['memcached']['listen']
-        port = n['memcached']['port'] || "11211"
+        port = n['memcached']['port'] || '11211'
 
         "#{listen}:#{port}"
       end.sort
     else
-      node['openstack']['memcached_servers'].length != 0 ?
-        node['openstack']['memcached_servers'] : []
+      if node['openstack']['memcached_servers'].length != 0
+        node['openstack']['memcached_servers']
+      else
+        []
+      end
     end
   end
 
   # Returns all rabbit servers.
-  # Uses the value for ["openstack"]["mq"]["servers"] when set, otherwise
+  # Uses the value for ['openstack']['mq']['servers'] when set, otherwise
   # will perform a search.
   #
   # @return [String] Rabbit servers joined by a comma in
   # the format of '<ip>:<port>'.
-  def rabbit_servers
-    if node["openstack"]["mq"]["servers"]
-      servers = node["openstack"]["mq"]["servers"]
-      port = node["openstack"]["mq"]["port"]
+  def rabbit_servers # rubocop:disable MethodLength
+    if node['openstack']['mq']['servers']
+      servers = node['openstack']['mq']['servers']
+      port = node['openstack']['mq']['port']
 
-      servers.map { |s| "#{s}:#{port}" }.join ","
+      servers.map { |s| "#{s}:#{port}" }.join ','
     else
-      role = node["openstack"]["mq"]["server_role"]
+      role = node['openstack']['mq']['server_role']
       search_for(role).map do |n|
         # The listen attribute should be saved to the node
         # in the wrapper cookbook.  See the reference cookbook
         # openstack-ops-messaging.
-        address = n["openstack"]["mq"]["listen"]
-        port = n["openstack"]["mq"]["port"]
+        address = n['openstack']['mq']['listen']
+        port = n['openstack']['mq']['port']
 
         "#{address}:#{port}"
-      end.sort.join ","
+      end.sort.join ','
     end
   end
 end

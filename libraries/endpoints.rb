@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 #
 # Cookbook Name:: openstack-common
 # library:: endpoints
@@ -17,14 +19,14 @@
 # limitations under the License.
 #
 
-require "uri"
+require 'uri'
 
-module ::Openstack
-  # Shortcut to get the full URI for an endpoint. If the "uri" key isn't
+module ::Openstack # rubocop:disable Documentation
+  # Shortcut to get the full URI for an endpoint. If the 'uri' key isn't
   # set in the endpoint hash, we use the ::Openstack.get_uri_from_mash
   # library routine from the openstack-common cookbook to grab a URI object
   # and construct the URI object from the endpoint parts.
-  def endpoint name
+  def endpoint(name)
     ep = endpoint_for name
     if ep && ep['uri']
       ::URI.parse ::URI.encode(ep['uri'])
@@ -34,7 +36,7 @@ module ::Openstack
   end
 
   # Useful for iterating over the OpenStack endpoints
-  def endpoints &block
+  def endpoints(&block)
     node['openstack']['endpoints'].each do | name, info |
       block.call(name, info)
     end
@@ -42,50 +44,51 @@ module ::Openstack
     nil
   end
 
-  # Instead of specifying the verbose node["openstack"]["db"][service],
+  # Instead of specifying the verbose node['openstack']['db'][service],
   # this shortcut allows the simpler and shorter db(service), where
   # service is one of 'compute', 'image', 'identity', 'network',
   # and 'volume'
-  def db service
+  def db(service)
     node['openstack']['db'][service]
   rescue
     nil
   end
 
   # Shortcut to get the SQLAlchemy DB URI for a named service
-  def db_uri service, user, pass
+  def db_uri(service, user, pass) # rubocop:disable MethodLength, CyclomaticComplexity
     info = db(service)
     if info
       host = info['host']
       port = info['port'].to_s
       type = info['db_type']
       name = info['db_name']
-      if type == "pgsql"
-        # Normalize to the SQLAlchemy standard db type identifier
-        type = "postgresql"
+      if type == 'pgsql'
+      # Normalize to the SQLAlchemy standard db type identifier
+        type = 'postgresql'
       end
       case type
-      when "postgresql"
-        result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
-      when "mysql"
-        result = "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
-      when "sqlite"
+      when 'postgresql'
+        "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
+      when 'mysql'
+        "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
+      when 'sqlite'
         # SQLite uses filepaths not db name
         # README(galstrom): 3 slashes is a relative path, 4 slashes is an absolute path
         #  example: info['path'] = 'path/to/foo.db' -- will return sqlite:///foo.db
         #  example: info['path'] = '/path/to/foo.db' -- will return sqlite:////foo.db
         path = info['path']
-        result = "sqlite:///#{path}"
-      when "db2"
-        result = "ibm_db_sa://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
+        "sqlite:///#{path}"
+      when 'db2'
+        "ibm_db_sa://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
       end
     end
   end
 
-private
-  # Instead of specifying the verbose node["openstack"]["endpoints"][name],
+  private
+
+  # Instead of specifying the verbose node['openstack']['endpoints'][name],
   # this shortcut allows the simpler and shorter endpoint(name)
-  def endpoint_for name
+  def endpoint_for(name)
     node['openstack']['endpoints'][name]
   rescue
     nil

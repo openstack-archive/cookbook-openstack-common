@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 #
 # Cookbook Name:: openstack-common
 # library:: parse
@@ -15,10 +17,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
 module ::Openstack
-
   # The current state of (at least some) OpenStack CLI tools do not provide a
   # mechanism for outputting data in formats other than PrettyTable output.
   # Therefore this function is intended to parse PrettyTable output into a
@@ -26,38 +26,33 @@ module ::Openstack
   # into a single element array.
   # table - the raw PrettyTable output of the CLI command
   # output - array of hashes representing the data.
-  def prettytable_to_array table
+  def prettytable_to_array(table) # rubocop:disable MethodLength
     ret = []
-    return ret if table == nil
+    return ret if table.nil?
     indicies = []
-    (table.split(/$/).collect{|x| x.strip}).each { |line|
-      unless line.start_with?('+--') or line.empty?
-        cols = line.split('|').collect{|x| x.strip}
+    (table.split(/$/).map { |x| x.strip }).each do |line|
+      unless line.start_with?('+--') || line.empty?
+        cols = line.split('|').map { |x| x.strip }
         cols.shift
         if indicies == []
           indicies = cols
           next
         end
         newobj = {}
-        cols.each { |val|
-          newobj[indicies[newobj.length]] = val
-        }
+        cols.each { |val| newobj[indicies[newobj.length]] = val }
         ret.push(newobj)
       end
-    }
+    end
 
     # this kinda sucks, but some prettytable data comes
     # as Property Value pairs. If this is the case, then
     # flatten it as expected.
     newobj = {}
     if indicies == ['Property', 'Value']
-      ret.each { |x|
-        newobj[x['Property']] = x['Value']
-      }
+      ret.each { |x| newobj[x['Property']] = x['Value'] }
       [newobj]
     else
       ret
     end
   end
-
 end

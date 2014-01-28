@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 #
 # Cookbook Name:: openstack-common
 # library:: uri
@@ -17,23 +19,23 @@
 # limitations under the License.
 #
 
-require "uri"
+require 'uri'
 
-module ::Openstack
-  # Returns a uri::URI from a hash. If the hash has a "uri" key, the value
+module ::Openstack # rubocop:disable Documentation
+  # Returns a uri::URI from a hash. If the hash has a 'uri' key, the value
   # of that is returned. If not, then the routine attempts to construct
   # the URI from other parts of the hash, notably looking for keys of
-  # "host", "port", "scheme", and "path" to construct the URI.
+  # 'host', 'port', 'scheme', and 'path' to construct the URI.
   #
-  # Returns nil if neither "uri" or "host" keys exist in the supplied
+  # Returns nil if neither 'uri' or 'host' keys exist in the supplied
   # hash.
-  def uri_from_hash hash
+  def uri_from_hash(hash)
     if hash['uri']
       ::URI.parse hash['uri']
     else
       return nil unless hash['host']
 
-      scheme = hash['scheme'] ? hash['scheme'] : "http"
+      scheme = hash['scheme'] ? hash['scheme'] : 'http'
       host = hash['host']
       port = hash['port']  # Returns nil if missing, which is fine.
       path = hash['path']  # Returns nil if missing, which is fine.
@@ -48,9 +50,7 @@ module ::Openstack
     return nil if paths.length == 0
     leadingslash = paths[0][0] == '/' ? '/' : ''
     trailingslash = paths[-1][-1] == '/' ? '/' : ''
-    paths.map! { |path|
-      path = path.sub(/^\/+/,'').sub(/\/+$/,'')
-    }
+    paths.map! { |path| path.sub(/^\/+/, '').sub(/\/+$/, '') }
     leadingslash + paths.join('/') + trailingslash
   end
 end

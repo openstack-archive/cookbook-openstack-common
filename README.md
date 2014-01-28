@@ -19,7 +19,7 @@ The following cookbooks are dependencies:
 Attributes
 ==========
 
-Please see the extensive inline documentation in `attributes/default.rb` for descriptions
+Please see the extensive inline documentation in `attributes/*.rb` for descriptions
 of all the settable attributes for this cookbook.
 
 Note that all attributes are in the `default["openstack"]` "namespace"

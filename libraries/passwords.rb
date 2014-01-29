@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 #
 # Cookbook Name:: openstack-common
 # library:: passwords
@@ -21,9 +23,9 @@ module ::Openstack
   # Library routine that returns an encrypted data bag value
   # for a supplied string. The key used in decrypting the
   # encrypted value should be located at
-  # node["openstack"]["secret"]["key_path"].
+  # node['openstack']['secret']['key_path'].
   #
-  # Note that if node["openstack"]["developer_mode"] is true,
+  # Note that if node['openstack']['developer_mode'] is true,
   # then the value of the index parameter is just returned as-is. This
   # means that in developer mode, if a cookbook does this:
   #
@@ -33,25 +35,23 @@ module ::Openstack
   #    end
   # end
   #
-  # nova_password = secret "passwords", "nova"
+  # nova_password = secret 'passwords', 'nova'
   #
-  # That means nova_password will == "nova".
-  def secret bag_name, index
-    if node["openstack"]["developer_mode"]
-      return index
-    end
-    key_path = node["openstack"]["secret"]["key_path"]
+  # That means nova_password will == 'nova'.
+  def secret(bag_name, index)
+    return index if node['openstack']['developer_mode']
+    key_path = node['openstack']['secret']['key_path']
     ::Chef::Log.info "Loading encrypted databag #{bag_name}.#{index} using key at #{key_path}"
     secret = ::Chef::EncryptedDataBagItem.load_secret key_path
     ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
   end
 
   # Ease-of-use/standarization routine that returns a service/database/user
-  # password for a named OpenStack service/database/user. Accepts "user",
-  # "service" or "db" as the type.
-  def get_password type, key
-    if ["db", "user", "service"].include?(type)
-      secret node["openstack"]["secret"]["#{type}_passwords_data_bag"], key
+  # password for a named OpenStack service/database/user. Accepts 'user',
+  # 'service' or 'db' as the type.
+  def get_password(type, key)
+    if ['db', 'user', 'service'].include?(type)
+      secret node['openstack']['secret']["#{type}_passwords_data_bag"], key
     else
       ::Chef::Log.error("Unsupported type for get_password: #{type}")
     end

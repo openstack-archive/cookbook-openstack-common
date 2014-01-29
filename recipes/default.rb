@@ -27,9 +27,9 @@ when 'debian'
   apt_components = node['openstack']['apt']['components']
 
   # Simple variable substitution for LSB codename and OpenStack release
-  apt_components.each do | comp | # rubocop:disable UselessAssignment
-    comp = comp.gsub '%release%', node['openstack']['release']
-    comp = comp.gsub '%codename%', node['lsb']['codename']
+  apt_components.each do | comp |
+    comp.gsub! '%release%', node['openstack']['release']
+    comp.gsub! '%codename%', node['lsb']['codename']
   end
 
   apt_repository 'openstack-ppa' do

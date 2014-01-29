@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 #
 # Cookbook Name:: openstack-common
 # library:: address
@@ -23,12 +25,10 @@ module ::Openstack
   # @param [String] interface The interface to query.
   # @param [String] family The protocol family to use.
   # @return [String] The IPv4 address.
-  def address_for interface, family="inet"
-    interface_node = node["network"]["interfaces"][interface]["addresses"]
+  def address_for(interface, family = 'inet')
+    interface_node = node['network']['interfaces'][interface]['addresses']
     interface_node.select do |address, data|
-      if data['family'] == family
-        return address
-      end
+      return address if data['family'] == family
     end
   end
 end

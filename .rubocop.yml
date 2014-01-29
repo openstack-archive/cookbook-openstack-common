@@ -5,8 +5,8 @@ AllCops:
     - attributes/**
     - recipes/**
     - spec/**
-  Excludes:
     - libraries/**
+  Excludes:
     - providers/**
     - resources/**
 

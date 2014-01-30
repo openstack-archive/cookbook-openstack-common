@@ -1,7 +1,0 @@
-# embedded attributes make for long lines
-LineLength:
-  Enabled: false
-
-# %w or %W have not generally been used in attribute files
-WordArray:
-  Enabled: false

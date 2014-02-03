@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.1.0
+### Blueprint:
+* yum-cookbook-v3-support: Update this cookbook to be compatible with version 3 of the yum cookbook.
+
 ## 8.0.1:
 ### Bug
 * Add sleep to search_for function, so that node can be searched

@@ -45,16 +45,11 @@ when 'rhel'
     repo_action = :remove
   end
 
-  yum_key "RPM-GPG-KEY-RDO-#{node['openstack']['release']}" do
-    url node['openstack']['yum']['repo-key']
-    action repo_action
-  end
-
   yum_repository "RDO-#{node['openstack']['release']}" do
     description "OpenStack RDO repo for #{node['openstack']['release']}"
-    key "RPM-GPG-KEY-RDO-#{node['openstack']['release']}"
-    url node['openstack']['yum']['uri']
-    enabled 1
+    gpgkey node['openstack']['yum']['repo-key']
+    baseurl node['openstack']['yum']['uri']
+    enabled true
     action repo_action
   end
 

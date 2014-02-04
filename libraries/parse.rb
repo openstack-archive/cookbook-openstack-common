@@ -18,7 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-module ::Openstack
+module ::Openstack # rubocop:disable Documentation
   # The current state of (at least some) OpenStack CLI tools do not provide a
   # mechanism for outputting data in formats other than PrettyTable output.
   # Therefore this function is intended to parse PrettyTable output into a

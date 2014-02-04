@@ -106,7 +106,7 @@ describe ::Openstack do
     it 'returns rabbit servers' do
       nodes = [
         { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1', 'port' => '5672' } } },
-        { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2', 'port' => '5672' } } },
+        { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2', 'port' => '5672' } } }
       ]
       @subject.stub(:node).and_return @chef_run.node
       @subject.stub(:search_for)

@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-module ::Openstack
+module ::Openstack # rubocop:disable Documentation
   # Library routine that returns an encrypted data bag value
   # for a supplied string. The key used in decrypting the
   # encrypted value should be located at

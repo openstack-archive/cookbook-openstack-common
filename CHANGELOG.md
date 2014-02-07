@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.1.1
+### Bug
+* Adjust metering service endpoint path from /v1 to /
+
 ## 8.1.0
 ### Blueprint:
 * yum-cookbook-v3-support: Update this cookbook to be compatible with version 3 of the yum cookbook.

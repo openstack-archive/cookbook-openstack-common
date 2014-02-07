@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@lists.tfoundry.com'
 license          'Apache 2.0'
 description      'Common OpenStack attributes, libraries and recipes.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '8.1.0'
+version          '8.1.1'
 
 recipe           'openstack-common', 'Installs/Configures common recipes'
 recipe           'openstack-common::set_endpoints_by_interface', 'Set endpoints by interface'

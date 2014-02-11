@@ -33,6 +33,7 @@ default['openstack']['mq']['vhost'] = '/'
 
 # Messaging attributes used by the OpenStack Volume (Cinder) service
 default['openstack']['mq']['block-storage']['service_type'] = node['openstack']['mq']['service_type']
+default['openstack']['mq']['block-storage']['notification_topic'] = 'notifications'
 case node['openstack']['mq']['block-storage']['service_type']
 when 'qpid'
   default['openstack']['mq']['block-storage']['qpid']['host'] = node['openstack']['mq']['host']
@@ -50,6 +51,7 @@ when 'qpid'
   default['openstack']['mq']['block-storage']['qpid']['heartbeat'] = 60
   default['openstack']['mq']['block-storage']['qpid']['protocol'] = 'tcp'
   default['openstack']['mq']['block-storage']['qpid']['tcp_nodelay'] = true
+  default['openstack']['mq']['block-storage']['qpid']['notification_topic'] = node['openstack']['mq']['block-storage']['notification_topic']
 when 'rabbitmq'
   default['openstack']['mq']['block-storage']['rabbit']['userid'] = node['openstack']['mq']['user']
   default['openstack']['mq']['block-storage']['rabbit']['vhost'] = node['openstack']['mq']['vhost']
@@ -57,6 +59,7 @@ when 'rabbitmq'
   default['openstack']['mq']['block-storage']['rabbit']['host'] = node['openstack']['mq']['host']
   default['openstack']['mq']['block-storage']['rabbit']['ha'] = false
   default['openstack']['mq']['block-storage']['rabbit']['use_ssl'] = false
+  default['openstack']['mq']['block-storage']['rabbit']['notification_topic'] = node['openstack']['mq']['block-storage']['notification_topic']
 end
 
 # Messaging attributes used by the OpenStack Compute (Nova) service

@@ -92,6 +92,7 @@ end
 # Messaging attributes used by the OpenStack Image (Glance) service
 default['openstack']['mq']['image']['service_type'] = node['openstack']['mq']['service_type']
 default['openstack']['mq']['image']['notifier_strategy'] = 'noop'
+default['openstack']['mq']['image']['notification_topic'] = 'glance_notifications'
 case node['openstack']['mq']['image']['service_type']
 when 'qpid'
   default['openstack']['mq']['image']['qpid']['host'] = node['openstack']['mq']['host']
@@ -109,12 +110,14 @@ when 'qpid'
   default['openstack']['mq']['image']['qpid']['heartbeat'] = 60
   default['openstack']['mq']['image']['qpid']['protocol'] = 'tcp'
   default['openstack']['mq']['image']['qpid']['tcp_nodelay'] = true
+  default['openstack']['mq']['image']['qpid']['notification_topic'] = node['openstack']['mq']['image']['notification_topic']
 when 'rabbitmq'
   default['openstack']['mq']['image']['rabbit']['userid'] = node['openstack']['mq']['user']
   default['openstack']['mq']['image']['rabbit']['vhost'] = node['openstack']['mq']['vhost']
   default['openstack']['mq']['image']['rabbit']['port'] = node['openstack']['mq']['port']
   default['openstack']['mq']['image']['rabbit']['host'] = node['openstack']['mq']['host']
   default['openstack']['mq']['image']['rabbit']['use_ssl'] = false
+  default['openstack']['mq']['image']['rabbit']['notification_topic'] = node['openstack']['mq']['image']['notification_topic']
 end
 
 # Messaging attributes used by the OpenStack Metering (Ceilometer) service

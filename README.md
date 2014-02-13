@@ -202,12 +202,14 @@ License and Author
 | **Author**           |  Sean Gallagher (<sean.gallagher@att.com>)         |
 | **Author**           |  Ionut Artarisi (<iartarisi@suse.cz>)              |
 | **Author**           |  Chen Zhiwei (<zhiwchen@cn.ibm.com>)               |
+| **Author**           |  Brett Campbell (<brett.campbell@rackspace.com>)   |
 |                      |                                                    |
 | **Copyright**        |  Copyright (c) 2012-2013, AT&T Services, Inc.      |
 | **Copyright**        |  Copyright (c) 2013, Opscode, Inc.                 |
 | **Copyright**        |  Copyright (c) 2013, Craig Tracey                  |
 | **Copyright**        |  Copyright (c) 2013, SUSE Linux GmbH               |
 | **Copyright**        |  Copyright (c) 2013-2014, IBM, Corp.               |
+| **Copyright**        |  Copyright (c) 2013-2014, Rackspace US, Inc.       |
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

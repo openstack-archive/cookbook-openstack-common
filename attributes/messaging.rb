@@ -74,6 +74,7 @@ rabbit_defaults = {
 ###################################################################
 services.each do |svc|
   default['openstack']['mq'][svc]['service_type'] = node['openstack']['mq']['service_type']
+  default['openstack']['mq'][svc]['notification_topic'] = 'notifications'
 
   case node['openstack']['mq'][svc]['service_type']
   when 'qpid'
@@ -91,7 +92,6 @@ end
 # Overrides and additional attributes for individual services
 ###################################################################
 # block-storage
-default['openstack']['mq']['block-storage']['notification_topic'] = 'notifications'
 default['openstack']['mq']['block-storage']['qpid']['notification_topic'] =
   node['openstack']['mq']['block-storage']['notification_topic']
 default['openstack']['mq']['block-storage']['rabbit']['notification_topic'] =

@@ -221,7 +221,9 @@ default['openstack']['endpoints']['object-storage-api']['bind_interface'] = nil
 default['openstack']['endpoints']['metering-api']['host'] = '127.0.0.1'
 default['openstack']['endpoints']['metering-api']['scheme'] = 'http'
 default['openstack']['endpoints']['metering-api']['port'] = '8777'
-default['openstack']['endpoints']['metering-api']['path'] = '/v1'
+# The ceilometer client appends the protocol version to the endpoint URL,
+# so the path needs to be empty
+default['openstack']['endpoints']['metering-api']['path'] = ''
 default['openstack']['endpoints']['metering-api']['bind_interface'] = nil
 
 # ******************** OpenStack Orchestration Endpoints ***************************

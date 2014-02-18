@@ -17,3 +17,9 @@ require 'chefspec/berkshelf'
 ::CHEFSPEC_OPTS = {
   log_level: ::LOG_LEVEL
 }
+
+# README(galstrom21): This will remove any coverage warnings from
+#   dependent cookbooks
+ChefSpec::Coverage.filters << '*/openstack-common'
+
+at_exit { ChefSpec::Coverage.report! }

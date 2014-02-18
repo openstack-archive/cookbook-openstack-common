@@ -265,6 +265,9 @@ default['openstack']['endpoints']['orchestration-api-cloudwatch']['bind_interfac
 # default['openstack']['endpoints']['orchestration-api-cfn']['uri']           = 'https://orchestration.example.com:8000/v1'
 # default['openstack']['endpoints']['orchestration-api-cloudwatch']['uri']    = 'https://orchestration.example.com:8003/v1'
 
+# Set a default region that other regions are set to - such that changing the region for all services can be done in one place
+default['openstack']['region'] = 'RegionOne'
+
 # logging.conf list keypairs module_name => log level to write
 default['openstack']['logging']['ignore'] = { 'nova.api.openstack.wsgi' => 'WARNING',
                                               'nova.osapi_compute.wsgi.server' => 'WARNING' }

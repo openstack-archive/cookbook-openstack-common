@@ -70,39 +70,49 @@
 # across many zones.
 #
 
+# ******************** Database Endpoint **************************************
+default['openstack']['endpoints']['db']['host'] = '127.0.0.1'
+default['openstack']['endpoints']['db']['scheme'] = nil
+default['openstack']['endpoints']['db']['port'] = '3306'
+default['openstack']['endpoints']['db']['path'] = nil
+default['openstack']['endpoints']['db']['bind_interface'] = nil
+
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'
 default['openstack']['db']['service_type'] = 'mysql'
-default['openstack']['db']['host'] = '127.0.0.1'
-default['openstack']['db']['port'] = '3306'
+# Note that the openstack:db:host and openstack:db:port attributes are being
+# deprecated in favor of the db endpoint and will be removed in a future
+# patch set.
+default['openstack']['db']['host'] = default['openstack']['endpoints']['db']['host']
+default['openstack']['db']['port'] = default['openstack']['endpoints']['db']['port']
 
 # Database used by the OpenStack Compute (Nova) service
 default['openstack']['db']['compute']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['compute']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['compute']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['compute']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['compute']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['compute']['db_name'] = 'nova'
 default['openstack']['db']['compute']['username'] = 'nova'
 
 # Database used by the OpenStack Identity (Keystone) service
 default['openstack']['db']['identity']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['identity']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['identity']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['identity']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['identity']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['identity']['db_name'] = 'keystone'
 default['openstack']['db']['identity']['username'] = 'keystone'
 default['openstack']['db']['identity']['migrate'] = true
 
 # Database used by the OpenStack Image (Glance) service
 default['openstack']['db']['image']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['image']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['image']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['image']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['image']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['image']['db_name'] = 'glance'
 default['openstack']['db']['image']['username'] = 'glance'
 default['openstack']['db']['image']['migrate'] = true
 
 # Database used by the OpenStack Network (Neutron) service
 default['openstack']['db']['network']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['network']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['network']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['network']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['network']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['network']['db_name'] = 'neutron'
 default['openstack']['db']['network']['username'] = 'neutron'
 # The SQLAlchemy connection string used to connect to the slave database
@@ -129,23 +139,23 @@ default['openstack']['db']['network']['pool_timeout'] = 10
 
 # Database used by the OpenStack Block Storage (Cinder) service
 default['openstack']['db']['block-storage']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['block-storage']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['block-storage']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['block-storage']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['block-storage']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['block-storage']['db_name'] = 'cinder'
 default['openstack']['db']['block-storage']['username'] = 'cinder'
 
 # Database used by the OpenStack Dashboard (Horizon)
 default['openstack']['db']['dashboard']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['dashboard']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['dashboard']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['dashboard']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['dashboard']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['dashboard']['db_name'] = 'horizon'
 default['openstack']['db']['dashboard']['username'] = 'dash'
 default['openstack']['db']['dashboard']['migrate'] = true
 
 # Database used by OpenStack Metering (Ceilometer)
 default['openstack']['db']['metering']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['metering']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['metering']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['metering']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['metering']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['metering']['db_name'] = 'ceilometer'
 default['openstack']['db']['metering']['username'] = 'ceilometer'
 default['openstack']['db']['metering']['nosql']['used'] = false
@@ -153,8 +163,8 @@ default['openstack']['db']['metering']['nosql']['port'] = '27017'
 
 # Database used by OpenStack Orchestration (Heat)
 default['openstack']['db']['orchestration']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['orchestration']['host'] = node['openstack']['db']['host']
-default['openstack']['db']['orchestration']['port'] = node['openstack']['db']['port']
+default['openstack']['db']['orchestration']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['orchestration']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['orchestration']['db_name'] = 'heat'
 default['openstack']['db']['orchestration']['username'] = 'heat'
 

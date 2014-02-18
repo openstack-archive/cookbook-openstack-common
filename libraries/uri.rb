@@ -24,19 +24,23 @@ require 'uri'
 module ::Openstack # rubocop:disable Documentation
   # Returns a uri::URI from a hash. If the hash has a 'uri' key, the value
   # of that is returned. If not, then the routine attempts to construct
-  # the URI from other parts of the hash, notably looking for keys of
-  # 'host', 'port', 'scheme', and 'path' to construct the URI.
+  # the URI from other parts of the hash.  The values of the 'port' and 'path'
+  # keys are used directly from the hash.  For the host, if the
+  # 'bind_interface' key is non-nil then it will use the first IP address on
+  # the specified interface, otherwise it will use the value of the 'host' key
+  # from the hash.
   #
-  # Returns nil if neither 'uri' or 'host' keys exist in the supplied
-  # hash.
+  # Returns nil if the 'uri' key does not exist in the supplied hash and if
+  # the determined host is nil (both the values of the 'bind_interface' and
+  # 'host' keys are nil).
   def uri_from_hash(hash)
     if hash['uri']
       ::URI.parse hash['uri']
     else
-      return nil unless hash['host']
+      host = address hash
+      return nil unless host
 
       scheme = hash['scheme'] ? hash['scheme'] : 'http'
-      host = hash['host']
       port = hash['port']  # Returns nil if missing, which is fine.
       path = hash['path']  # Returns nil if missing, which is fine.
       ::URI::Generic.new scheme, nil, host, port, nil, path, nil, nil, nil

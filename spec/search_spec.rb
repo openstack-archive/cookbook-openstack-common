@@ -8,7 +8,7 @@ describe 'openstack-common::default' do
     let(:node) { runner.node }
     let(:chef_run) do
       node.set['openstack']['mq']['server_role'] = 'openstack-ops-mq'
-      node.set['openstack']['mq']['port'] = 5672
+      node.set['openstack']['endpoints']['mq']['port'] = 5672
 
       runner.converge(described_recipe)
     end
@@ -103,8 +103,8 @@ describe 'openstack-common::default' do
     describe '#rabbit_servers' do
       it 'returns rabbit servers' do
         nodes = [
-          { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1', 'port' => '5672' } } },
-          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2', 'port' => '5672' } } }
+          { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
+          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } }
         ]
         subject.stub(:node).and_return(chef_run.node)
         subject.stub(:search_for)
@@ -115,9 +115,9 @@ describe 'openstack-common::default' do
 
       it 'returns sorted rabbit servers' do
         nodes = [
-          { 'openstack' => { 'mq' => { 'listen' => '3.3.3.3', 'port' => '5672'  } } },
-          { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1', 'port' => '5672' } } },
-          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2', 'port' => '5672'  } } }
+          { 'openstack' => { 'mq' => { 'listen' => '3.3.3.3' }, 'endpoints' => { 'mq' => { 'port' => '5672'  } } } },
+          { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
+          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672'  } } } }
         ]
         subject.stub(:node).and_return(chef_run.node)
         subject.stub(:search_for)

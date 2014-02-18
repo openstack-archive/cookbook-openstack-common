@@ -70,7 +70,7 @@ module ::Openstack # rubocop:disable Documentation
   def rabbit_servers # rubocop:disable MethodLength
     if node['openstack']['mq']['servers']
       servers = node['openstack']['mq']['servers']
-      port = node['openstack']['mq']['port']
+      port = node['openstack']['endpoints']['mq']['port']
 
       servers.map { |s| "#{s}:#{port}" }.join ','
     else
@@ -80,7 +80,7 @@ module ::Openstack # rubocop:disable Documentation
         # in the wrapper cookbook.  See the reference cookbook
         # openstack-ops-messaging.
         address = n['openstack']['mq']['listen']
-        port = n['openstack']['mq']['port']
+        port = n['openstack']['endpoints']['mq']['port']
 
         "#{address}:#{port}"
       end.sort.join ','

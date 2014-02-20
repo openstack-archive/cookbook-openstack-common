@@ -3,25 +3,31 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 
-::LOG_LEVEL = :fatal
-::UBUNTU_OPTS = {
+LOG_LEVEL = :fatal
+UBUNTU_OPTS = {
   platform: 'ubuntu',
   version: '12.04',
-  log_level: ::LOG_LEVEL
+  log_level: LOG_LEVEL
 }
-::REDHAT_OPTS = {
+REDHAT_OPTS = {
   platform: 'redhat',
-  version: '6.3',
-  log_level: ::LOG_LEVEL
+  version: '6.5',
+  log_level: LOG_LEVEL
 }
-::SUSE_OPTS = {
+SUSE_OPTS = {
   platform: 'suse',
   version: '11.03',
-  log_lovel: ::LOG_LEVEL
+  log_lovel: LOG_LEVEL
 }
-::CHEFSPEC_OPTS = {
-  log_level: ::LOG_LEVEL
+CHEFSPEC_OPTS = {
+  log_level: LOG_LEVEL
 }
+
+shared_context 'library-stubs' do
+  before do
+    subject.stub(:node).and_return(chef_run.node)
+  end
+end
 
 # README(galstrom21): This will remove any coverage warnings from
 #   dependent cookbooks

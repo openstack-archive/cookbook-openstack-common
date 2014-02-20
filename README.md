@@ -26,6 +26,12 @@ Note that all attributes are in the `default["openstack"]` "namespace"
 
 * `openstack['api']['auth']['version']` - Select v2.0 or v3.0. Default v2.0. The default auth API version used by other components to interact with identity service.
 
+default
+-------
+
+Support multiple network types. Default network type is "nova" with the other option supported being "neutron".
+The attribute is in the `default["openstack"]["compute"]["network"]["service_type"]`.
+
 Recipes
 =======
 

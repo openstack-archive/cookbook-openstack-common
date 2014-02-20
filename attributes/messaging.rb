@@ -75,7 +75,7 @@ rabbit_defaults = {
 services.each do |svc|
   default['openstack']['mq'][svc]['service_type'] = node['openstack']['mq']['service_type']
 
-  case default['openstack']['mq'][svc]['service_type']
+  case node['openstack']['mq'][svc]['service_type']
   when 'qpid'
     qpid_defaults.each do |key, val|
       default['openstack']['mq'][svc]['qpid'][key.to_s] = val

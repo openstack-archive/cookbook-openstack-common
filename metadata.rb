@@ -18,3 +18,4 @@ end
 depends          'apt'
 depends          'database'
 depends          'yum', '~> 3.0'
+depends          'yum-epel'

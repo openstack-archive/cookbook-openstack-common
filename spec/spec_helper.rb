@@ -14,6 +14,11 @@ require 'chefspec/berkshelf'
   version: '6.3',
   log_level: ::LOG_LEVEL
 }
+::SUSE_OPTS = {
+  platform: 'suse',
+  version: '11.03',
+  log_lovel: ::LOG_LEVEL
+}
 ::CHEFSPEC_OPTS = {
   log_level: ::LOG_LEVEL
 }

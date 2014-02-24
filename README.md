@@ -24,6 +24,8 @@ of all the settable attributes for this cookbook.
 
 Note that all attributes are in the `default["openstack"]` "namespace"
 
+* `openstack['api']['auth']['version']` - Select v2.0 or v3.0. Default v2.0. The default auth API version used by other components to interact with identity service.
+
 Recipes
 =======
 

@@ -133,6 +133,7 @@ default['openstack']['db']['dashboard']['host'] = node['openstack']['db']['host'
 default['openstack']['db']['dashboard']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['dashboard']['db_name'] = 'horizon'
 default['openstack']['db']['dashboard']['username'] = 'dash'
+default['openstack']['db']['dashboard']['migrate'] = true
 
 # Database used by OpenStack Metering (Ceilometer)
 default['openstack']['db']['metering']['service_type'] = node['openstack']['db']['service_type']

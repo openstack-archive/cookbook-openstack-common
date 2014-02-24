@@ -41,6 +41,7 @@ when 'rhel'
 
   if node['openstack']['yum']['rdo_enabled']
     repo_action = :add
+    include_recipe 'yum-epel'
   else
     repo_action = :remove
   end

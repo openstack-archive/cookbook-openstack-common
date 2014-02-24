@@ -13,6 +13,10 @@ describe 'openstack-common::default' do
       repo_name = 'RDO-testrelease'
       expect(@chef_run).to add_yum_repository(repo_name)
     end
+
+    it 'includes yum-epel recipe' do
+      expect(@chef_run).to include_recipe('yum-epel')
+    end
   end
 
   describe 'rhel-no-rdo' do
@@ -27,6 +31,10 @@ describe 'openstack-common::default' do
     it 'configures RDO yum repository' do
       repo_name = 'RDO-testrelease'
       expect(@chef_run).to remove_yum_repository(repo_name)
+    end
+
+    it 'does not include yum-epel recipe' do
+      expect(@chef_run).to_not include_recipe('yum-epel')
     end
   end
 end

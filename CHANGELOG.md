@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.2.1
+### Bug
+* Add notification_topics attribute to network attributes
+
 ## 8.2.0
 * Update and add new attributes for openstack-network cookbook
 

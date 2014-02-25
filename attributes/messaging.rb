@@ -104,3 +104,7 @@ default['openstack']['mq']['image']['qpid']['notification_topic'] =
   node['openstack']['mq']['image']['notification_topic']
 default['openstack']['mq']['image']['rabbit']['notification_topic'] =
   node['openstack']['mq']['image']['notification_topic']
+
+# network
+# AMQP topics used for openstack notifications, can be comma-separated values
+default['openstack']['mq']['network']['notification_topics'] = 'notifications'

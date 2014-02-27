@@ -105,20 +105,27 @@ default['openstack']['db']['network']['host'] = node['openstack']['db']['host']
 default['openstack']['db']['network']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['network']['db_name'] = 'neutron'
 default['openstack']['db']['network']['username'] = 'neutron'
-# Enable the use of eventlet's db_pool for MySQL. The flags sql_min_pool_size,
-# sql_max_pool_size and sql_idle_timeout are relevant only if this is enabled.
-default['openstack']['db']['network']['sql_dbpool_enable'] = 'False'
+# The SQLAlchemy connection string used to connect to the slave database
+default['openstack']['db']['network']['slave_connection'] = ''
 # Database reconnection retry times - in event connectivity is lost
-default['openstack']['db']['network']['sql_max_retries'] = 10
+default['openstack']['db']['network']['max_retries'] = 10
 # Database reconnection interval in seconds - if the initial connection to the
 # database fails
-default['openstack']['db']['network']['reconnect_interval'] = 2
+default['openstack']['db']['network']['retry_interval'] = 10
 # Minimum number of SQL connections to keep open in a pool
-default['openstack']['db']['network']['sql_min_pool_size'] = 1
+default['openstack']['db']['network']['min_pool_size'] = 1
 # Maximum number of SQL connections to keep open in a pool
-default['openstack']['db']['network']['sql_max_pool_size'] = 5
+default['openstack']['db']['network']['max_pool_size'] = 10
 # Timeout in seconds before idle sql connections are reaped
-default['openstack']['db']['network']['sql_idle_timeout'] = 3600
+default['openstack']['db']['network']['idle_timeout'] = 3600
+# If set, use this value for max_overflow with sqlalchemy
+default['openstack']['db']['network']['max_overflow'] = 20
+# Verbosity of SQL debugging information. 0=None, 100=Everything
+default['openstack']['db']['network']['connection_debug'] = 0
+# Add python stack traces to SQL as comment strings
+default['openstack']['db']['network']['connection_trace'] = false
+# If set, use this value for pool_timeout with sqlalchemy
+default['openstack']['db']['network']['pool_timeout'] = 10
 
 # Database used by the OpenStack Block Storage (Cinder) service
 default['openstack']['db']['block-storage']['service_type'] = node['openstack']['db']['service_type']

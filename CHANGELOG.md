@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.2.0
+* Update and add new attributes for openstack-network cookbook
+
 ## 8.1.1
 ### Bug
 * Adjust metering service endpoint path from /v1 to /

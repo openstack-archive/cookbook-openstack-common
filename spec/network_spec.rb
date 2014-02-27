@@ -1,12 +1,13 @@
 # encoding: UTF-8
-
 require_relative 'spec_helper'
 require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'network'
 
-describe ::Openstack do
-  before do
-    @chef_run = ::ChefSpec::Runner.new(::CHEFSPEC_OPTS) do |n|
-      n.set['network'] = {
+describe 'openstack-common::default' do
+  describe 'Openstack address_for' do
+    let(:runner) { ChefSpec::Runner.new(CHEFSPEC_OPTS) }
+    let(:node) { runner.node }
+    let(:chef_run) do
+      node.set['network'] = {
         'interfaces' => {
           'lo' => {
             'addresses' => {
@@ -25,24 +26,25 @@ describe ::Openstack do
           }
         }
       }
+
+      runner.converge(described_recipe)
     end
-    @chef_run.converge 'openstack-common::default'
-    @subject = ::Object.new.extend ::Openstack
-  end
+    let(:subject) { Object.new.extend(Openstack) }
 
-  describe '#address_for' do
-    it 'returns ipv4 address' do
-      @subject.stub(:node).and_return @chef_run.node
-      resp = @subject.address_for 'lo'
+    include_context 'library-stubs'
 
-      expect(resp).to eq '127.0.0.1'
-    end
+    describe '#address_for' do
+      it 'returns ipv4 address' do
+        expect(
+          subject.address_for('lo')
+        ).to eq('127.0.0.1')
+      end
 
-    it 'returns ipv4 address' do
-      @subject.stub(:node).and_return @chef_run.node
-      resp = @subject.address_for 'lo', 'inet6'
-
-      expect(resp).to eq '::1'
+      it 'returns ipv4 address' do
+        expect(
+          subject.address_for('lo', 'inet6')
+        ).to eq('::1')
+      end
     end
   end
 end

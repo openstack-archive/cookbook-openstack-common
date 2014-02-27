@@ -1,40 +1,46 @@
 # encoding: UTF-8
+require_relative 'spec_helper'
 
 describe 'openstack-common::default' do
   describe 'rhel-rdo' do
-    before do
-      @chef_run = ::ChefSpec::Runner.new(::REDHAT_OPTS) do |n|
-        n.set['openstack']['release'] = 'testrelease'
+    let(:runner) { ChefSpec::Runner.new(REDHAT_OPTS) }
+    let(:node) { runner.node }
+    let(:chef_run) do
+      node.set['openstack']['release'] = 'testrelease'
+
+      runner.converge(described_recipe)
+    end
+
+    context 'enabling RDO' do
+      before do
+        node.set['openstack']['yum']['rdo_enabled'] = true
       end
-      @chef_run.converge 'openstack-common::default'
-    end
 
-    it 'configures RDO yum repository' do
-      repo_name = 'RDO-testrelease'
-      expect(@chef_run).to add_yum_repository(repo_name)
-    end
-
-    it 'includes yum-epel recipe' do
-      expect(@chef_run).to include_recipe('yum-epel')
-    end
-  end
-
-  describe 'rhel-no-rdo' do
-    before do
-      @chef_run = ::ChefSpec::Runner.new(::REDHAT_OPTS) do |n|
-        n.set['openstack']['release'] = 'testrelease'
-        n.set['openstack']['yum']['rdo_enabled'] = false
+      it 'adds RDO yum repository' do
+        # Using cookbook(yum) LWRP custom matcher
+        # https://github.com/sethvargo/chefspec#packaging-custom-matchers
+        expect(chef_run).to add_yum_repository('RDO-testrelease')
       end
-      @chef_run.converge 'openstack-common::default'
+
+      it 'includes yum-epel recipe' do
+        expect(chef_run).to include_recipe('yum-epel')
+      end
     end
 
-    it 'configures RDO yum repository' do
-      repo_name = 'RDO-testrelease'
-      expect(@chef_run).to remove_yum_repository(repo_name)
-    end
+    context 'disabling RDO' do
+      before do
+        node.set['openstack']['yum']['rdo_enabled'] = false
+      end
 
-    it 'does not include yum-epel recipe' do
-      expect(@chef_run).to_not include_recipe('yum-epel')
+      it 'removes RDO yum repository' do
+        # Using cookbook(yum) LWRP custom matcher
+        # https://github.com/sethvargo/chefspec#packaging-custom-matchers
+        expect(chef_run).to remove_yum_repository('RDO-testrelease')
+      end
+
+      it 'does not include yum-epel recipe' do
+        expect(chef_run).to_not include_recipe('yum-epel')
+      end
     end
   end
 end

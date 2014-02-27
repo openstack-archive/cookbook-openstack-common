@@ -15,7 +15,7 @@ recipe           'openstack-common::sysctl', 'Configures sysctl settings'
   supports os
 end
 
-depends          'apt'
+depends          'apt', '~> 2.3.8'
 depends          'database'
 depends          'yum', '~> 3.0'
 depends          'yum-epel'

@@ -148,6 +148,8 @@ default['openstack']['db']['metering']['host'] = node['openstack']['db']['host']
 default['openstack']['db']['metering']['port'] = node['openstack']['db']['port']
 default['openstack']['db']['metering']['db_name'] = 'ceilometer'
 default['openstack']['db']['metering']['username'] = 'ceilometer'
+default['openstack']['db']['metering']['nosql']['used'] = false
+default['openstack']['db']['metering']['nosql']['port'] = '27017'
 
 # Database used by OpenStack Orchestration (Heat)
 default['openstack']['db']['orchestration']['service_type'] = node['openstack']['db']['service_type']

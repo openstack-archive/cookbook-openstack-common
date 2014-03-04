@@ -294,6 +294,10 @@ when 'fedora', 'redhat', 'centos', 'suse' # :pragma-foodcritic: ~FC024 - won't f
   default['openstack']['ceph']['platform']['uri'] = 'http://ceph.com/rpm-emperor'
 end
 
+# Overriding this makes the ceph_client recipe do nothing
+# (set this when using the ceph/ceph-cookbooks cookbook).
+default['openstack']['ceph']['setup_client'] = true
+
 default['openstack']['ceph']['global'] = {
   fsid: '00000000-0000-0000-0000-000000000000',
   mon_initial_members: [],

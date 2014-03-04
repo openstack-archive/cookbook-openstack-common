@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+return unless node['openstack']['ceph']['setup_client']
+
 case node['platform']
 when 'ubuntu'
   apt_repository 'ceph' do

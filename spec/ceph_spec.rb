@@ -25,6 +25,13 @@ describe 'openstack-common::ceph_client' do
         distribution: 'precise')
     end
 
+    it 'creates the /etc/ceph directory' do
+      expect(chef_run).to create_directory('/etc/ceph').with(
+        owner: 'root',
+        group: 'root'
+      )
+    end
+
     it 'creates the /etc/ceph/ceph.conf file' do
       expect(chef_run).to create_template(file.name).with(
         owner: 'root',
@@ -39,6 +46,21 @@ describe 'openstack-common::ceph_client' do
        /^mon_initial_members = 10.0.1.10, 10.0.1.20$/,
        /^mon_hosts = mon01, mon02$/].each do |content|
         expect(chef_run).to render_file(file.name).with_content(content)
+      end
+    end
+
+    describe 'when setup_client is not set' do
+      let(:chef_run) do
+        node.set['openstack']['ceph']['setup_client'] = false
+        node.set['lsb']['codename'] = 'precise'
+
+        runner.converge(described_recipe)
+      end
+
+      it "doesn't add the repository or create ceph.conf" do
+        expect(chef_run).not_to create_directory('/etc/ceph')
+        expect(chef_run).not_to create_template('/etc/ceph/ceph.conf')
+        expect(chef_run).not_to add_apt_repository('ceph')
       end
     end
   end

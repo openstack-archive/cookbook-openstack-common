@@ -98,4 +98,23 @@ describe 'Openstack uri' do
       ).to eq(expected)
     end
   end
+
+  describe '#auth_uri_transform' do
+    it 'preserves the original auth uri when the auth version passed is v2.0' do
+      auth_version = 'v2.0'
+      auth_uri = 'http://localhost:5000/v2.0'
+      expect(
+        subject.auth_uri_transform(auth_uri, auth_version)
+      ).to eq(auth_uri)
+    end
+
+    it 'substitute /v2.0 with /v3 in the passed auth uri when auth version passed is v3.0' do
+      auth_version = 'v3.0'
+      auth_uri = 'http://localhost:5000/v2.0'
+      expected_auth_uri = 'http://localhost:5000/v3'
+      expect(
+        subject.auth_uri_transform(auth_uri, auth_version)
+      ).to eq(expected_auth_uri)
+    end
+  end
 end

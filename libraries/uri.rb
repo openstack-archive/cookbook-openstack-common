@@ -53,4 +53,18 @@ module ::Openstack # rubocop:disable Documentation
     paths.map! { |path| path.sub(/^\/+/, '').sub(/\/+$/, '') }
     leadingslash + paths.join('/') + trailingslash
   end
+
+  def auth_uri_transform(auth_uri, auth_version)
+    case auth_version
+    when 'v2.0'
+      auth_uri
+    when 'v3.0'
+      # The auth_uri should contain /v2.0 in most cases, but if the
+      # auth_version is v3.0, we set it to v3. This is only necessary
+      # for environments that need to support V3 non-default-domain
+      # tokens, which is really the only reason to set version to
+      # something other than v2.0 (the default)
+      auth_uri.gsub('/v2.0', '/v3')
+    end
+  end
 end

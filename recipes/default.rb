@@ -24,19 +24,18 @@ when 'debian'
     action :install
   end
 
-  apt_components = node['openstack']['apt']['components']
-
-  # Simple variable substitution for LSB codename and OpenStack release
-  apt_components.each do | comp |
-    comp.gsub! '%release%', node['openstack']['release']
-    comp.gsub! '%codename%', node['lsb']['codename']
+  if node['openstack']['apt']['live_updates_enabled']
+    apt_components = node['openstack']['apt']['components']
+    # Simple variable substitution for LSB codename and OpenStack release
+    apt_components.each do | comp |
+      comp.gsub! '%release%', node['openstack']['release']
+      comp.gsub! '%codename%', node['lsb']['codename']
+    end
+    apt_repository 'openstack-ppa' do
+      uri node['openstack']['apt']['uri']
+      components apt_components
+    end
   end
-
-  apt_repository 'openstack-ppa' do
-    uri node['openstack']['apt']['uri']
-    components apt_components
-  end
-
 when 'rhel'
 
   if node['openstack']['yum']['rdo_enabled']

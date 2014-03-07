@@ -42,8 +42,10 @@ when 'rhel'
   if node['openstack']['yum']['rdo_enabled']
     repo_action = :add
     include_recipe 'yum-epel'
-  else
+  elsif FileTest.exist? "/etc/yum.repos.d/RDO-#{node['openstack']['release']}.repo"
     repo_action = :remove
+  else
+    repo_action = :nothing
   end
 
   yum_repository "RDO-#{node['openstack']['release']}" do

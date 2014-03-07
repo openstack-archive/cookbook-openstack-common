@@ -33,9 +33,16 @@ describe 'openstack-common::default' do
       end
 
       it 'removes RDO yum repository' do
+        ::FileTest.stub(:exist?).with('/etc/yum.repos.d/RDO-testrelease.repo').and_return(true)
+
         # Using cookbook(yum) LWRP custom matcher
         # https://github.com/sethvargo/chefspec#packaging-custom-matchers
         expect(chef_run).to remove_yum_repository('RDO-testrelease')
+      end
+
+      it 'does nothing when RDO yum repository does not exist' do
+        repo = chef_run.find_resource('yum_repository', 'RDO-testrelease')
+        expect(repo.performed_actions).to be_empty
       end
 
       it 'does not include yum-epel recipe' do

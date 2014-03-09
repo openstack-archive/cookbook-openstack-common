@@ -183,5 +183,28 @@ describe 'openstack-common::set_endpoints_by_interface' do
         ).to eq(expected)
       end
     end
+
+    describe '#address' do
+      it 'returns interface IP if bind_interface specified' do
+        ep_hash = {
+          'bind_interface' => 'eth0',
+          'host' => '5.6.7.8'
+        }
+        subject.stub('address_for').and_return('1.2.3.4')
+        expect(
+          subject.address(ep_hash)
+        ).to eq('1.2.3.4')
+      end
+      it 'returns host IP if bind_interface not specified' do
+        ep_hash = {
+          'bind_interface' => nil,
+          'host' => '5.6.7.8'
+        }
+        subject.stub('address_for').and_return('1.2.3.4')
+        expect(
+          subject.address(ep_hash)
+        ).to eq('5.6.7.8')
+      end
+    end
   end
 end

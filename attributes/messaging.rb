@@ -24,6 +24,13 @@
 # expected to create the user, pass, vhost in a wrapper rabbitmq cookbook.
 #
 
+# ******************** RabbitMQ Endpoint **************************************
+default['openstack']['endpoints']['mq']['host'] = '127.0.0.1'
+default['openstack']['endpoints']['mq']['scheme'] = nil
+default['openstack']['endpoints']['mq']['port'] = '5672'
+default['openstack']['endpoints']['mq']['path'] = nil
+default['openstack']['endpoints']['mq']['bind_interface'] = nil
+
 ###################################################################
 # Services to assign mq attributes for
 ###################################################################
@@ -34,8 +41,11 @@ services = %w{block-storage compute image metering network orchestration}
 ###################################################################
 default['openstack']['mq']['server_role'] = 'os-ops-messaging'
 default['openstack']['mq']['service_type'] = 'rabbitmq'
-default['openstack']['mq']['host'] = '127.0.0.1'
-default['openstack']['mq']['port'] = '5672'
+# Note that the openstack:mq:host and openstack:mq:port attributes are being
+# deprecated in favor of the mq endpoint and will be removed in a future
+# patch set.
+default['openstack']['mq']['host'] = default['openstack']['endpoints']['mq']['host']
+default['openstack']['mq']['port'] = default['openstack']['endpoints']['mq']['port']
 default['openstack']['mq']['user'] = 'guest'
 default['openstack']['mq']['vhost'] = '/'
 
@@ -55,16 +65,16 @@ qpid_defaults = {
   heartbeat: 60,
   protocol: 'tcp',
   tcp_nodelay: true,
-  host: node['openstack']['mq']['host'],
-  port: node['openstack']['mq']['port'],
-  qpid_hosts: ["#{node['openstack']['mq']['host']}:#{node['openstack']['mq']['port']}"]
+  host: node['openstack']['endpoints']['mq']['host'],
+  port: node['openstack']['endpoints']['mq']['port'],
+  qpid_hosts: ["#{node['openstack']['endpoints']['mq']['host']}:#{node['openstack']['endpoints']['mq']['port']}"]
 }
 
 rabbit_defaults = {
   userid: node['openstack']['mq']['user'],
   vhost: node['openstack']['mq']['vhost'],
-  port: node['openstack']['mq']['port'],
-  host: node['openstack']['mq']['host'],
+  port: node['openstack']['endpoints']['mq']['port'],
+  host: node['openstack']['endpoints']['mq']['host'],
   ha: false,
   use_ssl: false
 }

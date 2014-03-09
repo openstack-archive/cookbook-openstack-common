@@ -88,6 +88,20 @@ module ::Openstack # rubocop:disable Documentation
     end
   end
 
+  # Return the IPv4 address for the hash.
+  #
+  # If the bind_interface is set, then return the first IP on the interface.
+  # otherwise return the IP specified in the host attribute.
+  def address(hash)
+    bind_interface = hash['bind_interface'] if hash['bind_interface']
+
+    if bind_interface
+      return address_for bind_interface
+    else
+      return hash['host']
+    end
+  end
+
   private
 
   # Instead of specifying the verbose node['openstack']['endpoints'][name],

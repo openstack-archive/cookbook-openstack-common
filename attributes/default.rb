@@ -118,6 +118,15 @@ default['openstack']['yum']['repo-key'] = 'https://raw.github.com/redhat-opensta
 
 # ******************** OpenStack Identity Endpoints ***************************
 default['openstack']['endpoints']['host'] = '127.0.0.1'
+
+# The OpenStack Identity Bind API endpoint is used to determine what IP/host
+# to bind the Identity services to.
+default['openstack']['endpoints']['identity-bind']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['identity-bind']['scheme'] = nil
+default['openstack']['endpoints']['identity-bind']['port'] = nil
+default['openstack']['endpoints']['identity-bind']['path'] = nil
+default['openstack']['endpoints']['identity-bind']['bind_interface'] = nil
+
 # The OpenStack Identity (Keystone) API endpoint. This is commonly called
 # the Keystone Service endpoint...
 default['openstack']['endpoints']['identity-api']['host'] = node['openstack']['endpoints']['host']

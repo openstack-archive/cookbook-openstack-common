@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.3.0
+### Blueprint
+* use-data-bag-for-qpid-password: have qpid use get_password method rather than
+  using a password attribute
+
 ## 8.2.1
 ### Bug
 * Add notification_topics attribute to network attributes

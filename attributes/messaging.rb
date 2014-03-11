@@ -53,8 +53,7 @@ default['openstack']['mq']['vhost'] = '/'
 # Default qpid and rabbit values (for attribute assignment below)
 ###################################################################
 qpid_defaults = {
-  username: '',
-  password: '',
+  username: node['openstack']['mq']['user'],
   sasl_mechanisms: '',
   reconnect: true,
   reconnect_timeout: 0,

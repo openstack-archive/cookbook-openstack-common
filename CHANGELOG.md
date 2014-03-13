@@ -1,6 +1,8 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 8.5.0
+* Add get_secret library method which allows one to specify a secrets_data_bag in attributes.
 
 ## 8.4.2
 * Adjust image service endpoint path from /v2 to /

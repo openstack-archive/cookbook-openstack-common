@@ -25,6 +25,28 @@ describe 'openstack-common::default' do
       end
     end
 
+    describe '#get_secret' do
+      it 'returns index param when developer_mode is true' do
+        node.set['openstack']['developer_mode'] = true
+        expect(subject.get_secret('nova')).to eq('nova')
+      end
+
+      it 'returns databag when developer_mode is false' do
+        value = { 'nova' => 'this' }
+        ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
+        ::Chef::EncryptedDataBagItem.stub(:load).with('secrets', 'nova', 'secret').and_return(value)
+        expect(subject.get_secret('nova')).to eq('this')
+      end
+
+      it 'returns secret from an alternate databag when secrets_data_bag set' do
+        node.set['openstack']['secret']['secrets_data_bag'] = 'myothersecrets'
+        value = { 'nova' => 'this' }
+        ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
+        ::Chef::EncryptedDataBagItem.stub(:load).with('myothersecrets', 'nova', 'secret').and_return(value)
+        expect(subject.get_secret('nova')).to eq('this')
+      end
+    end
+
     describe '#get_password_service_password' do
       it 'returns index param when developer_mode is true' do
         node.set['openstack']['developer_mode'] = true

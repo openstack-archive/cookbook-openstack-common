@@ -46,6 +46,12 @@ module ::Openstack # rubocop:disable Documentation
     ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
   end
 
+  # Ease-of-use/standarization routine that returns a secret from the
+  # attribute-specified openstack secrets databag.
+  def get_secret(key)
+    secret node['openstack']['secret']['secrets_data_bag'], key
+  end
+
   # Ease-of-use/standarization routine that returns a service/database/user
   # password for a named OpenStack service/database/user. Accepts 'user',
   # 'service' or 'db' as the type.

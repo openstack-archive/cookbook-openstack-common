@@ -43,6 +43,9 @@ default['openstack']['auth']['validate_certs'] = true
 # values in the data bag.
 default['openstack']['secret']['key_path'] = '/etc/chef/openstack_data_bag_secret'
 
+# The name of the encrypted data bag that stores openstack secrets
+default['openstack']['secret']['secrets_data_bag'] = 'secrets'
+
 # The name of the encrypted data bag that stores service user passwords, with
 # each key in the data bag corresponding to a named OpenStack service, like
 # "nova", "cinder", etc.

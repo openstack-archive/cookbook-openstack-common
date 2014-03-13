@@ -34,7 +34,7 @@ default['openstack']['endpoints']['mq']['bind_interface'] = nil
 ###################################################################
 # Services to assign mq attributes for
 ###################################################################
-services = %w{block-storage compute image metering network orchestration}
+services = %w{block-storage compute image telemetry network orchestration}
 
 ###################################################################
 # Generic default attributes

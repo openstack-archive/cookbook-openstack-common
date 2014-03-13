@@ -219,13 +219,13 @@ default['openstack']['endpoints']['object-storage-api']['bind_interface'] = nil
 # ******************** OpenStack Metering Endpoints ***************************
 
 # The OpenStack Metering (Ceilometer) API endpoint
-default['openstack']['endpoints']['metering-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['metering-api']['scheme'] = 'http'
-default['openstack']['endpoints']['metering-api']['port'] = '8777'
+default['openstack']['endpoints']['telemetry-api']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['telemetry-api']['scheme'] = 'http'
+default['openstack']['endpoints']['telemetry-api']['port'] = '8777'
 # The ceilometer client appends the protocol version to the endpoint URL,
 # so the path needs to be empty
-default['openstack']['endpoints']['metering-api']['path'] = ''
-default['openstack']['endpoints']['metering-api']['bind_interface'] = nil
+default['openstack']['endpoints']['telemetry-api']['path'] = ''
+default['openstack']['endpoints']['telemetry-api']['bind_interface'] = nil
 
 # ******************** OpenStack Orchestration Endpoints ***************************
 
@@ -263,7 +263,7 @@ default['openstack']['endpoints']['orchestration-api-cloudwatch']['bind_interfac
 # default['openstack']['endpoints']['image-api']['uri']            = 'https://image.example.com:9292/v2'
 # default['openstack']['endpoints']['image-registry']['uri']       = 'https://image.example.com:9191/v2'
 # default['openstack']['endpoints']['block-storage-api']['uri']           = 'https://volume.example.com:8776/v1/%(tenant_id)s'
-# default['openstack']['endpoints']['metering-api']['uri']         = 'https://metering.example.com:9000/v1'
+# default['openstack']['endpoints']['telemetry-api']['uri']        = 'https://telemetry.example.com:9000/v1'
 # default['openstack']['endpoints']['orchestration-api']['uri']               = 'https://orchestration.example.com:8004//v1/%(tenant_id)s'
 # default['openstack']['endpoints']['orchestration-api-cfn']['uri']           = 'https://orchestration.example.com:8000/v1'
 # default['openstack']['endpoints']['orchestration-api-cloudwatch']['uri']    = 'https://orchestration.example.com:8003/v1'

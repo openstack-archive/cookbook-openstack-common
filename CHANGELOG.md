@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.4.0
+* Rename openstack-metering to openstack-telemetry
+
 ## 8.3.0
 ### Blueprint
 * use-data-bag-for-qpid-password: have qpid use get_password method rather than

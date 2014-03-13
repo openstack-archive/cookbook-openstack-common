@@ -153,13 +153,13 @@ default['openstack']['db']['dashboard']['username'] = 'dash'
 default['openstack']['db']['dashboard']['migrate'] = true
 
 # Database used by OpenStack Metering (Ceilometer)
-default['openstack']['db']['metering']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['metering']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['metering']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['metering']['db_name'] = 'ceilometer'
-default['openstack']['db']['metering']['username'] = 'ceilometer'
-default['openstack']['db']['metering']['nosql']['used'] = false
-default['openstack']['db']['metering']['nosql']['port'] = '27017'
+default['openstack']['db']['telemetry']['service_type'] = node['openstack']['db']['service_type']
+default['openstack']['db']['telemetry']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['telemetry']['port'] = node['openstack']['endpoints']['db']['port']
+default['openstack']['db']['telemetry']['db_name'] = 'ceilometer'
+default['openstack']['db']['telemetry']['username'] = 'ceilometer'
+default['openstack']['db']['telemetry']['nosql']['used'] = false
+default['openstack']['db']['telemetry']['nosql']['port'] = '27017'
 
 # Database used by OpenStack Orchestration (Heat)
 default['openstack']['db']['orchestration']['service_type'] = node['openstack']['db']['service_type']

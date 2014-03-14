@@ -79,7 +79,7 @@ module ::Openstack # rubocop:disable Documentation
         path = info['path']
         "sqlite:///#{path}"
       when 'db2'
-        if service == 'metering'
+        if service == 'telemetry'
           "db2://#{user}:#{pass}@#{host}:#{info['nosql']['port']}/#{name}"
         else
           "ibm_db_sa://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"

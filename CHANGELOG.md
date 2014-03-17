@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 8.4.2
+* Adjust image service endpoint path from /v2 to /
+
 ## 8.4.1
 * Fix a renaming openstack-metering issue, change `metering` to `telemetry` in db_uri function.
 

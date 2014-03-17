@@ -197,7 +197,9 @@ default['openstack']['endpoints']['network-api']['bind_interface'] = nil
 default['openstack']['endpoints']['image-api']['host'] = node['openstack']['endpoints']['host']
 default['openstack']['endpoints']['image-api']['scheme'] = 'http'
 default['openstack']['endpoints']['image-api']['port'] = '9292'
-default['openstack']['endpoints']['image-api']['path'] = '/v2'
+# The glance client appends the protocol version to the endpoint URL,
+# so the path needs to be empty
+default['openstack']['endpoints']['image-api']['path'] = ''
 default['openstack']['endpoints']['image-api']['bind_interface'] = nil
 
 # The OpenStack Image (Glance) Registry API endpoint

@@ -52,6 +52,7 @@ default['openstack']['mq']['vhost'] = '/'
 ###################################################################
 # Default qpid and rabbit values (for attribute assignment below)
 ###################################################################
+default['openstack']['mq']['qpid']['protocol'] = 'tcp'
 qpid_defaults = {
   username: node['openstack']['mq']['user'],
   sasl_mechanisms: '',
@@ -62,7 +63,7 @@ qpid_defaults = {
   reconnect_interval_max: 0,
   reconnect_interval: 0,
   heartbeat: 60,
-  protocol: 'tcp',
+  protocol: node['openstack']['mq']['qpid']['protocol'],
   tcp_nodelay: true,
   host: node['openstack']['endpoints']['mq']['host'],
   port: node['openstack']['endpoints']['mq']['port'],

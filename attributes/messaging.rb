@@ -41,11 +41,6 @@ services = %w{block-storage compute image telemetry network orchestration}
 ###################################################################
 default['openstack']['mq']['server_role'] = 'os-ops-messaging'
 default['openstack']['mq']['service_type'] = 'rabbitmq'
-# Note that the openstack:mq:host and openstack:mq:port attributes are being
-# deprecated in favor of the mq endpoint and will be removed in a future
-# patch set.
-default['openstack']['mq']['host'] = default['openstack']['endpoints']['mq']['host']
-default['openstack']['mq']['port'] = default['openstack']['endpoints']['mq']['port']
 default['openstack']['mq']['user'] = 'guest'
 default['openstack']['mq']['vhost'] = '/'
 

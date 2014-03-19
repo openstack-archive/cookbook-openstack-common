@@ -80,11 +80,6 @@ default['openstack']['endpoints']['db']['bind_interface'] = nil
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'
 default['openstack']['db']['service_type'] = 'mysql'
-# Note that the openstack:db:host and openstack:db:port attributes are being
-# deprecated in favor of the db endpoint and will be removed in a future
-# patch set.
-default['openstack']['db']['host'] = default['openstack']['endpoints']['db']['host']
-default['openstack']['db']['port'] = default['openstack']['endpoints']['db']['port']
 
 # Database used by the OpenStack Compute (Nova) service
 default['openstack']['db']['compute']['service_type'] = node['openstack']['db']['service_type']

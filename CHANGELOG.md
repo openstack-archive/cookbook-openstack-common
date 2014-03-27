@@ -1,6 +1,9 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 9.0.0
+* Upgrading to Icehouse
+
 ## 8.5.0
 * Add get_secret library method which allows one to specify a secrets_data_bag in attributes.
 

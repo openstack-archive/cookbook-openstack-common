@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@lists.tfoundry.com'
 license          'Apache 2.0'
 description      'Common OpenStack attributes, libraries and recipes.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '8.5.0'
+version          '9.0.0'
 
 recipe           'openstack-common', 'Installs/Configures common recipes'
 recipe           'openstack-common::set_endpoints_by_interface', 'Set endpoints by interface'
@@ -16,6 +16,6 @@ recipe           'openstack-common::sysctl', 'Configures sysctl settings'
 end
 
 depends          'apt', '~> 2.3.8'
-depends          'database'
-depends          'yum', '~> 3.0'
-depends          'yum-epel'
+depends          'database', '~> 2.0.0'
+depends          'yum', '~> 3.1.4'
+depends          'yum-epel', '~> 0.3.4'

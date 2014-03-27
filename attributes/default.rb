@@ -183,6 +183,13 @@ default['openstack']['endpoints']['compute-novnc']['port'] = '6080'
 default['openstack']['endpoints']['compute-novnc']['path'] = '/vnc_auto.html'
 default['openstack']['endpoints']['compute-novnc']['bind_interface'] = nil
 
+# The OpenStack Compute (Nova) vnc endpoint
+default['openstack']['endpoints']['compute-vnc']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['compute-vnc']['scheme'] = nil
+default['openstack']['endpoints']['compute-vnc']['port'] = nil
+default['openstack']['endpoints']['compute-vnc']['path'] = nil
+default['openstack']['endpoints']['compute-vnc']['bind_interface'] = nil
+
 # ******************** OpenStack Network Endpoints ****************************
 
 # The OpenStack Network (Neutron) API endpoint.

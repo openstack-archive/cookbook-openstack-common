@@ -201,6 +201,20 @@ default['openstack']['endpoints']['network-api']['port'] = '9696'
 default['openstack']['endpoints']['network-api']['path'] = ''
 default['openstack']['endpoints']['network-api']['bind_interface'] = nil
 
+# The OpenStack Network Linux Bridge endpoint
+default['openstack']['endpoints']['network-linuxbridge']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['network-linuxbridge']['scheme'] = nil
+default['openstack']['endpoints']['network-linuxbridge']['port'] = nil
+default['openstack']['endpoints']['network-linuxbridge']['path'] = nil
+default['openstack']['endpoints']['network-linuxbridge']['bind_interface'] = nil
+
+# The OpenStack Network Open vSwitch endpoint
+default['openstack']['endpoints']['network-openvswitch']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['network-openvswitch']['scheme'] = nil
+default['openstack']['endpoints']['network-openvswitch']['port'] = nil
+default['openstack']['endpoints']['network-openvswitch']['path'] = nil
+default['openstack']['endpoints']['network-openvswitch']['bind_interface'] = nil
+
 # ******************** OpenStack Image Endpoints ******************************
 
 # The OpenStack Image (Glance) API endpoint

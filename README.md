@@ -1,12 +1,12 @@
 Description
 ===========
 
-This cookbook provides common setup recipes, helper methods and attributes that describe an OpenStack deployment as part of the OpenStack reference deployment Chef for OpenStack.
+This cookbook provides common setup recipes, helper methods and attributes that describe an OpenStack deployment as part of the OpenStack reference deployment Chef for OpenStack. This version is for deploying the 'Havana' release, the 'master' branch is currently working on the 'Icehouse' release.
 
 Requirements
 ============
 
-* Chef 0.10.0 or higher required (for Chef environment use).
+* Chef 11 or higher is required.
 
 Cookbooks
 ---------
@@ -15,6 +15,8 @@ The following cookbooks are dependencies:
 
 * apt
 * database
+* yum
+* yum-epel
 
 Attributes
 ==========
@@ -205,7 +207,7 @@ License and Author
 |:---------------------|:---------------------------------------------------|
 | **Author**           |  Jay Pipes (<jaypipes@att.com>)                    |
 | **Author**           |  John Dewey (<jdewey@att.com>)                     |
-| **Author**           |  Matt Ray (<matt@opscode.com>)                     |
+| **Author**           |  Matt Ray (<matt@getchef.com>)                     |
 | **Author**           |  Craig Tracey (<craigtracey@gmail.com>)            |
 | **Author**           |  Sean Gallagher (<sean.gallagher@att.com>)         |
 | **Author**           |  Ionut Artarisi (<iartarisi@suse.cz>)              |
@@ -213,7 +215,7 @@ License and Author
 | **Author**           |  Brett Campbell (<brett.campbell@rackspace.com>)   |
 |                      |                                                    |
 | **Copyright**        |  Copyright (c) 2012-2013, AT&T Services, Inc.      |
-| **Copyright**        |  Copyright (c) 2013, Opscode, Inc.                 |
+| **Copyright**        |  Copyright (c) 2013-2014, Chef Software, Inc.      |
 | **Copyright**        |  Copyright (c) 2013, Craig Tracey                  |
 | **Copyright**        |  Copyright (c) 2013, SUSE Linux GmbH               |
 | **Copyright**        |  Copyright (c) 2013-2014, IBM, Corp.               |

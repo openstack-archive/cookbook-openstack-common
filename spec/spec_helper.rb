@@ -1,7 +1,8 @@
 # encoding: UTF-8
-
 require 'chefspec'
 require 'chefspec/berkshelf'
+
+ChefSpec::Coverage.start! { add_filter 'openstack-common' }
 
 LOG_LEVEL = :fatal
 UBUNTU_OPTS = {
@@ -28,9 +29,3 @@ shared_context 'library-stubs' do
     subject.stub(:node).and_return(chef_run.node)
   end
 end
-
-# README(galstrom21): This will remove any coverage warnings from
-#   dependent cookbooks
-ChefSpec::Coverage.filters << '*/openstack-common'
-
-at_exit { ChefSpec::Coverage.report! }

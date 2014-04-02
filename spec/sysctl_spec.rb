@@ -19,10 +19,12 @@ describe 'openstack-common::sysctl' do
         expect(sprintf('%o', file.mode)).to eq '644'
       end
 
-      { 'net.ipv4.conf.all.rp_filter' => 0,
-        'net.ipv4.conf.default.rp_filter' => 0 }.each do |k, v|
-        it "sets the #{k}" do
-          expect(chef_run).to render_file(file.name).with_content("#{k} = #{v}")
+      it 'sets the sysctl attributes' do
+        sysctl_kv = { 'systcl_key1' => 'sysctl_value1',
+                      'sysctl_key2' => 'sysctl_value2' }
+        node.set['openstack']['sysctl'] = sysctl_kv
+        sysctl_kv.each do |k, v|
+          expect(chef_run).to render_file(file.name).with_content(/^#{k} = #{v}$/)
         end
       end
     end

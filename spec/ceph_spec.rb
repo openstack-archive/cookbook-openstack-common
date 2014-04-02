@@ -32,23 +32,26 @@ describe 'openstack-common::ceph_client' do
       )
     end
 
-    it 'creates the /etc/ceph/ceph.conf file' do
-      expect(chef_run).to create_template(file.name).with(
-        owner: 'root',
-        group: 'root',
-        mode: '644'
-      )
-    end
+    context 'configuration file' do
+      it 'creates the file' do
+        expect(chef_run).to create_template(file.name).with(
+          owner: 'root',
+          group: 'root',
+          mode: '644'
+        )
+      end
 
-    it 'configures ceph.conf' do
-      [/^\[global\]$/,
-       /^fsid = 9e5038a9-4329-4cad-8c24-0813a49d1125$/,
-       /^mon_initial_members = 10.0.1.10, 10.0.1.20$/,
-       /^mon_hosts = mon01, mon02$/].each do |content|
-        expect(chef_run).to render_file(file.name).with_content(content)
+      it 'sets file contents from the global ceph configuration attributes' do
+        node.set['openstack']['ceph']['global'] = {
+          'key_1' => %w(value_1_1 value_1_2),
+          'key_2' => 'value_2'
+        }
+        [/^key_1 = value_1_1, value_1_2$/,
+         /^key_2 = value_2$/].each do |content|
+          expect(chef_run).to render_file(file.name).with_content(content)
+        end
       end
     end
-
     describe 'when setup_client is not set' do
       let(:chef_run) do
         node.set['openstack']['ceph']['setup_client'] = false

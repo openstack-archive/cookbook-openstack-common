@@ -32,19 +32,34 @@ describe 'openstack-common::logging' do
         expect(sprintf('%o', file.mode)).to eq '644'
       end
 
-      it 'templates openstack.logging.ignore block' do
-        node.set['openstack']['logging']['ignore'] = {
-          'test.nova.api.openstack.wsgi' => 'WARNING'
-        }
+      context 'logging ignore' do
+        it 'adds loggers keys ignore' do
+          node.set['openstack']['logging']['ignore'] = {
+            'ignore.key.1' => 'ignore.value.1',
+            'ignore.key.2' => 'ignore.value.2'
+          }
+          [
+            /^\[loggers\]$/,
+            /^keys=.*ignore_key_1,ignore_key_2$/
+          ].each do |content|
+            expect(chef_run).to render_file(file.name).with_content(content)
+          end
+        end
 
-        tmp = [
-          '[logger_test_nova_api_openstack_wsgi]',
-          'level = WARNING',
-          'handlers = prod,debug',
-          'qualname = test.nova.api.openstack.wsgi'
-        ]
-        expect(chef_run).to render_file(file.name).with_content(tmp.join('
-'))
+        it 'adds specific logger ignore block' do
+          node.set['openstack']['logging']['ignore'] = {
+            'test.nova.api.openstack.wsgi' => 'WARNING'
+          }
+
+          [
+            /^\[logger_test_nova_api_openstack_wsgi\]$/,
+            /^level = WARNING$/,
+            /^handlers = prod,debug$/,
+            /^qualname = test.nova.api.openstack.wsgi$/
+          ].each do |content|
+            expect(chef_run).to render_file(file.name).with_content(content)
+          end
+        end
       end
     end
   end

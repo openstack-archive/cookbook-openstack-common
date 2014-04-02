@@ -101,6 +101,7 @@ default['openstack']['mq']['block-storage']['qpid']['notification_topic'] =
   node['openstack']['mq']['block-storage']['notification_topic']
 default['openstack']['mq']['block-storage']['rabbit']['notification_topic'] =
   node['openstack']['mq']['block-storage']['notification_topic']
+default['openstack']['mq']['block-storage']['control_exchange'] = 'cinder'
 
 # image
 default['openstack']['mq']['image']['notifier_strategy'] = 'noop'
@@ -109,7 +110,18 @@ default['openstack']['mq']['image']['qpid']['notification_topic'] =
   node['openstack']['mq']['image']['notification_topic']
 default['openstack']['mq']['image']['rabbit']['notification_topic'] =
   node['openstack']['mq']['image']['notification_topic']
+default['openstack']['mq']['image']['control_exchange'] = 'glance'
 
 # network
 # AMQP topics used for openstack notifications, can be comma-separated values
 default['openstack']['mq']['network']['notification_topics'] = 'notifications'
+default['openstack']['mq']['network']['control_exchange'] = 'neutron'
+
+# compute
+default['openstack']['mq']['compute']['control_exchange'] = 'nova'
+
+# orchestration
+default['openstack']['mq']['orchestration']['control_exchange'] = 'heat'
+
+# telemetry
+default['openstack']['mq']['telemetry']['control_exchange'] = 'ceilometer'

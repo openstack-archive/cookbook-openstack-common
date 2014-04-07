@@ -24,8 +24,8 @@ module ::Openstack # rubocop:disable Documentation
   #
   # @param [String] interface The interface to query.
   # @param [String] family The protocol family to use.
-  # @return [String] The IPv4 address.
-  def address_for(interface, family = 'inet')
+  # @return [String] The address.
+  def address_for(interface, family = node['openstack']['endpoints']['family'])
     interface_node = node['network']['interfaces'][interface]['addresses']
     interface_node.select do |address, data|
       return address if data['family'] == family

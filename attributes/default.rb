@@ -122,6 +122,7 @@ default['openstack']['yum']['repo-key'] = 'https://raw.github.com/redhat-opensta
 
 # ******************** OpenStack Identity Endpoints ***************************
 default['openstack']['endpoints']['host'] = '127.0.0.1'
+default['openstack']['endpoints']['family'] = 'inet'
 
 # The OpenStack Identity Bind API endpoint is used to determine what IP/host
 # to bind the Identity services to.

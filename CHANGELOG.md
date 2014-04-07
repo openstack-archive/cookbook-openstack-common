@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 9.0.2
+* Allow address_for family default to be overridden
+
 ## 9.0.1
 ### Bug
 * Fix the depends cookbook version issue in metadata.rb

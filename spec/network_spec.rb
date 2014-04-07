@@ -33,14 +33,28 @@ describe 'openstack-common::default' do
 
     include_context 'library-stubs'
 
-    describe '#address_for' do
+    describe '#address_for ipv4' do
       it 'returns ipv4 address' do
         expect(
           subject.address_for('lo')
         ).to eq('127.0.0.1')
       end
 
-      it 'returns ipv4 address' do
+      it 'returns ipv6 address' do
+        expect(
+          subject.address_for('lo', 'inet6')
+        ).to eq('::1')
+      end
+    end
+    describe '#address_for ipv6' do
+      it 'returns ipv6 address' do
+        node.set['openstack']['endpoints']['family'] = 'inet6'
+        expect(
+          subject.address_for('lo')
+        ).to eq('::1')
+      end
+
+      it 'returns ipv6 address' do
         expect(
           subject.address_for('lo', 'inet6')
         ).to eq('::1')

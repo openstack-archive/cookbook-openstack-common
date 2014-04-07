@@ -35,6 +35,11 @@ The attribute is in the `default["openstack"]["compute"]["network"]["service_typ
 Recipes
 =======
 
+client
+----
+
+Install the common python openstack client package
+
 default
 ----
 

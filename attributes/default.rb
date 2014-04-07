@@ -411,3 +411,16 @@ default['openstack']['ceph']['global'] = {
   auth_client_required: 'cephx',
   filestore_xattr_use_omap: true
 }
+
+case node['platform_family']
+when 'rhel', 'suse'
+  default['openstack']['common']['platform'] = {
+    'common_client_packages' => ['python-openstackclient'],
+    'package_overrides' => ''
+  }
+when 'debian'
+  default['openstack']['common']['platform'] = {
+    'common_client_packages' => ['python-openstackclient'],
+    'package_overrides' => "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'"
+  }
+end

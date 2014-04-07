@@ -1,6 +1,8 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 9.1.0
+* Added python-openstackclient support
 
 ## 9.0.2
 * Allow address_for family default to be overridden

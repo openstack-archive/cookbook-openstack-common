@@ -20,15 +20,15 @@
 
 return unless node['openstack']['ceph']['setup_client']
 
-case node['platform']
-when 'ubuntu'
+case node['platform_family']
+when 'debian'
   apt_repository 'ceph' do
     uri node['openstack']['ceph']['platform']['uri']
     distribution node['lsb']['codename']
     components ['main']
     key node['openstack']['ceph']['key-url']
   end
-when 'fedora', 'redhat', 'centos', 'suse' # :pragma-foodcritic: ~FC024 - won't fix this
+when 'fedora', 'rhel', 'suse' # :pragma-foodcritic: ~FC024 - won't fix this
   # TODO
 end
 

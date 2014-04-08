@@ -20,9 +20,8 @@ SUSE_OPTS = {
   version: '11.03',
   log_lovel: LOG_LEVEL
 }
-CHEFSPEC_OPTS = {
-  log_level: LOG_LEVEL
-}
+# We set a default platform for non-platform specific test cases
+CHEFSPEC_OPTS = UBUNTU_OPTS
 
 shared_context 'library-stubs' do
   before do

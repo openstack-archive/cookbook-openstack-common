@@ -1,6 +1,9 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 9.1.1
+* Add new library method for making cli calls and one for getting uuids
+
 ## 9.1.0
 * Added python-openstackclient support
 

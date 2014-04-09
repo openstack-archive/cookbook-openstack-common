@@ -94,6 +94,7 @@ Libraries
 
 This cookbook exposes a set of default library routines:
 
+* `cli` -- Used to call openstack CLIs
 * `endpoint` -- Used to return a `::URI` object representing the named OpenStack endpoint
 * `endpoints` -- Useful for operating on all OpenStack endpoints
 * `db` -- Returns a Hash of information about a named OpenStack database

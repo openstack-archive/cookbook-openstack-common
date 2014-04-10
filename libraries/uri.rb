@@ -35,7 +35,7 @@ module ::Openstack # rubocop:disable Documentation
   # 'host' keys are nil).
   def uri_from_hash(hash)
     if hash['uri']
-      ::URI.parse hash['uri']
+      ::URI.parse ::URI.encode(hash['uri'])
     else
       host = address hash
       return nil unless host

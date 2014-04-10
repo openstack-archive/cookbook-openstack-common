@@ -22,17 +22,14 @@
 require 'uri'
 
 module ::Openstack # rubocop:disable Documentation
-  # Shortcut to get the full URI for an endpoint. If the 'uri' key isn't
-  # set in the endpoint hash, we use the ::Openstack.get_uri_from_mash
-  # library routine from the openstack-common cookbook to grab a URI object
-  # and construct the URI object from the endpoint parts.
+  # Shortcut to get the full URI for an endpoint, and return it as a URI object
+  # First we get the attribute hash for the endpoint, using endpoint_for().
+  # Then we call uri_from_hash(). If the hash has a 'uri' key,
+  # this gets converted to a URI object and returned. If not, a URI object is
+  # constructed from the endpoint parts in the endpoint hash, and returned
   def endpoint(name)
-    ep = endpoint_for name
-    if ep && ep['uri']
-      ::URI.parse ::URI.encode(ep['uri'])
-    elsif ep
-      uri_from_hash ep
-    end
+    ep = endpoint_for(name)
+    uri_from_hash(ep) if ep
   end
 
   # Useful for iterating over the OpenStack endpoints

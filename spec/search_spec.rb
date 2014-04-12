@@ -21,7 +21,7 @@ describe 'openstack-common::default' do
           .with(:node, '(chef_environment:_default AND roles:role) OR (chef_environment:_default AND recipes:role)')
           .and_return([chef_run.node])
         resp = subject.search_for('role')
-        expect(resp[0]['fqdn']).to eq('chefspec.local')
+        expect(resp[0]['fqdn']).to eq('fauxhai.local')
       end
 
       it 'returns empty results' do

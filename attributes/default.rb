@@ -391,10 +391,10 @@ default['openstack']['ceph']['key-url'] = 'https://ceph.com/git/?p=ceph.git;a=bl
 # Default OpenStack Network Type: nova (optional: neutron)
 default['openstack']['compute']['network']['service_type'] = 'nova'
 
-case platform
-when 'ubuntu'
+case platform_family
+when 'debian'
   default['openstack']['ceph']['platform']['uri'] = 'http://ceph.com/debian-emperor'
-when 'fedora', 'redhat', 'centos', 'suse' # :pragma-foodcritic: ~FC024 - won't fix this
+when 'fedora', 'rhel', 'suse' # :pragma-foodcritic: ~FC024 - won't fix this
   default['openstack']['ceph']['platform']['uri'] = 'http://ceph.com/rpm-emperor'
 end
 

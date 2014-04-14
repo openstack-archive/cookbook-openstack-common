@@ -1,0 +1,15 @@
+<%= node['openstack']['common']['custom_template_banner'] %>
+
+# COMMON OPENSTACK ENVS
+export OS_USERNAME=<%= @user %>
+export OS_PASSWORD=<%= @password %>
+export OS_TENANT_NAME=<%= @tenant %>
+export OS_AUTH_URL=<%= @identity_endpoint %>
+export OS_REGION_NAME=<%= node['openstack']['region'] %>
+
+<% if node['openstack']['misc_openrc'] %>
+# Misc options
+<% node['openstack']['misc_openrc'].each do |m| %>
+<%= m %>
+<% end %>
+<% end %>

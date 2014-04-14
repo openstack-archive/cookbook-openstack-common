@@ -77,6 +77,12 @@ example, overriding `node['openstack']['endpoints']['identity']['host']`). If
 ]
 ```
 
+openrc
+----
+
+Creates an /root/openrc file
+
+
 sysctl
 ----
 

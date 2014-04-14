@@ -28,3 +28,22 @@ shared_context 'library-stubs' do
     subject.stub(:node).and_return(chef_run.node)
   end
 end
+
+shared_context 'common-stubs' do
+  before do
+    Chef::Recipe.any_instance.stub(:search_for)
+    .with('os-identity').and_return(
+      [{
+        'openstack' => {
+          'identity' => {
+            'admin_tenant_name' => 'admin',
+            'admin_user' => 'admin'
+          }
+        }
+      }]
+    )
+    Chef::Recipe.any_instance.stub(:get_password)
+      .with('user', 'admin')
+      .and_return('admin')
+  end
+end

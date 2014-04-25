@@ -30,7 +30,7 @@
 default['openstack']['developer_mode'] = false
 
 # The type of token signing to use (uuid or pki)
-default['openstack']['auth']['strategy'] = 'uuid'
+default['openstack']['auth']['strategy'] = 'pki'
 
 # Set to true where using self-signed certs (in testing environments)
 default['openstack']['auth']['validate_certs'] = true

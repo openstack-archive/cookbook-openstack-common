@@ -18,10 +18,12 @@
 # limitations under the License.
 #
 
+platform_options = node['openstack']['common']['platform']
 case node['platform_family']
 when 'debian'
   package 'ubuntu-cloud-keyring' do
-    action :install
+    options platform_options['package_overrides']
+    action :upgrade
   end
 
   if node['openstack']['apt']['live_updates_enabled']

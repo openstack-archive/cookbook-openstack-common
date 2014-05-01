@@ -11,8 +11,8 @@ describe 'openstack-common::default' do
       runner.converge(described_recipe)
     end
 
-    it 'installs ubuntu-cloud-keyring package' do
-      expect(chef_run).to install_package 'ubuntu-cloud-keyring'
+    it 'upgrades ubuntu-cloud-keyring package' do
+      expect(chef_run).to upgrade_package 'ubuntu-cloud-keyring'
     end
 
     it 'configures openstack repository' do

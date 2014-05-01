@@ -11,7 +11,7 @@ describe 'openstack-common::client' do
       runner.converge(described_recipe)
     end
 
-    it 'installs common client packages' do
+    it 'upgrades common client packages' do
       expect(chef_run).to upgrade_package('python-openstackclient')
     end
   end

@@ -1,6 +1,9 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 9.2.1
+* Fix package action to allow updates
+
 ## 9.2.0
 * Add recipe for openrc file (moved from compute cookbook)
 

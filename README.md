@@ -80,7 +80,9 @@ example, overriding `node['openstack']['endpoints']['identity']['host']`). If
 openrc
 ----
 
-Creates an /root/openrc file
+Creates an /root/openrc file. This requires the identity attributes for
+admin_user and admin_tenant_name, or for the identity_service_chef_role
+to be used on the identity server node.
 
 
 sysctl

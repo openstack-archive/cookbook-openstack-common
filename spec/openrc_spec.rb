@@ -42,6 +42,17 @@ describe 'openstack-common::openrc' do
         expect(chef_run).to render_file(file.name).with_content(
           /^export MISC2=OPTION2$/)
       end
+
+      it 'contains overridden auth environment variables' do
+        node.set['openstack']['identity']['admin_tenant_name'] = 'admin-tenant-name-override'
+        node.set['openstack']['identity']['admin_user'] = 'admin-user-override'
+        [
+          /^export OS_USERNAME=admin-user-override$/,
+          /^export OS_TENANT_NAME=admin-tenant-name-override$/
+        ].each do |line|
+          expect(chef_run).to render_file(file.name).with_content(line)
+        end
+      end
     end
   end
 end

@@ -22,13 +22,22 @@ class ::Chef::Recipe # rubocop:disable Documentation
   include ::Openstack
 end
 
-identity_service_role = node['openstack']['identity_service_chef_role']
-keystone = search_for(identity_service_role).first
+# check attributes before searching
+if node['openstack']['identity'] && node['openstack']['identity']['admin_tenant_name'] && node['openstack']['identity']['admin_user']
+  ksadmin_tenant_name = node['openstack']['identity']['admin_tenant_name']
+  ksadmin_user = node['openstack']['identity']['admin_user']
+else
+  identity_service_role = node['openstack']['identity_service_chef_role']
+  keystone = search_for(identity_service_role).first
 
-return if keystone.nil?
+  if keystone.nil?
+    Chef::Log.warn("openrc not created, identity role node not found: #{identity_service_role}")
+    return
+  end
 
-ksadmin_tenant_name = keystone['openstack']['identity']['admin_tenant_name']
-ksadmin_user = keystone['openstack']['identity']['admin_user']
+  ksadmin_tenant_name = keystone['openstack']['identity']['admin_tenant_name']
+  ksadmin_user = keystone['openstack']['identity']['admin_user']
+end
 
 ksadmin_pass = get_password 'user', ksadmin_user
 identity_endpoint = endpoint 'identity-api'

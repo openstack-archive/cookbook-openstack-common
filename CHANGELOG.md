@@ -1,6 +1,9 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 9.2.2
+* Fixed openrc failure on role search
+
 ## 9.2.1
 * Fix package action to allow updates
 

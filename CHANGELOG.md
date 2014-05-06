@@ -1,6 +1,9 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 9.3.0
+* Provide an option to specify the password when dev mode equals true
+
 ## 9.2.2
 * Fixed openrc failure on role search
 

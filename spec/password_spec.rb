@@ -17,6 +17,12 @@ describe 'openstack-common::default' do
         expect(subject.secret('passwords', 'nova')).to eq('nova')
       end
 
+      it 'returns the specified password when developer_mode is true' do
+        node.set['openstack']['developer_mode'] = true
+        node.override['openstack']['secret']['nova'] = '12345'
+        expect(subject.secret('passwords', 'nova')).to eq('12345')
+      end
+
       it 'returns databag when developer_mode is false' do
         value = { 'nova' => 'this' }
         ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
@@ -29,6 +35,12 @@ describe 'openstack-common::default' do
       it 'returns index param when developer_mode is true' do
         node.set['openstack']['developer_mode'] = true
         expect(subject.get_secret('nova')).to eq('nova')
+      end
+
+      it 'returns the specified password when developer_mode is true' do
+        node.set['openstack']['developer_mode'] = true
+        node.override['openstack']['secret']['nova'] = '67890'
+        expect(subject.get_secret('nova')).to eq('67890')
       end
 
       it 'returns databag when developer_mode is false' do

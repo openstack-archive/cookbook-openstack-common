@@ -44,10 +44,16 @@ default['openstack']['mq']['service_type'] = 'rabbitmq'
 default['openstack']['mq']['user'] = 'guest'
 default['openstack']['mq']['vhost'] = '/'
 
+# defined in oslo/messaging/_drivers/amqp.py
+default['openstack']['mq']['durable_queues'] = false
+default['openstack']['mq']['auto_delete'] = false
+
 ###################################################################
 # Default qpid and rabbit values (for attribute assignment below)
 ###################################################################
 default['openstack']['mq']['qpid']['protocol'] = 'tcp'
+# defined in oslo/messaging/_drivers/impl_qpid.py
+default['openstack']['mq']['qpid']['topology_version'] = 1
 qpid_defaults = {
   username: node['openstack']['mq']['user'],
   sasl_mechanisms: '',
@@ -62,7 +68,8 @@ qpid_defaults = {
   tcp_nodelay: true,
   host: node['openstack']['endpoints']['mq']['host'],
   port: node['openstack']['endpoints']['mq']['port'],
-  qpid_hosts: ["#{node['openstack']['endpoints']['mq']['host']}:#{node['openstack']['endpoints']['mq']['port']}"]
+  qpid_hosts: ["#{node['openstack']['endpoints']['mq']['host']}:#{node['openstack']['endpoints']['mq']['port']}"],
+  topology_version: node['openstack']['mq']['qpid']['topology_version']
 }
 
 rabbit_defaults = {
@@ -80,6 +87,11 @@ rabbit_defaults = {
 services.each do |svc|
   default['openstack']['mq'][svc]['service_type'] = node['openstack']['mq']['service_type']
   default['openstack']['mq'][svc]['notification_topic'] = 'notifications'
+
+  default['openstack']['mq'][svc]['durable_queues'] =
+    node['openstack']['mq']['durable_queues']
+  default['openstack']['mq'][svc]['auto_delete'] =
+    node['openstack']['mq']['auto_delete']
 
   case node['openstack']['mq'][svc]['service_type']
   when 'qpid'

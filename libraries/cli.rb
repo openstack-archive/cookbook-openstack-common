@@ -53,7 +53,11 @@ module ::Openstack # rubocop:disable Documentation
   #       update the provider to use this.
   #
   def openstack_command(cmd, options = '', env = {}, args = {})
-    openstackcmd = [cmd] << options
+    # NOTE: Here we split options (which creates an array) and then merge that
+    #       array into [cmd].  This is done to accomdate cmd + options like:
+    #       keystone user-list
+    #       glance   image-show <id|name>
+    openstackcmd = [cmd].concat(options.split)
     args.each do |key, val|
       openstackcmd << "--#{key}" << val.to_s
     end
@@ -84,6 +88,23 @@ module ::Openstack # rubocop:disable Documentation
       end
     rescue RuntimeError => e
       raise "Could not lookup uuid for #{type}:#{key}=>#{value}. Error was #{e.message}"
+    end
+    nil
+  end
+
+  # return id for a glance image.
+  #
+  # @param [String] name of image
+  # @param [Hash] environment to use.
+  # @return [String] id or nil
+  def image_id(name, env, args = {})
+    begin
+      output = openstack_command('glance', "image-show #{name}", env, args)
+      prettytable_to_array(output).each do |obj|
+        return obj['id'] if obj.key?('id')
+      end
+    rescue RuntimeError => e
+      raise "Could not lookup ID for image #{name}. Error was #{e.message}"
     end
     nil
   end

@@ -1,5 +1,6 @@
 # encoding: UTF-8
 require_relative 'spec_helper'
+require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'uri'
 require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'endpoints'
 
 describe 'openstack-common::set_endpoints_by_interface' do
@@ -175,11 +176,53 @@ describe 'openstack-common::set_endpoints_by_interface' do
         ).to be_nil
       end
 
-      it 'returns db info hash when service found' do
+      it 'returns compute db info hash when service found for default mysql' do
         subject.stub(:node).and_return(chef_run.node)
         expected = 'mysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
         expect(
           subject.db_uri('compute', 'user', 'pass')
+        ).to eq(expected)
+      end
+
+      it 'returns network db info hash when service found for sqlite with options' do
+        node.set['openstack']['db']['service_type'] = 'sqlite'
+        node.set['openstack']['db']['options'] = { 'sqlite' => '?options' }
+        node.set['openstack']['db']['network']['path'] = 'path'
+        subject.stub(:node).and_return(chef_run.node)
+        expected = 'sqlite:///path?options'
+        expect(
+          subject.db_uri('network', 'user', 'pass')
+        ).to eq(expected)
+      end
+
+      it 'returns block-storage db info hash when service found for db2 with options' do
+        node.set['openstack']['db']['service_type'] = 'db2'
+        node.set['openstack']['db']['options'] = { 'db2' => '?options' }
+        subject.stub(:node).and_return(chef_run.node)
+        expected = 'ibm_db_sa://user:pass@127.0.0.1:3306/cinder?options'
+        expect(
+          subject.db_uri('block-storage', 'user', 'pass')
+        ).to eq(expected)
+      end
+
+      it 'returns telemetry db info hash when service found for db2' do
+        node.set['openstack']['db']['service_type'] = 'db2'
+        node.set['openstack']['db']['telemetry']['nosql']['used'] = true
+        subject.stub(:node).and_return(chef_run.node)
+        expected = 'db2://user:pass@127.0.0.1:27017/ceilometer'
+        expect(
+          subject.db_uri('telemetry', 'user', 'pass')
+        ).to eq(expected)
+      end
+
+      it 'returns telemetry db info hash when service found for db2 with options' do
+        node.set['openstack']['db']['service_type'] = 'db2'
+        node.set['openstack']['db']['options'] = { 'nosql' => '?options' }
+        node.set['openstack']['db']['telemetry']['nosql']['used'] = true
+        subject.stub(:node).and_return(chef_run.node)
+        expected = 'db2://user:pass@127.0.0.1:27017/ceilometer?options'
+        expect(
+          subject.db_uri('telemetry', 'user', 'pass')
         ).to eq(expected)
       end
     end

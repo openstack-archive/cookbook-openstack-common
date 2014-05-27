@@ -25,7 +25,7 @@
 # used in an OpenStack deployment.
 #
 # There is no 'scheme' key. Instead, there is a 'service_type' key that should
-# contain one of 'sqlite', 'mysql', or 'postgresql'
+# contain one of 'sqlite', 'mysql', 'db2' or 'postgresql'
 #
 # The ::Openstack::db(<SERVICE_NAME>) library routine allows a lookup from any recipe
 # to this array, returning the host information for the server that contains
@@ -80,6 +80,14 @@ default['openstack']['endpoints']['db']['bind_interface'] = nil
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'
 default['openstack']['db']['service_type'] = 'mysql'
+# Database connection options. Should include starting '?'
+default['openstack']['db']['options'] = {
+   mysql: '?charset=utf8',
+   postgresql: '',
+   sqlite: '',
+   db2: '?charset=utf8',
+   nosql: ''
+}
 
 # Database used by the OpenStack Compute (Nova) service
 default['openstack']['db']['compute']['service_type'] = node['openstack']['db']['service_type']
@@ -87,6 +95,7 @@ default['openstack']['db']['compute']['host'] = node['openstack']['endpoints']['
 default['openstack']['db']['compute']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['compute']['db_name'] = 'nova'
 default['openstack']['db']['compute']['username'] = 'nova'
+default['openstack']['db']['compute']['options'] = node['openstack']['db']['options']
 
 # Database used by the OpenStack Identity (Keystone) service
 default['openstack']['db']['identity']['service_type'] = node['openstack']['db']['service_type']
@@ -95,6 +104,7 @@ default['openstack']['db']['identity']['port'] = node['openstack']['endpoints'][
 default['openstack']['db']['identity']['db_name'] = 'keystone'
 default['openstack']['db']['identity']['username'] = 'keystone'
 default['openstack']['db']['identity']['migrate'] = true
+default['openstack']['db']['identity']['options'] = node['openstack']['db']['options']
 
 # Database used by the OpenStack Image (Glance) service
 default['openstack']['db']['image']['service_type'] = node['openstack']['db']['service_type']
@@ -103,6 +113,7 @@ default['openstack']['db']['image']['port'] = node['openstack']['endpoints']['db
 default['openstack']['db']['image']['db_name'] = 'glance'
 default['openstack']['db']['image']['username'] = 'glance'
 default['openstack']['db']['image']['migrate'] = true
+default['openstack']['db']['image']['options'] = node['openstack']['db']['options']
 
 # Database used by the OpenStack Network (Neutron) service
 default['openstack']['db']['network']['service_type'] = node['openstack']['db']['service_type']
@@ -110,6 +121,7 @@ default['openstack']['db']['network']['host'] = node['openstack']['endpoints']['
 default['openstack']['db']['network']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['network']['db_name'] = 'neutron'
 default['openstack']['db']['network']['username'] = 'neutron'
+default['openstack']['db']['network']['options'] = node['openstack']['db']['options']
 # The SQLAlchemy connection string used to connect to the slave database
 default['openstack']['db']['network']['slave_connection'] = ''
 # Database reconnection retry times - in event connectivity is lost
@@ -138,6 +150,7 @@ default['openstack']['db']['block-storage']['host'] = node['openstack']['endpoin
 default['openstack']['db']['block-storage']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['block-storage']['db_name'] = 'cinder'
 default['openstack']['db']['block-storage']['username'] = 'cinder'
+default['openstack']['db']['block-storage']['options'] = node['openstack']['db']['options']
 
 # Database used by the OpenStack Dashboard (Horizon)
 default['openstack']['db']['dashboard']['service_type'] = node['openstack']['db']['service_type']
@@ -146,6 +159,7 @@ default['openstack']['db']['dashboard']['port'] = node['openstack']['endpoints']
 default['openstack']['db']['dashboard']['db_name'] = 'horizon'
 default['openstack']['db']['dashboard']['username'] = 'dash'
 default['openstack']['db']['dashboard']['migrate'] = true
+default['openstack']['db']['dashboard']['options'] = node['openstack']['db']['options']
 
 # Database used by OpenStack Metering (Ceilometer)
 default['openstack']['db']['telemetry']['service_type'] = node['openstack']['db']['service_type']
@@ -155,6 +169,7 @@ default['openstack']['db']['telemetry']['db_name'] = 'ceilometer'
 default['openstack']['db']['telemetry']['username'] = 'ceilometer'
 default['openstack']['db']['telemetry']['nosql']['used'] = false
 default['openstack']['db']['telemetry']['nosql']['port'] = '27017'
+default['openstack']['db']['telemetry']['options'] = node['openstack']['db']['options']
 
 # Database used by OpenStack Orchestration (Heat)
 default['openstack']['db']['orchestration']['service_type'] = node['openstack']['db']['service_type']
@@ -162,6 +177,7 @@ default['openstack']['db']['orchestration']['host'] = node['openstack']['endpoin
 default['openstack']['db']['orchestration']['port'] = node['openstack']['endpoints']['db']['port']
 default['openstack']['db']['orchestration']['db_name'] = 'heat'
 default['openstack']['db']['orchestration']['username'] = 'heat'
+default['openstack']['db']['orchestration']['options'] = node['openstack']['db']['options']
 
 # Switch to store the MySQL root password in a databag instead of
 # using the generated OpenSSL cookbook secure_password one.

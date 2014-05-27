@@ -1,6 +1,8 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 9.4.1
+* Fix to allow database connection options for telemetry nosql
 
 ## 9.4.0
 * Add durable_queues, auto_delete, and qpid topology version attributes

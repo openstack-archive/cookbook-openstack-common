@@ -43,8 +43,8 @@ module ::Openstack # rubocop:disable Documentation
 
   # Instead of specifying the verbose node['openstack']['db'][service],
   # this shortcut allows the simpler and shorter db(service), where
-  # service is one of 'compute', 'image', 'identity', 'network',
-  # and 'volume'
+  # service is one of 'compute', 'image', 'identity', 'network', 'dashboard'
+  # 'orchestration', 'telemetry' 'block-storage' and 'volume'
   def db(service)
     node['openstack']['db'][service]
   rescue
@@ -59,28 +59,34 @@ module ::Openstack # rubocop:disable Documentation
       port = info['port'].to_s
       type = info['service_type']
       name = info['db_name']
-      if type == 'pgsql'
+      options = info['options'][type]
+
       # Normalize to the SQLAlchemy standard db type identifier
+      case type
+      when 'db2'
+        # NoSQL is used for telemetry in the DB2 case
+        if service == 'telemetry' && node['openstack']['db']['telemetry']['nosql']['used']
+          options = info['options']['nosql']
+          port = info['nosql']['port']
+          type = 'db2'
+        else
+          type = 'ibm_db_sa'
+        end
+      when 'pgsql'
         type = 'postgresql'
       end
+
+      # Build uri
       case type
-      when 'postgresql'
-        "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}"
-      when 'mysql'
-        "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
+      when 'mysql', 'postgresql', 'db2', 'ibm_db_sa'
+        "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}#{options}"
       when 'sqlite'
         # SQLite uses filepaths not db name
         # README(galstrom): 3 slashes is a relative path, 4 slashes is an absolute path
         #  example: info['path'] = 'path/to/foo.db' -- will return sqlite:///foo.db
         #  example: info['path'] = '/path/to/foo.db' -- will return sqlite:////foo.db
         path = info['path']
-        "sqlite:///#{path}"
-      when 'db2'
-        if service == 'telemetry'
-          "db2://#{user}:#{pass}@#{host}:#{info['nosql']['port']}/#{name}"
-        else
-          "ibm_db_sa://#{user}:#{pass}@#{host}:#{port}/#{name}?charset=utf8"
-        end
+        "#{type}:///#{path}#{options}"
       end
     end
   end

@@ -100,5 +100,32 @@ describe 'openstack-common::default' do
         expect(result).to eq('1234567890ABCDEFGH')
       end
     end
+
+    describe 'image_id' do
+      let(:env) do
+        {
+          'OS_USERNAME' => 'name',
+          'OS_PASSWORD' => 'pass',
+          'OS_TENANT_NAME' => 'tenant',
+          'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+        }
+      end
+
+      it 'runs glance command to query valid id' do
+        subject.stub(:openstack_command).with('glance', 'image-show cirros', :env, {})
+        subject.stub(:prettytable_to_array)
+          .and_return([{ 'id' => '87f38e15-9737-46cc-a612-7c67ee29a24f', 'name' => 'cirros' }])
+
+        result = subject.image_id('cirros', :env)
+        expect(result).to eq('87f38e15-9737-46cc-a612-7c67ee29a24f')
+      end
+
+      it 'runs glance command to query invalid id' do
+        subject.stub(:openstack_command).with('glance', 'image-show test', :env, {})
+          .and_raise("No image with a name or ID of 'test' exists. (1)")
+
+        expect { subject.image_id('test', :env) }.to raise_error
+      end
+    end
   end
 end

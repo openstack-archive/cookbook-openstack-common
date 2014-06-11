@@ -1,6 +1,10 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+
+## 9.5.1
+* Add Trove endpoints, database and mq attributes
+
 ## 9.5.0
 * Add new image_id cli library method for obtaining glance ID from image name
 

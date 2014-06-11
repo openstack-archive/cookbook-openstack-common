@@ -179,6 +179,14 @@ default['openstack']['db']['orchestration']['db_name'] = 'heat'
 default['openstack']['db']['orchestration']['username'] = 'heat'
 default['openstack']['db']['orchestration']['options'] = node['openstack']['db']['options']
 
+# Database used by OpenStack Database (Trove)
+default['openstack']['db']['database']['service_type'] = node['openstack']['db']['service_type']
+default['openstack']['db']['database']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['database']['port'] = node['openstack']['endpoints']['db']['port']
+default['openstack']['db']['database']['db_name'] = 'trove'
+default['openstack']['db']['database']['username'] = 'trove'
+default['openstack']['db']['database']['options'] = node['openstack']['db']['options']
+
 # Switch to store the MySQL root password in a databag instead of
 # using the generated OpenSSL cookbook secure_password one.
 default['openstack']['db']['root_user_use_databag'] = false

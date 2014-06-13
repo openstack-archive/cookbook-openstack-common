@@ -4,7 +4,7 @@
 # Attributes:: messaging
 #
 # Copyright 2012-2013, AT&T Services, Inc.
-# Copyright 2013, SUSE Linux GmbH
+# Copyright 2013-2014, SUSE Linux GmbH
 # Copyright 2013-2014, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +34,8 @@ default['openstack']['endpoints']['mq']['bind_interface'] = nil
 ###################################################################
 # Services to assign mq attributes for
 ###################################################################
-services = %w{block-storage compute image telemetry network orchestration}
+services = %w{block-storage compute database image
+              telemetry network orchestration}
 
 ###################################################################
 # Generic default attributes

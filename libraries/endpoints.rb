@@ -43,8 +43,7 @@ module ::Openstack # rubocop:disable Documentation
 
   # Instead of specifying the verbose node['openstack']['db'][service],
   # this shortcut allows the simpler and shorter db(service), where
-  # service is one of 'compute', 'image', 'identity', 'network', 'dashboard'
-  # 'orchestration', 'telemetry' 'block-storage' and 'volume'
+  # service can be: 'compute', 'image', 'identity', 'network', etc.
   def db(service)
     node['openstack']['db'][service]
   rescue

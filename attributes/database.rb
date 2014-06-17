@@ -4,7 +4,7 @@
 # Attributes:: database
 #
 # Copyright 2012-2013, AT&T Services, Inc.
-# Copyright 2013, SUSE Linux GmbH
+# Copyright 2013-2014, SUSE Linux GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -194,3 +194,23 @@ default['openstack']['db']['root_user_use_databag'] = false
 # If above root_user_use_databag is true, the below string
 # will be passed to the get_password library routine.
 default['openstack']['db']['root_user_key'] = 'mysqlroot'
+
+# platform and DBMS-specific python client packages
+case node['platform_family']
+when 'rhel'
+  default['openstack']['db']['python_packages'] = {
+    mysql: ['MySQL-python'],
+    db2: ['python-ibm-db', 'python-ibm-db-sa'],
+    postgresql: ['python-psycopg2']
+  }
+when 'suse'
+  default['openstack']['db']['python_packages'] = {
+    mysql: ['python-mysql'],
+    postgresql: ['python-psycopg2']
+  }
+when 'debian'
+  default['openstack']['db']['python_packages'] = {
+    mysql: ['python-mysqldb'],
+    postgresql: ['python-psycopg2']
+  }
+end

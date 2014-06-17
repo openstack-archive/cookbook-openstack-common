@@ -229,7 +229,7 @@ License and Author
 | **Copyright**        |  Copyright (c) 2012-2013, AT&T Services, Inc.      |
 | **Copyright**        |  Copyright (c) 2013, Opscode, Inc.                 |
 | **Copyright**        |  Copyright (c) 2013, Craig Tracey                  |
-| **Copyright**        |  Copyright (c) 2013, SUSE Linux GmbH               |
+| **Copyright**        |  Copyright (c) 2013-2014, SUSE Linux GmbH          |
 | **Copyright**        |  Copyright (c) 2013-2014, IBM, Corp.               |
 | **Copyright**        |  Copyright (c) 2013-2014, Rackspace US, Inc.       |
 

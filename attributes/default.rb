@@ -34,7 +34,23 @@ default['openstack']['common']['custom_template_banner'] = '
 # pass = secret "passwords", "nova"
 #
 # The value of pass will be "nova"
+#
+# This attribute is now DEPRECATED and will be removed. Use the default
+# attributes below instead.
 default['openstack']['developer_mode'] = false
+
+# Use data bags for storing passwords
+# Set this to false in order to get the passwords from attributes like:
+# node['openstack']['secret'][key][type]
+default['openstack']['use_databags'] = true
+
+# Default attributes when not using data bags (use_databags = false)
+%w{block-storage object-storage compute database dashboard image identity
+   telemetry network object-storage orchestration}.each do |service|
+  %w{user service db token}.each do |type|
+    default['openstack']['secret'][service][type] = "#{service}-#{type}"
+  end
+end
 
 # The type of token signing to use (uuid or pki)
 default['openstack']['auth']['strategy'] = 'pki'

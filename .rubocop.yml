@@ -22,3 +22,6 @@ LineLength:
 
 WordArray:
   MinSize: 3
+
+MethodLength:
+  Max: 15

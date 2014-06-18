@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 9.6.0
+* Add an option to store passwords in attributes instead of data bags. Deprecates the get_secret method and the development_mode.
+
 ## 9.5.2
 * Adds new python_packages attributes for database client packages
 

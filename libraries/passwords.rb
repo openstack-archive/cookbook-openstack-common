@@ -5,6 +5,7 @@
 # library:: passwords
 #
 # Copyright 2012-2013, AT&T Services, Inc.
+# Copyright 2014, SUSE Linux, GmbH.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -47,7 +48,14 @@ module ::Openstack # rubocop:disable Documentation
   #
   # The nova_password will == 'nova_password'
   def secret(bag_name, index)
-    return (node['openstack']['secret'][index] || index) if node['openstack']['developer_mode']
+    if node['openstack']['developer_mode']
+      ::Chef::Log.warn(
+        "Developer mode for reading passwords is DEPRECATED and will "\
+        "be removed. Please use attributes (and the get_password method) "\
+        "instead.")
+
+      return (node['openstack']['secret'][index] || index)
+    end
     key_path = node['openstack']['secret']['key_path']
     ::Chef::Log.info "Loading encrypted databag #{bag_name}.#{index} using key at #{key_path}"
     secret = ::Chef::EncryptedDataBagItem.load_secret key_path
@@ -57,17 +65,38 @@ module ::Openstack # rubocop:disable Documentation
   # Ease-of-use/standarization routine that returns a secret from the
   # attribute-specified openstack secrets databag.
   def get_secret(key)
-    secret node['openstack']['secret']['secrets_data_bag'], key
+    ::Chef::Log.warn(
+      "The get_secret method is DEPRECATED. "\
+      "Use get_password(key, 'token') instead")
+
+    if node['openstack']['use_databags']
+      secret node['openstack']['secret']['secrets_data_bag'], key
+    else
+      node['openstack']['secret'][key]['token']
+    end
   end
 
-  # Ease-of-use/standarization routine that returns a service/database/user
-  # password for a named OpenStack service/database/user. Accepts 'user',
-  # 'service' or 'db' as the type.
+  # Return a password using either data bags or attributes for
+  # storage. The storage mechanism used is determined by the
+  # node['openstack']['use_databags'] attribute.
+  # @param [String] type of password, one of 'user', 'service', 'db' or 'token'
+  # @param [String] the identifier of the password (usually the
+  # component name, but can also be a token name
+  # e.g. openstack_identity_bootstrap_token
   def get_password(type, key)
-    if ['db', 'user', 'service'].include?(type)
-      secret node['openstack']['secret']["#{type}_passwords_data_bag"], key
-    else
+    unless %w{db user service token}.include?(type)
       ::Chef::Log.error("Unsupported type for get_password: #{type}")
+      return
+    end
+
+    if node['openstack']['use_databags']
+      if type == 'token'
+        secret node['openstack']['secret']['secrets_data_bag'], key
+      else
+        secret node['openstack']['secret']["#{type}_passwords_data_bag"], key
+      end
+    else
+      node['openstack']['secret'][key][type]
     end
   end
 end

@@ -58,56 +58,21 @@ describe 'openstack-common::default' do
         expect(subject.get_secret('nova')).to eq('this')
       end
     end
+    describe '#get_password' do
+      ['service', 'db', 'user'].each do |type|
+        context type do
+          it 'returns index param when developer_mode is true' do
+            node.set['openstack']['developer_mode'] = true
+            expect(subject.get_password(type, 'nova')).to eq('nova')
+          end
 
-    describe '#get_password_service_password' do
-      it 'returns index param when developer_mode is true' do
-        node.set['openstack']['developer_mode'] = true
-        expect(subject.get_password('service', 'nova')).to eq('nova')
-      end
-
-      it 'returns databag when developer_mode is false' do
-        value = { 'nova' => 'this' }
-        ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-        ::Chef::EncryptedDataBagItem.stub(:load).with('service_passwords', 'nova', 'secret').and_return(value)
-        expect(
-          subject.get_password('service', 'nova')
-        ).to eq('this')
-      end
-    end
-
-    describe '#get_password_db_password' do
-      it 'returns index param when developer_mode is true' do
-        node.set['openstack']['developer_mode'] = true
-        expect(
-          subject.get_password('db', 'nova')
-        ).to eq('nova')
-      end
-
-      it 'returns databag when developer_mode is false' do
-        value = { 'nova' => 'this' }
-        ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-        ::Chef::EncryptedDataBagItem.stub(:load).with('db_passwords', 'nova', 'secret').and_return(value)
-        expect(
-          subject.get_password('db', 'nova')
-        ).to eq('this')
-      end
-    end
-
-    describe '#get_password_user_password' do
-      it 'returns index param when developer_mode is true' do
-        node.set['openstack']['developer_mode'] = true
-        expect(
-          subject.get_password('user', 'nova')
-        ).to eq('nova')
-      end
-
-      it 'returns databag when developer_mode is false' do
-        value = { 'nova' => 'this' }
-        ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-        ::Chef::EncryptedDataBagItem.stub(:load).with('user_passwords', 'nova', 'secret').and_return(value)
-        expect(
-          subject.get_password('user', 'nova')
-        ).to eq('this')
+          it 'returns databag when developer_mode is false' do
+            value = { 'nova' => 'this' }
+            ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
+            ::Chef::EncryptedDataBagItem.stub(:load).with("#{type}_passwords", 'nova', 'secret').and_return(value)
+            expect(subject.get_password(type, 'nova')).to eq('this')
+          end
+        end
       end
     end
   end

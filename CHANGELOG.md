@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 9.5.2
+* Adds new python_packages attributes for database client packages
+
 ## 9.5.1
 * Add Trove endpoints, database and mq attributes
 

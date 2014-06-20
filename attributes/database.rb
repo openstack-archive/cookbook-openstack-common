@@ -196,21 +196,16 @@ default['openstack']['db']['root_user_use_databag'] = false
 default['openstack']['db']['root_user_key'] = 'mysqlroot'
 
 # platform and DBMS-specific python client packages
+default['openstack']['db']['python_packages'] = {
+  postgresql: ['python-psycopg2'],
+  sqlite: []
+}
 case node['platform_family']
 when 'rhel'
-  default['openstack']['db']['python_packages'] = {
-    mysql: ['MySQL-python'],
-    db2: ['python-ibm-db', 'python-ibm-db-sa'],
-    postgresql: ['python-psycopg2']
-  }
+  default['openstack']['db']['python_packages']['mysql'] = ['MySQL-python']
+  default['openstack']['db']['python_packages']['db2'] = ['python-ibm-db', 'python-ibm-db-sa']
 when 'suse'
-  default['openstack']['db']['python_packages'] = {
-    mysql: ['python-mysql'],
-    postgresql: ['python-psycopg2']
-  }
+  default['openstack']['db']['python_packages']['mysql'] = ['python-mysql']
 when 'debian'
-  default['openstack']['db']['python_packages'] = {
-    mysql: ['python-mysqldb'],
-    postgresql: ['python-psycopg2']
-  }
+  default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
 end

@@ -365,7 +365,7 @@ default['openstack']['endpoints']['database-api-bind']['bind_interface'] = nil
 default['openstack']['endpoints']['database-api']['host'] = node['openstack']['endpoints']['host']
 default['openstack']['endpoints']['database-api']['scheme'] = 'http'
 default['openstack']['endpoints']['database-api']['port'] = '8779'
-default['openstack']['endpoints']['database-api']['path'] = '/v1.0'
+default['openstack']['endpoints']['database-api']['path'] = '/v1.0/%(tenant_id)s'
 default['openstack']['endpoints']['database-api']['bind_interface'] = nil
 
 # Alternately, if you used some standardized DNS naming scheme, you could

@@ -97,6 +97,15 @@ the entries to `/etc/sysctl.d/60-openstack.conf`.
 ]
 ```
 
+Data Bags
+=========
+
+This cookbook containes Libraries to work with passwords and secrets in databags.   Databags can be unencrypted ( for dev ) or encrypted ( for prod ).
+
+Documentation for Attributes for selecting databag format can be found in the attributes section of this cookbook.
+
+Documentation for format of these Databags can be found in the [Openstack Chef Repo](https://github.com/stackforge/openstack-chef-repo#databags) repository.
+
 Libraries
 =========
 

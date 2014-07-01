@@ -44,6 +44,13 @@ default['openstack']['developer_mode'] = false
 # node['openstack']['secret'][key][type]
 default['openstack']['use_databags'] = true
 
+# Set databag type
+# acceptable values 'encrypted', 'standard'
+# Set this to 'standard' in order to use regular databags.
+# this is not recommended for anything other than dev/CI
+# type environments.  Storing real secrets in plaintext = craycray.
+default['openstack']['databag_type'] = 'encrypted'
+
 # Default attributes when not using data bags (use_databags = false)
 %w{block-storage object-storage compute database dashboard image identity
    telemetry network object-storage orchestration}.each do |service|

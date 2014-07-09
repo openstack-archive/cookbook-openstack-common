@@ -29,8 +29,4 @@ shared_context 'library-stubs' do
   end
 end
 
-# README(galstrom21): This will remove any coverage warnings from
-#   dependent cookbooks
-ChefSpec::Coverage.filters << '*/openstack-common'
-
 at_exit { ChefSpec::Coverage.report! }

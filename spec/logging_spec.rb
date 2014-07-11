@@ -10,6 +10,10 @@ describe 'openstack-common::logging' do
     describe '/etc/openstack' do
       let(:dir) { chef_run.directory('/etc/openstack') }
 
+      it 'should create /etc/openstack' do
+        expect(chef_run).to create_directory('/etc/openstack')
+      end
+
       it 'has proper owner' do
         expect(dir.owner).to eq('root')
         expect(dir.group).to eq('root')

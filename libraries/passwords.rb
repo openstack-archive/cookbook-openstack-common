@@ -56,10 +56,26 @@ module ::Openstack # rubocop:disable Documentation
 
       return (node['openstack']['secret'][index] || index)
     end
+    case node['openstack']['databag_type']
+    when 'encrypted'
+      encrypted_secret(bag_name, index)
+    when 'standard'
+      standard_secret(bag_name, index)
+    else
+      ::Chef::Log.error("Unsupported value for node['openstack']['databag_type']")
+    end
+  end
+
+  def encrypted_secret(bag_name, index)
     key_path = node['openstack']['secret']['key_path']
     ::Chef::Log.info "Loading encrypted databag #{bag_name}.#{index} using key at #{key_path}"
     secret = ::Chef::EncryptedDataBagItem.load_secret key_path
     ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
+  end
+
+  def standard_secret(bag_name, index)
+    ::Chef::Log.info "Loading databag #{bag_name}.#{index}"
+    ::Chef::DataBagItem.load(bag_name, index)[index]
   end
 
   # Ease-of-use/standarization routine that returns a secret from the

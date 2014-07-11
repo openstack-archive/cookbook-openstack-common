@@ -11,7 +11,7 @@ describe 'openstack-common::default' do
 
     include_context 'library-stubs'
 
-    context 'stored in data bags by default' do
+    context 'stored in encrypted data bags by default' do
       describe '#secret' do
         it 'returns databag' do
           value = { 'nova' => 'this' }
@@ -58,6 +58,53 @@ describe 'openstack-common::default' do
             '/etc/chef/openstack_data_bag_secret').and_return('secret')
           ::Chef::EncryptedDataBagItem.stub(:load).with(
             'secrets', 'nova', 'secret').and_return(bag_content)
+          expect(subject.get_password('token', 'nova')).to eq('mysecret')
+        end
+      end
+    end
+
+    context 'stored in standard data bags' do
+      before { node.set['openstack']['databag_type'] = 'standard' }
+      describe '#secret' do
+        it 'returns databag' do
+          value = { 'nova' => 'this' }
+          ::Chef::DataBagItem.stub(:load).with('passwords', 'nova').and_return(value)
+          expect(subject.secret('passwords', 'nova')).to eq('this')
+        end
+      end
+
+      describe '#get_secret' do
+        it 'returns databag value' do
+          value = { 'nova' => 'this' }
+          ::Chef::DataBagItem.stub(:load).with('secrets', 'nova').and_return(value)
+          expect(subject.get_secret('nova')).to eq('this')
+        end
+
+        it 'returns secret from an alternate databag when secrets_data_bag set' do
+          node.set['openstack']['secret']['secrets_data_bag'] = 'myothersecrets'
+          value = { 'nova' => 'this' }
+          ::Chef::DataBagItem.stub(:load).with('myothersecrets', 'nova').and_return(value)
+          expect(subject.get_secret('nova')).to eq('this')
+        end
+      end
+
+      describe '#get_password' do
+        ['service', 'db', 'user'].each do |type|
+          it "returns databag value for #{type}" do
+            value = { 'nova' => 'this' }
+            ::Chef::DataBagItem.stub(:load).with("#{type}_passwords", 'nova').and_return(value)
+            expect(subject.get_password(type, 'nova')).to eq('this')
+          end
+        end
+
+        it 'returns nil for an invalid type' do
+          expect(subject.get_password('invalid_type', 'nova')).to be_nil
+        end
+
+        it 'returns tokens from the secrets_data_bag' do
+          bag_content = { 'nova' => 'mysecret' }
+          ::Chef::DataBagItem.stub(:load).with(
+            'secrets', 'nova').and_return(bag_content)
           expect(subject.get_password('token', 'nova')).to eq('mysecret')
         end
       end

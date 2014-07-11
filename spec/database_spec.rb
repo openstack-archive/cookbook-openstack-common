@@ -33,15 +33,15 @@ describe 'openstack-common::default' do
       end
 
       it 'creates database' do
-        pending 'TODO: test this LWRP'
+        skip 'TODO: test this LWRP'
       end
 
       it 'creates database user' do
-        pending 'TODO: test this LWRP'
+        skip 'TODO: test this LWRP'
       end
 
       it 'grants privs to database user' do
-        pending 'TODO: test this LWRP'
+        skip 'TODO: test this LWRP'
       end
     end
   end

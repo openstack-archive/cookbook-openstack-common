@@ -73,7 +73,7 @@ describe 'openstack-common::set_endpoints_by_interface' do
       end
 
       it 'returns endpoint URI object when uri key not in endpoint hash but host is in hash' do
-        pending 'TODO: implement'
+        skip 'TODO: implement'
         subject.should_receive(:uri_from_hash).with('host' => 'localhost', 'port' => '8080')
         uri_hash = {
           'openstack' => {
@@ -159,7 +159,7 @@ describe 'openstack-common::set_endpoints_by_interface' do
       it 'returns db info hash when service found' do
         subject.stub(:node).and_return(chef_run.node)
         expect(subject.db('compute')['host']).to eq('127.0.0.1')
-        expect(subject.db('compute').key?('uri')).to be_false
+        expect(subject.db('compute').key?('uri')).to be_falsey
       end
     end
 

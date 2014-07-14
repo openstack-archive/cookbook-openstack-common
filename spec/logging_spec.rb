@@ -27,6 +27,10 @@ describe 'openstack-common::logging' do
     describe 'logging.conf' do
       let(:file) { chef_run.template('/etc/openstack/logging.conf') }
 
+      it 'should create /etc/openstack/logging.conf' do
+        expect(chef_run).to create_template(file.name)
+      end
+
       it 'has proper owner' do
         expect(file.owner).to eq('root')
         expect(file.group).to eq('root')

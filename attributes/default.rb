@@ -471,3 +471,11 @@ default['openstack']['identity_service_chef_role'] = 'os-identity'
 
 # Array of bare options for openrc (e.g. 'option=value')
 default['openstack']['misc_openrc'] = nil
+
+# openrc location and owner
+default['openstack']['openrc']['path'] = '/root'
+default['openstack']['openrc']['file'] = 'openrc'
+default['openstack']['openrc']['user'] = 'root'
+default['openstack']['openrc']['group'] = 'root'
+default['openstack']['openrc']['file_mode'] = '0600'
+default['openstack']['openrc']['path_mode'] = '0700'

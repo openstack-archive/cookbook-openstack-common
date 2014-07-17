@@ -417,8 +417,149 @@ default['openstack']['region'] = 'RegionOne'
 default['openstack']['api']['auth']['version'] = 'v2.0'
 
 # logging.conf list keypairs module_name => log level to write
-default['openstack']['logging']['ignore'] = { 'nova.api.openstack.wsgi' => 'WARNING',
-                                              'nova.osapi_compute.wsgi.server' => 'WARNING' }
+# DEPRECATED, use new loggers attributes below.
+# TODO(MRV) remove in Juno
+# The old defaults have been incorporated below:
+# { 'nova.api.openstack.wsgi' => 'WARNING',
+#   'nova.osapi_compute.wsgi.server' => 'WARNING' }
+default['openstack']['logging']['ignore'] = {}
+
+# Allow configured loggers in logging.conf
+default['openstack']['logging']['loggers'] = {
+  'root' => {
+    'level' => 'NOTSET',
+    'handlers' => 'devel'
+  },
+  'ceilometer' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'ceilometer'
+  },
+  'cinder' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'cinder'
+  },
+  'glance' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'glance'
+  },
+  'horizon' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'horizon'
+  },
+  'keystone' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'keystone'
+  },
+  'nova' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'nova'
+  },
+  'neutron' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'neutron'
+  },
+  'swift' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'swift'
+  },
+  'trove' => {
+    'level' => 'DEBUG',
+    'handlers' => 'prod,debug',
+    'qualname' => 'trove'
+  },
+  'amqplib' => {
+    'level' => 'WARNING',
+    'handlers' => 'stderr',
+    'qualname' => 'amqplib'
+  },
+  'sqlalchemy' => {
+    'level' => 'WARNING',
+    # "level' => 'INFO" logs SQL queries.
+    # "level' => 'DEBUG" logs SQL queries and results.
+    # "level' => 'WARNING" logs neither.  (Recommended for production systems.)
+    'handlers' => 'stderr',
+    'qualname' => 'sqlalchemy'
+  },
+  'boto' => {
+    'level' => 'WARNING',
+    'handlers' => 'stderr',
+    'qualname' => 'boto'
+  },
+  'suds' => {
+    'level' => 'INFO',
+    'handlers' => 'stderr',
+    'qualname' => 'suds'
+  },
+  'eventletwsgi' => {
+    'level' => 'WARNING',
+    'handlers' => 'stderr',
+    'qualname' => 'eventlet.wsgi.server'
+  },
+  'nova_api_openstack_wsgi' => {
+    'level' => 'WARNING',
+    'handlers' => 'prod,debug',
+    'qualname' => 'nova.api.openstack.wsgi'
+  },
+  'nova_osapi_compute_wsgi_server' => {
+    'level' => 'WARNING',
+    'handlers' => 'prod,debug',
+    'qualname' => 'nova.osapi_compute.wsgi.server'
+  }
+}
+
+# Allow configured formatters in logging.conf
+default['openstack']['logging']['formatters'] = {
+  'normal' => {
+    'format' => '%(asctime)s %(levelname)s %(message)s'
+  },
+  'normal_with_name' => {
+    'format' => '[%(name)s]: %(asctime)s %(levelname)s %(message)s'
+  },
+  'debug' => {
+    'format' => '[%(name)s]: %(asctime)s %(levelname)s %(module)s.%(funcName)s %(message)s'
+  },
+  'syslog_with_name' => {
+    'format' => '%(name)s: %(levelname)s %(message)s'
+  },
+  'syslog_debug' => {
+    'format' => '%(name)s: %(levelname)s %(module)s.%(funcName)s %(message)s'
+  }
+}
+
+# Allow configured logging handlers in logging.conf
+default['openstack']['logging']['handlers'] = {
+  'stderr' => {
+    'args' => '(sys.stderr,)',
+    'class' => 'StreamHandler',
+    'formatter' => 'debug'
+  },
+  'devel' => {
+    'args' => '(sys.stdout,)',
+    'class' => 'StreamHandler',
+    'formatter' => 'debug',
+    'level' => 'NOTSET'
+  },
+  'prod' => {
+    'args' => '((\'/dev/log\'), handlers.SysLogHandler.LOG_LOCAL0)',
+    'class' => 'handlers.SysLogHandler',
+    'formatter' => 'syslog_with_name',
+    'level' => 'INFO'
+  },
+  'debug' => {
+    'args' => '((\'/dev/log\'), handlers.SysLogHandler.LOG_LOCAL1)',
+    'class' => 'handlers.SysLogHandler',
+    'formatter' => 'syslog_debug',
+    'level' => 'DEBUG'
+  }
+}
 
 default['openstack']['memcached_servers'] = nil
 

@@ -5,6 +5,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 ## 9.7.0
 * Add new network_uuid cli library method for obtaining ID from various neutron resources
 * fix fauxhai version for suse
+* Allow custom logging attributes for loggers, formatters and handlers
 
 ## 9.6.1
 * Add python_packages attribute for sqlite

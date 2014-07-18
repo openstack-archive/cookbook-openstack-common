@@ -17,7 +17,7 @@ REDHAT_OPTS = {
 }
 SUSE_OPTS = {
   platform: 'suse',
-  version: '11.03',
+  version: '11.3',
   log_lovel: LOG_LEVEL
 }
 # We set a default platform for non-platform specific test cases

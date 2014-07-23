@@ -42,13 +42,18 @@ end
 ksadmin_pass = get_password 'user', ksadmin_user
 identity_endpoint = endpoint 'identity-api'
 
-template '/root/openrc' do
+directory node['openstack']['openrc']['path'] do
+  owner node['openstack']['openrc']['user']
+  group node['openstack']['openrc']['group']
+  mode node['openstack']['openrc']['path_mode']
+  recursive true
+end
+
+template "#{node['openstack']['openrc']['path']}/#{node['openstack']['openrc']['file']}" do
   source 'openrc.erb'
-  # TODO: (MRV) Consider making the name, location, contents and owner/group
-  # of this more flexible with attributes.
-  owner  'root'
-  group  'root'
-  mode   00600
+  owner node['openstack']['openrc']['user']
+  group node['openstack']['openrc']['group']
+  mode node['openstack']['openrc']['file_mode']
   variables(
     user: ksadmin_user,
     tenant: ksadmin_tenant_name,

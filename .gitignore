@@ -6,3 +6,4 @@
 *.swp
 Berksfile.lock
 Vagrantfile
+Gemfile.lock

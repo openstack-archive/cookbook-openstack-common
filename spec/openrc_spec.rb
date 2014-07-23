@@ -16,10 +16,16 @@ describe 'openstack-common::openrc' do
       let(:file) { chef_run.template('/root/openrc') }
 
       it 'creates the /root/openrc file' do
+        expect(chef_run).to create_directory('/root').with(
+          owner: 'root',
+          group: 'root',
+          mode: '0700',
+          recursive: true
+        )
         expect(chef_run).to create_template(file.name).with(
           user: 'root',
           group: 'root',
-          mode: 0600
+          mode: '0600'
         )
       end
 

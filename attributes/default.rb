@@ -97,7 +97,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'icehouse'
+default['openstack']['release'] = 'juno'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -114,8 +114,8 @@ default['openstack']['zypp']['repo-key'] = 'd85f9316'  # 32 bit key ID
 default['openstack']['zypp']['uri'] = 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/%release%/%suse-release%/'
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/epel-6'
-default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-Icehouse'
+default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-juno/epel-6'
+default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-Juno'
 
 # ======================== OpenStack Endpoints ================================
 #

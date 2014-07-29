@@ -31,13 +31,13 @@ end
 
 shared_context 'library-stubs' do
   before do
-    subject.stub(:node).and_return(chef_run.node)
+    allow(subject).to receive(:node).and_return(chef_run.node)
   end
 end
 
 shared_context 'common-stubs' do
   before do
-    Chef::Recipe.any_instance.stub(:search_for)
+    allow_any_instance_of(Chef::Recipe).to receive(:search_for)
     .with('os-identity').and_return(
       [{
         'openstack' => {
@@ -48,10 +48,10 @@ shared_context 'common-stubs' do
         }
       }]
     )
-    Chef::Recipe.any_instance.stub(:get_password)
+    allow_any_instance_of(Chef::Recipe).to receive(:get_password)
       .with('user', 'admin')
       .and_return('admin')
-    Chef::Recipe.any_instance.stub(:get_password)
+    allow_any_instance_of(Chef::Recipe).to receive(:get_password)
       .with('user', 'admin-user-override')
       .and_return('admin-user-override')
   end

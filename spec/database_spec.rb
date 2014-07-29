@@ -13,7 +13,7 @@ describe 'openstack-common::default' do
 
     describe '#db_create_with_user' do
       before do
-        subject.stub(:include_recipe)
+        allow(subject).to receive(:include_recipe)
           .with('database::mysql')
           .and_return('')
       end
@@ -25,8 +25,8 @@ describe 'openstack-common::default' do
       end
 
       it 'returns db info and creates database with user when service found' do
-        subject.stub(:database).and_return({})
-        subject.stub(:database_user).and_return({})
+        allow(subject).to receive(:database).and_return({})
+        allow(subject).to receive(:database_user).and_return({})
         result = subject.db_create_with_user('compute', 'user', 'pass')
         expect(result['host']).to eq('127.0.0.1')
         expect(result['port']).to eq('3306')

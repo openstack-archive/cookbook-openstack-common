@@ -33,7 +33,7 @@ describe 'openstack-common::default' do
       end
 
       it 'removes RDO yum repository' do
-        ::FileTest.stub(:exist?).with('/etc/yum.repos.d/RDO-testrelease.repo').and_return(true)
+        allow(FileTest).to receive(:exist?).with('/etc/yum.repos.d/RDO-testrelease.repo').and_return(true)
 
         # Using cookbook(yum) LWRP custom matcher
         # https://github.com/sethvargo/chefspec#packaging-custom-matchers

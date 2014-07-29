@@ -1,6 +1,8 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 10.0.0
+* Upgrading to Juno
 
 ## 9.7.0
 * Add new network_uuid cli library method for obtaining ID from various neutron resources

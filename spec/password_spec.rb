@@ -15,8 +15,8 @@ describe 'openstack-common::default' do
       describe '#secret' do
         it 'returns databag' do
           value = { 'nova' => 'this' }
-          ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-          ::Chef::EncryptedDataBagItem.stub(:load).with('passwords', 'nova', 'secret').and_return(value)
+          allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
+          allow(Chef::EncryptedDataBagItem).to receive(:load).with('passwords', 'nova', 'secret').and_return(value)
           expect(subject.secret('passwords', 'nova')).to eq('this')
         end
       end
@@ -24,16 +24,16 @@ describe 'openstack-common::default' do
       describe '#get_secret' do
         it 'returns databag value' do
           value = { 'nova' => 'this' }
-          ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-          ::Chef::EncryptedDataBagItem.stub(:load).with('secrets', 'nova', 'secret').and_return(value)
+          allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
+          allow(Chef::EncryptedDataBagItem).to receive(:load).with('secrets', 'nova', 'secret').and_return(value)
           expect(subject.get_secret('nova')).to eq('this')
         end
 
         it 'returns secret from an alternate databag when secrets_data_bag set' do
           node.set['openstack']['secret']['secrets_data_bag'] = 'myothersecrets'
           value = { 'nova' => 'this' }
-          ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-          ::Chef::EncryptedDataBagItem.stub(:load).with('myothersecrets', 'nova', 'secret').and_return(value)
+          allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
+          allow(Chef::EncryptedDataBagItem).to receive(:load).with('myothersecrets', 'nova', 'secret').and_return(value)
           expect(subject.get_secret('nova')).to eq('this')
         end
       end
@@ -42,8 +42,8 @@ describe 'openstack-common::default' do
         ['service', 'db', 'user'].each do |type|
           it "returns databag value for #{type}" do
             value = { 'nova' => 'this' }
-            ::Chef::EncryptedDataBagItem.stub(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-            ::Chef::EncryptedDataBagItem.stub(:load).with("#{type}_passwords", 'nova', 'secret').and_return(value)
+            allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
+            allow(Chef::EncryptedDataBagItem).to receive(:load).with("#{type}_passwords", 'nova', 'secret').and_return(value)
             expect(subject.get_password(type, 'nova')).to eq('this')
           end
         end
@@ -54,9 +54,9 @@ describe 'openstack-common::default' do
 
         it 'returns tokens from the secrets_data_bag' do
           bag_content = { 'nova' => 'mysecret' }
-          ::Chef::EncryptedDataBagItem.stub(:load_secret).with(
+          allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with(
             '/etc/chef/openstack_data_bag_secret').and_return('secret')
-          ::Chef::EncryptedDataBagItem.stub(:load).with(
+          allow(Chef::EncryptedDataBagItem).to receive(:load).with(
             'secrets', 'nova', 'secret').and_return(bag_content)
           expect(subject.get_password('token', 'nova')).to eq('mysecret')
         end
@@ -68,7 +68,7 @@ describe 'openstack-common::default' do
       describe '#secret' do
         it 'returns databag' do
           value = { 'nova' => 'this' }
-          ::Chef::DataBagItem.stub(:load).with('passwords', 'nova').and_return(value)
+          allow(Chef::DataBagItem).to receive(:load).with('passwords', 'nova').and_return(value)
           expect(subject.secret('passwords', 'nova')).to eq('this')
         end
       end
@@ -76,14 +76,14 @@ describe 'openstack-common::default' do
       describe '#get_secret' do
         it 'returns databag value' do
           value = { 'nova' => 'this' }
-          ::Chef::DataBagItem.stub(:load).with('secrets', 'nova').and_return(value)
+          allow(Chef::DataBagItem).to receive(:load).with('secrets', 'nova').and_return(value)
           expect(subject.get_secret('nova')).to eq('this')
         end
 
         it 'returns secret from an alternate databag when secrets_data_bag set' do
           node.set['openstack']['secret']['secrets_data_bag'] = 'myothersecrets'
           value = { 'nova' => 'this' }
-          ::Chef::DataBagItem.stub(:load).with('myothersecrets', 'nova').and_return(value)
+          allow(Chef::DataBagItem).to receive(:load).with('myothersecrets', 'nova').and_return(value)
           expect(subject.get_secret('nova')).to eq('this')
         end
       end
@@ -92,7 +92,7 @@ describe 'openstack-common::default' do
         ['service', 'db', 'user'].each do |type|
           it "returns databag value for #{type}" do
             value = { 'nova' => 'this' }
-            ::Chef::DataBagItem.stub(:load).with("#{type}_passwords", 'nova').and_return(value)
+            allow(Chef::DataBagItem).to receive(:load).with("#{type}_passwords", 'nova').and_return(value)
             expect(subject.get_password(type, 'nova')).to eq('this')
           end
         end
@@ -103,7 +103,7 @@ describe 'openstack-common::default' do
 
         it 'returns tokens from the secrets_data_bag' do
           bag_content = { 'nova' => 'mysecret' }
-          ::Chef::DataBagItem.stub(:load).with(
+          allow(Chef::DataBagItem).to receive(:load).with(
             'secrets', 'nova').and_return(bag_content)
           expect(subject.get_password('token', 'nova')).to eq('mysecret')
         end

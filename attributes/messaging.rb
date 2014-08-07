@@ -53,6 +53,7 @@ default['openstack']['mq']['auto_delete'] = false
 # Default qpid and rabbit values (for attribute assignment below)
 ###################################################################
 default['openstack']['mq']['qpid']['protocol'] = 'tcp'
+default['openstack']['mq']['rabbitmq']['use_ssl'] = false
 # defined in oslo/messaging/_drivers/impl_qpid.py
 default['openstack']['mq']['qpid']['topology_version'] = 1
 qpid_defaults = {
@@ -79,7 +80,7 @@ rabbit_defaults = {
   port: node['openstack']['endpoints']['mq']['port'],
   host: node['openstack']['endpoints']['mq']['host'],
   ha: false,
-  use_ssl: false
+  use_ssl: node['openstack']['mq']['rabbitmq']['use_ssl']
 }
 
 ###################################################################

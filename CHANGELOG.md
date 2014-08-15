@@ -1,6 +1,9 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+## 10.0.2
+* Add database charset during create
+
 ## 10.0.1
 * Add an option to allow configuring rabbitmq use_ssl
 

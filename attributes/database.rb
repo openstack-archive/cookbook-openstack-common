@@ -80,12 +80,22 @@ default['openstack']['endpoints']['db']['bind_interface'] = nil
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'
 default['openstack']['db']['service_type'] = 'mysql'
+# Database charset during create database
+default['openstack']['db']['charset'] = {
+   mysql: 'utf8',
+   postgresql: nil,
+   pgsql: nil,
+   sqlite: nil,
+   db2: 'utf8',
+   nosql: nil
+}
+
 # Database connection options. Should include starting '?'
 default['openstack']['db']['options'] = {
-   mysql: '?charset=utf8',
+   mysql: "?charset=#{node['openstack']['db']['charset']['mysql']}",
    postgresql: '',
    sqlite: '',
-   db2: '?charset=utf8',
+   db2: "?charset=#{node['openstack']['db']['charset']['db2']}",
    nosql: ''
 }
 

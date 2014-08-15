@@ -25,7 +25,14 @@ describe 'openstack-common::default' do
       end
 
       it 'returns db info and creates database with user when service found' do
-        allow(subject).to receive(:database).and_return({})
+        ['mysql', 'pgsql', 'postgresql'].each do |db_type|
+          encoding = node['openstack']['db']['charset'][db_type]
+          if encoding.nil?
+            allow(subject).to receive(:database).and_return({})
+          else
+            allow(subject).to receive(:database).with(encoding: encoding).and_return({})
+          end
+        end
         allow(subject).to receive(:database_user).and_return({})
         result = subject.db_create_with_user('compute', 'user', 'pass')
         expect(result['host']).to eq('127.0.0.1')

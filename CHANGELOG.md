@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 9.7.1
+* Add database charset during create
+
 ## 9.7.0
 * Add new network_uuid cli library method for obtaining ID from various neutron resources
 * fix fauxhai version for suse

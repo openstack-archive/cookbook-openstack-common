@@ -91,6 +91,7 @@ module ::Openstack # rubocop:disable Documentation
         provider db_prov
         connection connection_info
         database_name db_name
+        encoding node['openstack']['db']['charset'][type]
         action :create
       end
 

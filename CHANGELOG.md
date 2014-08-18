@@ -6,6 +6,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 
 ## 10.0.0
 * Upgrading to Juno
+* Upgrading berkshelf from 2.0.18 to 3.1.5
 
 ## 9.7.0
 * Add new network_uuid cli library method for obtaining ID from various neutron resources

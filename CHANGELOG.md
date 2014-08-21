@@ -1,6 +1,10 @@
 # CHANGELOG for cookbook-openstack-common
 
 This file is used to list changes made in each version of cookbook-openstack-common.
+
+## 10.0.3
+* Adding identity internal endpoint variables to support new endpoint usage in identity cookbook
+
 ## 10.0.2
 * Add database charset during create
 

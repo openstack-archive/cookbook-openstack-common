@@ -175,6 +175,21 @@ default['openstack']['endpoints']['identity-api']['port'] = '5000'
 default['openstack']['endpoints']['identity-api']['path'] = '/v2.0'
 default['openstack']['endpoints']['identity-api']['bind_interface'] = nil
 
+# The OpenStack Identity (Keystone) Internal API endpoint
+# For a reference architecture this is a sensable default, however with a more
+# complex network setup the public endpoint may not be reachable by internal
+# systems, thus the ability to set this to something different must be present.
+# Even if the public endpoint is reachable there may be other reasons to send
+# interal communications to a different endpoint, for security or auditing
+# purposes for example.
+# Generally this listens on the same IP as the admin interface, but with the
+# public pipeline(5000) instead of the admin pipeline(35357).
+default['openstack']['endpoints']['identity-internal']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['identity-internal']['scheme'] = 'http'
+default['openstack']['endpoints']['identity-internal']['port'] = '5000'
+default['openstack']['endpoints']['identity-internal']['path'] = '/v2.0'
+default['openstack']['endpoints']['identity-internal']['bind_interface'] = nil
+
 # The OpenStack Identity (Keystone) Admin API endpoint
 default['openstack']['endpoints']['identity-admin']['host'] = node['openstack']['endpoints']['host']
 default['openstack']['endpoints']['identity-admin']['scheme'] = 'http'

@@ -23,6 +23,7 @@ describe 'openstack-common::openrc' do
           recursive: true
         )
         expect(chef_run).to create_template(file.name).with(
+          sensitive: true,
           user: 'root',
           group: 'root',
           mode: '0600'

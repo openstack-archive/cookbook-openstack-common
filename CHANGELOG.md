@@ -4,6 +4,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 
 ## 10.0.3
 * Adding identity internal endpoint variables to support new endpoint usage in identity cookbook
+* Add sensitive flag to openrc template resource
 
 ## 10.0.2
 * Add database charset during create

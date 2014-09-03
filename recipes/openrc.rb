@@ -54,6 +54,7 @@ template "#{node['openstack']['openrc']['path']}/#{node['openstack']['openrc']['
   owner node['openstack']['openrc']['user']
   group node['openstack']['openrc']['group']
   mode node['openstack']['openrc']['file_mode']
+  sensitive true
   variables(
     user: ksadmin_user,
     tenant: ksadmin_tenant_name,

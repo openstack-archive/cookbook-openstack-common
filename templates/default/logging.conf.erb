@@ -1,5 +1,5 @@
 [loggers]
-keys=<%= node["openstack"]["logging"]['loggers'].keys.join(',') %>,<%= node["openstack"]["logging"]["ignore"].map{|k,v| k.gsub(/\W/, '_')}.join(',') %>
+keys=<%= (node["openstack"]["logging"]['loggers'].keys + node["openstack"]["logging"]["ignore"].map{|k,v| k.gsub(/\W/, '_')}).join(',') %>
 
 [formatters]
 keys=<%= node["openstack"]["logging"]['formatters'].keys.join(',') %>

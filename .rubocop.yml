@@ -1,5 +1,5 @@
 AllCops:
-  Includes:
+  Include:
     - metadata.rb
     - Gemfile
     - attributes/**
@@ -8,6 +8,8 @@ AllCops:
     - recipes/**
     - resources/**
     - spec/**
+  Exclude:
+    - berks-cookbooks/**
 
 Encoding:
   Exclude:

@@ -268,6 +268,10 @@ default['openstack']['endpoints']['compute-vnc']['port'] = nil
 default['openstack']['endpoints']['compute-vnc']['path'] = nil
 default['openstack']['endpoints']['compute-vnc']['bind_interface'] = nil
 
+# The OpenStack Compute (Nova) vnc proxy endpoint
+default['openstack']['endpoints']['compute-vnc-proxy-bind']['host'] = node['openstack']['endpoints']['compute-vnc-bind']['host']
+default['openstack']['endpoints']['compute-vnc-proxy-bind']['bind_interface'] = node['openstack']['endpoints']['compute-vnc-bind']['bind_interface']
+
 # ******************** OpenStack Network Endpoints ****************************
 
 # The OpenStack Network (Neutron) API endpoint.

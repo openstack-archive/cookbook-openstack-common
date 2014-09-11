@@ -24,11 +24,14 @@ module ::Openstack # rubocop:disable Documentation
   #
   # @param [String] interface The interface to query.
   # @param [String] family The protocol family to use.
-  # @return [String] The address.
+  # @return [String] The address or log error when address is nil
   def address_for(interface, family = node['openstack']['endpoints']['family'])
     interface_node = node['network']['interfaces'][interface]['addresses']
-    interface_node.select do |address, data|
-      return address if data['family'] == family
-    end
+    fail "Interface #{interface} has no addresses assigned" if interface_node.to_a.empty?
+
+    address = interface_node.find { |addr, data| data['family'] == family }
+    fail "Interface #{interface} has no address for family #{family}" if address.nil?
+
+    address[0]
   end
 end

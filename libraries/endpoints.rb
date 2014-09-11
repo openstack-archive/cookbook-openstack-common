@@ -90,7 +90,7 @@ module ::Openstack # rubocop:disable Documentation
     end
   end
 
-  # Return the IPv4 address for the hash.
+  # Return the address for the hash.
   #
   # If the bind_interface is set, then return the first IP on the interface.
   # otherwise return the IP specified in the host attribute.

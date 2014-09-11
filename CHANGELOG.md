@@ -5,6 +5,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency
 * Fix logging.conf No section error
+* Raise error for nil address returned from address_for
 
 ## 10.0.3
 * Adding identity internal endpoint variables to support new endpoint usage in identity cookbook

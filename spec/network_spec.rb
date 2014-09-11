@@ -60,5 +60,55 @@ describe 'openstack-common::default' do
         ).to eq('::1')
       end
     end
+    describe '#address_for failures' do
+      it 'fails when addresses for interface is nil' do
+        node.set['network'] = {
+          'interfaces' => {
+            'lo' => {
+              'addresses' => nil
+            }
+          }
+        }
+        allow(subject).to receive(:address_for).with('lo')
+          .and_raise('Interface lo has no addresses assigned')
+        expect { subject.address_for('lo') }
+          .to raise_error(RuntimeError, 'Interface lo has no addresses assigned')
+      end
+
+      it 'fails when no addresses are avaiable for interface' do
+        node.set['network'] = {
+          'interfaces' => {
+            'lo' => {
+              'addresses' => {}
+            }
+          }
+        }
+        allow(subject).to receive(:address_for).with('lo')
+          .and_raise('Interface lo has no addresses assigned')
+        expect { subject.address_for('lo') }
+          .to raise_error(RuntimeError, 'Interface lo has no addresses assigned')
+      end
+
+      it 'fails when no address is available for interface family' do
+        node.set['network'] = {
+          'interfaces' => {
+            'lo' => {
+              'addresses' => {
+                '127.0.0.1' => {
+                  'family' => 'inet',
+                  'prefixlen' => '8',
+                  'netmask' => '255.0.0.0',
+                  'scope' => 'Node'
+                }
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:address_for).with('lo', 'inet6')
+          .and_raise('Interface lo has no address for family inet6')
+        expect { subject.address_for('lo', 'inet6') }
+          .to raise_error(RuntimeError, 'Interface lo has no address for family inet6')
+      end
+    end
   end
 end

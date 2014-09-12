@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 10.1.0
+* Adding identity admin bind host endpoint to allow flexibility and consistency
+
 ## 10.0.3
 * Adding identity internal endpoint variables to support new endpoint usage in identity cookbook
 

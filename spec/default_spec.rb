@@ -30,5 +30,16 @@ describe 'openstack-common::default' do
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         components: ['precise-updates/juno', 'main'])
     end
+
+    it 'does not install the gem chef-vault by default' do
+      expect(chef_run).to_not install_chef_gem('chef-vault')
+    end
+
+    it 'installs the gem chef-vault if databag_type is vault' do
+      node.set['openstack']['databag_type'] = 'vault'
+      expect(chef_run).to install_chef_gem('chef-vault')
+      .with(version: '~> 2.3')
+    end
+
   end
 end

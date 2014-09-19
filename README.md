@@ -102,7 +102,7 @@ the entries to `/etc/sysctl.d/60-openstack.conf`.
 Data Bags
 =========
 
-This cookbook containes Libraries to work with passwords and secrets in databags.   Databags can be unencrypted ( for dev ) or encrypted ( for prod ).
+This cookbook containes Libraries to work with passwords and secrets in databags.   Databags can be unencrypted ( for dev ) or encrypted ( for prod ). In addition to traditionally encrypted data bags they can also be created as chef-vault items. To read more about chef-vault and how to use it, go to https://docs.getchef.com/chef_vault.html.
 
 Documentation for Attributes for selecting databag format can be found in the attributes section of this cookbook.
 

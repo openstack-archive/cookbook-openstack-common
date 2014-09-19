@@ -45,11 +45,15 @@ default['openstack']['developer_mode'] = false
 default['openstack']['use_databags'] = true
 
 # Set databag type
-# acceptable values 'encrypted', 'standard'
+# acceptable values 'encrypted', 'standard', 'vault'
 # Set this to 'standard' in order to use regular databags.
 # this is not recommended for anything other than dev/CI
 # type environments.  Storing real secrets in plaintext = craycray.
+# In addition to the encrypted data_bags which are an included
+# feature of the official chef project, you can use 'vault' to
+# encrypt your secrets with the method provided in the chef-vault gem.
 default['openstack']['databag_type'] = 'encrypted'
+default['openstack']['vault_gem_version'] = '~> 2.3'
 
 # Default attributes when not using data bags (use_databags = false)
 %w{block-storage object-storage compute database dashboard image identity

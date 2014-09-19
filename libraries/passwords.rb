@@ -47,22 +47,21 @@ module ::Openstack # rubocop:disable Documentation
   # nova_password = secret 'passwords', 'nova'
   #
   # The nova_password will == 'nova_password'
+
   def secret(bag_name, index)
     if node['openstack']['developer_mode']
-      ::Chef::Log.warn(
-        "Developer mode for reading passwords is DEPRECATED and will "\
-        "be removed. Please use attributes (and the get_password method) "\
-        "instead.")
-
-      return (node['openstack']['secret'][index] || index)
-    end
-    case node['openstack']['databag_type']
-    when 'encrypted'
-      encrypted_secret(bag_name, index)
-    when 'standard'
-      standard_secret(bag_name, index)
+      dev_secret(index)
     else
-      ::Chef::Log.error("Unsupported value for node['openstack']['databag_type']")
+      case node['openstack']['databag_type']
+      when 'encrypted'
+        encrypted_secret(bag_name, index)
+      when 'standard'
+        standard_secret(bag_name, index)
+      when 'vault' # chef-vault, by convention use "vault_<bag_name>" as bag_name
+        vault_secret('vault_' + bag_name, index)
+      else
+        ::Chef::Log.error("Unsupported value for node['openstack']['databag_type']")
+      end
     end
   end
 
@@ -76,6 +75,16 @@ module ::Openstack # rubocop:disable Documentation
   def standard_secret(bag_name, index)
     ::Chef::Log.info "Loading databag #{bag_name}.#{index}"
     ::Chef::DataBagItem.load(bag_name, index)[index]
+  end
+
+  def vault_secret(bag_name, index)
+    begin
+      require 'chef-vault'
+    rescue LoadError
+      Chef::Log.warn("Missing gem 'chef-vault'")
+    end
+    ::Chef::Log.info "Loading vault secret #{index} from #{bag_name}"
+    ::ChefVault::Item.load(bag_name, index)[index]
   end
 
   # Ease-of-use/standarization routine that returns a secret from the
@@ -114,5 +123,15 @@ module ::Openstack # rubocop:disable Documentation
     else
       node['openstack']['secret'][key][type]
     end
+  end
+
+  private
+
+  def dev_secret(index)
+    ::Chef::Log.warn(
+      'Developer mode for reading passwords is DEPRECATED and will '\
+      'be removed. Please use attributes (and the get_password method) '\
+      'instead.')
+    (node['openstack']['secret'][index] || index)
   end
 end

@@ -191,6 +191,10 @@ default['openstack']['endpoints']['identity-internal']['path'] = '/v2.0'
 default['openstack']['endpoints']['identity-internal']['bind_interface'] = nil
 
 # The OpenStack Identity (Keystone) Admin API endpoint
+default['openstack']['endpoints']['identity-admin-bind']['host'] = node['openstack']['endpoints']['bind-host']
+default['openstack']['endpoints']['identity-admin-bind']['port'] = '35357'
+default['openstack']['endpoints']['identity-admin-bind']['bind_interface'] = nil
+
 default['openstack']['endpoints']['identity-admin']['host'] = node['openstack']['endpoints']['host']
 default['openstack']['endpoints']['identity-admin']['scheme'] = 'http'
 default['openstack']['endpoints']['identity-admin']['port'] = '35357'

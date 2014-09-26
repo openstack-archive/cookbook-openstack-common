@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+## 10.2.0
+* Separate endpoints for vncserver_listen and vncserver_proxyclient_address
+
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency
 * Fix logging.conf No section error

@@ -108,6 +108,10 @@ default['openstack']['release'] = 'juno'
 # In the component strings, %codename% will be replaced by the value of
 # the node['lsb']['codename'] Ohai value and %release% will be replaced
 # by the value of node['openstack']['release']
+#
+# Change ['openstack']['apt']['update_apt_cache'] to true if you would like
+# have the cache automaticly updated
+default['openstack']['apt']['update_apt_cache'] = false
 default['openstack']['apt']['live_updates_enabled'] = true
 default['openstack']['apt']['uri'] = 'http://ubuntu-cloud.archive.canonical.com/ubuntu'
 default['openstack']['apt']['components'] = ["#{node['lsb']['codename']}-updates/#{node['openstack']['release']}", 'main']

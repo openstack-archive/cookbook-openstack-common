@@ -21,6 +21,10 @@
 platform_options = node['openstack']['common']['platform']
 case node['platform_family']
 when 'debian'
+  if node['openstack']['apt']['update_apt_cache']
+    # Ensure we've done an apt-update first or packages won't be found.
+    include_recipe 'apt'
+  end
   package 'ubuntu-cloud-keyring' do
     options platform_options['package_overrides']
     action :upgrade

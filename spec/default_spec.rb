@@ -11,6 +11,15 @@ describe 'openstack-common::default' do
       runner.converge(described_recipe)
     end
 
+    it 'includes apt for apt-get update' do
+      node.set['openstack']['apt']['update_apt_cache'] = 'true'
+      expect(chef_run).to include_recipe 'apt'
+    end
+
+    it 'doesnt include apt for apt-get update' do
+      expect(chef_run).to_not include_recipe 'apt'
+    end
+
     it 'upgrades ubuntu-cloud-keyring package' do
       expect(chef_run).to upgrade_package 'ubuntu-cloud-keyring'
     end

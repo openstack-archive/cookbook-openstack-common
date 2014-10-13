@@ -15,6 +15,8 @@ The following cookbooks are dependencies:
 
 * apt
 * database
+* yum
+* yum-epel
 
 Attributes
 ==========

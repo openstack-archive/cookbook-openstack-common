@@ -337,7 +337,7 @@ default['openstack']['endpoints']['block-storage-api-bind']['bind_interface'] = 
 default['openstack']['endpoints']['block-storage-api']['host'] = node['openstack']['endpoints']['host']
 default['openstack']['endpoints']['block-storage-api']['scheme'] = 'http'
 default['openstack']['endpoints']['block-storage-api']['port'] = '8776'
-default['openstack']['endpoints']['block-storage-api']['path'] = '/v1/%(tenant_id)s'
+default['openstack']['endpoints']['block-storage-api']['path'] = '/v2/%(tenant_id)s'
 default['openstack']['endpoints']['block-storage-api']['bind_interface'] = nil
 
 # ******************** OpenStack Object Storage Endpoint *****************************

@@ -6,6 +6,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 * Separate endpoints for vncserver_listen and vncserver_proxyclient_address
 
 * Bump Chef gem to 11.16
+* Change the default cinder endpoint path to use v2 API since v1 API has been deprecated
 
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency

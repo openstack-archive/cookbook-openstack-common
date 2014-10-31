@@ -4,8 +4,8 @@ This file is used to list changes made in each version of cookbook-openstack-com
 
 ## 10.2.0
 * Separate endpoints for vncserver_listen and vncserver_proxyclient_address
-
 * Bump Chef gem to 11.16
+* Fix openstack_command with correct arguments order
 
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency

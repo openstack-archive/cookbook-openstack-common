@@ -57,7 +57,7 @@ describe 'openstack-common::default' do
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
           }
         allow(subject).to receive(:shell_out).with(
-          %w(keystone user-list --key1 value1 --key2 value2),
+          %w(keystone --key1 value1 --key2 value2 user-list),
           env: env
           ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
 

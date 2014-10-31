@@ -54,10 +54,11 @@ module ::Openstack # rubocop:disable Documentation
     #       array into [cmd].  This is done to accomdate cmd + options like:
     #       keystone user-list
     #       glance   image-show <id|name>
-    openstackcmd = [cmd].concat(options.split)
+    openstackcmd = [cmd]
     args.each do |key, val|
       openstackcmd << "--#{key}" << val.to_s
     end
+    openstackcmd = openstackcmd.concat(options.split)
     Chef::Log.debug("Running openstack command: #{openstackcmd} with environment: #{env}")
     result = shell_out(openstackcmd, env: env)
     fail "#{result.stderr} (#{result.exitstatus})" if result.exitstatus != 0

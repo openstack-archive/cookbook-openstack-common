@@ -56,7 +56,8 @@ module ::Openstack # rubocop:disable Documentation
     #       glance   image-show <id|name>
     openstackcmd = [cmd]
     args.each do |key, val|
-      openstackcmd << "--#{key}" << val.to_s
+      openstackcmd << "--#{key}"
+      openstackcmd << val.to_s unless val.to_s.empty?
     end
     openstackcmd = openstackcmd.concat(options.split)
     Chef::Log.debug("Running openstack command: #{openstackcmd} with environment: #{env}")

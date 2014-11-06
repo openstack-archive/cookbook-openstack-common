@@ -57,11 +57,11 @@ describe 'openstack-common::default' do
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
           }
         allow(subject).to receive(:shell_out).with(
-          %w(keystone --key1 value1 --key2 value2 user-list),
+          %w(keystone --key1 value1 --key2 value2 --key3 user-list),
           env: env
           ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
 
-        result = subject.openstack_command('keystone', 'user-list', env, 'key1' => 'value1', 'key2' => 'value2')
+        result = subject.openstack_command('keystone', 'user-list', env, 'key1' => 'value1', 'key2' => 'value2', 'key3' => '')
         expect(result).to eq('good')
       end
 

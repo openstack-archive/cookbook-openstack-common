@@ -9,6 +9,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 * Fix openstack_command with single argument type
 * Make default using cinder v2 api
 * Add OS_VOLUME_API_VERSION for openrc
+* Removed the hardcoded PPA reference to "Precise"
 
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency

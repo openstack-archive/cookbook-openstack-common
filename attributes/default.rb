@@ -110,7 +110,7 @@ default['openstack']['release'] = 'juno'
 # by the value of node['openstack']['release']
 default['openstack']['apt']['live_updates_enabled'] = true
 default['openstack']['apt']['uri'] = 'http://ubuntu-cloud.archive.canonical.com/ubuntu'
-default['openstack']['apt']['components'] = ["precise-updates/#{node['openstack']['release']}", 'main']
+default['openstack']['apt']['components'] = ["#{node['lsb']['codename']}-updates/#{node['openstack']['release']}", 'main']
 # For the SRU packaging, use this:
 # default['openstack']['apt']['components'] = [ '%codename%-proposed/%release%', 'main' ]
 

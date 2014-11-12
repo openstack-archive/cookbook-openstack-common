@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require_relative 'spec_helper'
 require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'passwords'
+require 'chef-vault'
 
 describe 'openstack-common::default' do
   describe 'Passwords' do
@@ -18,6 +19,17 @@ describe 'openstack-common::default' do
           allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
           allow(Chef::EncryptedDataBagItem).to receive(:load).with('passwords', 'nova', 'secret').and_return(value)
           expect(subject.secret('passwords', 'nova')).to eq('this')
+        end
+      end
+
+      context 'using chef-vault' do
+        before do
+          node.set['openstack']['databag_type'] = 'vault'
+        end
+        it 'returns the data from a chef vault item' do
+          allow(ChefVault::Item).to receive(:load).with('vault_passwords', 'nova')
+          .and_return('nova' => 'novapassword')
+          expect(subject.secret('passwords', 'nova')).to eq('novapassword')
         end
       end
 

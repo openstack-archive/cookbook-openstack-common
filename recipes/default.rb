@@ -103,3 +103,9 @@ when 'suse'
     not_if { Mixlib::ShellOut.new('zypper repos --export -').run_command.stdout.include? repo_uri }
   end
 end
+
+if node['openstack']['databag_type'] == 'vault'
+  chef_gem 'chef-vault' do
+    version node['openstack']['vault_gem_version']
+  end
+end

@@ -41,6 +41,9 @@ end
 
 ksadmin_pass = get_password 'user', ksadmin_user
 identity_endpoint = endpoint 'identity-api'
+volume_api_version = 2
+volume_api_path = node['openstack']['endpoints']['block-storage-api']['path']
+volume_api_version = volume_api_path[/\d/].to_i unless volume_api_path.to_s.empty?
 
 directory node['openstack']['openrc']['path'] do
   owner node['openstack']['openrc']['user']
@@ -59,6 +62,7 @@ template "#{node['openstack']['openrc']['path']}/#{node['openstack']['openrc']['
     user: ksadmin_user,
     tenant: ksadmin_tenant_name,
     password: ksadmin_pass,
-    identity_endpoint: identity_endpoint.to_s
+    identity_endpoint: identity_endpoint.to_s,
+    volume_api_version: volume_api_version
   )
 end

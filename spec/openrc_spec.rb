@@ -36,7 +36,8 @@ describe 'openstack-common::openrc' do
           /^export OS_TENANT_NAME=admin$/,
           /^export OS_PASSWORD=admin$/,
           %r{^export OS_AUTH_URL=http://127.0.0.1:5000/v2.0$},
-          /^export OS_REGION_NAME=RegionOne$/
+          /^export OS_REGION_NAME=RegionOne$/,
+          /^export OS_VOLUME_API_VERSION=2$/
         ].each do |line|
           expect(chef_run).to render_file(file.name).with_content(line)
         end

@@ -18,5 +18,6 @@ end
 
 depends          'apt', '>= 2.3.8'
 depends          'database', '>= 2.0.0'
+depends          'mysql', '< 6.0.0'
 depends          'yum', '>= 3.1.4'
 depends          'yum-epel', '>= 0.3.4'

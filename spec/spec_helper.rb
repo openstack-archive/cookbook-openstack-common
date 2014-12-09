@@ -23,12 +23,6 @@ SUSE_OPTS = {
 # We set a default platform for non-platform specific test cases
 CHEFSPEC_OPTS = UBUNTU_OPTS
 
-# Build a regex for a section of lines
-def build_section(lines)
-  lines.map! { |line| Regexp.quote(line) }
-  /^#{lines.join('\n')}/
-end
-
 shared_context 'library-stubs' do
   before do
     allow(subject).to receive(:node).and_return(chef_run.node)

@@ -121,6 +121,7 @@ This cookbook exposes a set of default library routines:
 * `db_create_with_user` -- Creates a database and database user for a named OpenStack database
 * `secret` -- Returns the value of an encrypted data bag for a named OpenStack secret key and key-section
 * `get_password` -- Ease-of-use helper that returns the decrypted password for a named database, service or keystone user.
+* `matchers` -- A custom matcher(render_config_file) for testing ini format file section content by with_section_content.
 
 Usage
 -----

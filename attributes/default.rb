@@ -598,32 +598,8 @@ default['openstack']['memcached_servers'] = nil
 default['openstack']['sysctl']['net.ipv4.conf.all.rp_filter'] = 0
 default['openstack']['sysctl']['net.ipv4.conf.default.rp_filter'] = 0
 
-# Default Ceph settings
-default['openstack']['ceph']['key-url'] = 'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc'
-
 # Default OpenStack Network Type: nova (optional: neutron)
 default['openstack']['compute']['network']['service_type'] = 'nova'
-
-case platform_family
-when 'debian'
-  default['openstack']['ceph']['platform']['uri'] = 'http://ceph.com/debian-emperor'
-when 'fedora', 'rhel', 'suse' # :pragma-foodcritic: ~FC024 - won't fix this
-  default['openstack']['ceph']['platform']['uri'] = 'http://ceph.com/rpm-emperor'
-end
-
-# Overriding this makes the ceph_client recipe do nothing
-# (set this when using the ceph/ceph-cookbooks cookbook).
-default['openstack']['ceph']['setup_client'] = true
-
-default['openstack']['ceph']['global'] = {
-  fsid: '00000000-0000-0000-0000-000000000000',
-  mon_initial_members: [],
-  mon_host: [],
-  auth_cluster_required: 'cephx',
-  auth_service_required: 'cephx',
-  auth_client_required: 'cephx',
-  filestore_xattr_use_omap: true
-}
 
 case node['platform_family']
 when 'rhel', 'suse'

@@ -50,5 +50,11 @@ describe 'openstack-common::default' do
       .with(version: '~> 2.3')
     end
 
+    it 'enables rabbit ha for all services' do
+      node.set['openstack']['mq']['rabbitmq']['ha'] = true
+      %w{block-storage compute database image telemetry network orchestration}.each do |svc|
+        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['ha']).to eq(true)
+      end
+    end
   end
 end

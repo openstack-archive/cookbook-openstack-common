@@ -12,6 +12,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 * Removed the hardcoded PPA reference to "Precise"
 * Added an optional automatic apt-get update for Debian based repos
 * Add a new custom matcher render_config_file to test ini file content
+* Add global rabbit ha flag
 
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency

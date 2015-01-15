@@ -87,7 +87,7 @@ module ::Openstack # rubocop:disable Documentation
       }
 
       # create database
-      database "create #{db_name} database" do
+      database "create database #{db_name}" do
         provider db_prov
         connection connection_info
         database_name db_name
@@ -96,7 +96,7 @@ module ::Openstack # rubocop:disable Documentation
       end
 
       # create user
-      database_user user do
+      database_user "create database user #{user}"  do
         provider user_prov
         connection connection_info
         password pass
@@ -104,7 +104,7 @@ module ::Openstack # rubocop:disable Documentation
       end
 
       # grant privs to user
-      database_user user do
+      database_user "grant database user #{user}" do
         provider user_prov
         connection connection_info
         password pass

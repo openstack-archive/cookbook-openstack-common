@@ -15,6 +15,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 * Add global rabbit ha flag
 * Removed all ceph logic
 * Allow different URLs for internal, public, admin endpoints (bug 1412919)
+* Cleanup CHEF-3694 warnings
 
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency

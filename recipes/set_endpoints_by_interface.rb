@@ -24,8 +24,11 @@ end
 
 # iterate over the endpoints, look for bind_interface to set the host
 node['openstack']['endpoints'].keys.each do |component|
-  unless node['openstack']['endpoints'][component]['bind_interface'].nil?
-    ip_address = address node['openstack']['endpoints'][component]
-    node.default['openstack']['endpoints'][component]['host'] = ip_address
+  # Skip the overrides at the parent level
+  unless  %w(host, family, bind-host, bind_interface).include? component
+    unless node['openstack']['endpoints'][component]['bind_interface'].nil?
+      ip_address = address node['openstack']['endpoints'][component]
+      node.default['openstack']['endpoints'][component]['host'] = ip_address
+    end
   end
 end

@@ -56,5 +56,16 @@ describe 'openstack-common::default' do
         expect(chef_run.node['openstack']['mq'][svc]['rabbit']['ha']).to eq(true)
       end
     end
+
+    it 'allows bind_interface override for all bind endpoints' do
+      node.set['openstack']['endpoints']['bind_interface'] = 'eth1'
+      %w{identity-bind identity-admin-bind compute-api-bind compute-ec2-api-bind compute-ec2-admin-bind
+         compute-xvpvnc-bind compute-novnc-bind compute-vnc-bind compute-vnc-proxy-bind
+         network-api-bind image-api-bind image-registry-bind block-storage-api-bind object-storage-api-bind
+         telemetry-api-bind orchestration-api-bind orchestration-api-cfn-bind orchestration-api-cloudwatch-bind
+         database-api-bind}.each do |endpoint|
+        expect(chef_run.node['openstack']['endpoints'][endpoint]['bind_interface']).to eq('eth1')
+      end
+    end
   end
 end

@@ -17,6 +17,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 * Allow different URLs for internal, public, admin endpoints (bug 1412919)
 * Cleanup CHEF-3694 warnings
 * Allow disabling GnuPG signature check for RDO repo
+* Add global bind_interface attribute like the existing bind-host one
 
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency

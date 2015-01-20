@@ -34,7 +34,7 @@ default['openstack']['endpoints']['mq']['bind_interface'] = nil
 ###################################################################
 # Services to assign mq attributes for
 ###################################################################
-services = %w{block-storage compute database image
+services = %w{bare-metal block-storage compute database image
               telemetry network orchestration}
 
 ###################################################################
@@ -113,6 +113,13 @@ end
 ###################################################################
 # Overrides and additional attributes for individual services
 ###################################################################
+# bare-metal
+default['openstack']['mq']['bare-metal']['qpid']['notification_topic'] =
+  node['openstack']['mq']['bare-metal']['notification_topic']
+default['openstack']['mq']['bare-metal']['rabbit']['notification_topic'] =
+  node['openstack']['mq']['bare-metal']['notification_topic']
+default['openstack']['mq']['bare-metal']['control_exchange'] = 'ironic'
+
 # block-storage
 default['openstack']['mq']['block-storage']['qpid']['notification_topic'] =
   node['openstack']['mq']['block-storage']['notification_topic']

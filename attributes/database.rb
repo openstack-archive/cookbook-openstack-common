@@ -197,6 +197,14 @@ default['openstack']['db']['database']['db_name'] = 'trove'
 default['openstack']['db']['database']['username'] = 'trove'
 default['openstack']['db']['database']['options'] = node['openstack']['db']['options']
 
+# Database used by OpenStack Bare Metal (Ironic)
+default['openstack']['db']['bare-metal']['service_type'] = node['openstack']['db']['service_type']
+default['openstack']['db']['bare-metal']['host'] = node['openstack']['endpoints']['db']['host']
+default['openstack']['db']['bare-metal']['port'] = node['openstack']['endpoints']['db']['port']
+default['openstack']['db']['bare-metal']['db_name'] = 'ironic'
+default['openstack']['db']['bare-metal']['username'] = 'ironic'
+default['openstack']['db']['bare-metal']['options'] = node['openstack']['db']['options']
+
 # DB key to the get_password library routine
 default['openstack']['db']['root_user_key'] = 'mysqlroot'
 

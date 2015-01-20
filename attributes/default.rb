@@ -53,7 +53,7 @@ default['openstack']['databag_type'] = 'encrypted'
 default['openstack']['vault_gem_version'] = '~> 2.3'
 
 # Default attributes when not using data bags (use_databags = false)
-%w{block-storage object-storage compute database dashboard image identity
+%w{bare-metal block-storage object-storage compute database dashboard image identity
    telemetry network object-storage orchestration}.each do |service|
   %w{user service db token}.each do |type|
     default['openstack']['secret'][service][type] = "#{service}-#{type}"
@@ -447,6 +447,19 @@ default['openstack']['endpoints']['database-api']['scheme'] = 'http'
 default['openstack']['endpoints']['database-api']['port'] = '8779'
 default['openstack']['endpoints']['database-api']['path'] = '/v1.0/%(tenant_id)s'
 default['openstack']['endpoints']['database-api']['bind_interface'] = nil
+
+# ******************** OpenStack Bare Metal Endpoints *****************************
+
+# The OpenStack Bare Metal (Ironic) API endpoint
+default['openstack']['endpoints']['bare-metal-api-bind']['host'] = node['openstack']['endpoints']['bind-host']
+default['openstack']['endpoints']['bare-metal-api-bind']['port'] = '6385'
+default['openstack']['endpoints']['bare-metal-api-bind']['bind_interface'] = nil
+
+default['openstack']['endpoints']['bare-metal-api']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['bare-metal-api']['scheme'] = 'http'
+default['openstack']['endpoints']['bare-metal-api']['port'] = '6385'
+default['openstack']['endpoints']['bare-metal-api']['path'] = ''
+default['openstack']['endpoints']['bare-metal-api']['bind_interface'] = nil
 
 # Alternately, if you used some standardized DNS naming scheme, you could
 # do something like this, which would override any part-wise specifications above.

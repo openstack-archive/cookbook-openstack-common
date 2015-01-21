@@ -157,6 +157,19 @@ default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/red
 # IP) in a network to a particular OpenStack service endpoint. If the
 # bind_interface is set, it will set the host IP in the
 # set_endpoints_by_interface recipe.
+#
+# If you wish to use different values for the admin, public, and internal
+# URIs for a service, you can easily do so by putting that service's
+# information within the node['openstack']['endpoints'][type][service] hash
+# (where type is one of 'admin', 'public', or 'internal').
+# For example, to use a special public URI for compute-api, it could be
+# specified within...
+# node['openstack']['endpoints']['public']['compute-api'] = ...
+#
+# If you have no need for separate URIs for any of the admin, public, or
+# internal endpoints for compute-api, then you could just set the general
+# service endpoint within...
+# node['openstack']['endpoints']['compute-api'] = ...
 
 # ******************** OpenStack Identity Endpoints ***************************
 default['openstack']['endpoints']['host'] = '127.0.0.1'

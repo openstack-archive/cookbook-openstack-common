@@ -120,6 +120,138 @@ describe 'openstack-common::set_endpoints_by_interface' do
       end
     end
 
+    describe '#admin_endpoint' do
+      it 'returns nil admin_endpoint when not exists' do
+        allow(subject).to receive(:node).and_return({})
+        expect(
+          subject.admin_endpoint('nonexisting')
+        ).to be_nil
+      end
+
+      it 'returns general endpoint no admin endpoint exists' do
+        uri_hash = {
+          'openstack' => {
+            'endpoints' => {
+              'compute-api' => {
+                'uri' => 'http://localhost:8080/path'
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:node).and_return(uri_hash)
+        expect(subject.admin_endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
+      end
+
+      it 'returns admin endpoint when it exists' do
+        uri_hash = {
+          'openstack' => {
+            'endpoints' => {
+              'compute-api' => {
+                'uri' => 'http://localhost:8080/path'
+              },
+              'admin' => {
+                'compute-api' => {
+                  'uri' => 'https://localhost:1234/path'
+                }
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:node).and_return(uri_hash)
+        expect(subject.admin_endpoint('compute-api').to_s).to eq('https://localhost:1234/path')
+        # Make sure that the general endpoint didn't break
+        expect(subject.endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
+      end
+    end
+
+    describe '#public_endpoint' do
+      it 'returns nil public_endpoint when not exists' do
+        allow(subject).to receive(:node).and_return({})
+        expect(
+          subject.public_endpoint('nonexisting')
+        ).to be_nil
+      end
+
+      it 'returns general endpoint no public endpoint exists' do
+        uri_hash = {
+          'openstack' => {
+            'endpoints' => {
+              'compute-api' => {
+                'uri' => 'http://localhost:8080/path'
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:node).and_return(uri_hash)
+        expect(subject.public_endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
+      end
+
+      it 'returns public endpoint when it exists' do
+        uri_hash = {
+          'openstack' => {
+            'endpoints' => {
+              'compute-api' => {
+                'uri' => 'http://localhost:8080/path'
+              },
+              'public' => {
+                'compute-api' => {
+                  'uri' => 'https://localhost:1234/path'
+                }
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:node).and_return(uri_hash)
+        expect(subject.public_endpoint('compute-api').to_s).to eq('https://localhost:1234/path')
+        # Make sure that the general endpoint didn't break
+        expect(subject.endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
+      end
+    end
+
+    describe '#internal_endpoint' do
+      it 'returns nil internal_endpoint when not exists' do
+        allow(subject).to receive(:node).and_return({})
+        expect(
+          subject.internal_endpoint('nonexisting')
+        ).to be_nil
+      end
+
+      it 'returns general endpoint no internal endpoint exists' do
+        uri_hash = {
+          'openstack' => {
+            'endpoints' => {
+              'compute-api' => {
+                'uri' => 'http://localhost:8080/path'
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:node).and_return(uri_hash)
+        expect(subject.internal_endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
+      end
+
+      it 'returns internal endpoint when it exists' do
+        uri_hash = {
+          'openstack' => {
+            'endpoints' => {
+              'compute-api' => {
+                'uri' => 'http://localhost:8080/path'
+              },
+              'internal' => {
+                'compute-api' => {
+                  'uri' => 'https://localhost:1234/path'
+                }
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:node).and_return(uri_hash)
+        expect(subject.internal_endpoint('compute-api').to_s).to eq('https://localhost:1234/path')
+        # Make sure that the general endpoint didn't break
+        expect(subject.endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
+      end
+    end
+
     describe '#endpoints' do
       it 'does nothing when no endpoints' do
         allow(subject).to receive(:node).and_return({})

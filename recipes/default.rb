@@ -57,6 +57,7 @@ when 'rhel'
     description "OpenStack RDO repo for #{node['openstack']['release']}"
     gpgkey node['openstack']['yum']['repo-key']
     baseurl node['openstack']['yum']['uri']
+    gpgcheck node['openstack']['yum']['gpgcheck']
     enabled true
     action repo_action
   end

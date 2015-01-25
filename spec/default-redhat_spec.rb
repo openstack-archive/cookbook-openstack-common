@@ -11,7 +11,7 @@ describe 'openstack-common::default' do
       runner.converge(described_recipe)
     end
 
-    context 'enabling RDO' do
+    context 'enabling RDO with gpgcheck enabled' do
       before do
         node.set['openstack']['yum']['rdo_enabled'] = true
       end
@@ -20,6 +20,23 @@ describe 'openstack-common::default' do
         # Using cookbook(yum) LWRP custom matcher
         # https://github.com/sethvargo/chefspec#packaging-custom-matchers
         expect(chef_run).to add_yum_repository('RDO-testrelease')
+          .with(gpgcheck: true)
+      end
+
+      it 'includes yum-epel recipe' do
+        expect(chef_run).to include_recipe('yum-epel')
+      end
+    end
+
+    context 'enabling RDO with gpgcheck disabled' do
+      before do
+        node.set['openstack']['yum']['rdo_enabled'] = true
+        node.set['openstack']['yum']['gpgcheck'] = false
+      end
+
+      it 'adds RDO yum repository' do
+        expect(chef_run).to add_yum_repository('RDO-testrelease')
+          .with(gpgcheck: false)
       end
 
       it 'includes yum-epel recipe' do

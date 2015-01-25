@@ -104,6 +104,27 @@ module ::Openstack # rubocop:disable Documentation
     end
   end
 
+  # Get the admin endpoint for the specified service.
+  # If there's no specific endpoint, then get the general service endpoint.
+  def admin_endpoint(name)
+    ep = specific_endpoint('admin', name)
+    uri_from_hash(ep) if ep
+  end
+
+  # Get the public endpoint for the specified service.
+  # If there's no specific endpoint, then get the general  service endpoint.
+  def public_endpoint(name)
+    ep = specific_endpoint('public', name)
+    uri_from_hash(ep) if ep
+  end
+
+  # Get the internal endpoint for the specified service.
+  # If there's no specific endpoint, then get the general  service endpoint.
+  def internal_endpoint(name)
+    ep = specific_endpoint('internal', name)
+    uri_from_hash(ep) if ep
+  end
+
   private
 
   # Instead of specifying the verbose node['openstack']['endpoints'][name],
@@ -112,5 +133,14 @@ module ::Openstack # rubocop:disable Documentation
     node['openstack']['endpoints'][name]
   rescue
     nil
+  end
+
+  # Attempt to find the specific endpoint ('internal', 'admin', or
+  # 'public') for the given name.  If it's not found, then return the
+  # general endpoint.
+  def specific_endpoint(type, name)
+    node['openstack']['endpoints'][type][name]
+  rescue
+    endpoint_for(name)
   end
 end

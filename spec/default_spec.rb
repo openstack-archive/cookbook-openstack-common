@@ -61,8 +61,19 @@ describe 'openstack-common::default' do
          compute-xvpvnc-bind compute-novnc-bind compute-vnc-bind compute-vnc-proxy-bind compute-metadata-api-bind
          network-api-bind image-api-bind image-registry-bind block-storage-api-bind object-storage-api-bind
          telemetry-api-bind orchestration-api-bind orchestration-api-cfn-bind orchestration-api-cloudwatch-bind
-         database-api-bind}.each do |endpoint|
+         database-api-bind bare-metal-api-bind}.each do |endpoint|
         expect(chef_run.node['openstack']['endpoints'][endpoint]['bind_interface']).to eq('eth1')
+      end
+    end
+
+    it 'allows scheme for all bind endpoints' do
+      node.set['openstack']['endpoints']['scheme'] = 'https'
+      %w{identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
+         compute-xvpvnc compute-novnc compute-metadata-api
+         network-api image-api image-registry block-storage-api object-storage-api
+         telemetry-api orchestration-api orchestration-api-cfn orchestration-api-cloudwatch
+         database-api bare-metal-api}.each do |endpoint|
+        expect(chef_run.node['openstack']['endpoints'][endpoint]['scheme']).to eq('https')
       end
     end
   end

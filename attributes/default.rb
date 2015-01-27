@@ -172,6 +172,7 @@ default['openstack']['yum']['gpgcheck'] = true
 # ******************** OpenStack Identity Endpoints ***************************
 default['openstack']['endpoints']['host'] = '127.0.0.1'
 default['openstack']['endpoints']['family'] = 'inet'
+default['openstack']['endpoints']['scheme'] = 'http'
 
 # Note: The ['<service-name>-bind'] for each service exist so that a user can
 # have a service bind to a local IP per API node, that is different to the
@@ -191,7 +192,7 @@ default['openstack']['endpoints']['identity-bind']['host'] = node['openstack']['
 default['openstack']['endpoints']['identity-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['identity-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['identity-api']['scheme'] = 'http'
+default['openstack']['endpoints']['identity-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['identity-api']['port'] = '5000'
 default['openstack']['endpoints']['identity-api']['path'] = '/v2.0'
 default['openstack']['endpoints']['identity-api']['bind_interface'] = nil
@@ -206,7 +207,7 @@ default['openstack']['endpoints']['identity-api']['bind_interface'] = nil
 # Generally this listens on the same IP as the admin interface, but with the
 # public pipeline(5000) instead of the admin pipeline(35357).
 default['openstack']['endpoints']['identity-internal']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['identity-internal']['scheme'] = 'http'
+default['openstack']['endpoints']['identity-internal']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['identity-internal']['port'] = '5000'
 default['openstack']['endpoints']['identity-internal']['path'] = '/v2.0'
 default['openstack']['endpoints']['identity-internal']['bind_interface'] = nil
@@ -217,7 +218,7 @@ default['openstack']['endpoints']['identity-admin-bind']['port'] = '35357'
 default['openstack']['endpoints']['identity-admin-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['identity-admin']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['identity-admin']['scheme'] = 'http'
+default['openstack']['endpoints']['identity-admin']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['identity-admin']['port'] = '35357'
 default['openstack']['endpoints']['identity-admin']['path'] = '/v2.0'
 default['openstack']['endpoints']['identity-admin']['bind_interface'] = nil
@@ -230,7 +231,7 @@ default['openstack']['endpoints']['compute-api-bind']['port'] = '8774'
 default['openstack']['endpoints']['compute-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['compute-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['compute-api']['scheme'] = 'http'
+default['openstack']['endpoints']['compute-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['compute-api']['port'] = '8774'
 default['openstack']['endpoints']['compute-api']['path'] = '/v2/%(tenant_id)s'
 default['openstack']['endpoints']['compute-api']['bind_interface'] = nil
@@ -241,7 +242,7 @@ default['openstack']['endpoints']['compute-ec2-api-bind']['port'] = '8773'
 default['openstack']['endpoints']['compute-ec2-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['compute-ec2-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['compute-ec2-api']['scheme'] = 'http'
+default['openstack']['endpoints']['compute-ec2-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['compute-ec2-api']['port'] = '8773'
 default['openstack']['endpoints']['compute-ec2-api']['path'] = '/services/Cloud'
 default['openstack']['endpoints']['compute-ec2-api']['bind_interface'] = nil
@@ -252,7 +253,7 @@ default['openstack']['endpoints']['compute-ec2-admin-bind']['port'] = '8773'
 default['openstack']['endpoints']['compute-ec2-admin-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['compute-ec2-admin']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['compute-ec2-admin']['scheme'] = 'http'
+default['openstack']['endpoints']['compute-ec2-admin']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['compute-ec2-admin']['port'] = '8773'
 default['openstack']['endpoints']['compute-ec2-admin']['path'] = '/services/Admin'
 default['openstack']['endpoints']['compute-ec2-admin']['bind_interface'] = nil
@@ -263,7 +264,7 @@ default['openstack']['endpoints']['compute-xvpvnc-bind']['port'] = '6081'
 default['openstack']['endpoints']['compute-xvpvnc-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['compute-xvpvnc']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['compute-xvpvnc']['scheme'] = 'http'
+default['openstack']['endpoints']['compute-xvpvnc']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['compute-xvpvnc']['port'] = '6081'
 default['openstack']['endpoints']['compute-xvpvnc']['path'] = '/console'
 default['openstack']['endpoints']['compute-xvpvnc']['bind_interface'] = nil
@@ -274,7 +275,7 @@ default['openstack']['endpoints']['compute-novnc-bind']['port'] = '6080'
 default['openstack']['endpoints']['compute-novnc-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['compute-novnc']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['compute-novnc']['scheme'] = 'http'
+default['openstack']['endpoints']['compute-novnc']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['compute-novnc']['port'] = '6080'
 default['openstack']['endpoints']['compute-novnc']['path'] = '/vnc_auto.html'
 default['openstack']['endpoints']['compute-novnc']['bind_interface'] = nil
@@ -299,7 +300,7 @@ default['openstack']['endpoints']['compute-metadata-api-bind']['port'] = '8775'
 default['openstack']['endpoints']['compute-metadata-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['compute-metadata-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['compute-metadata-api']['scheme'] = 'http'
+default['openstack']['endpoints']['compute-metadata-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['compute-metadata-api']['port'] = '8775'
 default['openstack']['endpoints']['compute-metadata-api']['path'] = nil
 default['openstack']['endpoints']['compute-metadata-api']['bind_interface'] = nil
@@ -312,7 +313,7 @@ default['openstack']['endpoints']['network-api-bind']['port'] = '9696'
 default['openstack']['endpoints']['network-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['network-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['network-api']['scheme'] = 'http'
+default['openstack']['endpoints']['network-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['network-api']['port'] = '9696'
 # neutronclient appends the protocol version to the endpoint URL, so the
 # path needs to be empty
@@ -341,7 +342,7 @@ default['openstack']['endpoints']['image-api-bind']['port'] = '9292'
 default['openstack']['endpoints']['image-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['image-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['image-api']['scheme'] = 'http'
+default['openstack']['endpoints']['image-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['image-api']['port'] = '9292'
 # The glance client appends the protocol version to the endpoint URL,
 # so the path needs to be empty
@@ -354,7 +355,7 @@ default['openstack']['endpoints']['image-registry-bind']['port'] = '9191'
 default['openstack']['endpoints']['image-registry-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['image-registry']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['image-registry']['scheme'] = 'http'
+default['openstack']['endpoints']['image-registry']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['image-registry']['port'] = '9191'
 default['openstack']['endpoints']['image-registry']['path'] = '/v2'
 default['openstack']['endpoints']['image-registry']['bind_interface'] = nil
@@ -367,7 +368,7 @@ default['openstack']['endpoints']['block-storage-api-bind']['port'] = '8776'
 default['openstack']['endpoints']['block-storage-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['block-storage-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['block-storage-api']['scheme'] = 'http'
+default['openstack']['endpoints']['block-storage-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['block-storage-api']['port'] = '8776'
 default['openstack']['endpoints']['block-storage-api']['path'] = '/v2/%(tenant_id)s'
 default['openstack']['endpoints']['block-storage-api']['bind_interface'] = nil
@@ -380,7 +381,7 @@ default['openstack']['endpoints']['object-storage-api-bind']['port'] = '8080'
 default['openstack']['endpoints']['object-storage-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['object-storage-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['object-storage-api']['scheme'] = 'http'
+default['openstack']['endpoints']['object-storage-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['object-storage-api']['port'] = '8080'
 default['openstack']['endpoints']['object-storage-api']['path'] = '/v1/AUTH_%(tenant_id)s'
 default['openstack']['endpoints']['object-storage-api']['bind_interface'] = nil
@@ -393,7 +394,7 @@ default['openstack']['endpoints']['telemetry-api-bind']['port'] = '8777'
 default['openstack']['endpoints']['telemetry-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['telemetry-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['telemetry-api']['scheme'] = 'http'
+default['openstack']['endpoints']['telemetry-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['telemetry-api']['port'] = '8777'
 # The ceilometer client appends the protocol version to the endpoint URL,
 # so the path needs to be empty
@@ -408,7 +409,7 @@ default['openstack']['endpoints']['orchestration-api-bind']['port'] = '8004'
 default['openstack']['endpoints']['orchestration-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['orchestration-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['orchestration-api']['scheme'] = 'http'
+default['openstack']['endpoints']['orchestration-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['orchestration-api']['port'] = '8004'
 default['openstack']['endpoints']['orchestration-api']['path'] = '/v1/%(tenant_id)s'
 default['openstack']['endpoints']['orchestration-api']['bind_interface'] = nil
@@ -419,7 +420,7 @@ default['openstack']['endpoints']['orchestration-api-cfn-bind']['port'] = '8000'
 default['openstack']['endpoints']['orchestration-api-cfn-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['orchestration-api-cfn']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['orchestration-api-cfn']['scheme'] = 'http'
+default['openstack']['endpoints']['orchestration-api-cfn']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['orchestration-api-cfn']['port'] = '8000'
 default['openstack']['endpoints']['orchestration-api-cfn']['path'] = '/v1'
 default['openstack']['endpoints']['orchestration-api-cfn']['bind_interface'] = nil
@@ -430,7 +431,7 @@ default['openstack']['endpoints']['orchestration-api-cloudwatch-bind']['port'] =
 default['openstack']['endpoints']['orchestration-api-cloudwatch-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['orchestration-api-cloudwatch']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['orchestration-api-cloudwatch']['scheme'] = 'http'
+default['openstack']['endpoints']['orchestration-api-cloudwatch']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['orchestration-api-cloudwatch']['port'] = '8003'
 default['openstack']['endpoints']['orchestration-api-cloudwatch']['path'] = '/v1'
 default['openstack']['endpoints']['orchestration-api-cloudwatch']['bind_interface'] = nil
@@ -443,7 +444,7 @@ default['openstack']['endpoints']['database-api-bind']['port'] = '8779'
 default['openstack']['endpoints']['database-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['database-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['database-api']['scheme'] = 'http'
+default['openstack']['endpoints']['database-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['database-api']['port'] = '8779'
 default['openstack']['endpoints']['database-api']['path'] = '/v1.0/%(tenant_id)s'
 default['openstack']['endpoints']['database-api']['bind_interface'] = nil
@@ -453,10 +454,10 @@ default['openstack']['endpoints']['database-api']['bind_interface'] = nil
 # The OpenStack Bare Metal (Ironic) API endpoint
 default['openstack']['endpoints']['bare-metal-api-bind']['host'] = node['openstack']['endpoints']['bind-host']
 default['openstack']['endpoints']['bare-metal-api-bind']['port'] = '6385'
-default['openstack']['endpoints']['bare-metal-api-bind']['bind_interface'] = nil
+default['openstack']['endpoints']['bare-metal-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
 
 default['openstack']['endpoints']['bare-metal-api']['host'] = node['openstack']['endpoints']['host']
-default['openstack']['endpoints']['bare-metal-api']['scheme'] = 'http'
+default['openstack']['endpoints']['bare-metal-api']['scheme'] = node['openstack']['endpoints']['scheme']
 default['openstack']['endpoints']['bare-metal-api']['port'] = '6385'
 default['openstack']['endpoints']['bare-metal-api']['path'] = ''
 default['openstack']['endpoints']['bare-metal-api']['bind_interface'] = nil

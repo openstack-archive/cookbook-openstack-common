@@ -135,12 +135,22 @@ module ::Openstack # rubocop:disable Documentation
     nil
   end
 
-  # Attempt to find the specific endpoint ('internal', 'admin', or
+  # Attempt to find the specific endpoint type ('internal', 'admin', or
   # 'public') for the given name.  If it's not found, then return the
   # general endpoint.
   def specific_endpoint(type, name)
-    node['openstack']['endpoints'][type][name]
+    if node['openstack']['endpoints'][type].include? name
+      node['openstack']['endpoints'][type][name]
+    else
+      # There may have been a subhash for the specified type, but it
+      # didn't have the name we were looking for (and didn't throw
+      # an exception either). In this case, attempt to use the general
+      # endpoit
+      endpoint_for(name)
+    end
   rescue
+    # Problem doing hash lookups for requested type of endpoint. Use
+    # general endpoint instead
     endpoint_for(name)
   end
 end

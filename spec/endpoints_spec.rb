@@ -162,6 +162,32 @@ describe 'openstack-common::set_endpoints_by_interface' do
         # Make sure that the general endpoint didn't break
         expect(subject.endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
       end
+
+      it 'one admin endpoint not masking another' do
+        uri_hash = {
+          'openstack' => {
+            'endpoints' => {
+              'compute-api' => {
+                'uri' => 'http://localhost:8080/path'
+              },
+              'foo' => {
+                'uri' => 'http://localhost:8080/foo'
+              },
+              'admin' => {
+                'compute-api' => {
+                  'uri' => 'https://localhost:1234/path'
+                }
+              }
+            }
+          }
+        }
+        allow(subject).to receive(:node).and_return(uri_hash)
+        expect(subject.admin_endpoint('compute-api').to_s).to eq('https://localhost:1234/path')
+        # Make sure that the general endpoint didn't break
+        expect(subject.endpoint('compute-api').to_s).to eq('http://localhost:8080/path')
+        # Make sure foo admin_endpoint is from general definition
+        expect(subject.admin_endpoint('foo').to_s).to eq('http://localhost:8080/foo')
+      end
     end
 
     describe '#public_endpoint' do

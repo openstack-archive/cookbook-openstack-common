@@ -38,18 +38,6 @@ describe 'openstack-common::default' do
         expect(result['host']).to eq('127.0.0.1')
         expect(result['port']).to eq('3306')
       end
-
-      it 'creates database' do
-        skip 'TODO: test this LWRP'
-      end
-
-      it 'creates database user' do
-        skip 'TODO: test this LWRP'
-      end
-
-      it 'grants privs to database user' do
-        skip 'TODO: test this LWRP'
-      end
     end
   end
 end

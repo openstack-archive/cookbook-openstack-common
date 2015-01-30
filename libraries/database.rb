@@ -99,6 +99,7 @@ module ::Openstack # rubocop:disable Documentation
       database_user "create database user #{user}"  do
         provider user_prov
         connection connection_info
+        username user
         password pass
         action :create
       end
@@ -107,6 +108,7 @@ module ::Openstack # rubocop:disable Documentation
       database_user "grant database user #{user}" do
         provider user_prov
         connection connection_info
+        username user
         password pass
         database_name db_name
         host '%'

@@ -218,4 +218,5 @@ when 'suse'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysql']
 when 'debian'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
+  default['openstack']['db']['python_packages']['db2'] = ['ibm-db', 'ibm-db-sa']
 end

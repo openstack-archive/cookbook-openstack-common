@@ -6,8 +6,6 @@ describe 'openstack-common::default' do
     let(:runner) { ChefSpec::Runner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['lsb']['codename'] = 'precise'
-
       runner.converge(described_recipe)
     end
 
@@ -30,14 +28,14 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = true
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        components: ['precise-updates/juno', 'main'])
+        components: ['trusty-updates/juno', 'main'])
     end
 
     it 'disables openstack live updates' do
       node.set['openstack']['apt']['live_updates_enabled'] = false
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        components: ['precise-updates/juno', 'main'])
+        components: ['trusty-updates/juno', 'main'])
     end
 
     it 'does not install the gem chef-vault by default' do

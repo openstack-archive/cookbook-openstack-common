@@ -29,7 +29,6 @@ module ::Openstack # rubocop:disable Documentation
   # is used, the node['mysql']['server_root_password'] is used along
   # with the 'root' (super)user.
   def db_create_with_user(service, user, pass) # rubocop:disable CyclomaticComplexity, MethodLength
-    root_user_use_databag = node['openstack']['db']['root_user_use_databag']
     info = db service
     if info
       host = info['host']
@@ -42,25 +41,14 @@ module ::Openstack # rubocop:disable Documentation
         db_prov = ::Chef::Provider::Database::Postgresql
         user_prov = ::Chef::Provider::Database::PostgresqlUser
         super_user = 'postgres'
-        if root_user_use_databag
-          user_key = node['openstack']['db']['root_user_key']
-          super_password = get_password 'user', user_key
-        else
-          super_password = node['postgresql']['password']['postgres']
-        end
+        user_key = node['openstack']['db']['root_user_key']
+        super_password = get_password 'user', user_key
       when 'mysql'
-        # we have to install the 'mysql' gem, otherwise the provider won't work
-        include_recipe 'database::mysql'
         db_prov = ::Chef::Provider::Database::Mysql
         user_prov = ::Chef::Provider::Database::MysqlUser
         super_user = 'root'
-
-        if root_user_use_databag
-          user_key = node['openstack']['db']['root_user_key']
-          super_password = get_password 'user', user_key
-        else
-          super_password = node['mysql']['server_root_password']
-        end
+        user_key = node['openstack']['db']['root_user_key']
+        super_password = get_password 'user', user_key
       when 'db2'
         db2_database 'create database' do
           db_name db_name

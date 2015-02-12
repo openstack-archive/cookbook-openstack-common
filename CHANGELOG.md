@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of cookbook-openstack-common.
 
+
+## 10.3.0
+* Updates for mysql cookbook ver 6.x
+
 ## 10.2.0
 * Separate endpoints for vncserver_listen and vncserver_proxyclient_address
 * Bump Chef gem to 11.16

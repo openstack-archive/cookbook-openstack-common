@@ -4,7 +4,7 @@ maintainer_email 'opscode-chef-openstack@googlegroups.com'
 license          'Apache 2.0'
 description      'Common OpenStack attributes, libraries and recipes.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '10.2.0'
+version          '10.3.0'
 
 recipe           'openstack-common', 'Installs/Configures common recipes'
 recipe           'openstack-common::set_endpoints_by_interface', 'Set endpoints by interface'
@@ -16,8 +16,8 @@ recipe           'openstack-common::openrc', 'Creates openrc file'
   supports os
 end
 
-depends          'apt', '>= 2.3.8'
-depends          'database', '>= 2.0.0'
-depends          'mysql', '< 6.0.0'
-depends          'yum', '>= 3.1.4'
-depends          'yum-epel', '>= 0.3.4'
+depends 'apt', '>= 2.3.8', '< 3.0.0'
+depends 'database', '>= 4.0.2', '< 5.0.0'
+depends 'mysql', '>= 6.0.13', '< 7.0.0'
+depends 'yum', '>= 3.5.2', '< 4.0.0'
+depends 'yum-epel', '>= 0.6.0', '< 1.0.0'

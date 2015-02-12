@@ -383,6 +383,15 @@ describe 'openstack-common::set_endpoints_by_interface' do
           subject.db_uri('telemetry', 'user', 'pass')
         ).to eq(expected)
       end
+
+      it 'returns compute db info hash when service found for mariadb' do
+        node.set['openstack']['db']['service_type'] = 'mariadb'
+        allow(subject).to receive(:node).and_return(chef_run.node)
+        expected = 'mysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
+        expect(
+          subject.db_uri('compute', 'user', 'pass')
+        ).to eq(expected)
+      end
     end
 
     describe '#address' do

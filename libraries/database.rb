@@ -43,7 +43,7 @@ module ::Openstack # rubocop:disable Documentation
         super_user = 'postgres'
         user_key = node['openstack']['db']['root_user_key']
         super_password = get_password 'user', user_key
-      when 'mysql'
+      when 'mysql', 'mariadb'
         db_prov = ::Chef::Provider::Database::Mysql
         user_prov = ::Chef::Provider::Database::MysqlUser
         super_user = 'root'

@@ -73,6 +73,8 @@ module ::Openstack # rubocop:disable Documentation
         end
       when 'pgsql'
         type = 'postgresql'
+      when 'mariadb'
+        type = 'mysql'
       end
 
       # Build uri

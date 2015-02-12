@@ -20,7 +20,7 @@ describe 'openstack-common::default' do
       end
 
       it 'returns db info and creates database with user when service found' do
-        ['mysql', 'pgsql', 'postgresql'].each do |db_type|
+        %w(mysql, mariadb, pgsql, postgresql).each do |db_type|
           encoding = node['openstack']['db']['charset'][db_type]
           if encoding.nil?
             allow(subject).to receive(:database).and_return({})

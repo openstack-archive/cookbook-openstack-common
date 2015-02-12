@@ -79,10 +79,10 @@ default['openstack']['endpoints']['db']['bind_interface'] = nil
 
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'
-default['openstack']['db']['service_type'] = 'mysql'
 # Database charset during create database
 default['openstack']['db']['charset'] = {
    mysql: 'utf8',
+   mariadb: 'utf8',
    postgresql: nil,
    pgsql: nil,
    sqlite: nil,
@@ -93,11 +93,29 @@ default['openstack']['db']['charset'] = {
 # Database connection options. Should include starting '?'
 default['openstack']['db']['options'] = {
    mysql: "?charset=#{node['openstack']['db']['charset']['mysql']}",
+   mariadb: "?charset=#{node['openstack']['db']['charset']['mariadb']}",
    postgresql: '',
    sqlite: '',
    db2: "?charset=#{node['openstack']['db']['charset']['db2']}",
    nosql: ''
 }
+
+case node['platform_family']
+when 'rhel'
+  default['openstack']['db']['service_type'] = 'mariadb'
+  default['openstack']['db']['python_packages']['mysql'] = ['MySQL-python']
+  default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
+  default['openstack']['db']['python_packages']['db2'] = ['python-ibm-db', 'python-ibm-db-sa']
+when 'suse'
+  default['openstack']['db']['service_type'] = 'mysql'
+  default['openstack']['db']['python_packages']['mysql'] = ['python-mysql']
+  default['openstack']['db']['python_packages']['mariadb'] = ['python-mysql']
+when 'debian'
+  default['openstack']['db']['service_type'] = 'mysql'
+  default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
+  default['openstack']['db']['python_packages']['mariadb'] = ['python-mysqldb']
+  default['openstack']['db']['python_packages']['db2'] = ['ibm-db', 'ibm-db-sa']
+end
 
 # Database used by the OpenStack Compute (Nova) service
 default['openstack']['db']['compute']['service_type'] = node['openstack']['db']['service_type']
@@ -213,13 +231,3 @@ default['openstack']['db']['python_packages'] = {
   postgresql: ['python-psycopg2'],
   sqlite: []
 }
-case node['platform_family']
-when 'rhel'
-  default['openstack']['db']['python_packages']['mysql'] = ['MySQL-python']
-  default['openstack']['db']['python_packages']['db2'] = ['python-ibm-db', 'python-ibm-db-sa']
-when 'suse'
-  default['openstack']['db']['python_packages']['mysql'] = ['python-mysql']
-when 'debian'
-  default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
-  default['openstack']['db']['python_packages']['db2'] = ['ibm-db', 'ibm-db-sa']
-end

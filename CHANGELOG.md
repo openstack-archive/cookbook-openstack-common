@@ -18,6 +18,7 @@ This file is used to list changes made in each version of cookbook-openstack-com
 * Cleanup CHEF-3694 warnings
 * Allow disabling GnuPG signature check for RDO repo
 * Add global bind_interface attribute like the existing bind-host one
+* Add bootstrap.sh for installing the packages needed to run tests on trusty with 'chef exec rake'
 
 ## 10.1.0
 * Adding identity admin bind host endpoint to allow flexibility and consistency

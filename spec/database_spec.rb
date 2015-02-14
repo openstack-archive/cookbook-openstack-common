@@ -12,11 +12,6 @@ describe 'openstack-common::default' do
     include_context 'library-stubs'
 
     describe '#db_create_with_user' do
-      before do
-        allow(subject).to receive(:include_recipe)
-          .with('database::mysql')
-          .and_return('')
-      end
 
       it 'returns nil when no such service was found' do
         expect(
@@ -34,6 +29,7 @@ describe 'openstack-common::default' do
           end
         end
         allow(subject).to receive(:database_user).and_return({})
+        allow(subject).to receive(:get_password).with('user', 'mysqlroot').and_return('admin')
         result = subject.db_create_with_user('compute', 'user', 'pass')
         expect(result['host']).to eq('127.0.0.1')
         expect(result['port']).to eq('3306')

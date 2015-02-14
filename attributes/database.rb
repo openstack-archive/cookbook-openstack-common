@@ -197,12 +197,7 @@ default['openstack']['db']['database']['db_name'] = 'trove'
 default['openstack']['db']['database']['username'] = 'trove'
 default['openstack']['db']['database']['options'] = node['openstack']['db']['options']
 
-# Switch to store the MySQL root password in a databag instead of
-# using the generated OpenSSL cookbook secure_password one.
-default['openstack']['db']['root_user_use_databag'] = false
-
-# If above root_user_use_databag is true, the below string
-# will be passed to the get_password library routine.
+# DB key to the get_password library routine
 default['openstack']['db']['root_user_key'] = 'mysqlroot'
 
 # platform and DBMS-specific python client packages

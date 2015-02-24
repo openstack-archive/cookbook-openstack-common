@@ -71,7 +71,7 @@ describe 'openstack-common::logging' do
             'loggers' =>
               [
                 'keys=root,ceilometer,cinder,glance,horizon,keystone,nova,'\
-                'neutron,swift,trove,amqplib,sqlalchemy,boto,suds,eventletwsgi,'\
+                'neutron,trove,amqplib,sqlalchemy,boto,suds,eventletwsgi,'\
                 'nova_api_openstack_wsgi,nova_osapi_compute_wsgi_server'
               ],
             'logger_root' =>
@@ -120,12 +120,6 @@ describe 'openstack-common::logging' do
                 'level=DEBUG',
                 'handlers=prod,debug',
                 'qualname=neutron'
-              ],
-            'logger_swift' =>
-              [
-                'level=DEBUG',
-                'handlers=prod,debug',
-                'qualname=swift'
               ],
             'logger_trove' =>
               [

@@ -374,7 +374,7 @@ default['openstack']['endpoints']['object-storage-api-bind']['bind_interface'] =
 default['openstack']['endpoints']['object-storage-api']['host'] = node['openstack']['endpoints']['host']
 default['openstack']['endpoints']['object-storage-api']['scheme'] = 'http'
 default['openstack']['endpoints']['object-storage-api']['port'] = '8080'
-default['openstack']['endpoints']['object-storage-api']['path'] = '/v1/'
+default['openstack']['endpoints']['object-storage-api']['path'] = '/v1/AUTH_%(tenant_id)s'
 default['openstack']['endpoints']['object-storage-api']['bind_interface'] = nil
 
 # ******************** OpenStack Metering Endpoints ***************************
@@ -513,11 +513,6 @@ default['openstack']['logging']['loggers'] = {
     'level' => 'DEBUG',
     'handlers' => 'prod,debug',
     'qualname' => 'neutron'
-  },
-  'swift' => {
-    'level' => 'DEBUG',
-    'handlers' => 'prod,debug',
-    'qualname' => 'swift'
   },
   'trove' => {
     'level' => 'DEBUG',

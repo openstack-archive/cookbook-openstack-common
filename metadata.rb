@@ -16,8 +16,8 @@ recipe           'openstack-common::openrc', 'Creates openrc file'
   supports os
 end
 
-depends 'apt', '>= 2.3.8', '< 3.0.0'
-depends 'database', '>= 4.0.2', '< 5.0.0'
-depends 'mysql', '>= 6.0.13', '< 7.0.0'
-depends 'yum', '>= 3.5.2', '< 4.0.0'
-depends 'yum-epel', '>= 0.6.0', '< 1.0.0'
+depends 'apt', '~> 2.6.1'
+depends 'database', '~> 4.0.2'
+depends 'mysql', '~> 6.0.13'
+depends 'yum', '~> 3.5.2'
+depends 'yum-epel', '~> 0.6.0'

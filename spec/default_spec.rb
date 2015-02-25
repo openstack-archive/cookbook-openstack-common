@@ -58,7 +58,7 @@ describe 'openstack-common::default' do
     it 'allows bind_interface override for all bind endpoints' do
       node.set['openstack']['endpoints']['bind_interface'] = 'eth1'
       %w{identity-bind identity-admin-bind compute-api-bind compute-ec2-api-bind compute-ec2-admin-bind
-         compute-xvpvnc-bind compute-novnc-bind compute-vnc-bind compute-vnc-proxy-bind
+         compute-xvpvnc-bind compute-novnc-bind compute-vnc-bind compute-vnc-proxy-bind compute-metadata-api-bind
          network-api-bind image-api-bind image-registry-bind block-storage-api-bind object-storage-api-bind
          telemetry-api-bind orchestration-api-bind orchestration-api-cfn-bind orchestration-api-cloudwatch-bind
          database-api-bind}.each do |endpoint|

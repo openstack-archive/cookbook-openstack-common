@@ -296,6 +296,17 @@ default['openstack']['endpoints']['compute-vnc']['bind_interface'] = nil
 default['openstack']['endpoints']['compute-vnc-proxy-bind']['host'] = node['openstack']['endpoints']['compute-vnc-bind']['host']
 default['openstack']['endpoints']['compute-vnc-proxy-bind']['bind_interface'] = node['openstack']['endpoints']['compute-vnc-bind']['bind_interface']
 
+# The OpenStack Compute (Nova) metadata API endpoint
+default['openstack']['endpoints']['compute-metadata-api-bind']['host'] = node['openstack']['endpoints']['bind-host']
+default['openstack']['endpoints']['compute-metadata-api-bind']['port'] = '8775'
+default['openstack']['endpoints']['compute-metadata-api-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
+
+default['openstack']['endpoints']['compute-metadata-api']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['compute-metadata-api']['scheme'] = 'http'
+default['openstack']['endpoints']['compute-metadata-api']['port'] = '8775'
+default['openstack']['endpoints']['compute-metadata-api']['path'] = nil
+default['openstack']['endpoints']['compute-metadata-api']['bind_interface'] = nil
+
 # ******************** OpenStack Network Endpoints ****************************
 
 # The OpenStack Network (Neutron) API endpoint.

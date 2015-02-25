@@ -3,6 +3,9 @@
 This file is used to list changes made in each version of cookbook-openstack-common.
 
 
+## 10.4.0
+* Add nova metadata api endpoint
+
 ## 10.3.0
 * Updates for mysql cookbook ver 6.x
 

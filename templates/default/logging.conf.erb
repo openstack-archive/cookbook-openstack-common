@@ -1,5 +1,5 @@
 [loggers]
-keys=<%= (node["openstack"]["logging"]['loggers'].keys + node["openstack"]["logging"]["ignore"].map{|k,v| k.gsub(/\W/, '_')}).join(',') %>
+keys=<%= (node["openstack"]["logging"]['loggers'].keys).join(',') %>
 
 [formatters]
 keys=<%= node["openstack"]["logging"]['formatters'].keys.join(',') %>
@@ -24,14 +24,6 @@ keys=<%= node["openstack"]["logging"]['handlers'].keys.join(',') %>
 <% options.each do |key, value| %>
 <%= key %>=<%= value %>
 <% end %>
-
-<% end %>
-
-<% node["openstack"]["logging"]["ignore"].each do |k,v| %>
-[logger_<%= k.gsub(/\W/, '_') %>]
-level = <%= v %>
-handlers = prod,debug
-qualname = <%= k %>
 
 <% end %>
 

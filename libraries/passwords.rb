@@ -26,42 +26,16 @@ module ::Openstack # rubocop:disable Documentation
   # encrypted value should be located at
   # node['openstack']['secret']['key_path'].
   #
-  # Note that if node['openstack']['developer_mode'] is true,
-  # then the value of the index parameter is just returned as-is. This
-  # means that in developer mode, if a cookbook does this:
-  #
-  # class Chef
-  #   class Recipe
-  #     include ::Openstack
-  #    end
-  # end
-  #
-  # nova_password = secret 'passwords', 'nova'
-  #
-  # That means nova_password will == 'nova'.
-  #
-  # You also can provide a default password value in developer mode,
-  # like following:
-  #
-  # node.set['openstack']['secret']['nova'] = 'nova_password'
-  # nova_password = secret 'passwords', 'nova'
-  #
-  # The nova_password will == 'nova_password'
-
   def secret(bag_name, index)
-    if node['openstack']['developer_mode']
-      dev_secret(index)
+    case node['openstack']['databag_type']
+    when 'encrypted'
+      encrypted_secret(bag_name, index)
+    when 'standard'
+      standard_secret(bag_name, index)
+    when 'vault' # chef-vault, by convention use "vault_<bag_name>" as bag_name
+      vault_secret('vault_' + bag_name, index)
     else
-      case node['openstack']['databag_type']
-      when 'encrypted'
-        encrypted_secret(bag_name, index)
-      when 'standard'
-        standard_secret(bag_name, index)
-      when 'vault' # chef-vault, by convention use "vault_<bag_name>" as bag_name
-        vault_secret('vault_' + bag_name, index)
-      else
-        ::Chef::Log.error("Unsupported value for node['openstack']['databag_type']")
-      end
+      ::Chef::Log.error("Unsupported value for node['openstack']['databag_type']")
     end
   end
 
@@ -123,15 +97,5 @@ module ::Openstack # rubocop:disable Documentation
     else
       node['openstack']['secret'][key][type]
     end
-  end
-
-  private
-
-  def dev_secret(index)
-    ::Chef::Log.warn(
-      'Developer mode for reading passwords is DEPRECATED and will '\
-      'be removed. Please use attributes (and the get_password method) '\
-      'instead.')
-    (node['openstack']['secret'][index] || index)
   end
 end

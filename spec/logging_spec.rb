@@ -40,31 +40,6 @@ describe 'openstack-common::logging' do
         expect(sprintf('%o', file.mode)).to eq '644'
       end
 
-      context 'logging ignore' do
-        it 'adds loggers keys ignore' do
-          node.set['openstack']['logging']['ignore'] = {
-            'ignore.key.1' => 'ignore.value.1',
-            'ignore.key.2' => 'ignore.value.2'
-          }
-          expect(chef_run).to render_config_file(file.name)
-              .with_section_content('loggers', /^keys=.*ignore_key_1,ignore_key_2$/)
-        end
-
-        it 'adds specific logger ignore block' do
-          node.set['openstack']['logging']['ignore'] = {
-            'test.nova.api.openstack.wsgi' => 'WARNING'
-          }
-          [
-            'level = WARNING',
-            'handlers = prod,debug',
-            'qualname = test.nova.api.openstack.wsgi'
-          ].each do |line|
-            expect(chef_run).to render_config_file(file.name)
-                .with_section_content('logger_test_nova_api_openstack_wsgi', line)
-          end
-        end
-      end
-
       context 'loggers' do
         it 'adds default loggers' do
           {

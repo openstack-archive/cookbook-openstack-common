@@ -75,6 +75,11 @@ if defined?(ChefSpec)
       return false if @actual_content.nil?
 
       if @expected_content.is_a?(Regexp)
+
+        # MRV Hack to allow windows env to work with rspec
+        # when regex end with $
+        @actual_content = @actual_content.gsub(/\r/, '')
+
         @actual_content =~ @expected_content
       elsif RSpec::Matchers.is_a_matcher?(@expected_content)
         @expected_content.matches?(@actual_content)

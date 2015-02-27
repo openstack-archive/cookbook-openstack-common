@@ -35,9 +35,6 @@ default['openstack']['common']['custom_template_banner'] = '
 #
 # The value of pass will be "nova"
 #
-# This attribute is now DEPRECATED and will be removed. Use the default
-# attributes below instead.
-default['openstack']['developer_mode'] = false
 
 # Use data bags for storing passwords
 # Set this to false in order to get the passwords from attributes like:
@@ -101,7 +98,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'juno'
+default['openstack']['release'] = 'kilo'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -122,8 +119,8 @@ default['openstack']['zypp']['repo-key'] = 'd85f9316'  # 32 bit key ID
 default['openstack']['zypp']['uri'] = 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/%release%/%suse-release%/'
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-juno/epel-7'
-default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-Juno'
+default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-kilo/epel-7'
+default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-Kilo'
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
 default['openstack']['yum']['gpgcheck'] = true
 # ======================== OpenStack Endpoints ================================
@@ -475,14 +472,6 @@ default['openstack']['region'] = 'RegionOne'
 # Set a default auth api version that other components use to interact with identity service.
 # Allowed auth API versions: v2.0 or v3.0. By default, it is set to v2.0.
 default['openstack']['api']['auth']['version'] = 'v2.0'
-
-# logging.conf list keypairs module_name => log level to write
-# DEPRECATED, use new loggers attributes below.
-# TODO(MRV) remove in Juno
-# The old defaults have been incorporated below:
-# { 'nova.api.openstack.wsgi' => 'WARNING',
-#   'nova.osapi_compute.wsgi.server' => 'WARNING' }
-default['openstack']['logging']['ignore'] = {}
 
 # Allow configured loggers in logging.conf
 default['openstack']['logging']['loggers'] = {

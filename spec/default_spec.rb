@@ -61,7 +61,7 @@ describe 'openstack-common::default' do
          compute-xvpvnc-bind compute-novnc-bind compute-vnc-bind compute-vnc-proxy-bind compute-metadata-api-bind
          network-api-bind image-api-bind image-registry-bind block-storage-api-bind object-storage-api-bind
          telemetry-api-bind orchestration-api-bind orchestration-api-cfn-bind orchestration-api-cloudwatch-bind
-         database-api-bind bare-metal-api-bind}.each do |endpoint|
+         database-api-bind bare-metal-api-bind dashboard-http-bind dashboard-https-bind}.each do |endpoint|
         expect(chef_run.node['openstack']['endpoints'][endpoint]['bind_interface']).to eq('eth1')
       end
     end

@@ -462,6 +462,20 @@ default['openstack']['endpoints']['bare-metal-api']['port'] = '6385'
 default['openstack']['endpoints']['bare-metal-api']['path'] = ''
 default['openstack']['endpoints']['bare-metal-api']['bind_interface'] = nil
 
+# ****************** OpenStack Dashboard Endpoints ******************************
+
+# The OpenStack Dashboard non-SSL endpoint
+default['openstack']['endpoints']['dashboard-http-bind']['host'] = node['openstack']['endpoints']['bind-host']
+default['openstack']['endpoints']['dashboard-http-bind']['port'] = '80'
+default['openstack']['endpoints']['dashboard-http-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
+
+# The OpenStack Dashboard SSL endpoint
+default['openstack']['endpoints']['dashboard-https-bind']['host'] = node['openstack']['endpoints']['bind-host']
+default['openstack']['endpoints']['dashboard-https-bind']['port'] = '443'
+default['openstack']['endpoints']['dashboard-https-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
+
+# ********************************************************************************
+
 # Alternately, if you used some standardized DNS naming scheme, you could
 # do something like this, which would override any part-wise specifications above.
 #

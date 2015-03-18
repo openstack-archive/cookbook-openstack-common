@@ -55,6 +55,8 @@ default['openstack']['mq']['auto_delete'] = false
 default['openstack']['mq']['qpid']['protocol'] = 'tcp'
 # global switch for handling rabbit ssl
 default['openstack']['mq']['rabbitmq']['use_ssl'] = false
+# SSL version to use (valid only if SSL enabled)
+default['openstack']['mq']['rabbitmq']['kombu_ssl_version'] = nil
 # global switch for handling rabbit ha
 default['openstack']['mq']['rabbitmq']['ha'] = false
 # defined in oslo/messaging/_drivers/impl_qpid.py
@@ -83,7 +85,8 @@ rabbit_defaults = {
   port: node['openstack']['endpoints']['mq']['port'],
   host: node['openstack']['endpoints']['mq']['host'],
   ha: node['openstack']['mq']['rabbitmq']['ha'],
-  use_ssl: node['openstack']['mq']['rabbitmq']['use_ssl']
+  use_ssl: node['openstack']['mq']['rabbitmq']['use_ssl'],
+  kombu_ssl_version: node['openstack']['mq']['rabbitmq']['kombu_ssl_version']
 }
 
 ###################################################################

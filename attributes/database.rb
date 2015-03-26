@@ -100,6 +100,11 @@ default['openstack']['db']['options'] = {
    nosql: ''
 }
 
+# platform and DBMS-specific python client packages
+default['openstack']['db']['python_packages'] = {
+  postgresql: ['python-psycopg2'],
+  sqlite: []
+}
 case node['platform_family']
 when 'rhel'
   default['openstack']['db']['service_type'] = 'mariadb'
@@ -225,9 +230,3 @@ default['openstack']['db']['bare-metal']['options'] = node['openstack']['db']['o
 
 # DB key to the get_password library routine
 default['openstack']['db']['root_user_key'] = 'mysqlroot'
-
-# platform and DBMS-specific python client packages
-default['openstack']['db']['python_packages'] = {
-  postgresql: ['python-psycopg2'],
-  sqlite: []
-}

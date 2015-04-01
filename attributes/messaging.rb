@@ -35,7 +35,7 @@ default['openstack']['endpoints']['mq']['bind_interface'] = nil
 # Services to assign mq attributes for
 ###################################################################
 services = %w{bare-metal block-storage compute database image
-              telemetry network orchestration}
+              identity telemetry network orchestration}
 
 ###################################################################
 # Generic default attributes
@@ -138,6 +138,11 @@ default['openstack']['mq']['image']['qpid']['notification_topic'] =
 default['openstack']['mq']['image']['rabbit']['notification_topic'] =
   node['openstack']['mq']['image']['notification_topic']
 default['openstack']['mq']['image']['control_exchange'] = 'glance'
+
+# identity
+# AMQP topics used for openstack notifications, can be comma-separated values
+default['openstack']['mq']['identity']['notification_topics'] = 'notifications'
+default['openstack']['mq']['identity']['control_exchange'] = 'identity'
 
 # network
 # AMQP topics used for openstack notifications, can be comma-separated values

@@ -80,7 +80,7 @@ describe 'openstack-common::default' do
     it 'enables rabbit ssl version for all services' do
       node.set['openstack']['mq']['rabbitmq']['kombu_ssl_version'] = 'TLSv1.2'
 
-      %w{bare-metal block-storage compute database image telemetry network orchestration}.each do |svc|
+      %w{bare-metal block-storage compute database image identity telemetry network orchestration}.each do |svc|
         expect(chef_run.node['openstack']['mq'][svc]['rabbit']['kombu_ssl_version']).to eq('TLSv1.2')
       end
     end

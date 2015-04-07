@@ -4,6 +4,7 @@ require_relative 'spec_helper'
 describe 'openstack-common::default' do
   describe 'ubuntu' do
     let(:runner) { ChefSpec::Runner.new(UBUNTU_OPTS) }
+    let(:mq_services) { %w{bare-metal block-storage compute database image telemetry network orchestration} }
     let(:node) { runner.node }
     let(:chef_run) do
       runner.converge(described_recipe)
@@ -50,7 +51,7 @@ describe 'openstack-common::default' do
 
     it 'enables rabbit ha for all services' do
       node.set['openstack']['mq']['rabbitmq']['ha'] = true
-      %w{bare-metal block-storage compute database image telemetry network orchestration}.each do |svc|
+      mq_services.each do |svc|
         expect(chef_run.node['openstack']['mq'][svc]['rabbit']['ha']).to eq(true)
       end
     end
@@ -79,9 +80,20 @@ describe 'openstack-common::default' do
 
     it 'enables rabbit ssl version for all services' do
       node.set['openstack']['mq']['rabbitmq']['kombu_ssl_version'] = 'TLSv1.2'
-
-      %w{bare-metal block-storage compute database image identity telemetry network orchestration}.each do |svc|
+      mq_services.each do |svc|
         expect(chef_run.node['openstack']['mq'][svc]['rabbit']['kombu_ssl_version']).to eq('TLSv1.2')
+      end
+    end
+
+    it 'set rabbit_max_retries to 0 for all services' do
+      mq_services.each do |svc|
+        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['rabbit_max_retries']).to eq(0)
+      end
+    end
+
+    it 'set rabbit_retry_interval to 1 for all services' do
+      mq_services.each do |svc|
+        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['rabbit_retry_interval']).to eq(1)
       end
     end
   end

@@ -80,6 +80,8 @@ qpid_defaults = {
 }
 
 rabbit_defaults = {
+  rabbit_max_retries: 0,
+  rabbit_retry_interval: 1,
   userid: node['openstack']['mq']['user'],
   vhost: node['openstack']['mq']['vhost'],
   port: node['openstack']['endpoints']['mq']['port'],

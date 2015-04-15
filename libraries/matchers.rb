@@ -11,10 +11,20 @@ if defined?(ChefSpec)
   # option1 = value1
   # option2 = value2
   # [section2]
-  # option1 = value2
+  # option3 = value3
+  #
+  # Example file content with dup sections:
+  #
+  # [section1]
+  # option1 = value1
+  # option2 = value2
+  # [section2]
+  # option3 = value3
+  # [section1]
+  # option4 = value4
   #
   # Example custom matcher that can be called in other
-  # dependends cookbooks.
+  # cookbooks.
   #
   # render_config_file(path).with_section_content(
   #   'section1', 'option1 = value1')
@@ -47,17 +57,17 @@ if defined?(ChefSpec)
       end
 
       def get_section_content(content, section)
-        match = false
+        within_section = false
         section_content = ''
         content.split("\n").each do |line|
           if section?(line, section)
-            match = true
+            within_section = true
             next
           end
 
-          section_content << "#{line}\n" if match == true && !section?(line)
-
-          break if match == true && section?(line)
+          start_of_new_section = section?(line)
+          section_content << "#{line}\n" if within_section && !start_of_new_section
+          within_section = false if start_of_new_section
         end
         section_content
       end

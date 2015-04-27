@@ -5,7 +5,7 @@ require 'chef-vault'
 
 describe 'openstack-common::default' do
   describe 'Passwords' do
-    let(:runner) { ChefSpec::Runner.new(CHEFSPEC_OPTS) }
+    let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) { runner.converge(described_recipe) }
     let(:subject) { Object.new.extend(Openstack) }

@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 
 describe 'openstack-common::default' do
   describe 'rhel-rdo' do
-    let(:runner) { ChefSpec::Runner.new(REDHAT_OPTS) }
+    let(:runner) { ChefSpec::SoloRunner.new(REDHAT_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
       node.set['openstack']['release'] = 'testrelease'

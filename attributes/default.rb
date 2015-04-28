@@ -658,6 +658,9 @@ end
 # The name of the Chef role that installs the Keystone Service API
 default['openstack']['identity_service_chef_role'] = 'os-identity'
 
+# The name of the Chef role that sets up the compute worker
+default['openstack']['compute_worker_chef_role'] = 'os-compute-worker'
+
 # Array of bare options for openrc (e.g. 'option=value')
 default['openstack']['misc_openrc'] = nil
 

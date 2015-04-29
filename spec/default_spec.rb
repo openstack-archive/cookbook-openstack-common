@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 
 describe 'openstack-common::default' do
   describe 'ubuntu' do
-    let(:runner) { ChefSpec::Runner.new(UBUNTU_OPTS) }
+    let(:runner) { ChefSpec::SoloRunner.new(UBUNTU_OPTS) }
     let(:mq_services) { %w{bare-metal block-storage compute database image telemetry network orchestration} }
     let(:node) { runner.node }
     let(:chef_run) do

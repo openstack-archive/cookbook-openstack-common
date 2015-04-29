@@ -5,7 +5,7 @@ require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'endpoints'
 
 describe 'openstack-common::set_endpoints_by_interface' do
   describe 'Openstack endpoints' do
-    let(:runner) { ChefSpec::Runner.new(CHEFSPEC_OPTS) }
+    let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) { runner.converge(described_recipe) }
     let(:subject) { Object.new.extend(Openstack) }

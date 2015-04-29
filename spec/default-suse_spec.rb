@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 
 describe 'openstack-common::default' do
   describe 'suse' do
-    let(:runner) { ChefSpec::Runner.new(SUSE_OPTS) }
+    let(:runner) { ChefSpec::SoloRunner.new(SUSE_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
       node.set_unless['lsb']['description'] = 'SUSE Linux Enterprise Server 11 (x86_64)'

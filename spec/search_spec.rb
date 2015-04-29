@@ -4,7 +4,7 @@ require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'search'
 
 describe 'openstack-common::default' do
   describe 'Openstack Search' do
-    let(:runner) { ChefSpec::Runner.new(CHEFSPEC_OPTS) }
+    let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
       node.set['openstack']['mq']['server_role'] = 'openstack-ops-mq'

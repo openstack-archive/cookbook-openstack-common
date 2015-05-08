@@ -99,4 +99,9 @@ if defined?(ChefSpec)
     end
     # rubocop:enable MethodLength, CyclomaticComplexity
   end
+
+  ## matchers for openstack_database LWRP
+  def create_openstack_common_database(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:openstack_common_database, :create, resource_name)
+  end
 end

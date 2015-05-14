@@ -123,7 +123,7 @@ default['openstack']['zypp']['uri'] = 'http://download.opensuse.org/repositories
 
 default['openstack']['yum']['rdo_enabled'] = true
 default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-juno/epel-7'
-default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-Juno'
+default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/juno/RPM-GPG-KEY-RDO-Juno'
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
 default['openstack']['yum']['gpgcheck'] = true
 # ======================== OpenStack Endpoints ================================

@@ -119,8 +119,8 @@ default['openstack']['zypp']['repo-key'] = 'd85f9316'  # 32 bit key ID
 default['openstack']['zypp']['uri'] = 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/%release%/%suse-release%/'
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-kilo/epel-7'
-default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-Kilo'
+default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-kilo/el7'
+default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-kilo'
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
 default['openstack']['yum']['gpgcheck'] = true
 # ======================== OpenStack Endpoints ================================

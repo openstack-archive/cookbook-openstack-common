@@ -56,6 +56,15 @@ describe 'openstack-common::default' do
       end
     end
 
+    it 'has correct host for endpoints' do
+      %w{identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
+         compute-xvpvnc compute-novnc compute-vnc compute-metadata-api network-api network-linuxbridge
+         network-openvswitch image-api block-storage-api object-storage-api telemetry-api orchestration-api
+         orchestration-api-cfn orchestration-api-cloudwatch database-api bare-metal-api}.each do |endpoint|
+        expect(chef_run.node['openstack']['endpoints'][endpoint]['host']).to eq('127.0.0.1')
+      end
+    end
+
     it 'allows bind_interface override for all bind endpoints' do
       node.set['openstack']['endpoints']['bind_interface'] = 'eth1'
       %w{identity-bind identity-admin-bind compute-api-bind compute-ec2-api-bind compute-ec2-admin-bind

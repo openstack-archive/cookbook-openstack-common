@@ -46,7 +46,6 @@ describe 'openstack-common::default' do
           subject.address_for('all')
         ).to eq('0.0.0.0')
       end
-
     end
 
     describe '#address_for ipv6' do

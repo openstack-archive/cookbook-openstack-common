@@ -28,7 +28,7 @@ describe 'openstack-common::default' do
         end
         it 'returns the data from a chef vault item' do
           allow(ChefVault::Item).to receive(:load).with('vault_passwords', 'nova')
-          .and_return('nova' => 'novapassword')
+            .and_return('nova' => 'novapassword')
           expect(subject.secret('passwords', 'nova')).to eq('novapassword')
         end
       end
@@ -126,7 +126,7 @@ describe 'openstack-common::default' do
       before { node.set['openstack']['use_databags'] = false }
 
       describe '#get_password' do
-        %w{service db user token}.each do |type|
+        %w(service db user token).each do |type|
           it "returns the set attribute for #{type}" do
             expect(subject.get_password(type, 'compute')).to eq("compute-#{type}")
           end

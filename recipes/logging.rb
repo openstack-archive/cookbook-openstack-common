@@ -27,7 +27,7 @@ end
 
 template '/etc/openstack/logging.conf' do
   source 'logging.conf.erb'
-  owner  'root'
-  group  'root'
-  mode   00644
+  owner 'root'
+  group 'root'
+  mode 00644
 end

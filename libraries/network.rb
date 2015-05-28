@@ -19,7 +19,8 @@
 # limitations under the License.
 #
 
-module ::Openstack # rubocop:disable Documentation
+# Network methods
+module ::Openstack
   # return the IPv4 (default) address of the given interface.
   #
   # @param [String] interface The interface to query.

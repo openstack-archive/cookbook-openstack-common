@@ -287,7 +287,7 @@ describe 'openstack-common::set_endpoints_by_interface' do
       it 'does nothing when empty endpoints' do
         allow(subject).to receive(:node).and_return('openstack' => { 'endpoints' => {} })
         count = 0
-        subject.endpoints do | ep |
+        subject.endpoints do
           count += 1
         end
         expect(count).to eq(0)
@@ -296,7 +296,7 @@ describe 'openstack-common::set_endpoints_by_interface' do
       it 'executes block count when have endpoints' do
         allow(subject).to receive(:node).and_return(chef_run.node)
         count = 0
-        subject.endpoints do |ep|
+        subject.endpoints do
           count += 1
         end
         expect(count).to be >= 1

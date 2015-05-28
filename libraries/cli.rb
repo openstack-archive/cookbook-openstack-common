@@ -23,7 +23,8 @@ require 'chef/mixin/shell_out'
 include Chef::Mixin::ShellOut
 require 'uri'
 
-module ::Openstack # rubocop:disable Documentation
+# CLI methods
+module ::Openstack
   # return an environment suitable for calling openstack commands.
   #
   # @param [String] user name
@@ -34,10 +35,10 @@ module ::Openstack # rubocop:disable Documentation
     auth_uri = ::URI.decode identity_admin_endpoint.to_s
     pass = get_password 'user', name
     {
-        'OS_USERNAME' => name,
-        'OS_PASSWORD' => pass,
-        'OS_TENANT_NAME' => tenant,
-        'OS_AUTH_URL' => auth_uri
+      'OS_USERNAME' => name,
+      'OS_PASSWORD' => pass,
+      'OS_TENANT_NAME' => tenant,
+      'OS_AUTH_URL' => auth_uri
     }
   end
 

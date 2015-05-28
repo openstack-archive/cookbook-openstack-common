@@ -19,7 +19,8 @@
 # limitations under the License.
 #
 
-module ::Openstack # rubocop:disable Documentation
+# Database methods
+module ::Openstack
   # Library routine that uses the database cookbook to create the
   # service's database and grant read/write access to the
   # given user and password.

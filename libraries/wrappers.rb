@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# Wrapper methods
 module ::Openstack
   # Wrapper method to allow to easier spec testing
   def recipe_included?(recipe)

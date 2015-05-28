@@ -1,18 +1,18 @@
-name             'openstack-common'
-maintainer       'openstack-chef'
+name 'openstack-common'
+maintainer 'openstack-chef'
 maintainer_email 'opscode-chef-openstack@googlegroups.com'
-license          'Apache 2.0'
-description      'Common OpenStack attributes, libraries and recipes.'
+license 'Apache 2.0'
+description 'Common OpenStack attributes, libraries and recipes.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '11.3.0'
+version '11.3.0'
 
-recipe           'openstack-common', 'Installs/Configures common recipes'
-recipe           'openstack-common::set_endpoints_by_interface', 'Set endpoints by interface'
-recipe           'openstack-common::logging', 'Installs/Configures common logging'
-recipe           'openstack-common::sysctl', 'Configures sysctl settings'
-recipe           'openstack-common::openrc', 'Creates openrc file'
+recipe 'openstack-common', 'Installs/Configures common recipes'
+recipe 'openstack-common::set_endpoints_by_interface', 'Set endpoints by interface'
+recipe 'openstack-common::logging', 'Installs/Configures common logging'
+recipe 'openstack-common::sysctl', 'Configures sysctl settings'
+recipe 'openstack-common::openrc', 'Creates openrc file'
 
-%w{ ubuntu suse redhat centos }.each do |os|
+%w(ubuntu suse redhat centos).each do |os|
   supports os
 end
 

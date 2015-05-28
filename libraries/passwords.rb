@@ -20,7 +20,8 @@
 # limitations under the License.
 #
 
-module ::Openstack # rubocop:disable Documentation
+# Password methods
+module ::Openstack
   # Library routine that returns an encrypted data bag value
   # for a supplied string. The key used in decrypting the
   # encrypted value should be located at
@@ -65,7 +66,7 @@ module ::Openstack # rubocop:disable Documentation
   # attribute-specified openstack secrets databag.
   def get_secret(key)
     ::Chef::Log.warn(
-      "The get_secret method is DEPRECATED. "\
+      'The get_secret method is DEPRECATED. '\
       "Use get_password(key, 'token') instead")
 
     if node['openstack']['use_databags']
@@ -83,7 +84,7 @@ module ::Openstack # rubocop:disable Documentation
   # component name, but can also be a token name
   # e.g. openstack_identity_bootstrap_token
   def get_password(type, key)
-    unless %w{db user service token}.include?(type)
+    unless %w(db user service token).include?(type)
       ::Chef::Log.error("Unsupported type for get_password: #{type}")
       return
     end

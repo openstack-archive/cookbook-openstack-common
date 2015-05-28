@@ -81,23 +81,23 @@ default['openstack']['endpoints']['db']['bind_interface'] = nil
 default['openstack']['db']['server_role'] = 'os-ops-database'
 # Database charset during create database
 default['openstack']['db']['charset'] = {
-   mysql: 'utf8',
-   mariadb: 'utf8',
-   postgresql: nil,
-   pgsql: nil,
-   sqlite: nil,
-   db2: 'utf8',
-   nosql: nil
+  mysql: 'utf8',
+  mariadb: 'utf8',
+  postgresql: nil,
+  pgsql: nil,
+  sqlite: nil,
+  db2: 'utf8',
+  nosql: nil
 }
 
 # Database connection options. Should include starting '?'
 default['openstack']['db']['options'] = {
-   mysql: "?charset=#{node['openstack']['db']['charset']['mysql']}",
-   mariadb: "?charset=#{node['openstack']['db']['charset']['mariadb']}",
-   postgresql: '',
-   sqlite: '',
-   db2: "?charset=#{node['openstack']['db']['charset']['db2']}",
-   nosql: ''
+  mysql: "?charset=#{node['openstack']['db']['charset']['mysql']}",
+  mariadb: "?charset=#{node['openstack']['db']['charset']['mariadb']}",
+  postgresql: '',
+  sqlite: '',
+  db2: "?charset=#{node['openstack']['db']['charset']['db2']}",
+  nosql: ''
 }
 
 # platform and DBMS-specific python client packages
@@ -172,7 +172,6 @@ node['openstack']['common']['services'].each do |service, project|
     default['openstack']['db'][service]['nosql']['used'] = false
     default['openstack']['db'][service]['nosql']['port'] = '27017'
   end
-
 end
 
 # DB key to the get_password library routine

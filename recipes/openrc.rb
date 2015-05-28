@@ -18,7 +18,8 @@
 # limitations under the License.
 #
 
-class ::Chef::Recipe # rubocop:disable Documentation
+# Chef
+class ::Chef::Recipe
   include ::Openstack
 end
 

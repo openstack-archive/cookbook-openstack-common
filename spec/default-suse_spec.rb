@@ -15,7 +15,7 @@ describe 'openstack-common::default' do
       allow(Mixlib::ShellOut).to receive_message_chain(
         new: 'rpm -qa gpg-pubkey', run_command: nil, stdout: nil,
         new: 'zypper repos --export -').and_return(
-        'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Kilo/SLE_11_SP3/')
+          'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Kilo/SLE_11_SP3/')
 
       expect(chef_run).to run_bash('add repository key')
       expect(chef_run).not_to run_execute('add repository').with(command: /zypper addrepo/)
@@ -37,8 +37,8 @@ describe 'openstack-common::default' do
       allow(Mixlib::ShellOut).to receive_message_chain(
         new: 'rpm -qa gpg-pubkey', run_command: nil, stdout: nil,
         new: 'zypper repos --export -').and_return(
-        'd85f9316',
-        'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Kilo/SLE_11_SP3/')
+          'd85f9316',
+          'http://download.opensuse.org/repositories/Cloud:/OpenStack:/Kilo/SLE_11_SP3/')
       expect(chef_run).not_to run_bash('add repository key')
       expect(chef_run).not_to run_execute('add repository').with(command: /zypper addrepo/)
     end

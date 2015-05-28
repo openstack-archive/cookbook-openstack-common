@@ -21,7 +21,8 @@
 
 require 'uri'
 
-module ::Openstack # rubocop:disable Documentation
+# URI methods
+module ::Openstack
   # Returns a uri::URI from a hash. If the hash has a 'uri' key, the value
   # of that is returned. If not, then the routine attempts to construct
   # the URI from other parts of the hash.  The values of the 'port' and 'path'

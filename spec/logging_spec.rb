@@ -11,16 +11,11 @@ describe 'openstack-common::logging' do
       let(:dir) { chef_run.directory('/etc/openstack') }
 
       it 'should create /etc/openstack' do
-        expect(chef_run).to create_directory('/etc/openstack')
-      end
-
-      it 'has proper owner' do
-        expect(dir.owner).to eq('root')
-        expect(dir.group).to eq('root')
-      end
-
-      it 'has proper modes' do
-        expect(sprintf('%o', dir.mode)).to eq '755'
+        expect(chef_run).to create_directory('/etc/openstack').with(
+          owner: 'root',
+          group: 'root',
+          mode: 00755
+        )
       end
     end
 
@@ -28,16 +23,11 @@ describe 'openstack-common::logging' do
       let(:file) { chef_run.template('/etc/openstack/logging.conf') }
 
       it 'should create /etc/openstack/logging.conf' do
-        expect(chef_run).to create_template(file.name)
-      end
-
-      it 'has proper owner' do
-        expect(file.owner).to eq('root')
-        expect(file.group).to eq('root')
-      end
-
-      it 'has proper modes' do
-        expect(sprintf('%o', file.mode)).to eq '644'
+        expect(chef_run).to create_template(file.name).with(
+          owner: 'root',
+          group: 'root',
+          mode: 00644
+        )
       end
 
       context 'loggers' do

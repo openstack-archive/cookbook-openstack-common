@@ -69,7 +69,7 @@ default['openstack']['vault_gem_version'] = '~> 2.3'
 
 # Default attributes when not using data bags (use_databags = false)
 node['openstack']['common']['services'].each_key do |service|
-  %w{user service db token}.each do |type|
+  %w(user service db token).each do |type|
     default['openstack']['secret'][service][type] = "#{service}-#{type}"
   end
 end

@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 describe 'openstack-common::default' do
   describe 'ubuntu' do
     let(:runner) { ChefSpec::SoloRunner.new(UBUNTU_OPTS) }
-    let(:mq_services) { %w{bare-metal block-storage compute database image telemetry network orchestration} }
+    let(:mq_services) { %w(bare-metal block-storage compute database image telemetry network orchestration) }
     let(:node) { runner.node }
     let(:chef_run) do
       runner.converge(described_recipe)
@@ -46,7 +46,7 @@ describe 'openstack-common::default' do
     it 'installs the gem chef-vault if databag_type is vault' do
       node.set['openstack']['databag_type'] = 'vault'
       expect(chef_run).to install_chef_gem('chef-vault')
-      .with(version: '~> 2.3')
+        .with(version: '~> 2.3')
     end
 
     it 'enables rabbit ha for all services' do
@@ -57,32 +57,32 @@ describe 'openstack-common::default' do
     end
 
     it 'has correct host for endpoints' do
-      %w{identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
+      %w(identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
          compute-xvpvnc compute-novnc compute-vnc compute-metadata-api network-api network-linuxbridge
          network-openvswitch image-api block-storage-api object-storage-api telemetry-api orchestration-api
-         orchestration-api-cfn orchestration-api-cloudwatch database-api bare-metal-api}.each do |endpoint|
+         orchestration-api-cfn orchestration-api-cloudwatch database-api bare-metal-api).each do |endpoint|
         expect(chef_run.node['openstack']['endpoints'][endpoint]['host']).to eq('127.0.0.1')
       end
     end
 
     it 'allows bind_interface override for all bind endpoints' do
       node.set['openstack']['endpoints']['bind_interface'] = 'eth1'
-      %w{identity-bind identity-admin-bind compute-api-bind compute-ec2-api-bind compute-ec2-admin-bind
+      %w(identity-bind identity-admin-bind compute-api-bind compute-ec2-api-bind compute-ec2-admin-bind
          compute-xvpvnc-bind compute-novnc-bind compute-vnc-bind compute-vnc-proxy-bind compute-metadata-api-bind
          network-api-bind image-api-bind image-registry-bind block-storage-api-bind object-storage-api-bind
          telemetry-api-bind orchestration-api-bind orchestration-api-cfn-bind orchestration-api-cloudwatch-bind
-         database-api-bind bare-metal-api-bind dashboard-http-bind dashboard-https-bind}.each do |endpoint|
+         database-api-bind bare-metal-api-bind dashboard-http-bind dashboard-https-bind).each do |endpoint|
         expect(chef_run.node['openstack']['endpoints'][endpoint]['bind_interface']).to eq('eth1')
       end
     end
 
     it 'allows scheme for all bind endpoints' do
       node.set['openstack']['endpoints']['scheme'] = 'https'
-      %w{identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
+      %w(identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
          compute-xvpvnc compute-novnc compute-metadata-api
          network-api image-api image-registry block-storage-api object-storage-api
          telemetry-api orchestration-api orchestration-api-cfn orchestration-api-cloudwatch
-         database-api bare-metal-api}.each do |endpoint|
+         database-api bare-metal-api).each do |endpoint|
         expect(chef_run.node['openstack']['endpoints'][endpoint]['scheme']).to eq('https')
       end
     end

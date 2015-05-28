@@ -18,10 +18,6 @@
 # limitations under the License.
 #
 
-class ::Chef::Recipe # rubocop:disable Documentation
-  include ::Openstack
-end
-
 platform_options = node['openstack']['common']['platform']
 platform_options['common_client_packages'].each do |pkg|
   package pkg do

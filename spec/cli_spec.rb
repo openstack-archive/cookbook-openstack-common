@@ -16,8 +16,8 @@ describe 'openstack-common::default' do
     describe 'openstack_command_env' do
       it 'returns cli enviroment' do
         allow(subject).to receive(:get_password)
-         .with('user', 'name')
-         .and_return('pass')
+          .with('user', 'name')
+          .and_return('pass')
 
         expect(
           subject.openstack_command_env('name', 'tenant')

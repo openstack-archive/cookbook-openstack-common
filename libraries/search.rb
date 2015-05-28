@@ -18,7 +18,8 @@
 # limitations under the License.
 #
 
-module ::Openstack # rubocop:disable Documentation
+# Search methods
+module ::Openstack
   # Search the nodes environment for the given role or recipe.
   #
   # @param [String] The role or recipe to be found.

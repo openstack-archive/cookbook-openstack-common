@@ -32,15 +32,15 @@ end
 shared_context 'common-stubs' do
   before do
     allow_any_instance_of(Chef::Recipe).to receive(:search_for)
-    .with('os-identity').and_return(
-      [{
-        'openstack' => {
-          'identity' => {
-            'admin_tenant_name' => 'admin',
-            'admin_user' => 'admin'
+      .with('os-identity').and_return(
+        [{
+          'openstack' => {
+            'identity' => {
+              'admin_tenant_name' => 'admin',
+              'admin_user' => 'admin'
+            }
           }
-        }
-      }]
+        }]
     )
     allow_any_instance_of(Chef::Recipe).to receive(:get_password)
       .with('user', 'admin')

@@ -12,7 +12,6 @@ describe 'openstack-common::default' do
     include_context 'library-stubs'
 
     describe '#db_create_with_user' do
-
       it 'returns nil when no such service was found' do
         expect(
           subject.db_create_with_user('nonexisting', 'user', 'pass')

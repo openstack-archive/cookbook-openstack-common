@@ -33,7 +33,7 @@ when 'debian'
   if node['openstack']['apt']['live_updates_enabled']
     apt_components = node['openstack']['apt']['components']
     # Simple variable substitution for LSB codename and OpenStack release
-    apt_components.each do | comp |
+    apt_components.each do |comp|
       comp.gsub! '%release%', node['openstack']['release']
       comp.gsub! '%codename%', node['lsb']['codename']
     end

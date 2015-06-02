@@ -76,6 +76,16 @@ describe 'openstack-common::default' do
       end
     end
 
+    it 'has correct bind-host for all bind endpoints' do
+      %w(identity-bind identity-admin-bind compute-api-bind compute-ec2-api-bind compute-ec2-admin-bind
+         compute-xvpvnc-bind compute-novnc-bind compute-vnc-bind compute-metadata-api-bind network-api-bind
+         image-api-bind image-registry-bind block-storage-api-bind object-storage-api-bind telemetry-api-bind
+         orchestration-api-bind orchestration-api-cfn-bind orchestration-api-cloudwatch-bind database-api-bind
+         bare-metal-api-bind dashboard-http-bind dashboard-https-bind).each do |endpoint|
+        expect(chef_run.node['openstack']['endpoints'][endpoint]['host']).to eq('127.0.0.1')
+      end
+    end
+
     it 'allows scheme for all bind endpoints' do
       node.set['openstack']['endpoints']['scheme'] = 'https'
       %w(identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin

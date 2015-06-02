@@ -26,6 +26,21 @@ default['openstack']['common']['custom_template_banner'] = '
 # Do not edit, changes will be overwritten
 '
 
+# OpenStack services and their project names
+default['openstack']['common']['services'] = {
+  'bare-metal' => 'ironic',
+  'block-storage' => 'cinder',
+  'compute' => 'nova',
+  'dashboard' => 'horizon',
+  'database' => 'trove',
+  'identity' => 'keystone',
+  'image' => 'glance',
+  'network' => 'neutron',
+  'object-storage' => 'swift',
+  'orchestration' => 'heat',
+  'telemetry' => 'ceilometer'
+}
+
 # Setting this to True means that database passwords and service user
 # passwords for Keystone will be easy-to-remember values -- they will be
 # the same value as the key. For instance, if a cookbook calls the
@@ -53,8 +68,7 @@ default['openstack']['databag_type'] = 'encrypted'
 default['openstack']['vault_gem_version'] = '~> 2.3'
 
 # Default attributes when not using data bags (use_databags = false)
-%w{bare-metal block-storage object-storage compute database dashboard image identity
-   telemetry network object-storage orchestration}.each do |service|
+node['openstack']['common']['services'].each_key do |service|
   %w{user service db token}.each do |type|
     default['openstack']['secret'][service][type] = "#{service}-#{type}"
   end

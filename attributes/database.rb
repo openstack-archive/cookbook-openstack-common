@@ -122,111 +122,58 @@ when 'debian'
   default['openstack']['db']['python_packages']['db2'] = ['ibm-db', 'ibm-db-sa']
 end
 
-# Database used by the OpenStack Compute (Nova) service
-default['openstack']['db']['compute']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['compute']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['compute']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['compute']['db_name'] = 'nova'
-default['openstack']['db']['compute']['username'] = 'nova'
-default['openstack']['db']['compute']['options'] = node['openstack']['db']['options']
+# Database used by the OpenStack services
+node['openstack']['common']['services'].each do |service, project|
+  default['openstack']['db'][service]['service_type'] = node['openstack']['db']['service_type']
+  default['openstack']['db'][service]['host'] = node['openstack']['endpoints']['db']['host']
+  default['openstack']['db'][service]['port'] = node['openstack']['endpoints']['db']['port']
+  default['openstack']['db'][service]['db_name'] = project
+  default['openstack']['db'][service]['username'] = project
+  default['openstack']['db'][service]['options'] = node['openstack']['db']['options']
 
-# Database used by the OpenStack Identity (Keystone) service
-default['openstack']['db']['identity']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['identity']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['identity']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['identity']['db_name'] = 'keystone'
-default['openstack']['db']['identity']['username'] = 'keystone'
-default['openstack']['db']['identity']['migrate'] = true
-default['openstack']['db']['identity']['options'] = node['openstack']['db']['options']
+  case service
+  when 'dashboard'
+    default['openstack']['db'][service]['migrate'] = true
+  when 'identity'
+    default['openstack']['db'][service]['migrate'] = true
+  when 'image'
+    default['openstack']['db'][service]['migrate'] = true
+  when 'network'
+    # The SQLAlchemy connection string used to connect to the slave database
+    default['openstack']['db'][service]['slave_connection'] = ''
 
-# Database used by the OpenStack Image (Glance) service
-default['openstack']['db']['image']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['image']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['image']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['image']['db_name'] = 'glance'
-default['openstack']['db']['image']['username'] = 'glance'
-default['openstack']['db']['image']['migrate'] = true
-default['openstack']['db']['image']['options'] = node['openstack']['db']['options']
+    # Database reconnection retry times - in event connectivity is lost
+    default['openstack']['db'][service]['max_retries'] = 10
 
-# Database used by the OpenStack Network (Neutron) service
-default['openstack']['db']['network']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['network']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['network']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['network']['db_name'] = 'neutron'
-default['openstack']['db']['network']['username'] = 'neutron'
-default['openstack']['db']['network']['options'] = node['openstack']['db']['options']
-# The SQLAlchemy connection string used to connect to the slave database
-default['openstack']['db']['network']['slave_connection'] = ''
-# Database reconnection retry times - in event connectivity is lost
-default['openstack']['db']['network']['max_retries'] = 10
-# Database reconnection interval in seconds - if the initial connection to the
-# database fails
-default['openstack']['db']['network']['retry_interval'] = 10
-# Minimum number of SQL connections to keep open in a pool
-default['openstack']['db']['network']['min_pool_size'] = 1
-# Maximum number of SQL connections to keep open in a pool
-default['openstack']['db']['network']['max_pool_size'] = 10
-# Timeout in seconds before idle sql connections are reaped
-default['openstack']['db']['network']['idle_timeout'] = 3600
-# If set, use this value for max_overflow with sqlalchemy
-default['openstack']['db']['network']['max_overflow'] = 20
-# Verbosity of SQL debugging information. 0=None, 100=Everything
-default['openstack']['db']['network']['connection_debug'] = 0
-# Add python stack traces to SQL as comment strings
-default['openstack']['db']['network']['connection_trace'] = false
-# If set, use this value for pool_timeout with sqlalchemy
-default['openstack']['db']['network']['pool_timeout'] = 10
+    # Database reconnection interval in seconds - if the initial connection to the database fails
+    default['openstack']['db'][service]['retry_interval'] = 10
 
-# Database used by the OpenStack Block Storage (Cinder) service
-default['openstack']['db']['block-storage']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['block-storage']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['block-storage']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['block-storage']['db_name'] = 'cinder'
-default['openstack']['db']['block-storage']['username'] = 'cinder'
-default['openstack']['db']['block-storage']['options'] = node['openstack']['db']['options']
+    # Minimum number of SQL connections to keep open in a pool
+    default['openstack']['db'][service]['min_pool_size'] = 1
 
-# Database used by the OpenStack Dashboard (Horizon)
-default['openstack']['db']['dashboard']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['dashboard']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['dashboard']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['dashboard']['db_name'] = 'horizon'
-default['openstack']['db']['dashboard']['username'] = 'dash'
-default['openstack']['db']['dashboard']['migrate'] = true
-default['openstack']['db']['dashboard']['options'] = node['openstack']['db']['options']
+    # Maximum number of SQL connections to keep open in a pool
+    default['openstack']['db'][service]['max_pool_size'] = 10
 
-# Database used by OpenStack Metering (Ceilometer)
-default['openstack']['db']['telemetry']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['telemetry']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['telemetry']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['telemetry']['db_name'] = 'ceilometer'
-default['openstack']['db']['telemetry']['username'] = 'ceilometer'
-default['openstack']['db']['telemetry']['nosql']['used'] = false
-default['openstack']['db']['telemetry']['nosql']['port'] = '27017'
-default['openstack']['db']['telemetry']['options'] = node['openstack']['db']['options']
+    # Timeout in seconds before idle sql connections are reaped
+    default['openstack']['db'][service]['idle_timeout'] = 3600
 
-# Database used by OpenStack Orchestration (Heat)
-default['openstack']['db']['orchestration']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['orchestration']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['orchestration']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['orchestration']['db_name'] = 'heat'
-default['openstack']['db']['orchestration']['username'] = 'heat'
-default['openstack']['db']['orchestration']['options'] = node['openstack']['db']['options']
+    # If set, use this value for max_overflow with sqlalchemy
+    default['openstack']['db'][service]['max_overflow'] = 20
 
-# Database used by OpenStack Database (Trove)
-default['openstack']['db']['database']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['database']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['database']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['database']['db_name'] = 'trove'
-default['openstack']['db']['database']['username'] = 'trove'
-default['openstack']['db']['database']['options'] = node['openstack']['db']['options']
+    # Verbosity of SQL debugging information. 0=None, 100=Everything
+    default['openstack']['db'][service]['connection_debug'] = 0
 
-# Database used by OpenStack Bare Metal (Ironic)
-default['openstack']['db']['bare-metal']['service_type'] = node['openstack']['db']['service_type']
-default['openstack']['db']['bare-metal']['host'] = node['openstack']['endpoints']['db']['host']
-default['openstack']['db']['bare-metal']['port'] = node['openstack']['endpoints']['db']['port']
-default['openstack']['db']['bare-metal']['db_name'] = 'ironic'
-default['openstack']['db']['bare-metal']['username'] = 'ironic'
-default['openstack']['db']['bare-metal']['options'] = node['openstack']['db']['options']
+    # Add python stack traces to SQL as comment strings
+    default['openstack']['db'][service]['connection_trace'] = false
+
+    # If set, use this value for pool_timeout with sqlalchemy
+    default['openstack']['db'][service]['pool_timeout'] = 10
+  when 'telemetry'
+    default['openstack']['db'][service]['nosql']['used'] = false
+    default['openstack']['db'][service]['nosql']['port'] = '27017'
+  end
+
+end
 
 # DB key to the get_password library routine
 default['openstack']['db']['root_user_key'] = 'mysqlroot'

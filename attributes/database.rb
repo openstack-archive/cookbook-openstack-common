@@ -82,6 +82,7 @@ default['openstack']['db']['server_role'] = 'os-ops-database'
 # Database charset during create database
 default['openstack']['db']['charset'] = {
   mysql: 'utf8',
+  'percona-cluster' => 'utf8',
   mariadb: 'utf8',
   postgresql: nil,
   pgsql: nil,
@@ -94,6 +95,7 @@ default['openstack']['db']['charset'] = {
 # Database connection options. Should include starting '?'
 default['openstack']['db']['options'] = {
   mysql: "?charset=#{node['openstack']['db']['charset']['mysql']}",
+  'percona-cluster' => "?charset=#{node['openstack']['db']['charset']['percona-cluster']}",
   mariadb: "?charset=#{node['openstack']['db']['charset']['mariadb']}",
   postgresql: '',
   sqlite: '',
@@ -112,6 +114,7 @@ when 'rhel'
   default['openstack']['db']['service_type'] = 'mariadb'
   default['openstack']['db']['python_packages']['mysql'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
+  default['openstack']['db']['python_packages']['percona-cluster'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['db2'] = ['python-ibm-db', 'python-ibm-db-sa']
   default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
 when 'suse'
@@ -119,10 +122,12 @@ when 'suse'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysql']
   default['openstack']['db']['python_packages']['mariadb'] = ['python-mysql']
   default['openstack']['db']['python_packages']['galera'] = ['python-mysql']
+  default['openstack']['db']['python_packages']['percona-cluster'] = ['python-mysql']
 when 'debian'
   default['openstack']['db']['service_type'] = 'mysql'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['mariadb'] = ['python-mysqldb']
+  default['openstack']['db']['python_packages']['percona-cluster'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['db2'] = ['ibm-db', 'ibm-db-sa']
   default['openstack']['db']['python_packages']['galera'] = ['python-mysqldb']
 end

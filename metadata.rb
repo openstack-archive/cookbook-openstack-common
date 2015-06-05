@@ -16,7 +16,7 @@ recipe 'openstack-common::openrc', 'Creates openrc file'
   supports os
 end
 
-depends 'apt', '~> 2.6.1'
+depends 'apt', '~> 2.7.0'
 depends 'database', '~> 4.0.2'
 depends 'mariadb', '~> 0.3.0'
 depends 'mysql', '~> 6.0.13'

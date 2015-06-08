@@ -56,6 +56,20 @@ describe 'openstack-common::default' do
       end
     end
 
+    it 'enables rabbit heartbeat_timeout_threshold for all services' do
+      node.set['openstack']['mq']['rabbitmq']['heartbeat_timeout_threshold'] = 123
+      mq_services.each do |svc|
+        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['heartbeat_timeout_threshold']).to eq(123)
+      end
+    end
+
+    it 'enables rabbit heartbeat_rate for all services' do
+      node.set['openstack']['mq']['rabbitmq']['heartbeat_rate'] = 123
+      mq_services.each do |svc|
+        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['heartbeat_rate']).to eq(123)
+      end
+    end
+
     it 'has correct host for endpoints' do
       %w(identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
          compute-xvpvnc compute-novnc compute-vnc compute-metadata-api network-api network-linuxbridge

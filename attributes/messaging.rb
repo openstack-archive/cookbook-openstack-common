@@ -59,6 +59,11 @@ default['openstack']['mq']['rabbitmq']['use_ssl'] = false
 default['openstack']['mq']['rabbitmq']['kombu_ssl_version'] = nil
 # global switch for handling rabbit ha
 default['openstack']['mq']['rabbitmq']['ha'] = false
+# global switch for number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat)
+default['openstack']['mq']['rabbitmq']['heartbeat_timeout_threshold'] = 0
+# global switch for how often times during the heartbeat_timeout_threshold we check the heartbeat
+default['openstack']['mq']['rabbitmq']['heartbeat_rate'] = 2
+
 # defined in oslo/messaging/_drivers/impl_qpid.py
 default['openstack']['mq']['qpid']['topology_version'] = 1
 qpid_defaults = {
@@ -87,6 +92,8 @@ rabbit_defaults = {
   port: node['openstack']['endpoints']['mq']['port'],
   host: node['openstack']['endpoints']['mq']['host'],
   ha: node['openstack']['mq']['rabbitmq']['ha'],
+  heartbeat_timeout_threshold: node['openstack']['mq']['rabbitmq']['heartbeat_timeout_threshold'],
+  heartbeat_rate: node['openstack']['mq']['rabbitmq']['heartbeat_rate'],
   use_ssl: node['openstack']['mq']['rabbitmq']['use_ssl'],
   kombu_ssl_version: node['openstack']['mq']['rabbitmq']['kombu_ssl_version']
 }

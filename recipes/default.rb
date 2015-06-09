@@ -62,6 +62,15 @@ when 'rhel'
     action repo_action
   end
 
+  remote_file '/etc/yum.repos.d/rdo-manager-release.repo' do
+    source 'https://raw.githubusercontent.com/rdo-management/rdo-manager-release/master/rdo-manager-release.repo'
+    owner 'root'
+    group 'root'
+    mode '00644'
+    action :create
+    only_if { node['openstack']['yum']['rdo_delorean_enabled'] }
+  end
+
 when 'suse'
   if node['lsb']['description'].nil?
     # Ohai lsb does not work at all on SLES11SP3

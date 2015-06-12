@@ -57,6 +57,17 @@ default['openstack']['mq']['qpid']['protocol'] = 'tcp'
 default['openstack']['mq']['rabbitmq']['use_ssl'] = false
 # SSL version to use (valid only if SSL enabled)
 default['openstack']['mq']['rabbitmq']['kombu_ssl_version'] = nil
+# SSL key file (valid only if SSL enabled)
+default['openstack']['mq']['rabbitmq']['kombu_ssl_keyfile'] = nil
+# SSL cert file (valid only if SSL enabled)
+default['openstack']['mq']['rabbitmq']['kombu_ssl_certfile'] = nil
+# SSL certification authority file (valid only if SSL enabled)
+default['openstack']['mq']['rabbitmq']['kombu_ssl_ca_certs'] = nil
+# How long to wait before reconnecting in response to an AMQP consumer cancel notification
+default['openstack']['mq']['rabbitmq']['kombu_reconnect_delay'] = 1.0
+# How long to wait before considering a reconnect attempt to have failed.
+# This value should not be longer than rpc_response_timeout
+default['openstack']['mq']['rabbitmq']['kombu_reconnect_timeout'] = 60
 # global switch for handling rabbit ha
 default['openstack']['mq']['rabbitmq']['ha'] = false
 # global switch for number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat)
@@ -95,7 +106,12 @@ rabbit_defaults = {
   heartbeat_timeout_threshold: node['openstack']['mq']['rabbitmq']['heartbeat_timeout_threshold'],
   heartbeat_rate: node['openstack']['mq']['rabbitmq']['heartbeat_rate'],
   use_ssl: node['openstack']['mq']['rabbitmq']['use_ssl'],
-  kombu_ssl_version: node['openstack']['mq']['rabbitmq']['kombu_ssl_version']
+  kombu_ssl_version: node['openstack']['mq']['rabbitmq']['kombu_ssl_version'],
+  kombu_ssl_keyfile: node['openstack']['mq']['rabbitmq']['kombu_ssl_keyfile'],
+  kombu_ssl_certfile: node['openstack']['mq']['rabbitmq']['kombu_ssl_certfile'],
+  kombu_ssl_ca_certs: node['openstack']['mq']['rabbitmq']['kombu_ssl_ca_certs'],
+  kombu_reconnect_delay: node['openstack']['mq']['rabbitmq']['kombu_reconnect_delay'],
+  kombu_reconnect_timeout: node['openstack']['mq']['rabbitmq']['kombu_reconnect_timeout']
 }
 
 ###################################################################

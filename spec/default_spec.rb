@@ -49,27 +49,6 @@ describe 'openstack-common::default' do
         .with(version: '~> 2.3')
     end
 
-    it 'enables rabbit ha for all services' do
-      node.set['openstack']['mq']['rabbitmq']['ha'] = true
-      mq_services.each do |svc|
-        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['ha']).to eq(true)
-      end
-    end
-
-    it 'enables rabbit heartbeat_timeout_threshold for all services' do
-      node.set['openstack']['mq']['rabbitmq']['heartbeat_timeout_threshold'] = 123
-      mq_services.each do |svc|
-        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['heartbeat_timeout_threshold']).to eq(123)
-      end
-    end
-
-    it 'enables rabbit heartbeat_rate for all services' do
-      node.set['openstack']['mq']['rabbitmq']['heartbeat_rate'] = 123
-      mq_services.each do |svc|
-        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['heartbeat_rate']).to eq(123)
-      end
-    end
-
     it 'has correct host for endpoints' do
       %w(identity-api identity-internal identity-admin compute-api compute-ec2-api compute-ec2-admin
          compute-xvpvnc compute-novnc compute-vnc compute-metadata-api network-api network-linuxbridge
@@ -111,22 +90,41 @@ describe 'openstack-common::default' do
       end
     end
 
-    it 'enables rabbit ssl version for all services' do
-      node.set['openstack']['mq']['rabbitmq']['kombu_ssl_version'] = 'TLSv1.2'
-      mq_services.each do |svc|
-        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['kombu_ssl_version']).to eq('TLSv1.2')
+    context 'rabbit mq' do
+      rabbit_opts = {
+        'userid' => 'guest',
+        'vhost' => '/',
+        'port' => '5672',
+        'host' => '127.0.0.1',
+        'ha' => true,
+        'heartbeat_timeout_threshold' => 123,
+        'heartbeat_rate' => 123,
+        'kombu_ssl_version' => 'TLSv1.2',
+        'kombu_ssl_keyfile' => 'key_file',
+        'kombu_ssl_certfile' => 'cert_file',
+        'kombu_ssl_ca_certs' => 'ca_certs_file',
+        'kombu_reconnect_delay' => 123.456,
+        'kombu_reconnect_timeout' => 123
+      }
+      rabbit_opts.each do |key, value|
+        it "configures rabbit mq #{key}" do
+          node.set['openstack']['mq']['rabbitmq'][key] = value
+          mq_services.each do |service|
+            expect(chef_run.node['openstack']['mq'][service]['rabbit'][key]).to eq(value)
+          end
+        end
       end
-    end
 
-    it 'set rabbit_max_retries to 0 for all services' do
-      mq_services.each do |svc|
-        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['rabbit_max_retries']).to eq(0)
+      it 'set rabbit_max_retries to 0 for all services' do
+        mq_services.each do |svc|
+          expect(chef_run.node['openstack']['mq'][svc]['rabbit']['rabbit_max_retries']).to eq(0)
+        end
       end
-    end
 
-    it 'set rabbit_retry_interval to 1 for all services' do
-      mq_services.each do |svc|
-        expect(chef_run.node['openstack']['mq'][svc]['rabbit']['rabbit_retry_interval']).to eq(1)
+      it 'set rabbit_retry_interval to 1 for all services' do
+        mq_services.each do |svc|
+          expect(chef_run.node['openstack']['mq'][svc]['rabbit']['rabbit_retry_interval']).to eq(1)
+        end
       end
     end
   end

@@ -74,7 +74,7 @@ module ::Openstack
       end
     when 'pgsql'
       type = 'postgresql'
-    when 'mariadb'
+    when 'mariadb', 'galera'
       type = 'mysql'
     end
 

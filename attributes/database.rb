@@ -87,7 +87,8 @@ default['openstack']['db']['charset'] = {
   pgsql: nil,
   sqlite: nil,
   db2: 'utf8',
-  nosql: nil
+  nosql: nil,
+  galera: 'utf8'
 }
 
 # Database connection options. Should include starting '?'
@@ -97,7 +98,8 @@ default['openstack']['db']['options'] = {
   postgresql: '',
   sqlite: '',
   db2: "?charset=#{node['openstack']['db']['charset']['db2']}",
-  nosql: ''
+  nosql: '',
+  galera: "?charset=#{node['openstack']['db']['charset']['galera']}"
 }
 
 # platform and DBMS-specific python client packages
@@ -111,15 +113,18 @@ when 'rhel'
   default['openstack']['db']['python_packages']['mysql'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['db2'] = ['python-ibm-db', 'python-ibm-db-sa']
+  default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
 when 'suse'
   default['openstack']['db']['service_type'] = 'mysql'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysql']
   default['openstack']['db']['python_packages']['mariadb'] = ['python-mysql']
+  default['openstack']['db']['python_packages']['galera'] = ['python-mysql']
 when 'debian'
   default['openstack']['db']['service_type'] = 'mysql'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['mariadb'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['db2'] = ['ibm-db', 'ibm-db-sa']
+  default['openstack']['db']['python_packages']['galera'] = ['python-mysqldb']
 end
 
 # Database used by the OpenStack services

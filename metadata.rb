@@ -4,7 +4,7 @@ maintainer_email 'opscode-chef-openstack@googlegroups.com'
 license 'Apache 2.0'
 description 'Common OpenStack attributes, libraries and recipes.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '11.4.0'
+version '11.4.1'
 
 recipe 'openstack-common', 'Installs/Configures common recipes'
 recipe 'openstack-common::set_endpoints_by_interface', 'Set endpoints by interface'
@@ -22,3 +22,4 @@ depends 'mariadb', '~> 0.3.0'
 depends 'mysql', '~> 6.0.13'
 depends 'yum', '~> 3.5.4'
 depends 'yum-epel', '~> 0.6.0'
+depends 'galera', '~> 0.4.1'

@@ -116,4 +116,10 @@ describe 'test-openstack-common-database::default' do
         )
     end
   end
+
+  context 'galera' do
+    before do
+      node.override['openstack']['db']['service'] = { service_type: 'galera', port: 3306, db_name: 'service_db' }
+    end
+  end
 end

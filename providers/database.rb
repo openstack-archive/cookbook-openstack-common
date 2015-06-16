@@ -47,7 +47,7 @@ def db_types
     @db_prov = ::Chef::Provider::Database::Postgresql
     @user_prov = ::Chef::Provider::Database::PostgresqlUser
     @super_user = 'postgres'
-  when 'mysql', 'mariadb', 'percona-cluster'
+  when 'mysql', 'mariadb', 'percona-cluster', 'galera'
     @db_prov = ::Chef::Provider::Database::Mysql
     @user_prov = ::Chef::Provider::Database::MysqlUser
     @super_user = 'root'

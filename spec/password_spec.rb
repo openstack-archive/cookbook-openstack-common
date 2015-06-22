@@ -33,23 +33,6 @@ describe 'openstack-common::default' do
         end
       end
 
-      describe '#get_secret' do
-        it 'returns databag value' do
-          value = { 'nova' => 'this' }
-          allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-          allow(Chef::EncryptedDataBagItem).to receive(:load).with('secrets', 'nova', 'secret').and_return(value)
-          expect(subject.get_secret('nova')).to eq('this')
-        end
-
-        it 'returns secret from an alternate databag when secrets_data_bag set' do
-          node.set['openstack']['secret']['secrets_data_bag'] = 'myothersecrets'
-          value = { 'nova' => 'this' }
-          allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
-          allow(Chef::EncryptedDataBagItem).to receive(:load).with('myothersecrets', 'nova', 'secret').and_return(value)
-          expect(subject.get_secret('nova')).to eq('this')
-        end
-      end
-
       describe '#get_password' do
         ['service', 'db', 'user'].each do |type|
           it "returns databag value for #{type}" do
@@ -82,21 +65,6 @@ describe 'openstack-common::default' do
           value = { 'nova' => 'this' }
           allow(Chef::DataBagItem).to receive(:load).with('passwords', 'nova').and_return(value)
           expect(subject.secret('passwords', 'nova')).to eq('this')
-        end
-      end
-
-      describe '#get_secret' do
-        it 'returns databag value' do
-          value = { 'nova' => 'this' }
-          allow(Chef::DataBagItem).to receive(:load).with('secrets', 'nova').and_return(value)
-          expect(subject.get_secret('nova')).to eq('this')
-        end
-
-        it 'returns secret from an alternate databag when secrets_data_bag set' do
-          node.set['openstack']['secret']['secrets_data_bag'] = 'myothersecrets'
-          value = { 'nova' => 'this' }
-          allow(Chef::DataBagItem).to receive(:load).with('myothersecrets', 'nova').and_return(value)
-          expect(subject.get_secret('nova')).to eq('this')
         end
       end
 

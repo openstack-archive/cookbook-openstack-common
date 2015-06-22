@@ -62,20 +62,6 @@ module ::Openstack
     ::ChefVault::Item.load(bag_name, index)[index]
   end
 
-  # Ease-of-use/standarization routine that returns a secret from the
-  # attribute-specified openstack secrets databag.
-  def get_secret(key)
-    ::Chef::Log.warn(
-      'The get_secret method is DEPRECATED. '\
-      "Use get_password(key, 'token') instead")
-
-    if node['openstack']['use_databags']
-      secret node['openstack']['secret']['secrets_data_bag'], key
-    else
-      node['openstack']['secret'][key]['token']
-    end
-  end
-
   # Return a password using either data bags or attributes for
   # storage. The storage mechanism used is determined by the
   # node['openstack']['use_databags'] attribute.

@@ -320,6 +320,17 @@ default['openstack']['endpoints']['compute-metadata-api']['port'] = '8775'
 default['openstack']['endpoints']['compute-metadata-api']['path'] = nil
 default['openstack']['endpoints']['compute-metadata-api']['bind_interface'] = nil
 
+# The OpenStack Compute (Nova) serial console endpoint
+default['openstack']['endpoints']['compute-serial-console-bind']['host'] = node['openstack']['endpoints']['bind-host']
+default['openstack']['endpoints']['compute-serial-console-bind']['bind_interface'] = node['openstack']['endpoints']['bind_interface']
+
+# The OpenStack Compute (Nova) serial proxy endpoint
+default['openstack']['endpoints']['compute-serial-proxy']['host'] = node['openstack']['endpoints']['host']
+default['openstack']['endpoints']['compute-serial-proxy']['scheme'] = 'ws'
+default['openstack']['endpoints']['compute-serial-proxy']['port'] = '6083'
+default['openstack']['endpoints']['compute-serial-proxy']['path'] = '/'
+default['openstack']['endpoints']['compute-serial-proxy']['bind_interface'] = nil
+
 # ******************** OpenStack Network Endpoints ****************************
 
 # The OpenStack Network (Neutron) API endpoint.

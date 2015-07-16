@@ -37,6 +37,7 @@ module ::Openstack
         return '0.0.0.0'
       end
     end
+    fail "Interface #{interface} does not exist" unless nodeish['network']['interfaces'][interface]
     addresses = nodeish['network']['interfaces'][interface]['addresses']
     fail "Interface #{interface} has no addresses assigned" if addresses.to_a.empty?
     get_address addresses, family, drop_vips

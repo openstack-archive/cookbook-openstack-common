@@ -24,6 +24,11 @@ describe 'openstack-common::default' do
           .with(gpgcheck: true)
       end
 
+      it 'adds RDO testing yum repository' do
+        expect(chef_run).to add_yum_repository('RDO-testrelease-testing')
+          .with(gpgcheck: false)
+      end
+
       it 'includes yum-epel recipe' do
         expect(chef_run).to include_recipe('yum-epel')
       end

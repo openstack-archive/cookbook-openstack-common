@@ -62,6 +62,15 @@ when 'rhel'
     action repo_action
   end
 
+  yum_repository "RDO-#{node['openstack']['release']}-testing" do
+    description "OpenStack RDO testing repo for #{node['openstack']['release']}"
+    baseurl node['openstack']['yum']['testing-uri']
+    gpgcheck false
+    enabled true
+    action repo_action
+  end
+
+  # Bring in RDO-Manager repos
   remote_file '/etc/yum.repos.d/rdo-manager-release.repo' do
     source 'https://raw.githubusercontent.com/rdo-management/rdo-manager-release/master/rdo-manager-release.repo'
     owner 'root'

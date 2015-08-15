@@ -76,6 +76,9 @@ default['openstack']['endpoints']['db']['scheme'] = nil
 default['openstack']['endpoints']['db']['port'] = '3306'
 default['openstack']['endpoints']['db']['path'] = nil
 default['openstack']['endpoints']['db']['bind_interface'] = nil
+default['openstack']['endpoints']['db']['enabled_slave'] = false
+default['openstack']['endpoints']['db']['slave_host'] = '127.0.0.1'
+default['openstack']['endpoints']['db']['slave_port'] = '3316'
 
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'
@@ -140,6 +143,9 @@ node['openstack']['common']['services'].each do |service, project|
   default['openstack']['db'][service]['db_name'] = project
   default['openstack']['db'][service]['username'] = project
   default['openstack']['db'][service]['options'] = node['openstack']['db']['options']
+
+  default['openstack']['db'][service]['slave_host'] = node['openstack']['endpoints']['db']['slave_host']
+  default['openstack']['db'][service]['slave_port'] = node['openstack']['endpoints']['db']['slave_port']
 
   case service
   when 'dashboard'

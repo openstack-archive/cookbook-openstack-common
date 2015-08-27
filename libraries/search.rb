@@ -24,7 +24,7 @@ module ::Openstack
   #
   # @param [String] The role or recipe to be found.
   # @return [Array] The matching result or an empty list.
-  def search_for(r, &block) # rubocop:disable MethodLength
+  def search_for(r, &block)
     role_query = "(chef_environment:#{node.chef_environment} AND roles:#{r})"
     recipe_query = "(chef_environment:#{node.chef_environment} AND recipes:#{r})".sub('::', '\:\:')
     query = "#{role_query} OR #{recipe_query}"
@@ -45,7 +45,7 @@ module ::Openstack
   # @param [String] role The role to be found (optional).
   # @return [Array] A list of memcached servers in format
   # '<ip>:<port>'.
-  def memcached_servers(role = 'infra-caching') # rubocop:disable MethodLength
+  def memcached_servers(role = 'infra-caching')
     if !node['openstack']['memcached_servers']
       search_for(role).map do |n|
         listen = n['memcached']['listen']
@@ -68,7 +68,7 @@ module ::Openstack
   #
   # @return [String] Rabbit servers joined by a comma in
   # the format of '<ip>:<port>'.
-  def rabbit_servers # rubocop:disable MethodLength
+  def rabbit_servers
     if node['openstack']['mq']['servers']
       servers = node['openstack']['mq']['servers']
       port = node['openstack']['endpoints']['mq']['port']

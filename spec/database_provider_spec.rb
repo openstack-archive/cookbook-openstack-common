@@ -94,29 +94,6 @@ describe 'test-openstack-common-database::default' do
     end
   end
 
-  context 'db2' do
-    before do
-      node.override['openstack']['db']['service'] = { service_type: 'db2', db_name: 'service_db2' }
-    end
-    it 'creates the database with the db2 resource' do
-      pending('db2 resource is currently only available from an IBM internal cookbook')
-      expect(chef_run).to create_db2_database('create database service_db2')
-        .with(
-          database_name: 'service_db'
-        )
-    end
-
-    it 'creates the database use with the db2_user resource' do
-      pending('db2 resource is currently only available from an IBM internal cookbook')
-      expect(chef_run).to create_database_user('create database user db_user')
-        .with(
-          db_user: 'db_user',
-          db_pass: 'db_pass',
-          db_name: 'service_db2'
-        )
-    end
-  end
-
   context 'galera' do
     before do
       node.override['openstack']['db']['service'] = { service_type: 'galera', port: 3306, db_name: 'service_db' }

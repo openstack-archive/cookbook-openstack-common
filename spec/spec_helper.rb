@@ -41,7 +41,7 @@ shared_context 'common-stubs' do
             }
           }
         }]
-    )
+      )
     allow_any_instance_of(Chef::Recipe).to receive(:get_password)
       .with('user', 'admin')
       .and_return('admin')

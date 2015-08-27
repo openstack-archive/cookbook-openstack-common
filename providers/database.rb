@@ -13,15 +13,9 @@ use_inline_resources if defined?(use_inline_resources)
 
 action :create do
   info
-  ### db2 can only be used with an IBM internal cookbook
-  if @db_type == 'db2'
-    create_db2(@db_name) # create database
-    create_db2_user(@user, @pass, @db_name) # create user
-  else
-    create_db(@db_name, @db_prov, @connection_info, @db_type) # create database
-    create_db_user(@user, @user_prov, @connection_info, @pass) # create user
-    grant_db_privileges(@user, @user_prov, @connection_info, @pass, @db_name) # grant privileges
-  end
+  create_db(@db_name, @db_prov, @connection_info, @db_type) # create database
+  create_db_user(@user, @user_prov, @connection_info, @pass) # create user
+  grant_db_privileges(@user, @user_prov, @connection_info, @pass, @db_name) # grant privileges
 end
 
 private
@@ -37,7 +31,7 @@ def info
   @db_name = service_info['db_name']
   @user = new_resource.user
   @pass = new_resource.pass
-  db_types unless @db_type == 'db2' ## db2 is only IBM internal
+  db_types
   connection_info
 end
 
@@ -63,24 +57,6 @@ def connection_info
     username: @super_user,
     password: @super_password
   }
-end
-
-### this db2 resource does only exist in an IBM internal cookbook
-def create_db2(db_name)
-  db2_database "create database #{db_name}" do
-    db_name db_name
-    action :create
-  end
-end
-
-### this db2 resource does only exist in an IBM internal cookbook
-def create_db2_user(user, pass, db_name)
-  db2_user "create database user #{user}" do
-    db_user user
-    db_pass pass
-    db_name db_name
-    action :create
-  end
 end
 
 def create_db(db_name, db_prov, connection_info, db_type)

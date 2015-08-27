@@ -1,10 +1,10 @@
 name 'openstack-common'
 maintainer 'openstack-chef'
-maintainer_email 'opscode-chef-openstack@googlegroups.com'
+maintainer_email 'openstack-dev@lists.openstack.org'
 license 'Apache 2.0'
 description 'Common OpenStack attributes, libraries and recipes.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '11.5.1'
+version '12.0.0'
 
 recipe 'openstack-common', 'Installs/Configures common recipes'
 recipe 'openstack-common::set_endpoints_by_interface', 'Set endpoints by interface'

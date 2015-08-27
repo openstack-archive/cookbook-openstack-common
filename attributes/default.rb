@@ -112,7 +112,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'kilo'
+default['openstack']['release'] = 'liberty'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -134,10 +134,10 @@ default['openstack']['zypp']['uri'] = 'http://download.opensuse.org/repositories
 
 default['openstack']['yum']['rdo_enabled'] = true
 default['openstack']['yum']['rdo_delorean_enabled'] = false
-default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-kilo/el7'
+default['openstack']['yum']['uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-liberty/el7'
 # Add rdo-testing repo from rdo-release.rpm
-default['openstack']['yum']['testing-uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-kilo/testing/el7'
-default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-kilo'
+default['openstack']['yum']['testing-uri'] = 'http://repos.fedorapeople.org/repos/openstack/openstack-liberty/testing/el7'
+default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-liberty'
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
 default['openstack']['yum']['gpgcheck'] = true
 # ======================== OpenStack Endpoints ================================

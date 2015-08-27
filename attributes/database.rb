@@ -25,7 +25,7 @@
 # used in an OpenStack deployment.
 #
 # There is no 'scheme' key. Instead, there is a 'service_type' key that should
-# contain one of 'sqlite', 'mysql', 'db2' or 'postgresql'
+# contain one of 'sqlite', 'mysql', or 'postgresql'
 #
 # The ::Openstack::db(<SERVICE_NAME>) library routine allows a lookup from any recipe
 # to this array, returning the host information for the server that contains
@@ -90,7 +90,6 @@ default['openstack']['db']['charset'] = {
   postgresql: nil,
   pgsql: nil,
   sqlite: nil,
-  db2: 'utf8',
   nosql: nil,
   galera: 'utf8'
 }
@@ -102,7 +101,6 @@ default['openstack']['db']['options'] = {
   mariadb: "?charset=#{node['openstack']['db']['charset']['mariadb']}",
   postgresql: '',
   sqlite: '',
-  db2: "?charset=#{node['openstack']['db']['charset']['db2']}",
   nosql: '',
   galera: "?charset=#{node['openstack']['db']['charset']['galera']}"
 }
@@ -118,7 +116,6 @@ when 'rhel'
   default['openstack']['db']['python_packages']['mysql'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['percona-cluster'] = ['MySQL-python']
-  default['openstack']['db']['python_packages']['db2'] = ['python-ibm-db', 'python-ibm-db-sa']
   default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
 when 'suse'
   default['openstack']['db']['service_type'] = 'mysql'
@@ -131,7 +128,6 @@ when 'debian'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['mariadb'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['percona-cluster'] = ['python-mysqldb']
-  default['openstack']['db']['python_packages']['db2'] = ['ibm-db', 'ibm-db-sa']
   default['openstack']['db']['python_packages']['galera'] = ['python-mysqldb']
 end
 

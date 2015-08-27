@@ -42,7 +42,7 @@ describe 'openstack-common::default' do
         allow(subject).to receive(:shell_out).with(
           ['keystone', 'user-list'],
           env: env
-          ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
+        ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
 
         result = subject.openstack_command('keystone', 'user-list', env)
         expect(result).to eq('good')
@@ -59,7 +59,7 @@ describe 'openstack-common::default' do
         allow(subject).to receive(:shell_out).with(
           %w(keystone --key1 value1 --key2 value2 --key3 user-list),
           env: env
-          ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
+        ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
 
         result = subject.openstack_command('keystone', 'user-list', env, 'key1' => 'value1', 'key2' => 'value2', 'key3' => '')
         expect(result).to eq('good')
@@ -76,7 +76,7 @@ describe 'openstack-common::default' do
         allow(subject).to receive(:shell_out).with(
           ['keystone', 'user-list'],
           env: env
-          ).and_return double('shell_out', exitstatus: 123, stdout: 'fail', stderr: '')
+        ).and_return double('shell_out', exitstatus: 123, stdout: 'fail', stderr: '')
 
         # TODO: need to figure out why this won't work.
         # expect(subject.openstack_command('keystone', 'user-list', env)).to fail

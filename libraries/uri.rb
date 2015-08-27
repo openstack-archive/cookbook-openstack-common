@@ -55,7 +55,7 @@ module ::Openstack
     return nil if paths.length == 0
     leadingslash = paths[0][0] == '/' ? '/' : ''
     trailingslash = paths[-1][-1] == '/' ? '/' : ''
-    paths.map! { |path| path.sub(/^\/+/, '').sub(/\/+$/, '') }
+    paths.map! { |path| path.sub(%r{^\/+}, '').sub(%r{\/+$}, '') }
     leadingslash + paths.join('/') + trailingslash
   end
 

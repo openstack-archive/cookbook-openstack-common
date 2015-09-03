@@ -14,7 +14,6 @@ describe 'openstack-common::default' do
     context 'enabling RDO with gpgcheck enabled' do
       before do
         node.set['openstack']['yum']['rdo_enabled'] = true
-        node.set['openstack']['yum']['rdo_delorean_enabled'] = true
       end
 
       it 'adds RDO yum repository' do
@@ -24,18 +23,8 @@ describe 'openstack-common::default' do
           .with(gpgcheck: true)
       end
 
-      it 'adds RDO testing yum repository' do
-        expect(chef_run).to add_yum_repository('RDO-testrelease-testing')
-          .with(gpgcheck: false)
-      end
-
       it 'includes yum-epel recipe' do
         expect(chef_run).to include_recipe('yum-epel')
-      end
-
-      it 'adds RDO-Manager repositories' do
-        expect(chef_run).to create_remote_file('/etc/yum.repos.d/rdo-manager-release.repo').with(
-          source: 'https://raw.githubusercontent.com/rdo-management/rdo-manager-release/master/rdo-manager-release.repo')
       end
     end
 
@@ -75,10 +64,6 @@ describe 'openstack-common::default' do
 
       it 'does not include yum-epel recipe' do
         expect(chef_run).to_not include_recipe('yum-epel')
-      end
-
-      it 'does not create RDO-Manager yum repositories' do
-        expect(chef_run).to_not create_remote_file('/etc/yum.repos.d/rdo-manager-release.repo')
       end
     end
   end

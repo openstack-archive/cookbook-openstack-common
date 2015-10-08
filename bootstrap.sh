@@ -5,7 +5,7 @@
 sudo apt-get -y install build-essential liblzma-dev zlib1g-dev
 
 # install chefdk
-chefdk=chefdk_0.7.0-1_amd64.deb
+chefdk=chefdk_0.9.0-1_amd64.deb
 wget -nv -t 3 https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/$chefdk
 sudo dpkg -i $chefdk
 rm $chefdk

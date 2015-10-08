@@ -124,7 +124,7 @@ describe 'openstack-common::default' do
         allow(subject).to receive(:openstack_command).with('glance', 'image-list', :env, {})
           .and_raise("No image with a name or ID of 'test' exists. (1)")
 
-        expect { subject.image_id('test', :env) }.to raise_error
+        expect { subject.image_id('test', :env) }.to raise_error(RuntimeError)
       end
     end
 

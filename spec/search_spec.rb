@@ -115,9 +115,9 @@ describe 'openstack-common::default' do
 
       it 'returns sorted rabbit servers' do
         nodes = [
-          { 'openstack' => { 'mq' => { 'listen' => '3.3.3.3' }, 'endpoints' => { 'mq' => { 'port' => '5672'  } } } },
+          { 'openstack' => { 'mq' => { 'listen' => '3.3.3.3' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
           { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
-          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672'  } } } }
+          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } }
         ]
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:search_for)

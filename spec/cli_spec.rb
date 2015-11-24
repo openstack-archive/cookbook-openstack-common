@@ -14,6 +14,14 @@ describe 'openstack-common::default' do
     include_context 'library-stubs'
 
     describe 'openstack_command_env' do
+      before do
+        node.set['openstack']['endpoints']['identity']['admin'] = {
+          host: '127.0.0.1',
+          scheme: 'http',
+          path: '/v2.0',
+          port: '35357'
+        }
+      end
       it 'returns cli enviroment' do
         allow(subject).to receive(:get_password)
           .with('user', 'name')

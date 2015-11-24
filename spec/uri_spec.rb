@@ -7,16 +7,6 @@ describe 'Openstack uri' do
   let(:subject) { Object.new.extend(Openstack) }
 
   describe '#uri_from_hash' do
-    it 'returns nil when no host or uri key found' do
-      hash = {
-        'port' => 8888,
-        'path' => '/path'
-      }
-      expect(
-        subject.uri_from_hash(hash)
-      ).to be_nil
-    end
-
     it 'returns uri when uri key found, ignoring other parts' do
       uri = 'http://localhost/'
       hash = {
@@ -57,7 +47,7 @@ describe 'Openstack uri' do
       uri = 'http://localhost'
       hash = {
         'host'    => 'localhost',
-        'network' => 'public'  # To emulate the osops-utils::ip_location way...
+        'network' => 'public' # To emulate the osops-utils::ip_location way...
       }
       expect(
         subject.uri_from_hash(hash).to_s

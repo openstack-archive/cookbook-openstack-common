@@ -70,7 +70,7 @@ def create_db(db_name, db_prov, connection_info, db_type)
 end
 
 def create_db_user(user, user_prov, connection_info, pass)
-  database_user "create database user #{user}"  do
+  database_user "create database user #{user}" do
     provider user_prov
     connection connection_info
     username user

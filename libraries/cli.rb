@@ -31,7 +31,7 @@ module ::Openstack
   # @param [String] tenant name
   # @return [Hash] environment
   def openstack_command_env(name, tenant)
-    identity_admin_endpoint = endpoint 'identity-admin'
+    identity_admin_endpoint = admin_endpoint 'identity'
     auth_uri = ::URI.decode identity_admin_endpoint.to_s
     pass = get_password 'user', name
     {
@@ -78,7 +78,7 @@ module ::Openstack
   # @param [String] optional uuid field to match
   # @return [String] uuid or nil
   #
-  def get_uuid(client, type, key, value, env, args = {}, uuid_field = 'id')  # rubocop: disable ParameterLists
+  def get_uuid(client, type, key, value, env, args = {}, uuid_field = 'id') # rubocop: disable ParameterLists
     begin
       output = openstack_command(client, "#{type}-list", env, args)
       prettytable_to_array(output).each do |obj|

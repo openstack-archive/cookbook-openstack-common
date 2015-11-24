@@ -117,12 +117,6 @@ when 'rhel'
   default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['percona-cluster'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
-when 'suse'
-  default['openstack']['db']['service_type'] = 'mysql'
-  default['openstack']['db']['python_packages']['mysql'] = ['python-mysql']
-  default['openstack']['db']['python_packages']['mariadb'] = ['python-mysql']
-  default['openstack']['db']['python_packages']['galera'] = ['python-mysql']
-  default['openstack']['db']['python_packages']['percona-cluster'] = ['python-mysql']
 when 'debian'
   default['openstack']['db']['service_type'] = 'mysql'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']

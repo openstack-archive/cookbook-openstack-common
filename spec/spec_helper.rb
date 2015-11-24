@@ -15,11 +15,6 @@ REDHAT_OPTS = {
   version: '7.1',
   log_level: LOG_LEVEL
 }
-SUSE_OPTS = {
-  platform: 'suse',
-  version: '11.3',
-  log_lovel: LOG_LEVEL
-}
 # We set a default platform for non-platform specific test cases
 CHEFSPEC_OPTS = UBUNTU_OPTS
 

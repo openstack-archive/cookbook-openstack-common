@@ -41,7 +41,7 @@ services = %w(bare-metal block-storage compute database image
 # Generic default attributes
 ###################################################################
 default['openstack']['mq']['server_role'] = 'os-ops-messaging'
-default['openstack']['mq']['service_type'] = 'rabbitmq'
+default['openstack']['mq']['service_type'] = 'rabbit'
 default['openstack']['mq']['user'] = 'guest'
 default['openstack']['mq']['vhost'] = '/'
 
@@ -50,9 +50,8 @@ default['openstack']['mq']['durable_queues'] = false
 default['openstack']['mq']['auto_delete'] = false
 
 ###################################################################
-# Default qpid and rabbit values (for attribute assignment below)
+# Default rabbit values (for attribute assignment below)
 ###################################################################
-default['openstack']['mq']['qpid']['protocol'] = 'tcp'
 # global switch for handling rabbit ssl
 default['openstack']['mq']['rabbitmq']['use_ssl'] = false
 # SSL version to use (valid only if SSL enabled)
@@ -74,26 +73,6 @@ default['openstack']['mq']['rabbitmq']['ha'] = false
 default['openstack']['mq']['rabbitmq']['heartbeat_timeout_threshold'] = 0
 # global switch for how often times during the heartbeat_timeout_threshold we check the heartbeat
 default['openstack']['mq']['rabbitmq']['heartbeat_rate'] = 2
-
-# defined in oslo/messaging/_drivers/impl_qpid.py
-default['openstack']['mq']['qpid']['topology_version'] = 1
-qpid_defaults = {
-  username: node['openstack']['mq']['user'],
-  sasl_mechanisms: '',
-  reconnect: true,
-  reconnect_timeout: 0,
-  reconnect_limit: 0,
-  reconnect_interval_min: 0,
-  reconnect_interval_max: 0,
-  reconnect_interval: 0,
-  heartbeat: 60,
-  protocol: node['openstack']['mq']['qpid']['protocol'],
-  tcp_nodelay: true,
-  host: node['openstack']['endpoints']['mq']['host'],
-  port: node['openstack']['endpoints']['mq']['port'],
-  qpid_hosts: ["#{node['openstack']['endpoints']['mq']['host']}:#{node['openstack']['endpoints']['mq']['port']}"],
-  topology_version: node['openstack']['mq']['qpid']['topology_version']
-}
 
 rabbit_defaults = {
   rabbit_max_retries: 0,
@@ -126,15 +105,8 @@ services.each do |svc|
   default['openstack']['mq'][svc]['auto_delete'] =
     node['openstack']['mq']['auto_delete']
 
-  case node['openstack']['mq'][svc]['service_type']
-  when 'qpid'
-    qpid_defaults.each do |key, val|
-      default['openstack']['mq'][svc]['qpid'][key.to_s] = val
-    end
-  when 'rabbitmq'
-    rabbit_defaults.each do |key, val|
-      default['openstack']['mq'][svc]['rabbit'][key.to_s] = val
-    end
+  rabbit_defaults.each do |key, val|
+    default['openstack']['mq'][svc]['rabbit'][key.to_s] = val
   end
 end
 
@@ -142,15 +114,11 @@ end
 # Overrides and additional attributes for individual services
 ###################################################################
 # bare-metal
-default['openstack']['mq']['bare-metal']['qpid']['notification_topic'] =
-  node['openstack']['mq']['bare-metal']['notification_topic']
 default['openstack']['mq']['bare-metal']['rabbit']['notification_topic'] =
   node['openstack']['mq']['bare-metal']['notification_topic']
 default['openstack']['mq']['bare-metal']['control_exchange'] = 'ironic'
 
 # block-storage
-default['openstack']['mq']['block-storage']['qpid']['notification_topic'] =
-  node['openstack']['mq']['block-storage']['notification_topic']
 default['openstack']['mq']['block-storage']['rabbit']['notification_topic'] =
   node['openstack']['mq']['block-storage']['notification_topic']
 default['openstack']['mq']['block-storage']['control_exchange'] = 'cinder'
@@ -158,8 +126,6 @@ default['openstack']['mq']['block-storage']['control_exchange'] = 'cinder'
 # image
 default['openstack']['mq']['image']['notifier_strategy'] = 'noop'
 default['openstack']['mq']['image']['notification_topic'] = 'glance_notifications'
-default['openstack']['mq']['image']['qpid']['notification_topic'] =
-  node['openstack']['mq']['image']['notification_topic']
 default['openstack']['mq']['image']['rabbit']['notification_topic'] =
   node['openstack']['mq']['image']['notification_topic']
 default['openstack']['mq']['image']['control_exchange'] = 'glance'

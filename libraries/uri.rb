@@ -26,21 +26,12 @@ module ::Openstack
   # Returns a uri::URI from a hash. If the hash has a 'uri' key, the value
   # of that is returned. If not, then the routine attempts to construct
   # the URI from other parts of the hash.  The values of the 'port' and 'path'
-  # keys are used directly from the hash.  For the host, if the
-  # 'bind_interface' key is non-nil then it will use the first IP address on
-  # the specified interface, otherwise it will use the value of the 'host' key
-  # from the hash.
-  #
-  # Returns nil if the 'uri' key does not exist in the supplied hash and if
-  # the determined host is nil (both the values of the 'bind_interface' and
-  # 'host' keys are nil).
+  # keys are used directly from the hash.
   def uri_from_hash(hash)
     if hash['uri']
       ::URI.parse ::URI.encode(hash['uri'])
     else
-      host = address hash
-      return nil unless host
-
+      host = hash['host']
       scheme = hash['scheme'] ? hash['scheme'] : 'http'
       port = hash['port']  # Returns nil if missing, which is fine.
       path = hash['path']  # Returns nil if missing, which is fine.

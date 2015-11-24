@@ -45,7 +45,7 @@ module ::Openstack
 
   private
 
-  def get_address(addresses, family,  drop_vips)
+  def get_address(addresses, family, drop_vips)
     case family
     when 'inet'
       vip_prefixlen = '32'

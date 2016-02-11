@@ -71,14 +71,24 @@
 #
 
 # ******************** Database Endpoint **************************************
-default['openstack']['endpoints']['db']['host'] = '127.0.0.1'
-default['openstack']['endpoints']['db']['scheme'] = nil
-default['openstack']['endpoints']['db']['port'] = '3306'
-default['openstack']['endpoints']['db']['path'] = nil
-default['openstack']['endpoints']['db']['bind_interface'] = nil
+%w(endpoints bind_service).each do |type|
+  default['openstack'][type]['db']['host'] = '127.0.0.1'
+  default['openstack'][type]['db']['port'] = '3306'
+end
+default['openstack']['bind_service']['db']['interface'] = nil
 default['openstack']['endpoints']['db']['enabled_slave'] = false
 default['openstack']['endpoints']['db']['slave_host'] = '127.0.0.1'
 default['openstack']['endpoints']['db']['slave_port'] = '3316'
+
+# If you bind the database to a specific ip-address (you can only choose one
+# here for mysql, so 127.0.0.1 + external address is not an option), to allow
+# the services and applications to access it via this one, you probably do not
+# want to allow the db root user to access it via this external address. In this
+# case you have the option to allow root access only via localhost, which
+# will work for mysql databases, since it will use a direct connection via
+# the socket, so the database does not have not to listen on 127.0.0.1.
+# Set this to 'localhost' for mysql to connect via socket.
+default['openstack']['endpoints']['db']['host_for_db_root_user'] = nil
 
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'

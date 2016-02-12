@@ -30,8 +30,8 @@ describe 'openstack-common::default' do
           uri_hash = {
             'openstack' => {
               'endpoints' => {
-                'compute-api' => {
-                  ep_type => {
+                ep_type => {
+                  'compute-api' => {
                     'uri' => 'http://localhost:8080/v2/%(tenant_id)s'
                   }
                 }
@@ -48,8 +48,8 @@ describe 'openstack-common::default' do
           uri_hash = {
             'openstack' => {
               'endpoints' => {
-                'compute-api' => {
-                  ep_type => {
+                ep_type => {
+                  'compute-api' => {
                     'uri' => 'http://localhost:1234/path'
                   }
                 }
@@ -66,8 +66,8 @@ describe 'openstack-common::default' do
           uri_hash = {
             'openstack' => {
               'endpoints' => {
-                'compute-api' => {
-                  ep_type => {
+                ep_type => {
+                  'compute-api' => {
                     'uri' => 'http://localhost',
                     'host' => 'ignored'
                   }
@@ -84,8 +84,8 @@ describe 'openstack-common::default' do
           uri_hash = {
             'openstack' => {
               'endpoints' => {
-                'compute-api' => {
-                  ep_type => {
+                ep_type => {
+                  'compute-api' => {
                     'host' => 'localhost',
                     'port' => '1234'
                   }

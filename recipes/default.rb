@@ -61,6 +61,14 @@ when 'rhel'
     enabled true
     action repo_action
   end
+
+  yum_repository 'RDO-delorean-deps' do
+    description 'RDO delorean deps repo'
+    baseurl 'http://buildlogs.centos.org/centos/7/cloud/$basearch/openstack-liberty/'
+    gpgcheck false
+    enabled true
+    action repo_action
+  end
 end
 
 if node['openstack']['databag_type'] == 'vault'

@@ -25,11 +25,13 @@
 #
 
 # ******************** RabbitMQ Endpoint **************************************
+%w(endpoints bind_service).each do |type|
+  default['openstack'][type]['mq']['host'] = '127.0.0.1'
+  default['openstack'][type]['mq']['port'] = '5672'
+end
+default['openstack']['bind_service']['mq']['interface'] = nil
 default['openstack']['endpoints']['mq']['host'] = '127.0.0.1'
-default['openstack']['endpoints']['mq']['scheme'] = nil
 default['openstack']['endpoints']['mq']['port'] = '5672'
-default['openstack']['endpoints']['mq']['path'] = nil
-default['openstack']['endpoints']['mq']['bind_interface'] = nil
 
 ###################################################################
 # Services to assign mq attributes for

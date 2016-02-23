@@ -23,10 +23,10 @@ private
 def info
   info = node['openstack']['endpoints']['db']
   service_info = db new_resource.service
-  @host = service_info['host'] || info['host']
+  @host = info['host_for_db_root_user'] || service_info['host'] || info['host']
   @port = service_info['port'] || info['port']
   user_key = node['openstack']['db']['root_user_key']
-  @super_password = get_password 'user', user_key
+  @super_password = get_password 'db', user_key
   @db_type = service_info['service_type']
   @db_name = service_info['db_name']
   @user = new_resource.user

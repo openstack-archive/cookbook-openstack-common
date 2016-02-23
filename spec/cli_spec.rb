@@ -15,7 +15,7 @@ describe 'openstack-common::default' do
 
     describe 'openstack_command_env' do
       before do
-        node.set['openstack']['endpoints']['identity']['admin'] = {
+        node.set['openstack']['endpoints']['admin']['identity'] = {
           host: '127.0.0.1',
           scheme: 'http',
           path: '/v2.0',

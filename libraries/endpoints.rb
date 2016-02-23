@@ -72,7 +72,7 @@ module ::Openstack
   # 'public') for the given service.
   %w(public internal admin).each do |ep_type|
     define_method "#{ep_type}_endpoint" do |service|
-      uri_from_hash(node['openstack']['endpoints'][service][ep_type])
+      uri_from_hash(node['openstack']['endpoints'][ep_type][service])
     end
   end
 end

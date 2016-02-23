@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'network'
 
 describe 'openstack-common::default' do
-  describe 'Openstack address_for' do
+  describe 'Openstack address_for and bind_address' do
     let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
@@ -74,7 +74,42 @@ describe 'openstack-common::default' do
         ).to eq('::')
       end
     end
-
+    describe 'bind_address' do
+      describe 'mq' do
+        it 'returns the host' do
+          expect(
+            subject.bind_address(node['openstack']['bind_service']['mq'])
+          ).to eq('127.0.0.1')
+        end
+        describe 'mq interface set' do
+          before do
+            node.set['openstack']['bind_service']['mq']['interface'] = 'eth0'
+          end
+          it 'returns the interface address' do
+            expect(
+              subject.bind_address(node['openstack']['bind_service']['mq'])
+            ).to eq('10.0.0.3')
+          end
+        end
+      end
+      describe 'db' do
+        it 'returns the host' do
+          expect(
+            subject.bind_address(node['openstack']['bind_service']['db'])
+          ).to eq('127.0.0.1')
+        end
+        describe 'interface set' do
+          before do
+            node.set['openstack']['bind_service']['db']['interface'] = 'eth0'
+          end
+          it 'returns the interface address' do
+            expect(
+              subject.bind_address(node['openstack']['bind_service']['db'])
+            ).to eq('10.0.0.3')
+          end
+        end
+      end
+    end
     describe '#address_for failures' do
       it 'fails when addresses for interface is nil' do
         node.automatic['network'] = {

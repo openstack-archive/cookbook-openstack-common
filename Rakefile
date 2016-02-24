@@ -42,7 +42,9 @@ task :common_integration do
   # to workspace/cookbook-openstack-common
   patch_dir = Dir.pwd
   patch_dir_berks = ENV['ZUUL_PROJECT'].split('/')[1]
-  sh %(ln -s #{patch_dir} ../#{patch_dir_berks})
+  sh %(ls -la ..)
+  sh %(ls -la ../..)
+  sh %(sudo ln -s #{patch_dir} ../#{patch_dir_berks})
 
   sh %(git clone --depth 1 git://github.com/stackforge/openstack-chef-repo.git ../openstack-chef-repo)
   Dir.chdir('../openstack-chef-repo') do

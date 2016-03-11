@@ -113,7 +113,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'liberty'
+default['openstack']['release'] = 'mitaka'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -131,10 +131,10 @@ default['openstack']['apt']['components'] = ["#{node['lsb']['codename']}-updates
 # default['openstack']['apt']['components'] = [ '%codename%-proposed/%release%', 'main' ]
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = 'http://trunk.rdoproject.org/centos7-mitaka/c4/51/c45166c3fac46f2f4921a44c77e48f5b8f6847c5_c28e30d0'
+default['openstack']['yum']['uri'] = 'http://buildlogs.centos.org/centos/7/cloud/x86_64/openstack-mitaka/'
 default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-CentOS-SIG-Cloud'
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
-default['openstack']['yum']['gpgcheck'] = true
+default['openstack']['yum']['gpgcheck'] = false
 default['openstack']['endpoints']['family'] = 'inet'
 
 # Set a default region that other regions are set to - such that changing the region for all services can be done in one place

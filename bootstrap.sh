@@ -1,14 +1,43 @@
 #!/bin/bash -x
-## This script is for installing all the needed packages on trusty to run the chef tests with 'chef exec rake'
+## This script is for installing all the needed packages on centos 7 and trusty to run the chef tests with 'chef exec rake'
 
-# install needed packages
-sudo apt-get -y install build-essential liblzma-dev zlib1g-dev
+if [ -f /etc/redhat-release ] ; then
+  # enable repoforge/rpmforge
+  repoforge=rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+  wget -nv -t 3 http://pkgs.repoforge.org/rpmforge-release/$repoforge
+  sudo yum -y install $repoforge
+  rm $repoforge
 
-# install chefdk
-chefdk=chefdk_0.9.0-1_amd64.deb
-wget -nv -t 3 https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/$chefdk
-sudo dpkg -i $chefdk
-rm $chefdk
+  # install needed packages
+  sudo yum clean all
+  sudo yum -y groupinstall "Development Tools"
+  sudo yum -y install lzma-devel zlib-devel
+
+  # uninstall requests from pip
+  sudo pip uninstall requests -y || true
+
+  # install chefdk
+  chefdk=chefdk-0.9.0-1.el7.x86_64.rpm
+  wget -nv -t 3 https://opscode-omnibus-packages.s3.amazonaws.com/el/7/x86_64/$chefdk
+  sudo yum -y install $chefdk
+  rm $chefdk
+
+  # explicitly disable selinux
+  sudo /usr/sbin/setenforce 0
+
+elif [ -f /etc/debian_version ]; then
+
+  # install needed packages
+  sudo apt-get update
+  sudo apt-get -y install build-essential liblzma-dev zlib1g-dev
+
+  # install chefdk
+  chefdk=chefdk_0.9.0-1_amd64.deb
+  wget -nv -t 3 https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/$chefdk
+  sudo dpkg -i $chefdk
+  rm $chefdk
+
+fi
 
 ## workaround to fix redhat fauxhai permission issue (can be removed with fauxhai > 2.3 in chefdk)
 sudo chef exec ruby -e "require 'fauxhai'; Fauxhai.mock(platform:'redhat', version:'7.1')"
@@ -43,6 +72,8 @@ for cookbook_info in "${cookbooks[@]}"; do
 done
 
 # Allow the zuul cloner to pull down the necessary Depends-On patches
+#
+# also change ownership of .chef and workspace
 if [ "$cookbook_projects" ]
 then
   sudo -E /usr/zuul-env/bin/zuul-cloner \
@@ -50,5 +81,8 @@ then
     --cache-dir /opt/git \
     --workspace /home/jenkins/workspace/ \
     git://git.openstack.org \
-    $cookbook_projects
+    $cookbook_projects && \
+    sudo chown -R jenkins:jenkins /home/jenkins/workspace && \
+    sudo mkdir -p /home/jenkins/.chef && \
+    sudo chown -R jenkins:jenkins /home/jenkins/.chef
 fi

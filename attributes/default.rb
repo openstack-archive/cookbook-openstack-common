@@ -31,6 +31,7 @@ default['openstack']['common']['services'] = {
   'bare-metal' => 'ironic',
   'block-storage' => 'cinder',
   'compute' => 'nova',
+  'compute_api' => 'nova_api',
   'dashboard' => 'horizon',
   'database' => 'trove',
   'identity' => 'keystone',

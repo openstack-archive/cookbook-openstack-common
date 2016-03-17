@@ -131,7 +131,7 @@ default['openstack']['apt']['components'] = ["#{node['lsb']['codename']}-updates
 # default['openstack']['apt']['components'] = [ '%codename%-proposed/%release%', 'main' ]
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = 'https://trunk.rdoproject.org/centos7/b4/77/b47704d4dee98cb031c06fed779f1e7c3e4c4dc8_d4d8381d/'
+default['openstack']['yum']['uri'] = 'http://trunk.rdoproject.org/centos7-mitaka/c4/51/c45166c3fac46f2f4921a44c77e48f5b8f6847c5_c28e30d0'
 default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-CentOS-SIG-Cloud'
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
 default['openstack']['yum']['gpgcheck'] = true

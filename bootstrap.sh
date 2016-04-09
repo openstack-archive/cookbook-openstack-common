@@ -1,7 +1,7 @@
 #!/bin/bash -x
 ## This script is for installing all the needed packages on centos 7 and trusty to run the chef tests with 'chef exec rake'
 
-if [ -f /etc/redhat-release ] ; then
+if [ -f /usr/bin/yum ] ; then
   # enable repoforge/rpmforge
   repoforge=rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
   wget -nv -t 3 http://pkgs.repoforge.org/rpmforge-release/$repoforge
@@ -25,7 +25,7 @@ if [ -f /etc/redhat-release ] ; then
   # explicitly disable selinux
   sudo /usr/sbin/setenforce 0
 
-elif [ -f /etc/debian_version ]; then
+elif [ -f /usr/bin/apt-get ]; then
 
   # install needed packages
   sudo apt-get update

@@ -131,10 +131,10 @@ default['openstack']['apt']['components'] = ["#{node['lsb']['codename']}-updates
 # default['openstack']['apt']['components'] = [ '%codename%-proposed/%release%', 'main' ]
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = 'http://buildlogs.centos.org/centos/7/cloud/x86_64/openstack-mitaka/'
+default['openstack']['yum']['uri'] = "http://mirror.centos.org/centos/$releasever/cloud/$basearch/openstack-#{node['openstack']['release']}"
 default['openstack']['yum']['repo-key'] = 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-CentOS-SIG-Cloud'
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
-default['openstack']['yum']['gpgcheck'] = false
+default['openstack']['yum']['gpgcheck'] = true
 default['openstack']['endpoints']['family'] = 'inet'
 
 # Set a default region that other regions are set to - such that changing the region for all services can be done in one place

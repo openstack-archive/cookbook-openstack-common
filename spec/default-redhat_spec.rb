@@ -14,7 +14,6 @@ describe 'openstack-common::default' do
     context 'enabling RDO with gpgcheck enabled' do
       before do
         node.set['openstack']['yum']['rdo_enabled'] = true
-        node.set['openstack']['yum']['gpgcheck'] = true
       end
 
       it 'adds RDO yum repository' do

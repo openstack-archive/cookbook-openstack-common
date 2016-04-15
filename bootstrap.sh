@@ -2,16 +2,10 @@
 ## This script is for installing all the needed packages on centos 7 and trusty to run the chef tests with 'chef exec rake'
 
 if [ -f /usr/bin/yum ] ; then
-  # enable repoforge/rpmforge
-  repoforge=rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
-  wget -nv -t 3 http://pkgs.repoforge.org/rpmforge-release/$repoforge
-  sudo yum -y install $repoforge
-  rm $repoforge
-
   # install needed packages
   sudo yum clean all
   sudo yum -y groupinstall "Development Tools"
-  sudo yum -y install lzma-devel zlib-devel
+  sudo yum -y install xz-devel zlib-devel
 
   # uninstall requests from pip
   sudo pip uninstall requests -y || true

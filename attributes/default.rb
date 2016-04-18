@@ -126,7 +126,7 @@ default['openstack']['release'] = 'mitaka'
 default['openstack']['apt']['update_apt_cache'] = false
 default['openstack']['apt']['live_updates_enabled'] = true
 default['openstack']['apt']['uri'] = 'http://ubuntu-cloud.archive.canonical.com/ubuntu'
-default['openstack']['apt']['components'] = ["#{node['lsb']['codename']}-updates/#{node['openstack']['release']}", 'main']
+default['openstack']['apt']['components'] = ['main']
 # For the SRU packaging, use this:
 # default['openstack']['apt']['components'] = [ '%codename%-proposed/%release%', 'main' ]
 

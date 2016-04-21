@@ -1,118 +1,112 @@
 Description
 ===========
 
-This cookbook provides common setup recipes, helper methods and attributes that describe an OpenStack deployment as part of the OpenStack reference deployment Chef for OpenStack.
+This cookbook provides common setup recipes, helper methods and attributes that
+describe an OpenStack deployment as part of the OpenStack reference deployment
+Chef for OpenStack.
+
+Please relate to the official OpenStack Configuration Reference for a more detailed documentation on operating and administration of an OpenStack cluster:
+
+http://docs.openstack.org/mitaka/config-reference/index.html
 
 Requirements
 ============
 
-* Chef 0.10.0 or higher required (for Chef environment use).
+- Chef 12 or higher
+- chefdk 0.9.0 for testing (also includes berkshelf for cookbook dependency
+  resolution)
+
+Platform
+========
+
+- ubuntu
+- redhat
+- centos
 
 Cookbooks
----------
+=========
 
 The following cookbooks are dependencies:
 
-* apt
-* database
-* yum
-* yum-epel
+- 'apt', '~> 2.8'
+- 'database', '~> 4.0.2'
+- 'mariadb', '~> 0.3.1'
+- 'mysql', '~> 6.0.13'
+- 'yum', '~> 3.5.4'
+- 'yum-epel', '~> 0.6.0'
+- 'galera', '~> 0.4.1'
 
 Attributes
 ==========
 
-Please see the extensive inline documentation in `attributes/*.rb` for descriptions
-of all the settable attributes for this cookbook.
+Please see the extensive inline documentation in `attributes/*.rb` for
+descriptions of all the settable attributes for this cookbook.
 
 Note that all attributes are in the `default["openstack"]` "namespace"
 
-* `openstack['api']['auth']['version']` - Select v2.0 or v3.0. Default v2.0. The default auth API version used by other components to interact with identity service.
+## Attributes to generate OpenStack service configuration files
 
-default
--------
+Since the mitaka release, we moved to a completely new way to generate all
+OpenStack service configuration files. The base template is the
+'openstack-service.conf.erb' included in the templates of this cookbook. In each
+of the service cookbook (e.g. openstack-network, openstack-identity or
+openstack-compute), the service configuration file (e.g neutron.conf,
+keystone.conf or nova.conf) gets generated directly from attributes set inside of
+the cookbook. To merge all the configuration options (including the secrets)
+properly, before handing them over as '@service_config' to the mentioned
+template above, we use the methods defined in 'libraries/config_helpers'.
 
-Support multiple network types. Default network type is "nova" with the other option supported being "neutron".
-The attribute is in the `default["openstack"]["compute"]["network"]["service_type"]`.
+For examples how to use these attributes, please refer to the attribute files
+included in the service cookbooks (e.g. attributes/neutron_conf.rb in
+openstack-network or attributes/keystone_conf.rb in openstack-identity). The
+basic structure of all these attributes always follows this model:
+
+```
+# usual config option that should evventually be saved to the node object
+default['openstack'][service]['conf'][section][key][value]
+# configuration options like passwords that should not be saved in the node
+# object
+default['openstack'][service]['conf_secrets'][section][key][value]
+```
 
 Recipes
 =======
 
-client
-----
+## openstack-common::client
+- Install the common python openstack client package
 
-Install the common python openstack client package
+## openstack-common::default
+- Installs/Configures common recipes
 
-default
-----
+## openstack-common::logging
+- Installs/Configures common logging
 
-Installs/Configures common recipes
-
-```json
-"run_list": [
-    "recipe[openstack-common]"
-]
-```
-
-logging
-----
-
-Installs/Configures common logging
-
-```json
-"run_list": [
-    "recipe[openstack-common::logging]"
-]
-```
-
-set_endpoints_by_interface
-----
-
-Iterates over the contents of the `node['openstack']['endpoints']` hash and
-finds any occurrence of `bind_interface` to set the IP address
-(`node['openstack']['endpoints']['identity']['bind_interface'] = 'eth0'` for
-example, overriding `node['openstack']['endpoints']['identity']['host']`). If
-`bind_interface` isn't set, the value of `host` is not modified.
-
-```json
-"run_list": [
-    "recipe[openstack-common::set_endpoints_by_interface]"
-]
-```
-
-openrc
-----
-
-Creates an /root/openrc file. This requires the identity attributes for
-admin_user and admin_tenant_name, or for the identity_service_chef_role
-to be used on the identity server node.
-
-
-sysctl
-----
-
-Iterates over the contents of the `node['openstack']['sysctl']` hash and writes
-the entries to `/etc/sysctl.d/60-openstack.conf`.
-
-```json
-"run_list": [
-    "recipe[openstack-common::sysctl]"
-]
-```
+## openstack-common::sysctl
+- Iterates over the contents of the `node['openstack']['sysctl']` hash and
+  writes the entries to `/etc/sysctl.d/60-openstack.conf`.
 
 Data Bags
 =========
 
-This cookbook containes Libraries to work with passwords and secrets in databags.   Databags can be unencrypted ( for dev ) or encrypted ( for prod ). In addition to traditionally encrypted data bags they can also be created as chef-vault items. To read more about chef-vault and how to use it, go to https://docs.getchef.com/chef_vault.html.
+This cookbook contains Libraries to work with passwords and secrets in
+databags. Databags can be unencrypted (for dev) or encrypted (for prod).
+In addition to traditionally encrypted data bags they can also be created as
+chef-vault items. To read more about chef-vault and how to use it, go to
+https://docs.chef.io/chef_vault.html.
 
-Documentation for Attributes for selecting databag format can be found in the attributes section of this cookbook.
+Documentation for Attributes for selecting databag format can be found in the
+attributes section of this cookbook.
 
-Documentation for format of these Databags can be found in the [Openstack Chef Repo](https://github.com/openstack/openstack-chef-repo#databags) repository.
+Documentation for format of these Databags can be found in the [Openstack Chef
+Repo](https://github.com/openstack/openstack-chef-repo#databags) repository.
 
-LWRPs
-=====
+Resources
+=========
 
-This cookbook provides the openstack_common_database LWRP, which replaces the old database library function 'db_create_with_user'.
-When this coobook is included as dependency, this LWRP can be used to create databases needed by the openstack services.
+This cookbook provides the openstack_common_database LWRP, which replaces the
+old database library function 'db_create_with_user'.  When this cookbook is
+included as dependency, this LWRP can be used to create databases needed by the
+OpenStack services.
 
 ```ruby
 depends 'openstack-common'
@@ -134,19 +128,30 @@ Libraries
 This cookbook exposes a set of default library routines:
 
 * `cli` -- Used to call openstack CLIs
-* `endpoint` -- Used to return a `::URI` object representing the named OpenStack endpoint
-* `admin_endpoint` -- Used to return a `::URI` object representing the named OpenStack admin endpoint if one was specified. Otherwise, it will return the same value as `endpoint`.
-* `internal_endpoint` -- Used to return a `::URI` object representing the named OpenStack internal endpoint if one was specified. Otherwise, it will return the same value as `endpoint`.
-* `public_endpoint` -- Used to return a `::URI` object representing the named OpenStack public endpoint if one was specified. Otherwise, it will return the same value as `endpoint`.
+* `endpoint` -- Used to return a `::URI` object representing the named OpenStack
+  endpoint
+* `admin_endpoint` -- Used to return a `::URI` object representing the named
+  OpenStack admin endpoint if one was specified. Otherwise, it will return the
+same value as `endpoint`.
+* `internal_endpoint` -- Used to return a `::URI` object representing the named
+  OpenStack internal endpoint if one was specified. Otherwise, it will return
+the same value as `endpoint`.
+* `public_endpoint` -- Used to return a `::URI` object representing the named
+  OpenStack public endpoint if one was specified. Otherwise, it will return the
+same value as `endpoint`.
 * `endpoints` -- Useful for operating on all OpenStack endpoints
 * `db` -- Returns a Hash of information about a named OpenStack database
-* `db_uri` -- Returns the SQLAlchemy RFC-1738 DB URI (see: http://rfc.net/rfc1738.html) for a named OpenStack database
-* `secret` -- Returns the value of an encrypted data bag for a named OpenStack secret key and key-section
-* `get_password` -- Ease-of-use helper that returns the decrypted password for a named database, service or keystone user.
-* `matchers` -- A custom matcher(render_config_file) for testing ini format file section content by with_section_content.
+* `db_uri` -- Returns the SQLAlchemy RFC-1738 DB URI (see:
+  http://rfc.net/rfc1738.html) for a named OpenStack database
+* `secret` -- Returns the value of an encrypted data bag for a named OpenStack
+  secret key and key-section
+* `get_password` -- Ease-of-use helper that returns the decrypted password for a
+  named database, service or keystone user.
+* `matchers` -- A custom matcher(render_config_file) for testing ini format file
+  section content by with_section_content.
 
-Usage
------
+Examples
+========
 
 The following are code examples showing the above library routines in action.
 Remember when using the library routines exposed by this library to include
@@ -202,8 +207,9 @@ object for a hash that contains any of the following keys:
 * `path`
 * `scheme`
 
-If the `uri` key is in the hash, that will be used as the URI, otherwise the URI will be
-constructed from the various parts of the hash corresponding to the keys above.
+If the `uri` key is in the hash, that will be used as the URI, otherwise the URI
+will be constructed from the various parts of the hash corresponding to the keys
+above.
 
 ```ruby
 # Suppose node hash contains the following subhash in the :identity_service key:
@@ -216,7 +222,8 @@ uri = ::Openstack::uri_from_hash(node[:identity_service])
 # uri.to_s would == "https://identity.example.com:5000"
 ```
 
-The routine will return nil if neither a `uri` or `host` key exists in the supplied hash.
+The routine will return nil if neither a `uri` or `host` key exists in the
+supplied hash.
 
 Using the library without prefixing with ::Openstack
 ----------------------------------------------------
@@ -230,21 +237,6 @@ end
 ```
 
 in your recipe.
-
-Testing
-=====
-
-Please refer to the [TESTING.md](TESTING.md) for instructions for testing the cookbook.
-
-Berkshelf
-=====
-
-Berks will resolve version requirements and dependencies on first run and
-store these in Berksfile.lock. If new cookbooks become available you can run
-`berks update` to update the references in Berksfile.lock. Berksfile.lock will
-be included in stable branches to provide a known good set of dependencies.
-Berksfile.lock will not be included in development branches to encourage
-development against the latest cookbooks.
 
 License and Author
 ==================
@@ -260,6 +252,8 @@ License and Author
 | **Author**           |  Chen Zhiwei (<zhiwchen@cn.ibm.com>)               |
 | **Author**           |  Brett Campbell (<brett.campbell@rackspace.com>)   |
 | **Author**           |  Mark Vanderwiel (<vanderwl@us.ibm.com>)           |
+| **Author**           |  Jan Klare (<j.klare@cloudbau.de>)                 |
+| **Author**           |  Christoph Albers (<c.albers@x-ion.de>)            |
 |                      |                                                    |
 | **Copyright**        |  Copyright (c) 2012-2013, AT&T Services, Inc.      |
 | **Copyright**        |  Copyright (c) 2013, Opscode, Inc.                 |

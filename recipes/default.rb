@@ -32,13 +32,9 @@ when 'debian'
 
   if node['openstack']['apt']['live_updates_enabled']
     apt_components = node['openstack']['apt']['components']
-    # Simple variable substitution for LSB codename and OpenStack release
-    apt_components.each do |comp|
-      comp.gsub! '%release%', node['openstack']['release']
-      comp.gsub! '%codename%', node['lsb']['codename']
-    end
     apt_repository 'openstack-ppa' do
       uri node['openstack']['apt']['uri']
+      distribution "#{node['lsb']['codename']}-updates/#{node['openstack']['release']}"
       components apt_components
     end
   end

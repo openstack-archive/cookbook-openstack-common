@@ -125,9 +125,7 @@ default['openstack']['release'] = 'liberty'
 default['openstack']['apt']['update_apt_cache'] = false
 default['openstack']['apt']['live_updates_enabled'] = true
 default['openstack']['apt']['uri'] = 'http://ubuntu-cloud.archive.canonical.com/ubuntu'
-default['openstack']['apt']['components'] = ["#{node['lsb']['codename']}-updates/#{node['openstack']['release']}", 'main']
-# For the SRU packaging, use this:
-# default['openstack']['apt']['components'] = [ '%codename%-proposed/%release%', 'main' ]
+default['openstack']['apt']['components'] = ['main']
 
 default['openstack']['zypp']['repo-key'] = 'd85f9316'  # 32 bit key ID
 default['openstack']['zypp']['uri'] = 'http://download.opensuse.org/repositories/Cloud:/OpenStack:/%release%/%suse-release%/'

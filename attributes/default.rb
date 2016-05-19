@@ -39,7 +39,8 @@ default['openstack']['common']['services'] = {
   'network' => 'neutron',
   'object-storage' => 'swift',
   'orchestration' => 'heat',
-  'telemetry' => 'ceilometer'
+  'telemetry' => 'ceilometer',
+  'telemetry-metric' => 'gnocchi'
 }
 
 # Setting this to True means that database passwords and service user

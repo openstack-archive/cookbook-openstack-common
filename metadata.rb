@@ -4,7 +4,7 @@ maintainer_email 'openstack-dev@lists.openstack.org'
 license 'Apache 2.0'
 description 'Common OpenStack attributes, libraries and recipes.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '13.0.0'
+version '14.0.0'
 
 recipe 'openstack-common', 'Installs/Configures common recipes'
 recipe 'openstack-common::logging', 'Installs/Configures common logging'

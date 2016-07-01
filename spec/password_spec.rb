@@ -34,7 +34,7 @@ describe 'openstack-common::default' do
       end
 
       describe '#get_password' do
-        ['service', 'db', 'user'].each do |type|
+        %w(service db user).each do |type|
           it "returns databag value for #{type}" do
             value = { 'nova' => 'this' }
             allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with('/etc/chef/openstack_data_bag_secret').and_return('secret')
@@ -69,7 +69,7 @@ describe 'openstack-common::default' do
       end
 
       describe '#get_password' do
-        ['service', 'db', 'user'].each do |type|
+        %w(service db user).each do |type|
           it "returns databag value for #{type}" do
             value = { 'nova' => 'this' }
             allow(Chef::DataBagItem).to receive(:load).with("#{type}_passwords", 'nova').and_return(value)

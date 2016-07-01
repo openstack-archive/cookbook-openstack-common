@@ -43,7 +43,7 @@ module ::Openstack
   # intended for joining URI relative path segments. This function merely
   # helps to accurately join supplied paths.
   def uri_join_paths(*paths)
-    return nil if paths.length == 0
+    return nil if paths.empty?
     leadingslash = paths[0][0] == '/' ? '/' : ''
     trailingslash = paths[-1][-1] == '/' ? '/' : ''
     paths.map! { |path| path.sub(%r{^\/+}, '').sub(%r{\/+$}, '') }

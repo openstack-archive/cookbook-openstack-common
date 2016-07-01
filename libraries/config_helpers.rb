@@ -26,11 +26,11 @@ module ::Openstack
   # @param [String] service
   def merge_config_options(service)
     conf = deep_dup(node['openstack'][service]['conf'])
-    if node['openstack'][service]['conf_secrets']
-      conf_secrets = deep_dup(node['openstack'][service]['conf_secrets'])
-    else
-      conf_secrets = {}
-    end
+    conf_secrets = if node['openstack'][service]['conf_secrets']
+                     deep_dup(node['openstack'][service]['conf_secrets'])
+                   else
+                     {}
+                   end
     Chef::Mixin::DeepMerge.merge(conf, conf_secrets)
   end
 

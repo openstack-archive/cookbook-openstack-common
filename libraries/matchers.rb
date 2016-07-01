@@ -49,11 +49,7 @@ if defined?(ChefSpec)
     # rubocop:disable MethodLength, CyclomaticComplexity
     def matches_content?
       def section?(line, section = '.*')
-        if line =~ /^[ \t]*\[#{section}\]/
-          return true
-        else
-          return false
-        end
+        return true if line =~ /^[ \t]*\[#{section}\]/
       end
 
       def get_section_content(content, section)
@@ -85,10 +81,6 @@ if defined?(ChefSpec)
       return false if @actual_content.nil?
 
       if @expected_content.is_a?(Regexp)
-
-        # MRV Hack to allow windows env to work with rspec
-        # when regex end with $
-        @actual_content = @actual_content.gsub(/\r/, '')
 
         @actual_content =~ @expected_content
       elsif RSpec::Matchers.is_a_matcher?(@expected_content)

@@ -46,7 +46,7 @@ def db_types
     @user_prov = ::Chef::Provider::Database::MysqlUser
     @super_user = 'root'
   else
-    fail "Unsupported database type #{@db_type}"
+    raise "Unsupported database type #{@db_type}"
   end
 end
 

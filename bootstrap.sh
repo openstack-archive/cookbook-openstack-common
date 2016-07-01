@@ -1,5 +1,5 @@
 #!/bin/bash -x
-## This script is for installing all the needed packages on centos 7 and trusty to run the chef tests with 'chef exec rake'
+## This script is for installing all the needed packages on CentOS 7 and Ubuntu Trusty to run the chef tests with 'chef exec rake'
 
 if [ -f /usr/bin/yum ] ; then
   # install needed packages
@@ -11,8 +11,8 @@ if [ -f /usr/bin/yum ] ; then
   sudo pip uninstall requests -y || true
 
   # install chefdk
-  chefdk=chefdk-0.9.0-1.el7.x86_64.rpm
-  wget -nv -t 3 https://opscode-omnibus-packages.s3.amazonaws.com/el/7/x86_64/$chefdk
+  chefdk=chefdk-0.15.15-1.el7.x86_64.rpm
+  wget -nv -t 3 https://packages.chef.io/stable/el/7/$chefdk
   sudo yum -y install $chefdk
   rm $chefdk
 
@@ -26,15 +26,12 @@ elif [ -f /usr/bin/apt-get ]; then
   sudo apt-get -y install build-essential liblzma-dev zlib1g-dev
 
   # install chefdk
-  chefdk=chefdk_0.9.0-1_amd64.deb
-  wget -nv -t 3 https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/$chefdk
+  chefdk=chefdk_0.15.15-1_amd64.deb
+  wget -nv -t 3 https://packages.chef.io/stable/ubuntu/12.04/$chefdk
   sudo dpkg -i $chefdk
   rm $chefdk
 
 fi
-
-## workaround to fix redhat fauxhai permission issue (can be removed with fauxhai > 2.3 in chefdk)
-sudo chef exec ruby -e "require 'fauxhai'; Fauxhai.mock(platform:'redhat', version:'7.1')"
 
 # The following will handle cross cookbook patch dependencies via the Depends-On in commit message
 

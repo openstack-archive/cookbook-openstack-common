@@ -31,15 +31,16 @@ module ::Openstack
   def address_for(interface, family = node['openstack']['endpoints']['family'], nodeish = node, drop_vips = true)
     Chef::Log.debug("address_for(#{interface}, #{family}, #{nodeish})")
     if interface == 'all'
-      if family == 'inet6'
+      case family
+      when 'inet6'
         return '::'
-      else
+      when 'inet'
         return '0.0.0.0'
       end
     end
-    fail "Interface #{interface} does not exist" unless nodeish['network']['interfaces'][interface]
+    raise "Interface #{interface} does not exist" unless nodeish['network']['interfaces'][interface]
     addresses = nodeish['network']['interfaces'][interface]['addresses']
-    fail "Interface #{interface} has no addresses assigned" if addresses.to_a.empty?
+    raise "Interface #{interface} has no addresses assigned" if addresses.to_a.empty?
     get_address addresses, family, drop_vips
   end
 
@@ -49,11 +50,11 @@ module ::Openstack
   # @param [Hash] service_config pointed to the set Hash
   def bind_address(service_config)
     iface = service_config['interface']
-    if iface
-      address = address_for(iface)
-    else
-      address = service_config['host']
-    end
+    address = if iface
+                address_for(iface)
+              else
+                service_config['host']
+              end
     address
   end
 
@@ -69,6 +70,6 @@ module ::Openstack
     addresses.each do |addr, data|
       return addr if data['family'] == family && (data['prefixlen'] != vip_prefixlen || !drop_vips)
     end
-    fail "No address for family #{family} found"
+    raise "No address for family #{family} found"
   end
 end

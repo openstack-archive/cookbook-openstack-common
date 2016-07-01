@@ -9,12 +9,12 @@ UBUNTU_OPTS = {
   platform: 'ubuntu',
   version: '14.04',
   log_level: LOG_LEVEL
-}
+}.freeze
 REDHAT_OPTS = {
   platform: 'redhat',
   version: '7.1',
   log_level: LOG_LEVEL
-}
+}.freeze
 # We set a default platform for non-platform specific test cases
 CHEFSPEC_OPTS = UBUNTU_OPTS
 

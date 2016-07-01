@@ -46,19 +46,17 @@ module ::Openstack
   # @return [Array] A list of memcached servers in format
   # '<ip>:<port>'.
   def memcached_servers(role = 'infra-caching')
-    if !node['openstack']['memcached_servers']
+    if node['openstack']['memcached_servers'].nil?
       search_for(role).map do |n|
         listen = n['memcached']['listen']
         port = n['memcached']['port'] || '11211'
 
         "#{listen}:#{port}"
       end.sort
+    elsif node['openstack']['memcached_servers']
+      node['openstack']['memcached_servers']
     else
-      if node['openstack']['memcached_servers'].length != 0
-        node['openstack']['memcached_servers']
-      else
-        []
-      end
+      []
     end
   end
 

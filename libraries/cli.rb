@@ -64,7 +64,7 @@ module ::Openstack
     Chef::Log.debug("Running openstack command: #{openstackcmd} with environment: #{env}")
     result = shell_out(openstackcmd, env: env)
     Chef::Log.debug("Output for command: #{cmd}:\n#{result.stdout}\n#{result.stderr}")
-    fail "#{result.stderr} (#{result.exitstatus})" if result.exitstatus != 0
+    raise "#{result.stderr} (#{result.exitstatus})" if result.exitstatus != 0
     result.stdout
   end
 

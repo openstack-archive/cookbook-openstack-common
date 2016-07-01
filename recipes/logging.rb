@@ -30,4 +30,9 @@ template '/etc/openstack/logging.conf' do
   owner 'root'
   group 'root'
   mode 00644
+  variables(
+    loggers: node['openstack']['logging']['loggers'],
+    formatters: node['openstack']['logging']['formatters'],
+    handlers: node['openstack']['logging']['handlers']
+  )
 end

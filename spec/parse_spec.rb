@@ -19,11 +19,11 @@ describe 'Openstack parse' do
     end
     it 'returns proper array of hashes when proper table provided' do
       table =
-'+---------+----------------------------------+----------------------------------+
-|  tenant |              access              |              secret              |
-+---------+----------------------------------+----------------------------------+
-| service | 91af731b3be244beb8f30fc59b7bc96d | ce811442cfb549c39390a203778a4bf5 |
-+---------+----------------------------------+----------------------------------+'
+        '+---------+----------------------------------+----------------------------------+
+         |  tenant |              access              |              secret              |
+         +---------+----------------------------------+----------------------------------+
+         | service | 91af731b3be244beb8f30fc59b7bc96d | ce811442cfb549c39390a203778a4bf5 |
+         +---------+----------------------------------+----------------------------------+'
       expect(
         subject.prettytable_to_array(table)
       ).to eq(
@@ -33,11 +33,11 @@ describe 'Openstack parse' do
     end
     it 'returns proper array of hashes when proper table provided including whitespace' do
       table =
-'+---------+----------------------------------+----------------------------------+
-|  tenant |              access              |              secret              |
-+---------+----------------------------------+----------------------------------+
-| service | 91af731b3be244beb8f30fc59b7bc96d | ce811442cfb549c39390a203778a4bf5 |
-+---------+----------------------------------+----------------------------------+
+        '+---------+----------------------------------+----------------------------------+
+         |  tenant |              access              |              secret              |
+         +---------+----------------------------------+----------------------------------+
+         | service | 91af731b3be244beb8f30fc59b7bc96d | ce811442cfb549c39390a203778a4bf5 |
+         +---------+----------------------------------+----------------------------------+
 
 
 '
@@ -50,14 +50,14 @@ describe 'Openstack parse' do
     end
     it 'returns a flatten hash when provided a Property/Value table' do
       table =
-'+-----------+----------------------------------+
-|  Property |              Value               |
-+-----------+----------------------------------+
-|   access  | 91af731b3be244beb8f30fc59b7bc96d |
-|   secret  | ce811442cfb549c39390a203778a4bf5 |
-| tenant_id | 429271dd1cf54b7ca921a0017524d8ea |
-|  user_id  | 1c4fc229560f40689c490c5d0838fd84 |
-+-----------+----------------------------------+'
+        '+-----------+----------------------------------+
+         |  Property |              Value               |
+         +-----------+----------------------------------+
+         |   access  | 91af731b3be244beb8f30fc59b7bc96d |
+         |   secret  | ce811442cfb549c39390a203778a4bf5 |
+         | tenant_id | 429271dd1cf54b7ca921a0017524d8ea |
+         |  user_id  | 1c4fc229560f40689c490c5d0838fd84 |
+         +-----------+----------------------------------+'
       expect(
         subject.prettytable_to_array(table)
       ).to eq(
@@ -68,16 +68,14 @@ describe 'Openstack parse' do
     end
     it 'returns a flatten hash when provided a Property/Value table including whitespace' do
       table =
-'
-
-+-----------+----------------------------------+
-|  Property |              Value               |
-+-----------+----------------------------------+
-|   access  | 91af731b3be244beb8f30fc59b7bc96d |
-|   secret  | ce811442cfb549c39390a203778a4bf5 |
-| tenant_id | 429271dd1cf54b7ca921a0017524d8ea |
-|  user_id  | 1c4fc229560f40689c490c5d0838fd84 |
-+-----------+----------------------------------+'
+        '+-----------+----------------------------------+
+         |  Property |              Value               |
+         +-----------+----------------------------------+
+         |   access  | 91af731b3be244beb8f30fc59b7bc96d |
+         |   secret  | ce811442cfb549c39390a203778a4bf5 |
+         | tenant_id | 429271dd1cf54b7ca921a0017524d8ea |
+         |  user_id  | 1c4fc229560f40689c490c5d0838fd84 |
+         +-----------+----------------------------------+'
       expect(
         subject.prettytable_to_array(table)
       ).to eq(

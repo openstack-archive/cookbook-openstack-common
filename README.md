@@ -13,7 +13,7 @@ Requirements
 ============
 
 - Chef 12 or higher
-- chefdk 0.9.0 for testing (also includes berkshelf for cookbook dependency
+- chefdk 0.15.15 for testing (also includes berkshelf for cookbook dependency
   resolution)
 
 Platform

@@ -1,26 +1,26 @@
 [loggers]
-keys=<%= (node["openstack"]["logging"]['loggers'].keys).join(',') %>
+keys=<%= (@loggers.keys).join(',') %>
 
 [formatters]
-keys=<%= node["openstack"]["logging"]['formatters'].keys.join(',') %>
+keys=<%= @formatters.keys.join(',') %>
 
 [handlers]
-keys=<%= node["openstack"]["logging"]['handlers'].keys.join(',') %>
+keys=<%= @handlers.keys.join(',') %>
 
-## FORMATTERS ##
+## LOGGERS ##
 
-<% node["openstack"]["logging"]['formatters'].each do |section, options| %>
-[formatter_<%= section %>]
+<% @loggers.each do |section, options| %>
+[logger_<%= section %>]
 <% options.each do |key, value| %>
 <%= key %>=<%= value %>
 <% end %>
 
 <% end %>
 
-## LOGGERS ##
+## FORMATTERS ##
 
-<% node["openstack"]["logging"]['loggers'].each do |section, options| %>
-[logger_<%= section %>]
+<% @formatters.each do |section, options| %>
+[formatter_<%= section %>]
 <% options.each do |key, value| %>
 <%= key %>=<%= value %>
 <% end %>
@@ -29,7 +29,7 @@ keys=<%= node["openstack"]["logging"]['handlers'].keys.join(',') %>
 
 ## HANDLERS ##
 
-<% node["openstack"]["logging"]['handlers'].each do |section, options| %>
+<% @handlers.each do |section, options| %>
 [handler_<%= section %>]
 <% options.each do |key, value| %>
 <%= key %>=<%= value %>

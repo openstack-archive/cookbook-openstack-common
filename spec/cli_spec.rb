@@ -48,11 +48,11 @@ describe 'openstack-common::default' do
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
           }
         allow(subject).to receive(:shell_out).with(
-          ['keystone', 'user-list'],
+          %w(openstack user list),
           env: env
         ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
 
-        result = subject.openstack_command('keystone', 'user-list', env)
+        result = subject.openstack_command('openstack', 'user list', env)
         expect(result).to eq('good')
       end
 
@@ -65,11 +65,11 @@ describe 'openstack-common::default' do
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
           }
         allow(subject).to receive(:shell_out).with(
-          %w(keystone --key1 value1 --key2 value2 --key3 user-list),
+          %w(openstack --key1 value1 --key2 value2 --key3 user list),
           env: env
         ).and_return double('shell_out', exitstatus: 0, stdout: 'good', stderr: '')
 
-        result = subject.openstack_command('keystone', 'user-list', env, 'key1' => 'value1', 'key2' => 'value2', 'key3' => '')
+        result = subject.openstack_command('openstack', 'user list', env, 'key1' => 'value1', 'key2' => 'value2', 'key3' => '')
         expect(result).to eq('good')
       end
 
@@ -82,7 +82,7 @@ describe 'openstack-common::default' do
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
           }
         allow(subject).to receive(:shell_out).with(
-          ['keystone', 'user-list'],
+          %w(openstack user list),
           env: env
         ).and_return double('shell_out', exitstatus: 123, stdout: 'fail', stderr: '')
 
@@ -100,7 +100,7 @@ describe 'openstack-common::default' do
             'OS_TENANT_NAME' => 'tenant',
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
           }
-        allow(subject).to receive(:openstack_command).with('keystone', 'user-list', env, {})
+        allow(subject).to receive(:openstack_command).with('openstack', 'user list', env, {})
         allow(subject).to receive(:prettytable_to_array)
           .and_return([{ 'name' => 'user1', 'id' => '1234567890ABCDEFGH' }])
 
@@ -120,7 +120,7 @@ describe 'openstack-common::default' do
       end
 
       it 'runs glance command to query valid id' do
-        allow(subject).to receive(:openstack_command).with('glance', 'image-list', :env, {})
+        allow(subject).to receive(:openstack_command).with('openstack', 'image list', :env, {})
         allow(subject).to receive(:prettytable_to_array)
           .and_return([{ 'ID' => '87f38e15-9737-46cc-a612-7c67ee29a24f', 'Name' => 'cirros' }])
 
@@ -129,7 +129,7 @@ describe 'openstack-common::default' do
       end
 
       it 'runs glance command to query invalid id' do
-        allow(subject).to receive(:openstack_command).with('glance', 'image-list', :env, {})
+        allow(subject).to receive(:openstack_command).with('openstack', 'image list', :env, {})
           .and_raise("No image with a name or ID of 'test' exists. (1)")
 
         expect { subject.image_id('test', :env) }.to raise_error(RuntimeError)
@@ -145,11 +145,11 @@ describe 'openstack-common::default' do
             'OS_TENANT_NAME' => 'tenant',
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
           }
-        allow(subject).to receive(:openstack_command).with('neutron', 'net-list', env, {})
+        allow(subject).to receive(:openstack_command).with('openstack', 'network list', env, {})
         allow(subject).to receive(:prettytable_to_array)
           .and_return([{ 'name' => 'net1', 'id' => '1234567890ABCDEFGH' }])
 
-        result = subject.network_uuid('net', 'name', 'net1', env)
+        result = subject.network_uuid('network', 'name', 'net1', env)
         expect(result).to eq('1234567890ABCDEFGH')
       end
     end

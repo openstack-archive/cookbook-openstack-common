@@ -81,7 +81,7 @@ module ::Openstack
   #
   def get_uuid(client, type, key, value, env, args = {}, uuid_field = 'id') # rubocop: disable ParameterLists
     begin
-      output = openstack_command(client, "#{type}-list", env, args)
+      output = openstack_command(client, "#{type} list", env, args)
       prettytable_to_array(output).each do |obj|
         return obj[uuid_field] if obj.key?(uuid_field) && obj[key] == value
       end
@@ -104,7 +104,7 @@ module ::Openstack
   # TODO: update openstack-identity register provider to use these functions.
   #
   def identity_uuid(*args)
-    get_uuid('keystone', *args)
+    get_uuid('openstack', *args)
   end
 
   # return id for a glance image.
@@ -114,7 +114,7 @@ module ::Openstack
   # @param [Hash] optional command argument/values pairs
   # @return [String] id or nil
   def image_id(name, env, args = {})
-    get_uuid('glance', 'image', 'Name', name, env, args, 'ID')
+    get_uuid('openstack', 'image', 'Name', name, env, args, 'ID')
   end
 
   # return uuid for a network resource.
@@ -128,6 +128,6 @@ module ::Openstack
   # @return [String] uuid or nil
   #
   def network_uuid(*args)
-    get_uuid('neutron', *args)
+    get_uuid('openstack', *args)
   end
 end

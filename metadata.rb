@@ -16,10 +16,10 @@ recipe 'openstack-common::sysctl', 'Configures sysctl settings'
   supports os
 end
 
-depends 'apt', '~> 2.8'
+depends 'apt', '~> 4.0'
 depends 'database', '~> 4.0.2'
 depends 'mariadb', '~> 0.3.1'
-depends 'mysql', '~> 6.0.13'
+depends 'mysql', '~> 7.2.0'
 depends 'yum', '~> 3.5.4'
 depends 'yum-epel', '~> 0.6.0'
 depends 'galera', '~> 0.4.1'

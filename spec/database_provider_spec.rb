@@ -5,7 +5,7 @@ require_relative 'spec_helper'
 describe 'test-openstack-common-database::default' do
   let(:runner) do
     ChefSpec::SoloRunner.new(platform: 'ubuntu',
-                             version: '14.04',
+                             version: '16.04',
                              log_level: :fatal,
                              step_into: ['openstack_common_database'])
   end

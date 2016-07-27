@@ -114,7 +114,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'mitaka'
+default['openstack']['release'] = 'newton'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -127,15 +127,13 @@ default['openstack']['release'] = 'mitaka'
 default['openstack']['apt']['update_apt_cache'] = false
 default['openstack']['apt']['live_updates_enabled'] = true
 default['openstack']['apt']['uri'] = 'http://ubuntu-cloud.archive.canonical.com/ubuntu'
-default['openstack']['apt']['components'] = ['main']
-# For the SRU packaging, use this:
-# default['openstack']['apt']['components'] = [ '%codename%-proposed/%release%', 'main' ]
+default['openstack']['apt']['components'] = ["xenial-proposed/#{node['openstack']['release']}", 'main']
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = "http://mirror.centos.org/centos/$releasever/cloud/$basearch/openstack-#{node['openstack']['release']}"
+default['openstack']['yum']['uri'] = 'https://trunk.rdoproject.org/centos7-master/53/ac/53ac6152735cb1353a3fe0eb91c97a02f541f167_fc22fbaf/'
 default['openstack']['yum']['repo-key'] = "https://github.com/redhat-openstack/rdo-release/raw/#{node['openstack']['release']}/RPM-GPG-KEY-CentOS-SIG-Cloud"
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
-default['openstack']['yum']['gpgcheck'] = true
+default['openstack']['yum']['gpgcheck'] = false
 default['openstack']['endpoints']['family'] = 'inet'
 
 # Set a default region that other regions are set to - such that changing the region for all services can be done in one place

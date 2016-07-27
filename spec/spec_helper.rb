@@ -7,7 +7,7 @@ ChefSpec::Coverage.start! { add_filter 'openstack-common' }
 LOG_LEVEL = :fatal
 UBUNTU_OPTS = {
   platform: 'ubuntu',
-  version: '14.04',
+  version: '16.04',
   log_level: LOG_LEVEL
 }.freeze
 REDHAT_OPTS = {

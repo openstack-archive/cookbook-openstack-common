@@ -29,16 +29,16 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = true
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'trusty-updates/mitaka',
-        components: ['main'])
+        distribution: 'xenial-updates/newton',
+        components: ['xenial-proposed/newton', 'main'])
     end
 
     it 'disables openstack live updates' do
       node.set['openstack']['apt']['live_updates_enabled'] = false
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'trusty-updates/mitaka',
-        components: ['main'])
+        distribution: 'xenial-updates/newton',
+        components: ['xenial-proposed/newton', 'main'])
     end
 
     it 'does not install the gem chef-vault by default' do

@@ -286,12 +286,10 @@ default['openstack']['sysctl']['net.ipv4.conf.default.rp_filter'] = 0
 case node['platform_family']
 when 'rhel'
   default['openstack']['common']['platform'] = {
-    'common_client_packages' => ['python-openstackclient'],
     'package_overrides' => ''
   }
 when 'debian'
   default['openstack']['common']['platform'] = {
-    'common_client_packages' => ['python-openstackclient'],
     'package_overrides' => "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'"
   }
 end

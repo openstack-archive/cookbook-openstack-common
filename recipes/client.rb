@@ -18,11 +18,8 @@
 # limitations under the License.
 #
 
-platform_options = node['openstack']['common']['platform']
-platform_options['common_client_packages'].each do |pkg|
-  package pkg do
-    options platform_options['package_overrides']
+python_runtime '2'
 
-    action :upgrade
-  end
+python_package 'python-openstackclient' do
+  version '2.6'
 end

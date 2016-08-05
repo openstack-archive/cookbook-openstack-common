@@ -9,8 +9,13 @@ describe 'openstack-common::client' do
       runner.converge(described_recipe)
     end
 
-    it 'upgrades common client packages' do
-      expect(chef_run).to upgrade_package('python-openstackclient')
+    it 'installs the latest python 2' do
+      expect(chef_run).to install_python_runtime('2')
+    end
+
+    it 'installs python-openstackclient 2.6' do
+      expect(chef_run).to install_python_package('python-openstackclient')
+        .with(version: '2.6')
     end
   end
 end

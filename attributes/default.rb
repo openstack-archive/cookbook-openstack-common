@@ -130,7 +130,7 @@ default['openstack']['apt']['uri'] = 'http://ubuntu-cloud.archive.canonical.com/
 default['openstack']['apt']['components'] = ["xenial-proposed/#{node['openstack']['release']}", 'main']
 
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = 'https://trunk.rdoproject.org/centos7-master/53/ac/53ac6152735cb1353a3fe0eb91c97a02f541f167_fc22fbaf/'
+default['openstack']['yum']['uri'] = 'https://trunk.rdoproject.org/centos7-master/84/8e/848ec9021b5fa528b08b5e4459f461dc51dc9f7c_d5612b91/'
 default['openstack']['yum']['repo-key'] = "https://github.com/redhat-openstack/rdo-release/raw/#{node['openstack']['release']}/RPM-GPG-KEY-CentOS-SIG-Cloud"
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
 default['openstack']['yum']['gpgcheck'] = false

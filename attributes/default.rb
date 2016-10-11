@@ -40,7 +40,8 @@ default['openstack']['common']['services'] = {
   'object-storage' => 'swift',
   'orchestration' => 'heat',
   'telemetry' => 'ceilometer',
-  'telemetry-metric' => 'gnocchi'
+  'telemetry-metric' => 'gnocchi',
+  'application-catalog' => 'murano'
 }
 
 # Setting this to True means that database passwords and service user

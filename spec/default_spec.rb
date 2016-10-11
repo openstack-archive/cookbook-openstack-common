@@ -30,7 +30,7 @@ describe 'openstack-common::default' do
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-updates/newton',
-        components: ['xenial-proposed/newton', 'main'])
+        components: ['main'])
     end
 
     it 'disables openstack live updates' do
@@ -38,7 +38,7 @@ describe 'openstack-common::default' do
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-updates/newton',
-        components: ['xenial-proposed/newton', 'main'])
+        components: ['main'])
     end
 
     it 'does not install the gem chef-vault by default' do

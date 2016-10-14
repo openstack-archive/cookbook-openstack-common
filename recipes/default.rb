@@ -57,14 +57,6 @@ when 'rhel'
     enabled true
     action repo_action
   end
-
-  yum_repository 'RDO-newton-deps' do
-    description 'Newton delorean-deps'
-    baseurl 'http://buildlogs.centos.org/centos/7/cloud/x86_64/openstack-newton'
-    gpgcheck false
-    enabled true
-    action repo_action
-  end
 end
 
 if node['openstack']['databag_type'] == 'vault'

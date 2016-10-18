@@ -11,7 +11,7 @@ if [ -f /usr/bin/yum ] ; then
   sudo pip uninstall requests -y || true
 
   # install chefdk
-  chefdk=chefdk-0.17.17-1.el7.x86_64.rpm
+  chefdk=chefdk-1.0.3-1.el7.x86_64.rpm
   wget -nv -t 3 https://packages.chef.io/stable/el/7/$chefdk
   sudo yum -y install $chefdk
   rm $chefdk
@@ -26,7 +26,7 @@ elif [ -f /usr/bin/apt-get ]; then
   sudo apt-get -y install build-essential liblzma-dev zlib1g-dev
 
   # install chefdk
-  chefdk=chefdk_0.17.17-1_amd64.deb
+  chefdk=chefdk_1.0.3-1_amd64.deb
   wget -nv -t 3 https://packages.chef.io/stable/ubuntu/12.04/$chefdk
   sudo dpkg -i $chefdk
   rm $chefdk

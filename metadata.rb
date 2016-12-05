@@ -18,10 +18,9 @@ end
 
 depends 'apt', '~> 5.0'
 depends 'database', '~> 6.1'
-depends 'mariadb', '~> 0.3.1'
-depends 'mysql', '~> 8.1'
+depends 'mariadb', '~> 0.3.3'
+depends 'mysql', '~> 8.2'
 depends 'yum', '~> 3.13'
-depends 'yum-epel', '~> 1.0'
+depends 'yum-epel', '~> 2.0'
 depends 'galera', '~> 0.4.1'
 depends 'poise-python', '~> 1.5'
-depends 'build-essential'

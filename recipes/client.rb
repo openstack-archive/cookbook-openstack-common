@@ -21,5 +21,5 @@
 python_runtime '2'
 
 python_package 'python-openstackclient' do
-  version '2.6'
+  version node['openstack']['common']['client_version']
 end

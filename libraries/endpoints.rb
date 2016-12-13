@@ -30,6 +30,19 @@ module ::Openstack
     nil
   end
 
+  # Shortcut to get the transport_url for rabbitmq
+  def rabbit_transport_url(service)
+    mq_user = node['openstack']['mq'][service]['rabbit']['userid']
+    mq_password = get_password 'user', mq_user
+    mq_port = node['openstack']['endpoints']['mq']['port']
+    vhost = node['openstack']['mq']['vhost']
+    bind_mq = node['openstack']['bind_service']['mq']
+    bind_mq_address = bind_address bind_mq
+    url = "rabbit://#{mq_user}:#{mq_password}@#{bind_mq_address}:#{mq_port}"
+    url += "/#{vhost}" unless vhost == '/'
+    url
+  end
+
   # Shortcut to get the SQLAlchemy DB URI for a named service
   def db_uri(service, user, pass, is_slave = false) # rubocop:disable MethodLength, CyclomaticComplexity
     info = db(service)

@@ -127,7 +127,7 @@ default['openstack']['release'] = 'newton'
 # by the value of node['openstack']['release']
 #
 # Change ['openstack']['apt']['update_apt_cache'] to true if you would like
-# have the cache automaticly updated
+# have the cache automatically updated
 default['openstack']['apt']['update_apt_cache'] = false
 default['openstack']['apt']['live_updates_enabled'] = true
 default['openstack']['apt']['uri'] = 'http://ubuntu-cloud.archive.canonical.com/ubuntu'

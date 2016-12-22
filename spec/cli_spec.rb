@@ -18,7 +18,7 @@ describe 'openstack-common::default' do
         node.set['openstack']['endpoints']['admin']['identity'] = {
           host: '127.0.0.1',
           scheme: 'http',
-          path: '/v2.0',
+          path: '/v3',
           port: '35357'
         }
       end
@@ -28,12 +28,15 @@ describe 'openstack-common::default' do
           .and_return('pass')
 
         expect(
-          subject.openstack_command_env('name', 'tenant')
+          subject.openstack_command_env('name', 'project', 'default', 'default')
         ).to eq(
           'OS_USERNAME' => 'name',
           'OS_PASSWORD' => 'pass',
-          'OS_TENANT_NAME' => 'tenant',
-          'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+          'OS_PROJECT_NAME' => 'project',
+          'OS_USER_DOMAIN_NAME' => 'default',
+          'OS_PROJECT_DOMAIN_NAME' => 'default',
+          'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+          'OS_IDENTITY_API_VERSION' => '3'
         )
       end
     end
@@ -44,8 +47,11 @@ describe 'openstack-common::default' do
           {
             'OS_USERNAME' => 'name',
             'OS_PASSWORD' => 'pass',
-            'OS_TENANT_NAME' => 'tenant',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+            'OS_PROJECT_NAME' => 'project',
+            'OS_USER_DOMAIN_NAME' => 'default',
+            'OS_PROJECT_DOMAIN_NAME' => 'default',
+            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_IDENTITY_API_VERSION' => 3
           }
         allow(subject).to receive(:shell_out).with(
           %w(openstack user list),
@@ -61,8 +67,11 @@ describe 'openstack-common::default' do
           {
             'OS_USERNAME' => 'name',
             'OS_PASSWORD' => 'pass',
-            'OS_TENANT_NAME' => 'tenant',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+            'OS_PROJECT_NAME' => 'project',
+            'OS_USER_DOMAIN_NAME' => 'default',
+            'OS_PROJECT_DOMAIN_NAME' => 'default',
+            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_IDENTITY_API_VERSION' => 3
           }
         allow(subject).to receive(:shell_out).with(
           %w(openstack --key1 value1 --key2 value2 --key3 user list),
@@ -78,16 +87,16 @@ describe 'openstack-common::default' do
           {
             'OS_USERNAME' => 'name',
             'OS_PASSWORD' => 'pass',
-            'OS_TENANT_NAME' => 'tenant',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+            'OS_PROJECT_NAME' => 'project',
+            'OS_USER_DOMAIN_NAME' => 'default',
+            'OS_PROJECT_DOMAIN_NAME' => 'default',
+            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_IDENTITY_API_VERSION' => 3
           }
         allow(subject).to receive(:shell_out).with(
           %w(openstack user list),
           env: env
         ).and_return double('shell_out', exitstatus: 123, stdout: 'fail', stderr: '')
-
-        # TODO: need to figure out why this won't work.
-        # expect(subject.openstack_command('keystone', 'user-list', env)).to fail
       end
     end
 
@@ -97,8 +106,11 @@ describe 'openstack-common::default' do
           {
             'OS_USERNAME' => 'name',
             'OS_PASSWORD' => 'pass',
-            'OS_TENANT_NAME' => 'tenant',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+            'OS_PROJECT_NAME' => 'project',
+            'OS_USER_DOMAIN_NAME' => 'default',
+            'OS_PROJECT_DOMAIN_NAME' => 'default',
+            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_IDENTITY_API_VERSION' => 3
           }
         allow(subject).to receive(:openstack_command).with('openstack', 'user list', env, {})
         allow(subject).to receive(:prettytable_to_array)
@@ -114,8 +126,11 @@ describe 'openstack-common::default' do
         {
           'OS_USERNAME' => 'name',
           'OS_PASSWORD' => 'pass',
-          'OS_TENANT_NAME' => 'tenant',
-          'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+          'OS_PROJECT_NAME' => 'project',
+          'OS_USER_DOMAIN_NAME' => 'default',
+          'OS_PROJECT_DOMAIN_NAME' => 'default',
+          'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+          'OS_IDENTITY_API_VERSION' => 3
         }
       end
 
@@ -142,8 +157,11 @@ describe 'openstack-common::default' do
           {
             'OS_USERNAME' => 'name',
             'OS_PASSWORD' => 'pass',
-            'OS_TENANT_NAME' => 'tenant',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v2.0'
+            'OS_PROJECT_NAME' => 'project',
+            'OS_USER_DOMAIN_NAME' => 'default',
+            'OS_PROJECT_DOMAIN_NAME' => 'default',
+            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_IDENTITY_API_VERSION' => 3
           }
         allow(subject).to receive(:openstack_command).with('openstack', 'network list', env, {})
         allow(subject).to receive(:prettytable_to_array)

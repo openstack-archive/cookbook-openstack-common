@@ -105,21 +105,22 @@ describe 'openstack-common::default' do
         allow(subject).to receive(:get_password)
           .with('user', 'guest')
           .and_return('mypass')
-        expected = 'rabbit://guest:mypass@127.0.0.1:5672'
+        expected = 'rabbit://guest:mypass@127.0.0.1:5672/'
         expect(subject.rabbit_transport_url('compute')).to eq(expected)
       end
 
       it do
         node.set['openstack']['mq']['service_type'] = 'rabbit'
+        node.set['openstack']['mq']['cluster'] = true
         node.set['openstack']['mq']['compute']['rabbit']['userid'] = 'rabbit2'
         node.set['openstack']['endpoints']['mq']['port'] = 1234
-        node.set['openstack']['bind_service']['mq']['host'] = '10.0.0.1'
-        node.set['openstack']['mq']['vhost'] = 'anyhost'
+        node.set['openstack']['mq']['servers'] = %w(10.0.0.1 10.0.0.2 10.0.0.3)
+        node.set['openstack']['mq']['vhost'] = '/anyhost'
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:get_password)
           .with('user', 'rabbit2')
           .and_return('mypass2')
-        expected = 'rabbit://rabbit2:mypass2@10.0.0.1:1234/anyhost'
+        expected = 'rabbit://rabbit2:mypass2@10.0.0.1:1234,rabbit2:mypass2@10.0.0.2:1234,rabbit2:mypass2@10.0.0.3:1234/anyhost'
         expect(subject.rabbit_transport_url('compute')).to eq(expected)
       end
     end

@@ -11,7 +11,7 @@ Lint/NestedMethodDefinition:
 
 # Offense count: 9
 Metrics/AbcSize:
-  Max: 31
+  Max: 40
 
 # Offense count: 2
 Metrics/PerceivedComplexity:

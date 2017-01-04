@@ -36,10 +36,17 @@ module ::Openstack
     mq_password = get_password 'user', mq_user
     mq_port = node['openstack']['endpoints']['mq']['port']
     vhost = node['openstack']['mq']['vhost']
-    bind_mq = node['openstack']['bind_service']['mq']
-    bind_mq_address = bind_address bind_mq
-    url = "rabbit://#{mq_user}:#{mq_password}@#{bind_mq_address}:#{mq_port}"
-    url += "/#{vhost}" unless vhost == '/'
+    bind_mq_address = bind_address node['openstack']['bind_service']['mq']
+    url = 'rabbit://'
+    if node['openstack']['mq']['cluster']
+      node['openstack']['mq']['servers'].each do |server|
+        url += "#{mq_user}:#{mq_password}@#{server}:#{mq_port}"
+        url += ',' unless node['openstack']['mq']['servers'].last == server
+      end
+    else
+      url += "#{mq_user}:#{mq_password}@#{bind_mq_address}:#{mq_port}"
+    end
+    url += vhost
     url
   end
 

@@ -184,6 +184,9 @@ node['openstack']['common']['services'].each do |service, project|
 
     # If set, use this value for pool_timeout with sqlalchemy
     default['openstack']['db'][service]['pool_timeout'] = 10
+
+    # Migrate databases by default
+    default['openstack']['db'][service]['migrate'] = true
   when 'telemetry'
     default['openstack']['db'][service]['nosql']['used'] = false
     default['openstack']['db'][service]['nosql']['port'] = '27017'

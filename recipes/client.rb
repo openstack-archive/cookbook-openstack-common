@@ -4,6 +4,7 @@
 # Recipe:: client
 #
 # Copyright 2014, IBM Corp.
+# Copyright 2017, cloudbau GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +21,15 @@
 
 python_runtime '2'
 
+python_virtualenv '/opt/osc' do
+  system_site_packages true
+end
+
 python_package 'python-openstackclient' do
   version node['openstack']['common']['client_version']
+  virtualenv '/opt/osc'
+end
+
+link '/usr/local/bin/openstack' do
+  to '/opt/osc/bin/openstack'
 end

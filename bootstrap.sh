@@ -1,5 +1,5 @@
 #!/bin/bash -x
-## This script is for installing all the needed packages on CentOS 7 and Ubuntu Trusty to run the chef tests with 'chef exec rake'
+## This script is for installing all the needed packages on CentOS 7 and Ubuntu 16.04 to run the chef tests with 'chef exec rake'
 
 if [ -f /usr/bin/yum ] ; then
   # install needed packages
@@ -31,6 +31,29 @@ elif [ -f /usr/bin/apt-get ]; then
   sudo dpkg -i $chefdk
   rm $chefdk
 
+fi
+
+if [ $(id -u) != 0 ]; then
+  # preserve environment to keep ZUUL_* params
+  export SUDO='sudo -E'
+fi
+
+# if we're in an integration gate, we're using OpenStack mirrors
+if [ -f /etc/nodepool/provider ]; then
+  source /etc/nodepool/provider
+  NODEPOOL_MIRROR_HOST=${NODEPOOL_MIRROR_HOST:-mirror.$NODEPOOL_REGION.$NODEPOOL_CLOUD.openstack.org}
+  NODEPOOL_MIRROR_HOST=$(echo $NODEPOOL_MIRROR_HOST|tr '[:upper:]' '[:lower:]')
+  CENTOS_MIRROR_HOST=${NODEPOOL_MIRROR_HOST}
+  UCA_MIRROR_HOST="${NODEPOOL_MIRROR_HOST}/ubuntu-cloud-archive"
+  CEPH_MIRROR_HOST="${NODEPOOL_MIRROR_HOST}/ceph-deb-jewel"
+  # due to rubygems.org timeouts, use OpenShift's mirror
+  chef exec gem sources --remove https://rubygems.org/
+  chef exec gem sources --add http://mirror.ops.rhcloud.com/mirror/ruby/
+  chef exec gem sources --list
+else
+  CENTOS_MIRROR_HOST='mirror.centos.org'
+  UCA_MIRROR_HOST='ubuntu-cloud.archive.canonical.com/ubuntu'
+  CEPH_MIRROR_HOST='download.ceph.com/debian-jewel'
 fi
 
 # The following will handle cross cookbook patch dependencies via the Depends-On in commit message

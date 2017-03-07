@@ -29,7 +29,7 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = true
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-updates/newton',
+        distribution: 'xenial-updates/ocata',
         components: ['main'])
     end
 
@@ -37,7 +37,7 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = false
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-updates/newton',
+        distribution: 'xenial-updates/ocata',
         components: ['main'])
     end
 

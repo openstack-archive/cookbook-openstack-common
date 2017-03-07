@@ -27,7 +27,7 @@ default['openstack']['common']['custom_template_banner'] = '
 '
 
 # version for python-openstackclient
-default['openstack']['common']['client_version'] = '3.6.0'
+default['openstack']['common']['client_version'] = '3.9.0'
 
 # OpenStack services and their project names
 default['openstack']['common']['services'] = {
@@ -35,6 +35,7 @@ default['openstack']['common']['services'] = {
   'block-storage' => 'cinder',
   'compute' => 'nova',
   'compute_api' => 'nova_api',
+  'compute_cell0' => 'nova_cell0',
   'dashboard' => 'horizon',
   'database' => 'trove',
   'identity' => 'keystone',
@@ -80,8 +81,8 @@ node['openstack']['common']['services'].each_key do |service|
   end
 end
 
-# The type of token signing to use (uuid or pki)
-default['openstack']['auth']['strategy'] = 'pki'
+# The type of token signing to use (uuid or fernet)
+default['openstack']['auth']['strategy'] = 'fernet'
 
 # Set to true where using self-signed certs (in testing environments)
 default['openstack']['auth']['validate_certs'] = true
@@ -118,7 +119,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'newton'
+default['openstack']['release'] = 'ocata'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.

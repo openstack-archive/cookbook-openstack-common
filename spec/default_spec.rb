@@ -53,7 +53,7 @@ describe 'openstack-common::default' do
 
     context 'rabbit mq' do
       rabbit_opts = {
-        'userid' => 'guest',
+        'userid' => 'openstack',
         'vhost' => '/',
         'port' => '5672',
         'host' => '127.0.0.1',

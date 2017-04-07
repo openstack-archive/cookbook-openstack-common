@@ -103,9 +103,9 @@ describe 'openstack-common::default' do
       it do
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:get_password)
-          .with('user', 'guest')
+          .with('user', 'openstack')
           .and_return('mypass')
-        expected = 'rabbit://guest:mypass@127.0.0.1:5672/'
+        expected = 'rabbit://openstack:mypass@127.0.0.1:5672/'
         expect(subject.rabbit_transport_url('compute')).to eq(expected)
       end
 

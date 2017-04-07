@@ -39,6 +39,7 @@ when 'debian'
     end
   end
 when 'rhel'
+  include_recipe 'yum' if node['openstack']['yum']['update_yum_cache']
 
   if node['openstack']['yum']['rdo_enabled']
     repo_action = :add

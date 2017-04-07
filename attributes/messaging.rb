@@ -44,7 +44,7 @@ services = %w(bare-metal block-storage compute database image
 ###################################################################
 default['openstack']['mq']['server_role'] = 'os-ops-messaging'
 default['openstack']['mq']['service_type'] = 'rabbit'
-default['openstack']['mq']['user'] = 'guest'
+default['openstack']['mq']['user'] = 'openstack'
 default['openstack']['mq']['vhost'] = '/'
 
 # defined in oslo/messaging/_drivers/amqp.py

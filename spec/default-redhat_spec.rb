@@ -15,6 +15,7 @@ describe 'openstack-common::default' do
       before do
         node.set['openstack']['yum']['rdo_enabled'] = true
         node.set['openstack']['yum']['gpgcheck'] = true
+        node.set['openstack']['yum']['update_yum_cache'] = true
       end
 
       it 'adds RDO yum repository' do
@@ -22,6 +23,10 @@ describe 'openstack-common::default' do
         # https://github.com/sethvargo/chefspec#packaging-custom-matchers
         expect(chef_run).to add_yum_repository('RDO-testrelease')
           .with(gpgcheck: true)
+      end
+
+      it 'includes yum recipe' do
+        expect(chef_run).to include_recipe('yum')
       end
 
       it 'includes yum-epel recipe' do

@@ -27,7 +27,7 @@ default['openstack']['common']['custom_template_banner'] = '
 '
 
 # version for python-openstackclient
-default['openstack']['common']['client_version'] = '3.9.0'
+default['openstack']['common']['client_version'] = '3.11.0'
 
 # OpenStack services and their project names
 default['openstack']['common']['services'] = {

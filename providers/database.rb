@@ -27,6 +27,7 @@ def info
   @port = service_info['port'] || info['port']
   user_key = node['openstack']['db']['root_user_key']
   @super_password = get_password 'db', user_key
+  @socket = node['openstack']['db']['socket']
   @db_type = service_info['service_type']
   @db_name = service_info['db_name']
   @user = new_resource.user
@@ -55,7 +56,8 @@ def connection_info
     host: @host,
     port: @port.to_i,
     username: @super_user,
-    password: @super_password
+    password: @super_password,
+    socket: @socket
   }
 end
 

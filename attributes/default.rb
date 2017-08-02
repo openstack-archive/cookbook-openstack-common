@@ -72,7 +72,7 @@ default['openstack']['use_databags'] = true
 # feature of the official chef project, you can use 'vault' to
 # encrypt your secrets with the method provided in the chef-vault gem.
 default['openstack']['databag_type'] = 'encrypted'
-default['openstack']['vault_gem_version'] = '~> 2.3'
+default['openstack']['vault_gem_version'] = '~> 3.2'
 
 # Default attributes when not using data bags (use_databags = false)
 node['openstack']['common']['services'].each_key do |service|

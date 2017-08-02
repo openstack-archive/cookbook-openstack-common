@@ -76,8 +76,8 @@ module ::Openstack
 
     # Build uri
     case type
-    when 'mysql', 'postgresql'
-      "#{type}://#{user}:#{pass}@#{host}:#{port}/#{name}#{options}"
+    when 'mysql'
+      "mysql+pymysql://#{user}:#{pass}@#{host}:#{port}/#{name}#{options}"
     when 'sqlite'
       # SQLite uses filepaths not db name
       # README(galstrom): 3 slashes is a relative path, 4 slashes is an absolute path

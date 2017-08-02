@@ -30,7 +30,8 @@ describe 'openstack-common::default' do
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-updates/ocata',
-        components: ['main'])
+        components: ['main']
+      )
     end
 
     it 'disables openstack live updates' do
@@ -38,7 +39,8 @@ describe 'openstack-common::default' do
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-updates/ocata',
-        components: ['main'])
+        components: ['main']
+      )
     end
 
     it 'does not install the gem chef-vault by default' do
@@ -48,7 +50,7 @@ describe 'openstack-common::default' do
     it 'installs the gem chef-vault if databag_type is vault' do
       node.set['openstack']['databag_type'] = 'vault'
       expect(chef_run).to install_chef_gem('chef-vault')
-        .with(version: '~> 2.3')
+        .with(version: '~> 3.2')
     end
 
     context 'rabbit mq' do

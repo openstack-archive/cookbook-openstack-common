@@ -50,9 +50,11 @@ describe 'openstack-common::default' do
         it 'returns tokens from the secrets_data_bag' do
           bag_content = { 'nova' => 'mysecret' }
           allow(Chef::EncryptedDataBagItem).to receive(:load_secret).with(
-            '/etc/chef/openstack_data_bag_secret').and_return('secret')
+            '/etc/chef/openstack_data_bag_secret'
+          ).and_return('secret')
           allow(Chef::EncryptedDataBagItem).to receive(:load).with(
-            'secrets', 'nova', 'secret').and_return(bag_content)
+            'secrets', 'nova', 'secret'
+          ).and_return(bag_content)
           expect(subject.get_password('token', 'nova')).to eq('mysecret')
         end
       end
@@ -84,7 +86,8 @@ describe 'openstack-common::default' do
         it 'returns tokens from the secrets_data_bag' do
           bag_content = { 'nova' => 'mysecret' }
           allow(Chef::DataBagItem).to receive(:load).with(
-            'secrets', 'nova').and_return(bag_content)
+            'secrets', 'nova'
+          ).and_return(bag_content)
           expect(subject.get_password('token', 'nova')).to eq('mysecret')
         end
       end

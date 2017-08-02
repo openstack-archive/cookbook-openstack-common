@@ -30,7 +30,7 @@ describe 'test-openstack-common-database::default' do
       expect(chef_run).to create_database('create database service_db')
         .with(
           provider: ::Chef::Provider::Database::Mysql,
-          connection: { host: 'localhost123', port: 3306, username: 'root', password: 'root_pass' },
+          connection: { host: 'localhost123', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
           database_name: 'service_db',
           encoding: 'utf8'
         )
@@ -41,7 +41,7 @@ describe 'test-openstack-common-database::default' do
     expect(chef_run).to create_database('create database service_db')
       .with(
         provider: ::Chef::Provider::Database::Mysql,
-        connection: { host: '127.0.0.1', port: 3306, username: 'root', password: 'root_pass' },
+        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
         database_name: 'service_db',
         encoding: 'utf8'
       )
@@ -51,7 +51,7 @@ describe 'test-openstack-common-database::default' do
     expect(chef_run).to create_database_user('create database user db_user')
       .with(
         provider: ::Chef::Provider::Database::MysqlUser,
-        connection: { host: '127.0.0.1', port: 3306, username: 'root', password: 'root_pass' },
+        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
         username: 'db_user',
         password: 'db_pass'
       )
@@ -61,52 +61,13 @@ describe 'test-openstack-common-database::default' do
     expect(chef_run).to grant_database_user('grant database user db_user')
       .with(
         provider: ::Chef::Provider::Database::MysqlUser,
-        connection: { host: '127.0.0.1', port: 3306, username: 'root', password: 'root_pass' },
+        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
         username: 'db_user',
         password: 'db_pass',
         database_name: 'service_db',
         host: '%',
         privileges: [:all]
       )
-  end
-
-  context 'postgresql' do
-    before do
-      node.override['openstack']['db']['service'] = { service_type: 'postgresql', port: 5432, db_name: 'service_postgres' }
-    end
-
-    it 'creates the database with the database resource' do
-      expect(chef_run).to create_database('create database service_postgres')
-        .with(
-          provider: ::Chef::Provider::Database::Postgresql,
-          connection: { host: '127.0.0.1', port: 5432, username: 'postgres', password: 'root_pass' },
-          database_name: 'service_postgres',
-          encoding: 'DEFAULT'
-        )
-    end
-
-    it 'creates the database use with the database_user resource' do
-      expect(chef_run).to create_database_user('create database user db_user')
-        .with(
-          provider: ::Chef::Provider::Database::PostgresqlUser,
-          connection: { host: '127.0.0.1', port: 5432, username: 'postgres', password: 'root_pass' },
-          username: 'db_user',
-          password: 'db_pass'
-        )
-    end
-
-    it 'grants database privileges to the user with the database_user resource' do
-      expect(chef_run).to grant_database_user('grant database user db_user')
-        .with(
-          provider: ::Chef::Provider::Database::PostgresqlUser,
-          connection: { host: '127.0.0.1', port: 5432, username: 'postgres', password: 'root_pass' },
-          username: 'db_user',
-          password: 'db_pass',
-          database_name: 'service_postgres',
-          host: '%',
-          privileges: [:all]
-        )
-    end
   end
 
   context 'galera' do

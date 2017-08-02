@@ -110,7 +110,8 @@ describe 'openstack-common::default' do
         allow(subject).to receive(:search_for)
           .and_return(nodes)
         expect(
-          subject.rabbit_servers).to eq('1.1.1.1:5672,2.2.2.2:5672')
+          subject.rabbit_servers
+        ).to eq('1.1.1.1:5672,2.2.2.2:5672')
       end
 
       it 'returns sorted rabbit servers' do

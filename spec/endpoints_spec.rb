@@ -158,7 +158,7 @@ describe 'openstack-common::default' do
 
       it 'returns compute db info hash when service found for default mysql' do
         allow(subject).to receive(:node).and_return(chef_run.node)
-        expected = 'mysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
+        expected = 'mysql+pymysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
         expect(
           subject.db_uri('compute', 'user', 'pass')
         ).to eq(expected)
@@ -178,7 +178,7 @@ describe 'openstack-common::default' do
       it 'returns compute db info hash when service found for mariadb' do
         node.set['openstack']['db']['service_type'] = 'mariadb'
         allow(subject).to receive(:node).and_return(chef_run.node)
-        expected = 'mysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
+        expected = 'mysql+pymysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
         expect(
           subject.db_uri('compute', 'user', 'pass')
         ).to eq(expected)
@@ -188,7 +188,7 @@ describe 'openstack-common::default' do
         it "returns compute db info hash when service found for #{db}" do
           node.set['openstack']['db']['service_type'] = db
           allow(subject).to receive(:node).and_return(chef_run.node)
-          expected = 'mysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
+          expected = 'mysql+pymysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
           expect(
             subject.db_uri('compute', 'user', 'pass')
           ).to eq(expected)
@@ -198,7 +198,7 @@ describe 'openstack-common::default' do
       it 'returns compute slave db info hash when service found for default mysql' do
         node.set['openstack']['endpoints']['db']['enabled_slave'] = true
         allow(subject).to receive(:node).and_return(chef_run.node)
-        expected = 'mysql://user:pass@127.0.0.1:3316/nova?charset=utf8'
+        expected = 'mysql+pymysql://user:pass@127.0.0.1:3316/nova?charset=utf8'
         expect(
           subject.db_uri('compute', 'user', 'pass', true)
         ).to eq(expected)
@@ -208,7 +208,7 @@ describe 'openstack-common::default' do
         node.set['openstack']['db']['service_type'] = 'mariadb'
         node.set['openstack']['endpoints']['db']['enabled_slave'] = true
         allow(subject).to receive(:node).and_return(chef_run.node)
-        expected = 'mysql://user:pass@127.0.0.1:3316/glance?charset=utf8'
+        expected = 'mysql+pymysql://user:pass@127.0.0.1:3316/glance?charset=utf8'
         expect(
           subject.db_uri('image', 'user', 'pass', true)
         ).to eq(expected)
@@ -219,7 +219,7 @@ describe 'openstack-common::default' do
           node.set['openstack']['db']['service_type'] = db
           node.set['openstack']['endpoints']['db']['enabled_slave'] = true
           allow(subject).to receive(:node).and_return(chef_run.node)
-          expected = 'mysql://user:pass@127.0.0.1:3316/neutron?charset=utf8'
+          expected = 'mysql+pymysql://user:pass@127.0.0.1:3316/neutron?charset=utf8'
           expect(
             subject.db_uri('network', 'user', 'pass', true)
           ).to eq(expected)

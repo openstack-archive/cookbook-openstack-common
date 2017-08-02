@@ -88,7 +88,7 @@ default['openstack']['endpoints']['db']['slave_port'] = '3316'
 # will work for mysql databases, since it will use a direct connection via
 # the socket, so the database does not have not to listen on 127.0.0.1.
 # Set this to 'localhost' for mysql to connect via socket.
-default['openstack']['endpoints']['db']['host_for_db_root_user'] = nil
+default['openstack']['endpoints']['db']['host_for_db_root_user'] = 'localhost'
 
 # Default database attributes
 default['openstack']['db']['server_role'] = 'os-ops-database'
@@ -135,6 +135,14 @@ when 'debian'
   default['openstack']['db']['python_packages']['galera'] = ['python-mysqldb']
 end
 
+# database sockets, because different
+case node['platform_family']
+when 'rhel'
+  default['openstack']['db']['socket'] = '/var/lib/mysql/mysql.sock'
+when 'debian'
+  default['openstack']['db']['socket'] = '/run/mysql-default/mysqld.sock'
+end
+
 # Database used by the OpenStack services
 node['openstack']['common']['services'].each do |service, project|
   default['openstack']['db'][service]['service_type'] = node['openstack']['db']['service_type']
@@ -146,6 +154,8 @@ node['openstack']['common']['services'].each do |service, project|
 
   default['openstack']['db'][service]['slave_host'] = node['openstack']['endpoints']['db']['slave_host']
   default['openstack']['db'][service]['slave_port'] = node['openstack']['endpoints']['db']['slave_port']
+
+  default['openstack']['db'][service]['socket'] = node['openstack']['db']['socket']
 
   case service
   when 'dashboard'

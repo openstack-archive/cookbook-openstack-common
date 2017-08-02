@@ -21,14 +21,14 @@
 directory '/etc/sysctl.d' do
   owner 'root'
   group 'root'
-  mode 00755
+  mode 0o0755
 end
 
 template '/etc/sysctl.d/60-openstack.conf' do
   source '60-openstack.conf.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode 0o0644
 end
 
 execute 'sysctl -p /etc/sysctl.d/60-openstack.conf' do

@@ -21,7 +21,7 @@
 directory '/etc/openstack' do
   owner 'root'
   group 'root'
-  mode 00755
+  mode 0o0755
   action :create
 end
 
@@ -29,7 +29,7 @@ template '/etc/openstack/logging.conf' do
   source 'logging.conf.erb'
   owner 'root'
   group 'root'
-  mode 00644
+  mode 0o0644
   variables(
     loggers: node['openstack']['logging']['loggers'],
     formatters: node['openstack']['logging']['formatters'],

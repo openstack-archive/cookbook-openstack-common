@@ -20,7 +20,7 @@ describe 'openstack-common::sysctl' do
         expect(chef_run).to create_template('/etc/sysctl.d/60-openstack.conf').with(
           owner: 'root',
           group: 'root',
-          mode: 0644
+          mode: 0o644
         )
       end
 

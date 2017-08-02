@@ -31,18 +31,17 @@ module ::Openstack
     ret = []
     return ret if table.nil?
     indicies = []
-    (table.split(/$/).map { |x| x.strip }).each do |line|
-      unless line.start_with?('+--') || line.empty?
-        cols = line.split('|').map { |x| x.strip }
-        cols.shift
-        if indicies == []
-          indicies = cols
-          next
-        end
-        newobj = {}
-        cols.each { |val| newobj[indicies[newobj.length]] = val }
-        ret.push(newobj)
+    table.split(/$/).map(&:strip).each do |line|
+      next if line.start_with?('+--') || line.empty?
+      cols = line.split('|').map(&:strip)
+      cols.shift
+      if indicies == []
+        indicies = cols
+        next
       end
+      newobj = {}
+      cols.each { |val| newobj[indicies[newobj.length]] = val }
+      ret.push(newobj)
     end
 
     # this kinda sucks, but some prettytable data comes

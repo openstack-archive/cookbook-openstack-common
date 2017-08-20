@@ -32,11 +32,11 @@ describe 'openstack-common::default' do
               'endpoints' => {
                 ep_type => {
                   'compute-api' => {
-                    'uri' => 'http://localhost:8080/v2/%(tenant_id)s'
-                  }
-                }
-              }
-            }
+                    'uri' => 'http://localhost:8080/v2/%(tenant_id)s',
+                  },
+                },
+              },
+            },
           }
           allow(subject).to receive(:node).and_return(uri_hash)
           expect(
@@ -50,11 +50,11 @@ describe 'openstack-common::default' do
               'endpoints' => {
                 ep_type => {
                   'compute-api' => {
-                    'uri' => 'http://localhost:1234/path'
-                  }
-                }
-              }
-            }
+                    'uri' => 'http://localhost:1234/path',
+                  },
+                },
+              },
+            },
           }
           allow(subject).to receive(:node).and_return(uri_hash)
           expect(
@@ -69,11 +69,11 @@ describe 'openstack-common::default' do
                 ep_type => {
                   'compute-api' => {
                     'uri' => 'http://localhost',
-                    'host' => 'ignored'
-                  }
-                }
-              }
-            }
+                    'host' => 'ignored',
+                  },
+                },
+              },
+            },
           }
           allow(subject).to receive(:node).and_return(uri_hash)
           expect(subject.send("#{ep_type}_endpoint", 'compute-api').to_s).to eq('http://localhost')
@@ -87,11 +87,11 @@ describe 'openstack-common::default' do
                 ep_type => {
                   'compute-api' => {
                     'host' => 'localhost',
-                    'port' => '1234'
-                  }
-                }
-              }
-            }
+                    'port' => '1234',
+                  },
+                },
+              },
+            },
           }
           allow(subject).to receive(:node).and_return(uri_hash)
           subject.send("#{ep_type}_endpoint", 'compute-api')

@@ -19,15 +19,15 @@ describe 'openstack-common::default' do
           'another_section' => { 'foo' => 'bar', 'baz' => 'yay' },
           'deep_section' => {
             'foo' => { key: 'bar', value: 'baz' },
-            'baz' => 'yay'
-          }
+            'baz' => 'yay',
+          },
         }
       node.set['openstack']['anyservice']['conf_secrets'] =
         {
           'Default' => { 'secret_log' => 'secret_file_to_log' },
           'secret_section' => { 'password' => '1234' },
           'another_section' => { 'secret_foo' => 'secret_bar' },
-          'another_secret_section' => { 'secret_baz' => 'secret_yay' }
+          'another_secret_section' => { 'secret_baz' => 'secret_yay' },
         }
     end
 
@@ -47,7 +47,7 @@ describe 'openstack-common::default' do
           'another_secret_section' => { 'secret_baz' => 'secret_yay' },
           'deep_section' => {
             'foo' => { 'key' => 'bar', 'value' => 'baz' },
-            'baz' => 'yay'
+            'baz' => 'yay',
           }
         )
       end

@@ -92,7 +92,7 @@ rabbit_defaults = {
   kombu_ssl_certfile: node['openstack']['mq']['rabbitmq']['kombu_ssl_certfile'],
   kombu_ssl_ca_certs: node['openstack']['mq']['rabbitmq']['kombu_ssl_ca_certs'],
   kombu_reconnect_delay: node['openstack']['mq']['rabbitmq']['kombu_reconnect_delay'],
-  kombu_reconnect_timeout: node['openstack']['mq']['rabbitmq']['kombu_reconnect_timeout']
+  kombu_reconnect_timeout: node['openstack']['mq']['rabbitmq']['kombu_reconnect_timeout'],
 }
 
 ###################################################################

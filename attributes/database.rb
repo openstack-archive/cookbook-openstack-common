@@ -101,7 +101,7 @@ default['openstack']['db']['charset'] = {
   pgsql: nil,
   sqlite: nil,
   nosql: nil,
-  galera: 'utf8'
+  galera: 'utf8',
 }
 
 # Database connection options. Should include starting '?'
@@ -112,13 +112,13 @@ default['openstack']['db']['options'] = {
   postgresql: '',
   sqlite: '',
   nosql: '',
-  galera: "?charset=#{node['openstack']['db']['charset']['galera']}"
+  galera: "?charset=#{node['openstack']['db']['charset']['galera']}",
 }
 
 # platform and DBMS-specific python client packages
 default['openstack']['db']['python_packages'] = {
   postgresql: ['python-psycopg2'],
-  sqlite: []
+  sqlite: [],
 }
 case node['platform_family']
 when 'rhel'

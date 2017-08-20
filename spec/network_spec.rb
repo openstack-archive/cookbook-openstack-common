@@ -12,7 +12,7 @@ describe 'openstack-common::default' do
                                    '::1' => { 'family' => 'inet6', 'prefixlen' => '128', 'scope' => 'Node' },
                                    '2001:db8::1' => { 'family' => 'inet6', 'prefixlen' => '64', 'scope' => 'Node' } } },
         'eth0' => { 'addresses' => { '10.0.0.2' => { 'family' => 'inet', 'prefixlen' => '32', 'netmask' => '255.255.255.255', 'scope' => 'Node' },
-                                     '10.0.0.3' => { 'family' => 'inet', 'prefixlen' => '24', 'netmask' => '255.255.255.0', 'scope' => 'Node' } } }
+                                     '10.0.0.3' => { 'family' => 'inet', 'prefixlen' => '24', 'netmask' => '255.255.255.0', 'scope' => 'Node' } } },
       }
 
       runner.converge(described_recipe)
@@ -115,9 +115,9 @@ describe 'openstack-common::default' do
         node.automatic['network'] = {
           'interfaces' => {
             'lo' => {
-              'addresses' => nil
-            }
-          }
+              'addresses' => nil,
+            },
+          },
         }
         expect { subject.address_for('lo') }
           .to raise_error(RuntimeError, 'Interface lo has no addresses assigned')
@@ -127,9 +127,9 @@ describe 'openstack-common::default' do
         node.automatic['network'] = {
           'interfaces' => {
             'lo' => {
-              'addresses' => {}
-            }
-          }
+              'addresses' => {},
+            },
+          },
         }
         expect { subject.address_for('lo') }
           .to raise_error(RuntimeError, 'Interface lo has no addresses assigned')
@@ -144,11 +144,11 @@ describe 'openstack-common::default' do
                   'family' => 'inet',
                   'prefixlen' => '8',
                   'netmask' => '255.0.0.0',
-                  'scope' => 'Node'
-                }
-              }
-            }
-          }
+                  'scope' => 'Node',
+                },
+              },
+            },
+          },
         }
         expect { subject.address_for('lo', 'inet6') }
           .to raise_error(RuntimeError, 'No address for family inet6 found')
@@ -163,11 +163,11 @@ describe 'openstack-common::default' do
                   'family' => 'inet',
                   'prefixlen' => '32',
                   'netmask' => '255.255.255.255',
-                  'scope' => 'Node'
-                }
-              }
-            }
-          }
+                  'scope' => 'Node',
+                },
+              },
+            },
+          },
         }
         expect { subject.address_for('lo', 'inet') }
           .to raise_error(RuntimeError, 'No address for family inet found')

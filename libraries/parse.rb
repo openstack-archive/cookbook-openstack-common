@@ -27,7 +27,7 @@ module ::Openstack
   # into a single element array.
   # table - the raw PrettyTable output of the CLI command
   # output - array of hashes representing the data.
-  def prettytable_to_array(table) # rubocop:disable MethodLength
+  def prettytable_to_array(table)
     ret = []
     return ret if table.nil?
     indicies = []

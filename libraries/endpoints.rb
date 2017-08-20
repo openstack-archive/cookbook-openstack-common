@@ -51,7 +51,7 @@ module ::Openstack
   end
 
   # Shortcut to get the SQLAlchemy DB URI for a named service
-  def db_uri(service, user, pass, is_slave = false) # rubocop:disable MethodLength, CyclomaticComplexity
+  def db_uri(service, user, pass, is_slave = false)
     info = db(service)
     return unless info
 

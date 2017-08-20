@@ -11,6 +11,10 @@ describe 'openstack-common::default' do
       runner.converge(described_recipe)
     end
 
+    it do
+      expect(chef_run).to upgrade_package('centos-release-qemu-ev')
+    end
+
     context 'enabling RDO with gpgcheck enabled' do
       before do
         node.set['openstack']['yum']['rdo_enabled'] = true
@@ -47,6 +51,16 @@ describe 'openstack-common::default' do
 
       it 'includes yum-epel recipe' do
         expect(chef_run).to include_recipe('yum-epel')
+      end
+    end
+
+    context 'disabling RDO deps repo with is_release true' do
+      before do
+        node.set['openstack']['is_release'] = true
+      end
+
+      it 'does not add the RDO deps yum repository' do
+        expect(chef_run).to_not add_yum_repository('RDO-testrelease-deps')
       end
     end
 

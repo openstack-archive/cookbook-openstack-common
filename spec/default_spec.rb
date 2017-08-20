@@ -29,7 +29,7 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = true
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-updates/ocata',
+        distribution: 'xenial-updates/pike',
         components: ['main']
       )
     end
@@ -38,7 +38,24 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = false
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-updates/ocata',
+        distribution: 'xenial-updates/pike',
+        components: ['main']
+      )
+    end
+
+    it 'configures openstack proposed repository' do
+      expect(chef_run).to add_apt_repository('openstack-ppa-proposed').with(
+        uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
+        distribution: 'xenial-proposed/pike',
+        components: ['main']
+      )
+    end
+
+    it 'disables openstack proposed repository' do
+      node.override['openstack']['is_release'] = true
+      expect(chef_run).to_not add_apt_repository('openstack-ppa-proposed').with(
+        uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
+        distribution: 'xenial-proposed/pike',
         components: ['main']
       )
     end
@@ -67,7 +84,7 @@ describe 'openstack-common::default' do
         'kombu_ssl_certfile' => 'cert_file',
         'kombu_ssl_ca_certs' => 'ca_certs_file',
         'kombu_reconnect_delay' => 123.456,
-        'kombu_reconnect_timeout' => 123
+        'kombu_reconnect_timeout' => 123,
       }
       rabbit_opts.each do |key, value|
         it "configures rabbit mq #{key}" do

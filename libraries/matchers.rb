@@ -46,7 +46,6 @@ if defined?(ChefSpec)
       self
     end
 
-    # rubocop:disable MethodLength, CyclomaticComplexity
     def matches_content?
       def section?(line, section = '.*')
         return true if line =~ /^[ \t]*\[#{section}\]/

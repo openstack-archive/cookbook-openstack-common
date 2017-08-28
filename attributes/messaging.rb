@@ -36,7 +36,7 @@ default['openstack']['endpoints']['mq']['port'] = '5672'
 ###################################################################
 # Services to assign mq attributes for
 ###################################################################
-services = %w(bare-metal block-storage compute database image
+services = %w(bare-metal block-storage compute database dns image
               identity telemetry network orchestration)
 
 ###################################################################

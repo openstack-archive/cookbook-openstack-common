@@ -38,6 +38,7 @@ default['openstack']['common']['services'] = {
   'compute_cell0' => 'nova_cell0',
   'dashboard' => 'horizon',
   'database' => 'trove',
+  'dns' => 'designate',
   'identity' => 'keystone',
   'image' => 'glance',
   'network' => 'neutron',

@@ -10,22 +10,7 @@ describe 'openstack-common::client' do
     end
 
     it do
-      expect(chef_run).to install_python_runtime('2')
-    end
-
-    it do
-      expect(chef_run).to create_python_virtualenv('/opt/osc')
-        .with(system_site_packages: true)
-    end
-
-    it do
-      expect(chef_run).to install_python_package('python-openstackclient')
-        .with(version: '3.11.0')
-    end
-
-    it do
-      expect(chef_run).to create_link('/usr/local/bin/openstack')
-        .with(to: '/opt/osc/bin/openstack')
+      expect(chef_run).to install_package('python-openstackclient')
     end
   end
 end

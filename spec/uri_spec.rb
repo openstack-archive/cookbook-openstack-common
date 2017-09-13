@@ -12,7 +12,7 @@ describe 'Openstack uri' do
       hash = {
         'port' => 8888,
         'path' => '/path',
-        'uri'  => uri
+        'uri'  => uri,
       }
       result = subject.uri_from_hash(hash)
       expect(result).to be_a URI
@@ -25,7 +25,7 @@ describe 'Openstack uri' do
         'scheme' => 'https',
         'port'   => 8888,
         'path'   => '/path',
-        'host'   => 'localhost'
+        'host'   => 'localhost',
       }
       expect(
         subject.uri_from_hash(hash).to_s
@@ -36,7 +36,7 @@ describe 'Openstack uri' do
       uri = 'https://localhost'
       hash = {
         'scheme' => 'https',
-        'host'   => 'localhost'
+        'host'   => 'localhost',
       }
       expect(
         subject.uri_from_hash(hash).to_s

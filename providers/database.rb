@@ -57,7 +57,7 @@ def connection_info
     port: @port.to_i,
     username: @super_user,
     password: @super_password,
-    socket: @socket
+    socket: @socket,
   }
 end
 

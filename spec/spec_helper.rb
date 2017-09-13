@@ -8,12 +8,12 @@ LOG_LEVEL = :fatal
 UBUNTU_OPTS = {
   platform: 'ubuntu',
   version: '16.04',
-  log_level: LOG_LEVEL
+  log_level: LOG_LEVEL,
 }.freeze
 REDHAT_OPTS = {
   platform: 'redhat',
   version: '7.1',
-  log_level: LOG_LEVEL
+  log_level: LOG_LEVEL,
 }.freeze
 # We set a default platform for non-platform specific test cases
 CHEFSPEC_OPTS = UBUNTU_OPTS
@@ -32,9 +32,9 @@ shared_context 'common-stubs' do
           'openstack' => {
             'identity' => {
               'admin_tenant_name' => 'admin',
-              'admin_user' => 'admin'
-            }
-          }
+              'admin_user' => 'admin',
+            },
+          },
         }]
       )
     allow_any_instance_of(Chef::Recipe).to receive(:get_password)

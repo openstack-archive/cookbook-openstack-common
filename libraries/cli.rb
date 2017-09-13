@@ -41,7 +41,7 @@ module ::Openstack
       'OS_USER_DOMAIN_NAME' => user_domain,
       'OS_PROJECT_DOMAIN_NAME' => project_domain,
       'OS_IDENTITY_API_VERSION' => '3',
-      'OS_AUTH_URL' => auth_uri
+      'OS_AUTH_URL' => auth_uri,
     }
   end
 

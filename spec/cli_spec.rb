@@ -19,7 +19,7 @@ describe 'openstack-common::default' do
           host: '127.0.0.1',
           scheme: 'http',
           path: '/v3',
-          port: '35357'
+          port: '35357',
         }
       end
       it 'returns cli enviroment' do
@@ -51,7 +51,7 @@ describe 'openstack-common::default' do
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
-            'OS_IDENTITY_API_VERSION' => 3
+            'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:shell_out).with(
           %w(openstack user list),
@@ -71,7 +71,7 @@ describe 'openstack-common::default' do
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
-            'OS_IDENTITY_API_VERSION' => 3
+            'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:shell_out).with(
           %w(openstack --key1 value1 --key2 value2 --key3 user list),
@@ -91,7 +91,7 @@ describe 'openstack-common::default' do
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
-            'OS_IDENTITY_API_VERSION' => 3
+            'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:shell_out).with(
           %w(openstack user list),
@@ -110,7 +110,7 @@ describe 'openstack-common::default' do
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
-            'OS_IDENTITY_API_VERSION' => 3
+            'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:openstack_command).with('openstack', 'user list', env, {})
         allow(subject).to receive(:prettytable_to_array)
@@ -130,7 +130,7 @@ describe 'openstack-common::default' do
           'OS_USER_DOMAIN_NAME' => 'default',
           'OS_PROJECT_DOMAIN_NAME' => 'default',
           'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
-          'OS_IDENTITY_API_VERSION' => 3
+          'OS_IDENTITY_API_VERSION' => 3,
         }
       end
 
@@ -161,7 +161,7 @@ describe 'openstack-common::default' do
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
-            'OS_IDENTITY_API_VERSION' => 3
+            'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:openstack_command).with('openstack', 'network list', env, {})
         allow(subject).to receive(:prettytable_to_array)

@@ -8,7 +8,7 @@ describe 'Openstack wrappers' do
   describe '#recipe_included' do
     it 'returns boolean for recipe list' do
       node_hash = {
-        'recipes' => 'included_recipe'
+        'recipes' => 'included_recipe',
       }
       allow(subject).to receive(:node).and_return(node_hash)
       expect(subject.recipe_included?('included_recipe')).to be_truthy
@@ -19,7 +19,7 @@ describe 'Openstack wrappers' do
   describe '#role_included' do
     it 'returns boolean for role list' do
       node_hash = {
-        'roles' => 'included_role'
+        'roles' => 'included_role',
       }
       allow(subject).to receive(:node).and_return(node_hash)
       expect(subject.role_included?('included_role')).to be_truthy

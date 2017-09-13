@@ -1,10 +1,9 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: openstack-common
-# Recipe:: client
+# recipe:: python
 #
-# Copyright 2014, IBM Corp.
-# Copyright 2017, cloudbau GmbH
+# Copyright 2017 Workday Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,4 +18,15 @@
 # limitations under the License.
 #
 
-package 'python-openstackclient'
+# install system packages for Ubuntu/Debian
+case node['platform_family']
+when 'debian', 'ubuntu'
+  python_runtime '3.5' do
+    provider :system
+  end
+# use Software Collections for CentOS/RHEL
+when 'rhel'
+  python_runtime '3.5' do
+    provider :scl
+  end
+end

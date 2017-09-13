@@ -49,7 +49,7 @@ describe 'openstack-common::default' do
       it 'returns memcached list' do
         nodes = [
           { 'memcached' => { 'listen' => '1.1.1.1', 'port' => '11211' } },
-          { 'memcached' => { 'listen' => '2.2.2.2', 'port' => '11211' } }
+          { 'memcached' => { 'listen' => '2.2.2.2', 'port' => '11211' } },
         ]
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:search_for)
@@ -64,7 +64,7 @@ describe 'openstack-common::default' do
         nodes = [
           { 'memcached' => { 'listen' => '3.3.3.3', 'port' => '11211' } },
           { 'memcached' => { 'listen' => '1.1.1.1', 'port' => '11211' } },
-          { 'memcached' => { 'listen' => '2.2.2.2', 'port' => '11211' } }
+          { 'memcached' => { 'listen' => '2.2.2.2', 'port' => '11211' } },
         ]
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:search_for)
@@ -78,8 +78,8 @@ describe 'openstack-common::default' do
       it 'returns memcached servers as defined by attributes' do
         nodes = {
           'openstack' => {
-            'memcached_servers' => ['1.1.1.1:11211', '2.2.2.2:11211']
-          }
+            'memcached_servers' => ['1.1.1.1:11211', '2.2.2.2:11211'],
+          },
         }
         allow(subject).to receive(:node).and_return(chef_run.node.merge(nodes))
         expect(
@@ -90,8 +90,8 @@ describe 'openstack-common::default' do
       it 'returns empty memcached servers as defined by attributes' do
         nodes = {
           'openstack' => {
-            'memcached_servers' => []
-          }
+            'memcached_servers' => [],
+          },
         }
         allow(subject).to receive(:node).and_return(chef_run.node.merge(nodes))
         expect(
@@ -104,7 +104,7 @@ describe 'openstack-common::default' do
       it 'returns rabbit servers' do
         nodes = [
           { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
-          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } }
+          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
         ]
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:search_for)
@@ -118,7 +118,7 @@ describe 'openstack-common::default' do
         nodes = [
           { 'openstack' => { 'mq' => { 'listen' => '3.3.3.3' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
           { 'openstack' => { 'mq' => { 'listen' => '1.1.1.1' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
-          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } }
+          { 'openstack' => { 'mq' => { 'listen' => '2.2.2.2' }, 'endpoints' => { 'mq' => { 'port' => '5672' } } } },
         ]
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:search_for)

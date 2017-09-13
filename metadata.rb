@@ -16,6 +16,7 @@ end
 
 depends 'apt', '~> 5.0'
 depends 'database', '~> 6.1'
+depends 'etcd', '~> 3.0'
 depends 'mariadb', '~> 1.5'
 depends 'mysql', '~> 8.2'
 depends 'yum', '~> 3.13'

@@ -30,8 +30,6 @@
   default['openstack'][type]['mq']['port'] = '5672'
 end
 default['openstack']['bind_service']['mq']['interface'] = nil
-default['openstack']['endpoints']['mq']['host'] = '127.0.0.1'
-default['openstack']['endpoints']['mq']['port'] = '5672'
 
 ###################################################################
 # Services to assign mq attributes for
@@ -100,7 +98,6 @@ rabbit_defaults = {
 ###################################################################
 services.each do |svc|
   default['openstack']['mq'][svc]['service_type'] = node['openstack']['mq']['service_type']
-  default['openstack']['mq'][svc]['notification_topic'] = 'notifications'
 
   default['openstack']['mq'][svc]['durable_queues'] =
     node['openstack']['mq']['durable_queues']
@@ -111,42 +108,3 @@ services.each do |svc|
     default['openstack']['mq'][svc]['rabbit'][key.to_s] = val
   end
 end
-
-###################################################################
-# Overrides and additional attributes for individual services
-###################################################################
-# bare-metal
-default['openstack']['mq']['bare-metal']['rabbit']['notification_topic'] =
-  node['openstack']['mq']['bare-metal']['notification_topic']
-default['openstack']['mq']['bare-metal']['control_exchange'] = 'ironic'
-
-# block-storage
-default['openstack']['mq']['block-storage']['rabbit']['notification_topic'] =
-  node['openstack']['mq']['block-storage']['notification_topic']
-default['openstack']['mq']['block-storage']['control_exchange'] = 'cinder'
-
-# image
-default['openstack']['mq']['image']['notifier_strategy'] = 'noop'
-default['openstack']['mq']['image']['notification_topic'] = 'glance_notifications'
-default['openstack']['mq']['image']['rabbit']['notification_topic'] =
-  node['openstack']['mq']['image']['notification_topic']
-default['openstack']['mq']['image']['control_exchange'] = 'glance'
-
-# identity
-# AMQP topics used for openstack notifications, can be comma-separated values
-default['openstack']['mq']['identity']['notification_topics'] = 'notifications'
-default['openstack']['mq']['identity']['control_exchange'] = 'identity'
-
-# network
-# AMQP topics used for openstack notifications, can be comma-separated values
-default['openstack']['mq']['network']['notification_topics'] = 'notifications'
-default['openstack']['mq']['network']['control_exchange'] = 'neutron'
-
-# compute
-default['openstack']['mq']['compute']['control_exchange'] = 'nova'
-
-# orchestration
-default['openstack']['mq']['orchestration']['control_exchange'] = 'heat'
-
-# telemetry
-default['openstack']['mq']['telemetry']['control_exchange'] = 'ceilometer'

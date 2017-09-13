@@ -7,6 +7,9 @@ if [ -f /usr/bin/yum ] ; then
   sudo yum -y groupinstall "Development Tools"
   sudo yum -y install xz-devel zlib-devel
 
+  # workaround for integration. let chef install libvirt later
+  sudo yum -y remove libvirt libvirt-python
+
   # uninstall requests from pip
   sudo pip uninstall requests -y || true
 
@@ -24,6 +27,9 @@ elif [ -f /usr/bin/apt-get ]; then
   # install needed packages
   sudo apt-get update
   sudo apt-get -y install build-essential liblzma-dev zlib1g-dev
+
+  # workaround for integration. let chef install what it needs later
+  sudo apt-get -y purge libvirt0 libvirt-dev python-libvirt
 
   # install chefdk
   chefdk=chefdk_1.6.1-1_amd64.deb

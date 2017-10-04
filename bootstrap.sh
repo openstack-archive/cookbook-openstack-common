@@ -83,8 +83,10 @@ cookbook_projects=""
 for cookbook_info in "${cookbooks[@]}"; do
   [[ $cookbook_info =~ openstack/([a-z-]*):.* ]]
   cookbook_name="${BASH_REMATCH[1]}"
-  cookbook_projects+=" openstack/$cookbook_name"
-  sed -i -e "s|github: [\"\']openstack/$cookbook_name[\"\']|path: '../$cookbook_name'|" Berksfile
+  if [ -n $cookbook_name ]; then
+    cookbook_projects+=" openstack/$cookbook_name"
+    sed -i -e "s|github: [\"\']openstack/$cookbook_name[\"\']|path: '../$cookbook_name'|" Berksfile
+  fi
 done
 
 # Allow the zuul cloner to pull down the necessary Depends-On patches

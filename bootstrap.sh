@@ -83,7 +83,7 @@ cookbook_projects=""
 for cookbook_info in "${cookbooks[@]}"; do
   [[ $cookbook_info =~ openstack/([a-z-]*):.* ]]
   cookbook_name="${BASH_REMATCH[1]}"
-  if [ -n $cookbook_name ]; then
+  if [ -n "$cookbook_name" ]; then
     cookbook_projects+=" openstack/$cookbook_name"
     sed -i -e "s|github: [\"\']openstack/$cookbook_name[\"\']|path: '../$cookbook_name'|" Berksfile
   fi

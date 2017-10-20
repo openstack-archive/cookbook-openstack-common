@@ -63,7 +63,10 @@ module ::Openstack
       openstackcmd << "--#{key}"
       openstackcmd << val.to_s unless val.to_s.empty?
     end
-    openstackcmd = openstackcmd.concat(options.split)
+    # If options is a string, split on whitespace into array; otherwise, assume
+    # it is an array already and leave it untouched.
+    options = options.split if options.instance_of? String
+    openstackcmd = openstackcmd.concat(options)
     Chef::Log.debug("Running openstack command: #{openstackcmd} with environment: #{env}")
     result = shell_out(openstackcmd, env: env)
     Chef::Log.debug("Output for command: #{cmd}:\n#{result.stdout}\n#{result.stderr}")

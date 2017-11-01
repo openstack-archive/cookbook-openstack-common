@@ -1,5 +1,6 @@
 <%= node['openstack']['common']['custom_template_banner'] %>
 <% @service_config.each do |section, values| -%>
+
 [<%= section %>]
   <% values.each do |key, value| -%>
   <% if value.class == Hash -%>

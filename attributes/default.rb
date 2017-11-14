@@ -32,6 +32,7 @@ default['openstack']['common']['custom_template_banner'] = '
 
 # OpenStack services and their project names
 default['openstack']['common']['services'] = {
+  'aodh' => 'aodh',
   'bare-metal' => 'ironic',
   'block-storage' => 'cinder',
   'compute' => 'nova',

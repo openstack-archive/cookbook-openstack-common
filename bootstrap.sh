@@ -14,7 +14,7 @@ if [ -f /usr/bin/yum ] ; then
   sudo pip uninstall requests -y || true
 
   # install chefdk
-  chefdk=chefdk-1.6.1-1.el7.x86_64.rpm
+  chefdk=chefdk-2.3.4-1.el7.x86_64.rpm
   wget -nv -t 3 https://packages.chef.io/stable/el/7/$chefdk
   sudo yum -y install $chefdk
   rm $chefdk
@@ -32,7 +32,7 @@ elif [ -f /usr/bin/apt-get ]; then
   sudo apt-get -y purge libvirt0 libvirt-dev python-libvirt
 
   # install chefdk
-  chefdk=chefdk_1.6.1-1_amd64.deb
+  chefdk=chefdk_2.3.4-1_amd64.deb
   wget -nv -t 3 https://packages.chef.io/stable/ubuntu/16.04/$chefdk
   sudo dpkg -i $chefdk
   rm $chefdk
@@ -52,6 +52,8 @@ if [ -f /etc/nodepool/provider ]; then
   CENTOS_MIRROR_HOST=${NODEPOOL_MIRROR_HOST}
   UCA_MIRROR_HOST="${NODEPOOL_MIRROR_HOST}/ubuntu-cloud-archive"
   CEPH_MIRROR_HOST="${NODEPOOL_MIRROR_HOST}/ceph-deb-jewel"
+  NODEPOOL_RDO_PROXY=${NODEPOOL_RDO_PROXY}
+  NODEPOOL_RUBYGEMS_PROXY=${NODEPOOL_RUBYGEMS_PROXY}
 else
   CENTOS_MIRROR_HOST='mirror.centos.org'
   UCA_MIRROR_HOST='ubuntu-cloud.archive.canonical.com/ubuntu'

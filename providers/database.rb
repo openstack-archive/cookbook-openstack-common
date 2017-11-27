@@ -38,10 +38,6 @@ end
 
 def db_types
   case @db_type
-  when 'postgresql', 'pgsql'
-    @db_prov = ::Chef::Provider::Database::Postgresql
-    @user_prov = ::Chef::Provider::Database::PostgresqlUser
-    @super_user = 'postgres'
   when 'mysql', 'mariadb', 'percona-cluster', 'galera'
     @db_prov = ::Chef::Provider::Database::Mysql
     @user_prov = ::Chef::Provider::Database::MysqlUser

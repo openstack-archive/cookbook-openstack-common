@@ -43,13 +43,13 @@ module ::Openstack
   def encrypted_secret(bag_name, index)
     key_path = node['openstack']['secret']['key_path']
     ::Chef::Log.info "Loading encrypted databag #{bag_name}.#{index} using key at #{key_path}"
-    secret = ::Chef::EncryptedDataBagItem.load_secret key_path
-    ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index]
+    secret = ::Chef::EncryptedDataBagItem.load_secret key_path # ~FC086
+    ::Chef::EncryptedDataBagItem.load(bag_name, index, secret)[index] # ~FC086
   end
 
   def standard_secret(bag_name, index)
     ::Chef::Log.info "Loading databag #{bag_name}.#{index}"
-    ::Chef::DataBagItem.load(bag_name, index)[index]
+    ::Chef::DataBagItem.load(bag_name, index)[index] # ~FC086
   end
 
   def vault_secret(bag_name, index)

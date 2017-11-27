@@ -30,7 +30,7 @@ describe 'test-openstack-common-database::default' do
       expect(chef_run).to create_database('create database service_db')
         .with(
           provider: ::Chef::Provider::Database::Mysql,
-          connection: { host: 'localhost123', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
+          connection: { host: 'localhost123', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
           database_name: 'service_db',
           encoding: 'utf8'
         )
@@ -41,7 +41,7 @@ describe 'test-openstack-common-database::default' do
     expect(chef_run).to create_database('create database service_db')
       .with(
         provider: ::Chef::Provider::Database::Mysql,
-        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
+        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
         database_name: 'service_db',
         encoding: 'utf8'
       )
@@ -51,7 +51,7 @@ describe 'test-openstack-common-database::default' do
     expect(chef_run).to create_database_user('create database user db_user')
       .with(
         provider: ::Chef::Provider::Database::MysqlUser,
-        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
+        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
         username: 'db_user',
         password: 'db_pass'
       )
@@ -61,7 +61,7 @@ describe 'test-openstack-common-database::default' do
     expect(chef_run).to grant_database_user('grant database user db_user')
       .with(
         provider: ::Chef::Provider::Database::MysqlUser,
-        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/run/mysql-default/mysqld.sock' },
+        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
         username: 'db_user',
         password: 'db_pass',
         database_name: 'service_db',

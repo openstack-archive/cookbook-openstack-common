@@ -23,9 +23,8 @@ describe 'openstack-common::default' do
         }
       end
       it 'returns cli enviroment' do
-        allow(subject).to receive(:get_password)
-          .with('user', 'name')
-          .and_return('pass')
+        allow(subject).to receive(:get_password).with(
+          'user', 'name').and_return('pass')
 
         expect(
           subject.openstack_command_env('name', 'project', 'default', 'default')
@@ -112,9 +111,10 @@ describe 'openstack-common::default' do
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
             'OS_IDENTITY_API_VERSION' => 3,
           }
-        allow(subject).to receive(:openstack_command).with('openstack', 'user list', env, {})
-        allow(subject).to receive(:prettytable_to_array)
-          .and_return([{ 'name' => 'user1', 'id' => '1234567890ABCDEFGH' }])
+        allow(subject).to receive(:openstack_command).with(
+          'openstack', 'user list', env, {})
+        allow(subject).to receive(:prettytable_to_array).and_return(
+          [{ 'name' => 'user1', 'id' => '1234567890ABCDEFGH' }])
 
         result = subject.identity_uuid('user', 'name', 'user1', env)
         expect(result).to eq('1234567890ABCDEFGH')
@@ -135,17 +135,19 @@ describe 'openstack-common::default' do
       end
 
       it 'runs glance command to query valid id' do
-        allow(subject).to receive(:openstack_command).with('openstack', 'image list', :env, {})
-        allow(subject).to receive(:prettytable_to_array)
-          .and_return([{ 'ID' => '87f38e15-9737-46cc-a612-7c67ee29a24f', 'Name' => 'cirros' }])
+        allow(subject).to receive(:openstack_command).with(
+          'openstack', 'image list', :env, {})
+        allow(subject).to receive(:prettytable_to_array).and_return(
+          [{ 'ID' => '87f38e15-9737-46cc-a612-7c67ee29a24f', 'Name' => 'cirros' }])
 
         result = subject.image_id('cirros', :env)
         expect(result).to eq('87f38e15-9737-46cc-a612-7c67ee29a24f')
       end
 
       it 'runs glance command to query invalid id' do
-        allow(subject).to receive(:openstack_command).with('openstack', 'image list', :env, {})
-          .and_raise("No image with a name or ID of 'test' exists. (1)")
+        allow(subject).to receive(:openstack_command).with(
+          'openstack', 'image list', :env, {}).and_raise(
+            "No image with a name or ID of 'test' exists. (1)")
 
         expect { subject.image_id('test', :env) }.to raise_error(RuntimeError)
       end
@@ -163,9 +165,10 @@ describe 'openstack-common::default' do
             'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
             'OS_IDENTITY_API_VERSION' => 3,
           }
-        allow(subject).to receive(:openstack_command).with('openstack', 'network list', env, {})
-        allow(subject).to receive(:prettytable_to_array)
-          .and_return([{ 'name' => 'net1', 'id' => '1234567890ABCDEFGH' }])
+        allow(subject).to receive(:openstack_command).with(
+          'openstack', 'network list', env, {})
+        allow(subject).to receive(:prettytable_to_array).and_return(
+          [{ 'name' => 'net1', 'id' => '1234567890ABCDEFGH' }])
 
         result = subject.network_uuid('network', 'name', 'net1', env)
         expect(result).to eq('1234567890ABCDEFGH')

@@ -12,7 +12,7 @@ UBUNTU_OPTS = {
 }.freeze
 REDHAT_OPTS = {
   platform: 'redhat',
-  version: '7.1',
+  version: '7.3',
   log_level: LOG_LEVEL,
 }.freeze
 # We set a default platform for non-platform specific test cases

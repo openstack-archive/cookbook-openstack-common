@@ -10,7 +10,7 @@ describe 'openstack-common::client' do
     end
 
     it do
-      expect(chef_run).to install_package('python-openstackclient')
+      expect(chef_run).to upgrade_package('python-openstackclient')
     end
   end
 end

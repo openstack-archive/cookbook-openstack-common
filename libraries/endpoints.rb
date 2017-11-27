@@ -68,8 +68,6 @@ module ::Openstack
 
     # Normalize to the SQLAlchemy standard db type identifier
     case type
-    when 'pgsql'
-      type = 'postgresql'
     when 'mariadb', 'galera', 'percona-cluster'
       type = 'mysql'
     end
@@ -91,7 +89,7 @@ module ::Openstack
   # Find the specific endpoint type ('internal', 'admin' or
   # 'public') for the given service.
   %w(public internal admin).each do |ep_type|
-    define_method "#{ep_type}_endpoint" do |service|
+    define_method("#{ep_type}_endpoint") do |service|
       uri_from_hash(node['openstack']['endpoints'][ep_type][service])
     end
   end

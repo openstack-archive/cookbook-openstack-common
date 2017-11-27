@@ -95,4 +95,68 @@ if defined?(ChefSpec)
   def create_openstack_common_database(resource_name)
     ChefSpec::Matchers::ResourceMatcher.new(:openstack_common_database, :create, resource_name)
   end
+
+  # database
+  #
+  ChefSpec.define_matcher :database
+
+  def create_database(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:database, :create, resource_name)
+  end
+
+  def drop_database(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:database, :drop, resource_name)
+  end
+
+  def query_database(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:database, :query, resource_name)
+  end
+
+  # database user
+  #
+  ChefSpec.define_matcher :database_user
+
+  def create_database_user(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:database_user, :create, resource_name)
+  end
+
+  def drop_database_user(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:database_user, :drop, resource_name)
+  end
+
+  def grant_database_user(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:database_user, :grant, resource_name)
+  end
+
+  # mysql database
+  #
+  ChefSpec.define_matcher :mysql_database
+
+  def create_mysql_database(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:mysql_database, :create, resource_name)
+  end
+
+  def drop_mysql_database(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:mysql_database, :drop, resource_name)
+  end
+
+  def query_mysql_database(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:mysql_database, :query, resource_name)
+  end
+
+  # mysql database user
+  #
+  ChefSpec.define_matcher :mysql_database_user
+
+  def create_mysql_database_user(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:mysql_database_user, :create, resource_name)
+  end
+
+  def drop_mysql_database_user(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:mysql_database_user, :drop, resource_name)
+  end
+
+  def grant_mysql_database_user(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:mysql_database_user, :grant, resource_name)
+  end
 end

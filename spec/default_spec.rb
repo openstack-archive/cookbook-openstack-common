@@ -10,13 +10,13 @@ describe 'openstack-common::default' do
       runner.converge(described_recipe)
     end
 
-    it 'includes apt for apt-get update' do
-      node.set['openstack']['apt']['update_apt_cache'] = 'true'
-      expect(chef_run).to include_recipe 'apt'
+    it 'does not include apt for apt-get update' do
+      expect(chef_run).to_not include_recipe 'apt'
     end
 
-    it 'doesnt include apt for apt-get update' do
-      expect(chef_run).to_not include_recipe 'apt'
+    it 'updates apt cache before installing packages' do
+      node.override['openstack']['apt']['update_apt_cache'] = true
+      expect(chef_run).to update_apt_update 'default'
     end
 
     it 'upgrades ubuntu-cloud-keyring package' do
@@ -30,7 +30,8 @@ describe 'openstack-common::default' do
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-updates/pike',
-        components: ['main']
+        components: ['main'],
+        cache_rebuild: true
       )
     end
 
@@ -47,7 +48,8 @@ describe 'openstack-common::default' do
       expect(chef_run).to add_apt_repository('openstack-ppa-proposed').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-proposed/pike',
-        components: ['main']
+        components: ['main'],
+        cache_rebuild: true
       )
     end
 

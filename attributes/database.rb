@@ -109,7 +109,6 @@ default['openstack']['db']['options'] = {
   mysql: "?charset=#{node['openstack']['db']['charset']['mysql']}",
   'percona-cluster' => "?charset=#{node['openstack']['db']['charset']['percona-cluster']}",
   mariadb: "?charset=#{node['openstack']['db']['charset']['mariadb']}",
-  postgresql: '',
   sqlite: '',
   nosql: '',
   galera: "?charset=#{node['openstack']['db']['charset']['galera']}",
@@ -117,7 +116,7 @@ default['openstack']['db']['options'] = {
 
 # platform and DBMS-specific python client packages
 default['openstack']['db']['python_packages'] = {
-  postgresql: ['python-psycopg2'],
+  postgresql: [],
   sqlite: [],
 }
 case node['platform_family']
@@ -128,7 +127,7 @@ when 'rhel'
   default['openstack']['db']['python_packages']['percona-cluster'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
 when 'debian'
-  default['openstack']['db']['service_type'] = 'mysql'
+  default['openstack']['db']['service_type'] = 'mariadb'
   default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['mariadb'] = ['python-mysqldb']
   default['openstack']['db']['python_packages']['percona-cluster'] = ['python-mysqldb']
@@ -140,7 +139,7 @@ case node['platform_family']
 when 'rhel'
   default['openstack']['db']['socket'] = '/var/lib/mysql/mysql.sock'
 when 'debian'
-  default['openstack']['db']['socket'] = '/run/mysql-default/mysqld.sock'
+  default['openstack']['db']['socket'] = '/var/run/mysqld/mysqld.sock'
 end
 
 # Database used by the OpenStack services

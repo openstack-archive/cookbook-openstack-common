@@ -1,43 +1,4 @@
 #!/bin/bash -x
-## This script is for installing all the needed packages on CentOS 7 and Ubuntu 16.04 to run the chef tests with 'chef exec rake'
-
-if [ -f /usr/bin/yum ] ; then
-  # install needed packages
-  sudo yum clean all
-  sudo yum -y groupinstall "Development Tools"
-  sudo yum -y install xz-devel zlib-devel
-
-  # workaround for integration. let chef install libvirt later
-  sudo yum -y remove libvirt libvirt-python
-
-  # uninstall requests from pip
-  sudo pip uninstall requests -y || true
-
-  # install chefdk
-  chefdk=chefdk-2.3.4-1.el7.x86_64.rpm
-  wget -nv -t 3 https://packages.chef.io/stable/el/7/$chefdk
-  sudo yum -y install $chefdk
-  rm $chefdk
-
-  # explicitly disable selinux
-  sudo /usr/sbin/setenforce 0
-
-elif [ -f /usr/bin/apt-get ]; then
-
-  # install needed packages
-  sudo apt-get update
-  sudo apt-get -y install build-essential liblzma-dev zlib1g-dev
-
-  # workaround for integration. let chef install what it needs later
-  sudo apt-get -y purge libvirt0 libvirt-dev python-libvirt
-
-  # install chefdk
-  chefdk=chefdk_2.3.4-1_amd64.deb
-  wget -nv -t 3 https://packages.chef.io/stable/ubuntu/16.04/$chefdk
-  sudo dpkg -i $chefdk
-  rm $chefdk
-
-fi
 
 if [ $(id -u) != 0 ]; then
   # preserve environment to keep ZUUL_* params

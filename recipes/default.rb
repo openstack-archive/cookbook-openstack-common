@@ -22,9 +22,26 @@ platform_options = node['openstack']['common']['platform']
 case node['platform_family']
 when 'debian'
   if node['openstack']['apt']['update_apt_cache']
-    # Ensure we've done an apt-update first or packages won't be found.
-    include_recipe 'apt'
+    # update the apt cache before installing anything
+    apt_update 'default' do
+      action :update
+    end
   end
+
+  # populate the necessary apt options
+  # by default, do not overwrite existing configuration files
+  # this alleviates the need to populate package_overrides in every cookbook
+  file '/etc/apt/apt.conf.d/confdef' do
+    owner 'root'
+    group 'root'
+    mode 00644
+    content 'Dpkg::Options {
+      "--force-confdef";
+      "--force-confold";
+      }'
+    action :create
+  end
+
   package 'ubuntu-cloud-keyring' do
     options platform_options['package_overrides']
     action :upgrade
@@ -36,6 +53,7 @@ when 'debian'
       uri node['openstack']['apt']['uri']
       distribution "#{node['lsb']['codename']}-updates/#{node['openstack']['release']}"
       components apt_components
+      cache_rebuild true # update the cache after a new repo is added
     end
 
     # add in the proposed repo, but only if we're in development
@@ -50,19 +68,18 @@ when 'debian'
       distribution "#{node['lsb']['codename']}-proposed/#{node['openstack']['release']}"
       components apt_components
       action proposed_action
+      cache_rebuild true # update the cache after a new repo is added
     end
   end
-when 'rhel'
-  include_recipe 'yum' if node['openstack']['yum']['update_yum_cache']
 
-  if node['openstack']['yum']['rdo_enabled']
-    repo_action = :add
-    include_recipe 'yum-epel'
-  elsif FileTest.exist? "/etc/yum.repos.d/RDO-#{node['openstack']['release']}.repo"
-    repo_action = :remove
-  else
-    repo_action = :nothing
-  end
+when 'rhel'
+  repo_action = if node['openstack']['yum']['rdo_enabled']
+                  :add
+                elsif FileTest.exist? "/etc/yum.repos.d/RDO-#{node['openstack']['release']}.repo"
+                  :remove
+                else
+                  :nothing
+                end
 
   yum_repository "RDO-#{node['openstack']['release']}" do
     description "OpenStack RDO repo for #{node['openstack']['release']}"

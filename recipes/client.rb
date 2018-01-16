@@ -19,4 +19,10 @@
 # limitations under the License.
 #
 
-package 'python-openstackclient'
+platform_options = node['openstack']['common']['platform']
+platform_options['common_client_packages'].each do |pkg|
+  package pkg do
+    options platform_options['package_overrides']
+    action :upgrade
+  end
+end

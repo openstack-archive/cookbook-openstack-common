@@ -19,7 +19,6 @@ describe 'openstack-common::default' do
       before do
         node.set['openstack']['yum']['rdo_enabled'] = true
         node.set['openstack']['yum']['gpgcheck'] = true
-        node.set['openstack']['yum']['update_yum_cache'] = true
       end
 
       it 'adds RDO yum repository' do
@@ -29,12 +28,12 @@ describe 'openstack-common::default' do
           .with(gpgcheck: true)
       end
 
-      it 'includes yum recipe' do
-        expect(chef_run).to include_recipe('yum')
+      it 'does not include yum recipe' do
+        expect(chef_run).to_not include_recipe('yum')
       end
 
-      it 'includes yum-epel recipe' do
-        expect(chef_run).to include_recipe('yum-epel')
+      it 'does not include yum-epel recipe' do
+        expect(chef_run).to_not include_recipe('yum-epel')
       end
     end
 
@@ -49,8 +48,8 @@ describe 'openstack-common::default' do
           .with(gpgcheck: false)
       end
 
-      it 'includes yum-epel recipe' do
-        expect(chef_run).to include_recipe('yum-epel')
+      it 'does not include yum-epel recipe' do
+        expect(chef_run).to_not include_recipe('yum-epel')
       end
     end
 

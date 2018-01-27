@@ -20,7 +20,7 @@ describe 'openstack-common::client' do
 
     it do
       expect(chef_run).to install_python_package('python-openstackclient')
-        .with(version: '3.11.0')
+        .with(version: '3.14.0')
     end
 
     it do

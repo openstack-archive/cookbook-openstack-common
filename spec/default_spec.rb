@@ -29,7 +29,7 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = true
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-updates/pike',
+        distribution: 'xenial-updates/queens',
         components: ['main'],
         cache_rebuild: true
       )
@@ -39,7 +39,7 @@ describe 'openstack-common::default' do
       node.set['openstack']['apt']['live_updates_enabled'] = false
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-updates/pike',
+        distribution: 'xenial-updates/queens',
         components: ['main']
       )
     end
@@ -47,7 +47,7 @@ describe 'openstack-common::default' do
     it 'configures openstack proposed repository' do
       expect(chef_run).to add_apt_repository('openstack-ppa-proposed').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-proposed/pike',
+        distribution: 'xenial-proposed/queens',
         components: ['main'],
         cache_rebuild: true
       )
@@ -57,7 +57,7 @@ describe 'openstack-common::default' do
       node.override['openstack']['is_release'] = true
       expect(chef_run).to_not add_apt_repository('openstack-ppa-proposed').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'xenial-proposed/pike',
+        distribution: 'xenial-proposed/queens',
         components: ['main']
       )
     end

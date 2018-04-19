@@ -18,16 +18,9 @@
 # limitations under the License.
 #
 
-# install a python, working around the epoch on RHEL
-case node['platform_family']
-when 'debian', 'ubuntu'
-  python_runtime '2' do
-    provider :system
-  end
-when 'rhel'
-  python_runtime '0:2' do
-    provider :system
-  end
+# install a python
+python_runtime '2' do
+  provider :system
 end
 
 platform_options = node['openstack']['common']['platform']

@@ -18,7 +18,7 @@ depends 'etcd', '~> 3.0'
 depends 'mariadb', '~> 1.5'
 depends 'memcached', '~> 4.1'
 depends 'mysql', '~> 8.2'
-depends 'poise-python', '~> 1.5'
+depends 'poise-python', '~> 1.7'
 depends 'selinux'
 
 issues_url 'https://launchpad.net/openstack-chef' if respond_to?(:issues_url)

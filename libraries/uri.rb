@@ -67,7 +67,7 @@ module ::Openstack
   # Helper for creating identity_uri value for the auth_token section
   # of component config files.
   # The definition of identity is: the unversioned root
-  # admin identity endpoint e.g. https://localhost:35357/
+  # identity endpoint e.g. https://localhost:5000/
   # This method will make sure the path is removed from the uri.
   def identity_uri_transform(identity_uri)
     uri = ::URI.parse ::URI.encode(identity_uri.to_s)

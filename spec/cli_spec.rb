@@ -15,11 +15,11 @@ describe 'openstack-common::default' do
 
     describe 'openstack_command_env' do
       before do
-        node.set['openstack']['endpoints']['admin']['identity'] = {
+        node.set['openstack']['endpoints']['public']['identity'] = {
           host: '127.0.0.1',
           scheme: 'http',
           path: '/v3',
-          port: '35357',
+          port: '5000',
         }
       end
       it 'returns cli enviroment' do
@@ -34,7 +34,7 @@ describe 'openstack-common::default' do
           'OS_PROJECT_NAME' => 'project',
           'OS_USER_DOMAIN_NAME' => 'default',
           'OS_PROJECT_DOMAIN_NAME' => 'default',
-          'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+          'OS_AUTH_URL' => 'http://127.0.0.1:5000/v3',
           'OS_IDENTITY_API_VERSION' => '3'
         )
       end
@@ -49,7 +49,7 @@ describe 'openstack-common::default' do
             'OS_PROJECT_NAME' => 'project',
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_AUTH_URL' => 'http://127.0.0.1:5000/v3',
             'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:shell_out).with(
@@ -69,7 +69,7 @@ describe 'openstack-common::default' do
             'OS_PROJECT_NAME' => 'project',
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_AUTH_URL' => 'http://127.0.0.1:5000/v3',
             'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:shell_out).with(
@@ -89,7 +89,7 @@ describe 'openstack-common::default' do
             'OS_PROJECT_NAME' => 'project',
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_AUTH_URL' => 'http://127.0.0.1:5000/v3',
             'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:shell_out).with(
@@ -108,7 +108,7 @@ describe 'openstack-common::default' do
             'OS_PROJECT_NAME' => 'project',
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_AUTH_URL' => 'http://127.0.0.1:5000/v3',
             'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:openstack_command).with(
@@ -129,7 +129,7 @@ describe 'openstack-common::default' do
           'OS_PROJECT_NAME' => 'project',
           'OS_USER_DOMAIN_NAME' => 'default',
           'OS_PROJECT_DOMAIN_NAME' => 'default',
-          'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+          'OS_AUTH_URL' => 'http://127.0.0.1:5000/v3',
           'OS_IDENTITY_API_VERSION' => 3,
         }
       end
@@ -162,7 +162,7 @@ describe 'openstack-common::default' do
             'OS_PROJECT_NAME' => 'project',
             'OS_USER_DOMAIN_NAME' => 'default',
             'OS_PROJECT_DOMAIN_NAME' => 'default',
-            'OS_AUTH_URL' => 'http://127.0.0.1:35357/v3',
+            'OS_AUTH_URL' => 'http://127.0.0.1:5000/v3',
             'OS_IDENTITY_API_VERSION' => 3,
           }
         allow(subject).to receive(:openstack_command).with(

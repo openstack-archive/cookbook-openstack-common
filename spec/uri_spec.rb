@@ -89,34 +89,15 @@ describe 'Openstack uri' do
     end
   end
 
-  describe '#auth_uri_transform' do
-    it 'preserves the original auth uri when the auth version passed is v2.0' do
-      auth_version = 'v2.0'
-      auth_uri = 'http://localhost:5000/v2.0'
-      expect(
-        subject.auth_uri_transform(auth_uri, auth_version)
-      ).to eq(auth_uri)
-    end
-
-    it 'substitute /v2.0 with /v3 in the passed auth uri when auth version passed is v3.0' do
-      auth_version = 'v3.0'
-      auth_uri = 'http://localhost:5000/v2.0'
-      expected_auth_uri = 'http://localhost:5000/v3'
-      expect(
-        subject.auth_uri_transform(auth_uri, auth_version)
-      ).to eq(expected_auth_uri)
-    end
-  end
-
   describe '#identity_uri_transform' do
-    it 'removes the path segment from identity admin endpoint' do
+    it 'removes the path segment from identity endpoint' do
       expect(
-        subject.identity_uri_transform('http://localhost:35357/v2.0')
-      ).to eq('http://localhost:35357/')
+        subject.identity_uri_transform('http://localhost:5000/v3')
+      ).to eq('http://localhost:5000/')
     end
 
-    it 'does not effect a valid identity admin endpoint' do
-      identity_uri = 'http://localhost:35357/'
+    it 'does not effect a valid identity endpoint' do
+      identity_uri = 'http://localhost:5000/'
       expect(
         subject.identity_uri_transform(identity_uri)
       ).to eq(identity_uri)

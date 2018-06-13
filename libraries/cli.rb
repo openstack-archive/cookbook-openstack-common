@@ -31,8 +31,9 @@ module ::Openstack
   # @param [String] tenant name
   # @return [Hash] environment
   def openstack_command_env(name, project, user_domain, project_domain)
-    identity_admin_endpoint = admin_endpoint 'identity'
-    auth_uri = ::URI.decode identity_admin_endpoint.to_s
+    identity_endpoint = public_endpoint 'identity'
+    auth_url = ::URI.decode identity_endpoint.to_s
+
     pass = get_password 'user', name
     {
       'OS_USERNAME' => name,
@@ -41,7 +42,7 @@ module ::Openstack
       'OS_USER_DOMAIN_NAME' => user_domain,
       'OS_PROJECT_DOMAIN_NAME' => project_domain,
       'OS_IDENTITY_API_VERSION' => '3',
-      'OS_AUTH_URL' => auth_uri,
+      'OS_AUTH_URL' => auth_url,
     }
   end
 

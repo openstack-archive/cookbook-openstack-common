@@ -4,16 +4,19 @@ require 'chefspec/berkshelf'
 
 ChefSpec::Coverage.start! { add_filter 'openstack-common' }
 
-LOG_LEVEL = :fatal
+RSpec.configure do |config|
+  config.color = true
+  config.formatter = :documentation
+  config.log_level = :fatal
+end
+
 UBUNTU_OPTS = {
   platform: 'ubuntu',
   version: '16.04',
-  log_level: LOG_LEVEL,
 }.freeze
 REDHAT_OPTS = {
   platform: 'redhat',
-  version: '7.3',
-  log_level: LOG_LEVEL,
+  version: '7.4',
 }.freeze
 # We set a default platform for non-platform specific test cases
 CHEFSPEC_OPTS = UBUNTU_OPTS

@@ -14,7 +14,7 @@ recipe 'openstack-common::sysctl', 'Configures sysctl settings'
   supports os
 end
 
-depends 'etcd', '~> 3.0'
+depends 'etcd', '~> 5.5'
 depends 'mariadb', '~> 1.5'
 depends 'memcached', '~> 4.1'
 depends 'mysql', '~> 8.2'

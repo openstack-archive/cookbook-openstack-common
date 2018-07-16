@@ -27,8 +27,6 @@ class Chef
   class Provider
     class Database
       class MysqlUser < Chef::Provider::Database::Mysql
-        use_inline_resources
-
         def whyrun_supported?
           true
         end

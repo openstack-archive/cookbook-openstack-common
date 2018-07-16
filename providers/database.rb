@@ -9,8 +9,6 @@
 
 include ::Openstack
 
-use_inline_resources if defined?(use_inline_resources)
-
 action :create do
   info
   create_db(@db_name, @db_prov, @connection_info, @db_type) # create database

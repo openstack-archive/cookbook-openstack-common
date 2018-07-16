@@ -19,6 +19,4 @@
 #
 
 # create a new etcd installation named 'openstack'
-etcd_service 'openstack' do
-  action [:create, :start]
-end
+etcd_service 'openstack'

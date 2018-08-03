@@ -6,7 +6,7 @@ describe 'openstack-common::default' do
     let(:runner) { ChefSpec::SoloRunner.new(REDHAT_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['openstack']['release'] = 'testrelease'
+      node.override['openstack']['release'] = 'testrelease'
 
       runner.converge(described_recipe)
     end
@@ -17,8 +17,8 @@ describe 'openstack-common::default' do
 
     context 'enabling RDO with gpgcheck enabled' do
       before do
-        node.set['openstack']['yum']['rdo_enabled'] = true
-        node.set['openstack']['yum']['gpgcheck'] = true
+        node.override['openstack']['yum']['rdo_enabled'] = true
+        node.override['openstack']['yum']['gpgcheck'] = true
       end
 
       it 'adds RDO yum repository' do
@@ -39,8 +39,8 @@ describe 'openstack-common::default' do
 
     context 'enabling RDO with gpgcheck disabled' do
       before do
-        node.set['openstack']['yum']['rdo_enabled'] = true
-        node.set['openstack']['yum']['gpgcheck'] = false
+        node.override['openstack']['yum']['rdo_enabled'] = true
+        node.override['openstack']['yum']['gpgcheck'] = false
       end
 
       it 'adds RDO yum repository' do
@@ -55,7 +55,7 @@ describe 'openstack-common::default' do
 
     context 'disabling RDO deps repo with is_release true' do
       before do
-        node.set['openstack']['is_release'] = true
+        node.override['openstack']['is_release'] = true
       end
 
       it 'does not add the RDO deps yum repository' do
@@ -65,7 +65,7 @@ describe 'openstack-common::default' do
 
     context 'disabling RDO' do
       before do
-        node.set['openstack']['yum']['rdo_enabled'] = false
+        node.override['openstack']['yum']['rdo_enabled'] = false
       end
 
       it 'removes RDO yum repository' do

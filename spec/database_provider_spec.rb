@@ -11,9 +11,9 @@ describe 'test-openstack-common-database::default' do
   end
   let(:node) { runner.node }
   let(:chef_run) do
-    node.set['openstack']['use_databags'] = false
-    node.set['openstack']['secret']['mysqlroot']['db'] = 'root_pass'
-    node.set['openstack']['db']['service'] = { service_type: 'mysql', port: 3306, db_name: 'service_db' }
+    node.override['openstack']['use_databags'] = false
+    node.override['openstack']['secret']['mysqlroot']['db'] = 'root_pass'
+    node.override['openstack']['db']['service'] = { service_type: 'mysql', port: 3306, db_name: 'service_db' }
     runner.converge(described_recipe)
   end
 
@@ -24,7 +24,7 @@ describe 'test-openstack-common-database::default' do
 
   context 'specific root user db endpoint' do
     before do
-      node.set['openstack']['endpoints']['db']['host_for_db_root_user'] = 'localhost123'
+      node.override['openstack']['endpoints']['db']['host_for_db_root_user'] = 'localhost123'
     end
     it 'connects to the database via a specific endpoint for the root user' do
       expect(chef_run).to create_database('create database service_db')

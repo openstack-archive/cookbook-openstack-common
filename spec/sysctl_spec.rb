@@ -27,7 +27,7 @@ describe 'openstack-common::sysctl' do
       it 'sets the sysctl attributes' do
         sysctl_kv = { 'systcl_key1' => 'sysctl_value1',
                       'sysctl_key2' => 'sysctl_value2' }
-        node.set['openstack']['sysctl'] = sysctl_kv
+        node.override['openstack']['sysctl'] = sysctl_kv
         sysctl_kv.each do |k, v|
           expect(chef_run).to render_file(file.name).with_content(/^#{k} = #{v}$/)
         end

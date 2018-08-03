@@ -7,8 +7,8 @@ describe 'openstack-common::default' do
     let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
     let(:chef_run) do
-      node.set['openstack']['mq']['server_role'] = 'openstack-ops-mq'
-      node.set['openstack']['endpoints']['mq']['port'] = 5672
+      node.override['openstack']['mq']['server_role'] = 'openstack-ops-mq'
+      node.override['openstack']['endpoints']['mq']['port'] = 5672
 
       runner.converge(described_recipe)
     end
@@ -129,7 +129,7 @@ describe 'openstack-common::default' do
       end
 
       it 'returns rabbit servers when not searching' do
-        chef_run.node.set['openstack']['mq']['servers'] = ['1.1.1.1', '2.2.2.2']
+        chef_run.node.override['openstack']['mq']['servers'] = ['1.1.1.1', '2.2.2.2']
         allow(subject).to receive(:node).and_return(chef_run.node)
         expect(
           subject.rabbit_servers

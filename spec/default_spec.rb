@@ -26,7 +26,7 @@ describe 'openstack-common::default' do
     it 'configures openstack repository' do
       # Using cookbook(apt) LWRP custom matcher
       # https://github.com/sethvargo/chefspec#packaging-custom-matchers
-      node.set['openstack']['apt']['live_updates_enabled'] = true
+      node.override['openstack']['apt']['live_updates_enabled'] = true
       expect(chef_run).to add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-updates/queens',
@@ -36,7 +36,7 @@ describe 'openstack-common::default' do
     end
 
     it 'disables openstack live updates' do
-      node.set['openstack']['apt']['live_updates_enabled'] = false
+      node.override['openstack']['apt']['live_updates_enabled'] = false
       expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
         distribution: 'xenial-updates/queens',
@@ -67,7 +67,7 @@ describe 'openstack-common::default' do
     end
 
     it 'installs the gem chef-vault if databag_type is vault' do
-      node.set['openstack']['databag_type'] = 'vault'
+      node.override['openstack']['databag_type'] = 'vault'
       expect(chef_run).to install_chef_gem('chef-vault')
         .with(version: '~> 3.2')
     end
@@ -90,7 +90,7 @@ describe 'openstack-common::default' do
       }
       rabbit_opts.each do |key, value|
         it "configures rabbit mq #{key}" do
-          node.set['openstack']['mq']['rabbitmq'][key] = value
+          node.override['openstack']['mq']['rabbitmq'][key] = value
           mq_services.each do |service|
             expect(chef_run.node['openstack']['mq'][service]['rabbit'][key]).to eq(value)
           end

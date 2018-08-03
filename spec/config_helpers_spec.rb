@@ -12,7 +12,7 @@ describe 'openstack-common::default' do
     let(:subject) { Object.new.extend(Openstack) }
     include_context 'library-stubs'
     before do
-      node.set['openstack']['anyservice']['conf'] =
+      node.override['openstack']['anyservice']['conf'] =
         {
           'Default' => { 'logfile' => 'file_to_log' },
           'secret_section' => {},
@@ -22,7 +22,7 @@ describe 'openstack-common::default' do
             'baz' => 'yay',
           },
         }
-      node.set['openstack']['anyservice']['conf_secrets'] =
+      node.override['openstack']['anyservice']['conf_secrets'] =
         {
           'Default' => { 'secret_log' => 'secret_file_to_log' },
           'secret_section' => { 'password' => '1234' },

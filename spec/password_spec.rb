@@ -26,7 +26,7 @@ describe 'openstack-common::default' do
 
       context 'using chef-vault' do
         before do
-          node.set['openstack']['databag_type'] = 'vault'
+          node.override['openstack']['databag_type'] = 'vault'
         end
         it 'returns the data from a chef vault item' do
           allow(ChefVault::Item).to receive(:load)
@@ -66,7 +66,7 @@ describe 'openstack-common::default' do
     end
 
     context 'stored in standard data bags' do
-      before { node.set['openstack']['databag_type'] = 'standard' }
+      before { node.override['openstack']['databag_type'] = 'standard' }
       describe '#secret' do
         it 'returns databag' do
           value = { 'nova' => 'this' }
@@ -101,7 +101,7 @@ describe 'openstack-common::default' do
     end
 
     context 'stored in attributes as an alternative' do
-      before { node.set['openstack']['use_databags'] = false }
+      before { node.override['openstack']['use_databags'] = false }
 
       describe '#get_password' do
         %w(service db user token).each do |type|

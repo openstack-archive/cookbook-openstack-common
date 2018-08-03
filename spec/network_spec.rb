@@ -50,7 +50,7 @@ describe 'openstack-common::default' do
 
     describe '#address_for ipv6' do
       it 'returns ipv6 address' do
-        node.set['openstack']['endpoints']['family'] = 'inet6'
+        node.override['openstack']['endpoints']['family'] = 'inet6'
         expect(
           subject.address_for('lo')
         ).to eq('2001:db8::1')
@@ -83,7 +83,7 @@ describe 'openstack-common::default' do
         end
         describe 'mq interface set' do
           before do
-            node.set['openstack']['bind_service']['mq']['interface'] = 'eth0'
+            node.override['openstack']['bind_service']['mq']['interface'] = 'eth0'
           end
           it 'returns the interface address' do
             expect(
@@ -100,7 +100,7 @@ describe 'openstack-common::default' do
         end
         describe 'interface set' do
           before do
-            node.set['openstack']['bind_service']['db']['interface'] = 'eth0'
+            node.override['openstack']['bind_service']['db']['interface'] = 'eth0'
           end
           it 'returns the interface address' do
             expect(

@@ -110,12 +110,12 @@ describe 'openstack-common::default' do
       end
 
       it do
-        node.set['openstack']['mq']['service_type'] = 'rabbit'
-        node.set['openstack']['mq']['cluster'] = true
-        node.set['openstack']['mq']['compute']['rabbit']['userid'] = 'rabbit2'
-        node.set['openstack']['endpoints']['mq']['port'] = 1234
-        node.set['openstack']['mq']['servers'] = %w(10.0.0.1 10.0.0.2 10.0.0.3)
-        node.set['openstack']['mq']['vhost'] = '/anyhost'
+        node.override['openstack']['mq']['service_type'] = 'rabbit'
+        node.override['openstack']['mq']['cluster'] = true
+        node.override['openstack']['mq']['compute']['rabbit']['userid'] = 'rabbit2'
+        node.override['openstack']['endpoints']['mq']['port'] = 1234
+        node.override['openstack']['mq']['servers'] = %w(10.0.0.1 10.0.0.2 10.0.0.3)
+        node.override['openstack']['mq']['vhost'] = '/anyhost'
         allow(subject).to receive(:node).and_return(chef_run.node)
         allow(subject).to receive(:get_password)
           .with('user', 'rabbit2')
@@ -165,9 +165,9 @@ describe 'openstack-common::default' do
       end
 
       it 'returns network db info hash when service found for sqlite with options' do
-        node.set['openstack']['db']['service_type'] = 'sqlite'
-        node.set['openstack']['db']['options'] = { 'sqlite' => '?options' }
-        node.set['openstack']['db']['network']['path'] = 'path'
+        node.override['openstack']['db']['service_type'] = 'sqlite'
+        node.override['openstack']['db']['options'] = { 'sqlite' => '?options' }
+        node.override['openstack']['db']['network']['path'] = 'path'
         allow(subject).to receive(:node).and_return(chef_run.node)
         expected = 'sqlite:///path?options'
         expect(
@@ -176,7 +176,7 @@ describe 'openstack-common::default' do
       end
 
       it 'returns compute db info hash when service found for mariadb' do
-        node.set['openstack']['db']['service_type'] = 'mariadb'
+        node.override['openstack']['db']['service_type'] = 'mariadb'
         allow(subject).to receive(:node).and_return(chef_run.node)
         expected = 'mysql+pymysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
         expect(
@@ -186,7 +186,7 @@ describe 'openstack-common::default' do
 
       %w(galera percona-cluster).each do |db|
         it "returns compute db info hash when service found for #{db}" do
-          node.set['openstack']['db']['service_type'] = db
+          node.override['openstack']['db']['service_type'] = db
           allow(subject).to receive(:node).and_return(chef_run.node)
           expected = 'mysql+pymysql://user:pass@127.0.0.1:3306/nova?charset=utf8'
           expect(
@@ -196,7 +196,7 @@ describe 'openstack-common::default' do
       end
 
       it 'returns compute slave db info hash when service found for default mysql' do
-        node.set['openstack']['endpoints']['db']['enabled_slave'] = true
+        node.override['openstack']['endpoints']['db']['enabled_slave'] = true
         allow(subject).to receive(:node).and_return(chef_run.node)
         expected = 'mysql+pymysql://user:pass@127.0.0.1:3316/nova?charset=utf8'
         expect(
@@ -205,8 +205,8 @@ describe 'openstack-common::default' do
       end
 
       it 'returns image slave db info hash when service found for mariadb' do
-        node.set['openstack']['db']['service_type'] = 'mariadb'
-        node.set['openstack']['endpoints']['db']['enabled_slave'] = true
+        node.override['openstack']['db']['service_type'] = 'mariadb'
+        node.override['openstack']['endpoints']['db']['enabled_slave'] = true
         allow(subject).to receive(:node).and_return(chef_run.node)
         expected = 'mysql+pymysql://user:pass@127.0.0.1:3316/glance?charset=utf8'
         expect(
@@ -216,8 +216,8 @@ describe 'openstack-common::default' do
 
       %w(galera percona-cluster).each do |db|
         it "returns network slave db info hash when service found for #{db}" do
-          node.set['openstack']['db']['service_type'] = db
-          node.set['openstack']['endpoints']['db']['enabled_slave'] = true
+          node.override['openstack']['db']['service_type'] = db
+          node.override['openstack']['endpoints']['db']['enabled_slave'] = true
           allow(subject).to receive(:node).and_return(chef_run.node)
           expected = 'mysql+pymysql://user:pass@127.0.0.1:3316/neutron?charset=utf8'
           expect(

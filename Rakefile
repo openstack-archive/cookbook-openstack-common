@@ -46,11 +46,11 @@ task :common_integration do
   sh %(ls -la ../..)
   sh %(sudo ln -s #{patch_dir} ../#{patch_dir_berks})
 
-  unless Dir.exist?('../openstack-chef-repo')
-    sh %(git clone --depth 1 git://github.com/openstack/openstack-chef-repo.git ../openstack-chef-repo)
+  unless Dir.exist?('../openstack-chef')
+    sh %(git clone --depth 1 git://github.com/openstack/openstack-chef.git ../openstack-chef)
   end
 
-  Dir.chdir('../openstack-chef-repo') do
+  Dir.chdir('../openstack-chef') do
     sh %(chef exec rake integration)
   end
 end

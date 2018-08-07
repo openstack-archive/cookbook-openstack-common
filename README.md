@@ -107,7 +107,7 @@ Documentation for Attributes for selecting databag format can be found in the
 attributes section of this cookbook.
 
 Documentation for format of these Databags can be found in the [Openstack Chef
-Repo](https://github.com/openstack/openstack-chef-repo#databags) repository.
+Repo](https://github.com/openstack/openstack-chef#databags) repository.
 
 Resources
 =========

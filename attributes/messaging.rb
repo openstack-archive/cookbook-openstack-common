@@ -34,7 +34,7 @@ default['openstack']['bind_service']['mq']['interface'] = nil
 ###################################################################
 # Services to assign mq attributes for
 ###################################################################
-services = %w(aodh bare-metal block-storage compute database dns image
+services = %w(aodh baremetal block-storage compute database dns image
               identity telemetry network orchestration)
 
 ###################################################################

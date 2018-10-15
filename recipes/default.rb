@@ -21,6 +21,8 @@
 # install a python
 python_runtime '2' do
   provider :system
+  # Workaround for https://github.com/poise/poise-python/issues/133
+  pip_version '18.0'
 end
 
 platform_options = node['openstack']['common']['platform']

@@ -20,13 +20,20 @@
 
 # install system packages for Ubuntu/Debian
 case node['platform_family']
-when 'debian', 'ubuntu'
+when 'debian'
   python_runtime '3.5' do
     provider :system
+    # Align with eg. OpenStack-Ansible (https://git.openstack.org/cgit/openstack/openstack-ansible/tree/global-requirement-pins.txt)
+    pip_version '18.0'
+    setuptools_version '40.0.0'
+    wheel_version '0.31.1'
   end
 # use Software Collections for CentOS/RHEL
 when 'rhel'
   python_runtime '3.5' do
     provider :scl
+    pip_version '18.0'
+    setuptools_version '40.0.0'
+    wheel_version '0.31.1'
   end
 end

@@ -18,13 +18,6 @@
 # limitations under the License.
 #
 
-# install a python
-python_runtime '2' do
-  provider :system
-  # Workaround for https://github.com/poise/poise-python/issues/133
-  pip_version '18.0'
-end
-
 platform_options = node['openstack']['common']['platform']
 case node['platform_family']
 when 'debian'
@@ -125,6 +118,16 @@ when 'rhel'
   package 'centos-release-qemu-ev' do
     action :upgrade
   end
+end
+
+# install a python
+python_runtime '2' do
+  provider :system
+  # Workaround for https://github.com/poise/poise-python/issues/133
+  pip_version '18.0'
+  # Align with eg. OpenStack-Ansible (https://git.openstack.org/cgit/openstack/openstack-ansible/tree/global-requirement-pins.txt)
+  setuptools_version '40.0.0'
+  wheel_version '0.31.1'
 end
 
 if node['openstack']['databag_type'] == 'vault'

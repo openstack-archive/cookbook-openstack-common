@@ -34,6 +34,8 @@ default['openstack']['common']['custom_template_banner'] = '
 default['openstack']['common']['services'] = {
   'aodh' => 'aodh',
   'baremetal' => 'ironic',
+  'bare_metal' => 'ironic',
+  'block_storage' => 'cinder',
   'block-storage' => 'cinder',
   'compute' => 'nova',
   'compute_api' => 'nova_api',
@@ -44,11 +46,11 @@ default['openstack']['common']['services'] = {
   'identity' => 'keystone',
   'image' => 'glance',
   'network' => 'neutron',
-  'object-storage' => 'swift',
+  'object_storage' => 'swift',
   'orchestration' => 'heat',
   'telemetry' => 'ceilometer',
-  'telemetry-metric' => 'gnocchi',
-  'application-catalog' => 'murano',
+  'telemetry_metric' => 'gnocchi',
+  'application_catalog' => 'murano',
 }
 
 # Setting this to True means that database passwords and service user

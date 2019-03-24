@@ -61,7 +61,7 @@ then
     -m clonemap.yaml \
     --cache-dir /opt/git \
     --workspace /home/jenkins/workspace/ \
-    git://git.openstack.org \
+    https://git.openstack.org \
     $cookbook_projects && \
     sudo chown -R jenkins:jenkins /home/jenkins/workspace && \
     sudo mkdir -p /home/jenkins/.chef && \

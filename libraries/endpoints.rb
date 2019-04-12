@@ -86,9 +86,9 @@ module ::Openstack
     end
   end
 
-  # Find the specific endpoint type ('internal', 'admin' or
+  # Find the specific endpoint type ('internal' or
   # 'public') for the given service.
-  %w(public internal admin).each do |ep_type|
+  %w(public internal).each do |ep_type|
     define_method("#{ep_type}_endpoint") do |service|
       uri_from_hash(node['openstack']['endpoints'][ep_type][service])
     end

@@ -10,7 +10,7 @@ describe 'openstack-common::default' do
     let(:chef_run) { runner.converge(described_recipe) }
     let(:subject) { Object.new.extend(Openstack) }
 
-    %w(public internal admin).each do |ep_type|
+    %w(public internal).each do |ep_type|
       describe "#{ep_type}_endpoint" do
         it 'fails with a NoMethodError when no openstack.endpoints in node attrs' do
           allow(subject).to receive(:node).and_return({})

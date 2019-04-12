@@ -150,10 +150,6 @@ default['openstack']['endpoints']['family'] = 'inet'
 # Set a default region that other regions are set to - such that changing the region for all services can be done in one place
 default['openstack']['region'] = 'RegionOne'
 
-# Set a default auth api version that other components use to interact with identity service.
-# Allowed auth API versions: v2.0 or v3.0. By default, it is set to v3.0.
-default['openstack']['api']['auth']['version'] = 'v3.0'
-
 # Allow configured loggers in logging.conf
 default['openstack']['logging']['loggers'] = {
   'root' => {

@@ -139,9 +139,6 @@ This cookbook exposes a set of default library routines:
 * `cli` -- Used to call openstack CLIs
 * `endpoint` -- Used to return a `::URI` object representing the named OpenStack
   endpoint
-* `admin_endpoint` -- Used to return a `::URI` object representing the named
-  OpenStack admin endpoint if one was specified. Otherwise, it will return the
-same value as `endpoint`.
 * `internal_endpoint` -- Used to return a `::URI` object representing the named
   OpenStack internal endpoint if one was specified. Otherwise, it will return
 the same value as `endpoint`.

@@ -303,6 +303,9 @@ when 'debian'
   }
 end
 
+# The location of the OSC bash completion file
+default['openstack']['common']['bash_complete'] = '/etc/bash_completion.d/osc.bash_completion'
+
 # The name of the Chef role that installs the Keystone Service API
 default['openstack']['identity_service_chef_role'] = 'os-identity'
 

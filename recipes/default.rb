@@ -125,7 +125,7 @@ python_runtime '2' do
   provider :system
   # Workaround for https://github.com/poise/poise-python/issues/133
   pip_version '18.0'
-  # Align with eg. OpenStack-Ansible (https://git.openstack.org/cgit/openstack/openstack-ansible/tree/global-requirement-pins.txt)
+  # Align with eg. OpenStack-Ansible (https://opendev.org/openstack/openstack-ansible/tree/global-requirement-pins.txt)
   setuptools_version '40.0.0'
   wheel_version '0.31.1'
 end

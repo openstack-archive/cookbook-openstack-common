@@ -23,7 +23,7 @@ case node['platform_family']
 when 'debian'
   python_runtime '3.5' do
     provider :system
-    # Align with eg. OpenStack-Ansible (https://git.openstack.org/cgit/openstack/openstack-ansible/tree/global-requirement-pins.txt)
+    # Align with eg. OpenStack-Ansible (https://opendev.org/openstack/openstack-ansible/tree/global-requirement-pins.txt)
     pip_version '18.0'
     setuptools_version '40.0.0'
     wheel_version '0.31.1'

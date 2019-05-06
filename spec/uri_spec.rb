@@ -88,19 +88,4 @@ describe 'Openstack uri' do
       ).to eq(expected)
     end
   end
-
-  describe '#identity_uri_transform' do
-    it 'removes the path segment from identity endpoint' do
-      expect(
-        subject.identity_uri_transform('http://localhost:5000/v3')
-      ).to eq('http://localhost:5000/')
-    end
-
-    it 'does not effect a valid identity endpoint' do
-      identity_uri = 'http://localhost:5000/'
-      expect(
-        subject.identity_uri_transform(identity_uri)
-      ).to eq(identity_uri)
-    end
-  end
 end

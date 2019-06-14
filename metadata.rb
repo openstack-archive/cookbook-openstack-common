@@ -18,8 +18,8 @@ depends 'etcd', '~> 5.5'
 depends 'mariadb', '~> 1.5'
 depends 'memcached', '~> 4.1'
 depends 'mysql', '~> 8.2'
-depends 'poise-python', '~> 1.7'
 depends 'selinux'
+depends 'yum-epel'
 
 issues_url 'https://launchpad.net/openstack-chef' if respond_to?(:issues_url)
 source_url 'https://github.com/openstack/cookbook-openstack-common' if respond_to?(:source_url)

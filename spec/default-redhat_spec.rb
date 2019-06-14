@@ -15,6 +15,12 @@ describe 'openstack-common::default' do
       expect(chef_run).to upgrade_package('centos-release-qemu-ev')
     end
 
+    pkgs = %w(python python2-pip python2-setuptools python-devel python-virtualenv python-wheel)
+
+    it 'installs python2 packages' do
+      expect(chef_run).to upgrade_package(pkgs)
+    end
+
     context 'enabling RDO with gpgcheck enabled' do
       before do
         node.override['openstack']['yum']['rdo_enabled'] = true
@@ -28,12 +34,8 @@ describe 'openstack-common::default' do
           .with(gpgcheck: true)
       end
 
-      it 'does not include yum recipe' do
-        expect(chef_run).to_not include_recipe('yum')
-      end
-
-      it 'does not include yum-epel recipe' do
-        expect(chef_run).to_not include_recipe('yum-epel')
+      it 'does include yum-epel recipe' do
+        expect(chef_run).to include_recipe('yum-epel')
       end
     end
 
@@ -48,8 +50,8 @@ describe 'openstack-common::default' do
           .with(gpgcheck: false)
       end
 
-      it 'does not include yum-epel recipe' do
-        expect(chef_run).to_not include_recipe('yum-epel')
+      it 'does include yum-epel recipe' do
+        expect(chef_run).to include_recipe('yum-epel')
       end
     end
 
@@ -81,8 +83,8 @@ describe 'openstack-common::default' do
         expect(repo.performed_actions).to be_empty
       end
 
-      it 'does not include yum-epel recipe' do
-        expect(chef_run).to_not include_recipe('yum-epel')
+      it 'does include yum-epel recipe' do
+        expect(chef_run).to include_recipe('yum-epel')
       end
 
       it 'does not create RDO-Manager yum repositories' do

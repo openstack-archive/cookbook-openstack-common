@@ -62,6 +62,12 @@ describe 'openstack-common::default' do
       )
     end
 
+    pkgs = %w(python python-dev python-pip python-setuptools python-virtualenv python-wheel)
+
+    it 'installs python2 packages' do
+      expect(chef_run).to upgrade_package(pkgs)
+    end
+
     it 'does not install the gem chef-vault by default' do
       expect(chef_run).to_not install_chef_gem('chef-vault')
     end

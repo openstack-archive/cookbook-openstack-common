@@ -18,13 +18,6 @@
 # limitations under the License.
 #
 
-# install a python
-python_runtime '2' do
-  provider :system
-  # Workaround for https://github.com/poise/poise-python/issues/133
-  pip_version '18.0'
-end
-
 platform_options = node['openstack']['common']['platform']
 case node['platform_family']
 when 'debian'
@@ -80,6 +73,8 @@ when 'debian'
   end
 
 when 'rhel'
+  include_recipe 'yum-epel'
+
   repo_action = if node['openstack']['yum']['rdo_enabled']
                   :add
                 elsif FileTest.exist? "/etc/yum.repos.d/RDO-#{node['openstack']['release']}.repo"
@@ -125,6 +120,12 @@ when 'rhel'
   package 'centos-release-qemu-ev' do
     action :upgrade
   end
+end
+
+# install a python
+package node['openstack']['common']['platform']['python2_packages'] do
+  options platform_options['package_overrides']
+  action :upgrade
 end
 
 if node['openstack']['databag_type'] == 'vault'

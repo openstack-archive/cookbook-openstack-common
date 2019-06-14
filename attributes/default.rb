@@ -294,11 +294,27 @@ case node['platform_family']
 when 'rhel'
   default['openstack']['common']['platform'] = {
     'common_client_packages' => ['python-openstackclient'],
+    'python2_packages' => [
+      'python',
+      'python2-pip',
+      'python2-setuptools',
+      'python-devel',
+      'python-virtualenv',
+      'python-wheel',
+    ],
     'package_overrides' => '',
   }
 when 'debian'
   default['openstack']['common']['platform'] = {
     'common_client_packages' => ['python-openstackclient'],
+    'python2_packages' => [
+      'python',
+      'python-dev',
+      'python-pip',
+      'python-setuptools',
+      'python-virtualenv',
+      'python-wheel',
+    ],
     'package_overrides' => '',
   }
 end

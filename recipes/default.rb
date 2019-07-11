@@ -107,16 +107,6 @@ when 'rhel'
     action deps_action
   end
 
-  # TODO(sc): workaround to add $contentdir
-  #           removable when centos is updated
-  bash 'yum_contentdir' do
-    cwd ::File.dirname('/etc/yum/vars')
-    code <<-EOH
-      echo 'centos' > /etc/yum/vars/contentdir
-      EOH
-    not_if { ::File.exist?('/etc/yum/vars/contentdir') }
-  end
-
   package 'centos-release-qemu-ev' do
     action :upgrade
   end

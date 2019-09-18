@@ -113,7 +113,7 @@ when 'rhel'
 end
 
 # install a python
-package node['openstack']['common']['platform']['python2_packages'] do
+package node['openstack']['common']['platform']['python_packages'] do
   options platform_options['package_overrides']
   action :upgrade
 end

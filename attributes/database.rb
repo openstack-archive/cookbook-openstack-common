@@ -128,10 +128,10 @@ when 'rhel'
   default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
 when 'debian'
   default['openstack']['db']['service_type'] = 'mariadb'
-  default['openstack']['db']['python_packages']['mysql'] = ['python-mysqldb']
-  default['openstack']['db']['python_packages']['mariadb'] = ['python-mysqldb']
-  default['openstack']['db']['python_packages']['percona-cluster'] = ['python-mysqldb']
-  default['openstack']['db']['python_packages']['galera'] = ['python-mysqldb']
+  default['openstack']['db']['python_packages']['mysql'] = ['python3-mysqldb']
+  default['openstack']['db']['python_packages']['mariadb'] = ['python3-mysqldb']
+  default['openstack']['db']['python_packages']['percona-cluster'] = ['python3-mysqldb']
+  default['openstack']['db']['python_packages']['galera'] = ['python3-mysqldb']
 end
 
 # database sockets, because different

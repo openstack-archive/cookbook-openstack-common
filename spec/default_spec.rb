@@ -62,9 +62,9 @@ describe 'openstack-common::default' do
       )
     end
 
-    pkgs = %w(python python-dev python-pip python-setuptools python-virtualenv python-wheel)
+    pkgs = %w(python3 python3-dev python3-pip python3-setuptools python3-virtualenv python3-wheel virtualenv)
 
-    it 'installs python2 packages' do
+    it 'installs python packages' do
       expect(chef_run).to upgrade_package(pkgs)
     end
 

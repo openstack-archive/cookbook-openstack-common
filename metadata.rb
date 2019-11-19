@@ -3,7 +3,6 @@ maintainer       'openstack-chef'
 maintainer_email 'openstack-discuss@lists.openstack.org'
 license          'Apache-2.0'
 description      'Common OpenStack attributes, libraries and recipes.'
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '18.0.0'
 
 recipe 'openstack-common', 'Installs/Configures common recipes'
@@ -21,6 +20,6 @@ depends 'mysql', '~> 8.2'
 depends 'selinux'
 depends 'yum-epel'
 
-issues_url 'https://launchpad.net/openstack-chef' if respond_to?(:issues_url)
-source_url 'https://github.com/openstack/cookbook-openstack-common' if respond_to?(:source_url)
-chef_version '>= 12.5' if respond_to?(:chef_version)
+issues_url 'https://launchpad.net/openstack-chef'
+source_url 'https://opendev.org/openstack/cookbook-openstack-common'
+chef_version '>= 14.0'

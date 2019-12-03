@@ -1,11 +1,9 @@
-Team and repository tags
-========================
+OpenStack Chef Cookbook - common
+================================
 
 [![Team and repository tags](http://governance.openstack.org/badges/cookbook-openstack-common.svg)](http://governance.openstack.org/reference/tags/index.html)
 
 <!-- Change things from this point on -->
-
-![Chef OpenStack Logo](https://www.openstack.org/themes/openstack/images/project-mascots/Chef%20OpenStack/OpenStack_Project_Chef_horizontal.png)
 
 Description
 ===========
@@ -14,15 +12,17 @@ This cookbook provides common setup recipes, helper methods and attributes that
 describe an OpenStack deployment as part of the OpenStack reference deployment
 Chef for OpenStack.
 
-Please relate to the official OpenStack Configuration Reference for a more detailed documentation on operating and administration of an OpenStack cluster:
+Please relate to the official OpenStack Configuration and Installation Guides for
+a more detailed documentation on operating and administration of an OpenStack cluster:
 
-http://docs.openstack.org/mitaka/config-reference/index.html
+https://docs.openstack.org/latest/configuration/
+https://docs.openstack.org/latest/install/
 
 Requirements
 ============
 
-- Chef 12 or higher
-- chefdk 0.15.15 for testing (also includes berkshelf for cookbook dependency
+- Chef 14 or higher
+- chefdk 3.2.30 for testing (also includes berkshelf for cookbook dependency
   resolution)
 
 Platform
@@ -37,13 +37,12 @@ Cookbooks
 
 The following cookbooks are dependencies:
 
-- 'apt', '~> 2.8'
-- 'database', '~> 4.0.2'
-- 'mariadb', '~> 0.3.1'
-- 'mysql', '~> 6.0.13'
-- 'yum', '~> 3.5.4'
-- 'yum-epel', '~> 0.6.0'
-- 'galera', '~> 0.4.1'
+- 'etcd', '~> 5.5'
+- 'mariadb', '~> 1.5'
+- 'memcached', '~> 4.1'
+- 'mysql', '~> 8.2'
+- 'selinux'
+- 'yum-epel'
 
 Attributes
 ==========
@@ -60,7 +59,7 @@ OpenStack service configuration files. The base template is the
 'openstack-service.conf.erb' included in the templates of this cookbook. In each
 of the service cookbook (e.g. openstack-network, openstack-identity or
 openstack-compute), the service configuration file (e.g neutron.conf,
-keystone.conf or nova.conf) gets generated directly from attributes set inside of
+keystone.conf or nova.conf) gets generated directly from attributes set inside
 the cookbook. To merge all the configuration options (including the secrets)
 properly, before handing them over as '@service_config' to the mentioned
 template above, we use the methods defined in 'libraries/config_helpers'.
@@ -71,7 +70,7 @@ openstack-network or attributes/keystone_conf.rb in openstack-identity). The
 basic structure of all these attributes always follows this model:
 
 ```
-# usual config option that should evventually be saved to the node object
+# usual config option that should eventually be saved to the node object
 default['openstack'][service]['conf'][section][key][value]
 # configuration options like passwords that should not be saved in the node
 # object
@@ -107,7 +106,7 @@ Documentation for Attributes for selecting databag format can be found in the
 attributes section of this cookbook.
 
 Documentation for format of these Databags can be found in the [Openstack Chef
-Repo](https://github.com/openstack/openstack-chef#databags) repository.
+Repo](https://opendev.org/openstack/openstack-chef#data-bags) repository.
 
 Resources
 =========
@@ -129,7 +128,7 @@ openstack_common_database 'compute' do
 end
 ```
 
-An example of the usage can be seen here https://github.com/stackforge/cookbook-openstack-ops-database/blob/master/recipes/openstack-db.rb.
+An example of the usage can be seen here https://opendev.org/openstack/cookbook-openstack-ops-database/src/branch/master/recipes/openstack-db.rb .
 
 Libraries
 =========
@@ -260,6 +259,7 @@ License and Author
 | **Author**           |  Mark Vanderwiel (<vanderwl@us.ibm.com>)           |
 | **Author**           |  Jan Klare (<j.klare@cloudbau.de>)                 |
 | **Author**           |  Christoph Albers (<c.albers@x-ion.de>)            |
+| **Author**           |  Jens Harbott (<j.harbott@x-ion.de>)               |
 |                      |                                                    |
 | **Copyright**        |  Copyright (c) 2012-2013, AT&T Services, Inc.      |
 | **Copyright**        |  Copyright (c) 2013, Opscode, Inc.                 |
@@ -267,6 +267,7 @@ License and Author
 | **Copyright**        |  Copyright (c) 2013-2014, SUSE Linux GmbH          |
 | **Copyright**        |  Copyright (c) 2013-2015, IBM, Corp.               |
 | **Copyright**        |  Copyright (c) 2013-2014, Rackspace US, Inc.       |
+| **Copyright**        |  Copyright (c) 2016-2019, x-ion GmbH               |
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -47,7 +47,7 @@ task :common_integration do
   sh %(sudo ln -s #{patch_dir} ../#{patch_dir_berks})
 
   unless Dir.exist?('../openstack-chef')
-    sh %(git clone --depth 1 git://github.com/openstack/openstack-chef.git ../openstack-chef)
+    sh %(git clone --depth 1 https://opendev.org/openstack/openstack-chef ../openstack-chef)
   end
 
   Dir.chdir('../openstack-chef') do

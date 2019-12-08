@@ -3,9 +3,16 @@ require_relative 'spec_helper'
 
 describe 'openstack-common::sysctl' do
   describe 'ubuntu' do
+    sysctl_kv = {
+      'systcl_key1' => 'sysctl_value1',
+      'sysctl_key2' => 'sysctl_value2',
+    }
     let(:runner) { ChefSpec::SoloRunner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
-    let(:chef_run) { runner.converge(described_recipe) }
+    cached(:chef_run) do
+      node.override['openstack']['sysctl'] = sysctl_kv
+      runner.converge(described_recipe)
+    end
 
     describe 'sysctl.d directory' do
       it 'should create /etc/systctl.d' do
@@ -25,9 +32,6 @@ describe 'openstack-common::sysctl' do
       end
 
       it 'sets the sysctl attributes' do
-        sysctl_kv = { 'systcl_key1' => 'sysctl_value1',
-                      'sysctl_key2' => 'sysctl_value2' }
-        node.override['openstack']['sysctl'] = sysctl_kv
         sysctl_kv.each do |k, v|
           expect(chef_run).to render_file(file.name).with_content(/^#{k} = #{v}$/)
         end

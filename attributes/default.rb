@@ -321,6 +321,10 @@ end
 # The location of the OSC bash completion file
 default['openstack']['common']['bash_complete'] = '/etc/bash_completion.d/osc.bash_completion'
 
+# Set maximum count for searches [1]
+# [1] https://review.opendev.org/60126
+default['openstack']['common']['search_count_max'] = 7
+
 # The name of the Chef role that installs the Keystone Service API
 default['openstack']['identity_service_chef_role'] = 'os-identity'
 

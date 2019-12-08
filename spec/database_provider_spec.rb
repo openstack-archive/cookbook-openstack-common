@@ -4,13 +4,10 @@ require_relative 'spec_helper'
 
 describe 'test-openstack-common-database::default' do
   let(:runner) do
-    ChefSpec::SoloRunner.new(platform: 'ubuntu',
-                             version: '16.04',
-                             log_level: :fatal,
-                             step_into: ['openstack_common_database'])
+    ChefSpec::SoloRunner.new(CHEFSPEC_OPTS.dup.merge(step_into: ['openstack_common_database']))
   end
   let(:node) { runner.node }
-  let(:chef_run) do
+  cached(:chef_run) do
     node.override['openstack']['use_databags'] = false
     node.override['openstack']['secret']['mysqlroot']['db'] = 'root_pass'
     node.override['openstack']['db']['service'] = { service_type: 'mysql', port: 3306, db_name: 'service_db' }
@@ -23,8 +20,12 @@ describe 'test-openstack-common-database::default' do
   end
 
   context 'specific root user db endpoint' do
-    before do
+    cached(:chef_run) do
       node.override['openstack']['endpoints']['db']['host_for_db_root_user'] = 'localhost123'
+      node.override['openstack']['use_databags'] = false
+      node.override['openstack']['secret']['mysqlroot']['db'] = 'root_pass'
+      node.override['openstack']['db']['service'] = { service_type: 'mysql', port: 3306, db_name: 'service_db' }
+      runner.converge(described_recipe)
     end
     it 'connects to the database via a specific endpoint for the root user' do
       expect(chef_run).to create_database('create database service_db')

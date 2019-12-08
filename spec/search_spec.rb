@@ -6,13 +6,14 @@ describe 'openstack-common::default' do
   describe 'Openstack Search' do
     let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
-    let(:chef_run) do
+    cached(:chef_run) do
       node.override['openstack']['mq']['server_role'] = 'openstack-ops-mq'
       node.override['openstack']['endpoints']['mq']['port'] = 5672
-
+      # speed up tests
+      node.override['openstack']['common']['search_count_max'] = 2
       runner.converge(described_recipe)
     end
-    let(:subject) { Object.new.extend(Openstack) }
+    cached(:subject) { Object.new.extend(Openstack) }
 
     describe '#search_for' do
       it 'returns results' do

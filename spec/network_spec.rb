@@ -4,17 +4,48 @@ require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'network'
 
 describe 'openstack-common::default' do
   describe 'Openstack address_for and bind_address' do
-    let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
-    let(:node) { runner.node }
-    let(:chef_run) do
-      node.automatic['network']['interfaces'] = {
-        'lo' => { 'addresses' => { '127.0.0.1' => { 'family' => 'inet', 'prefixlen' => '8', 'netmask' => '255.0.0.0', 'scope' => 'Node' },
-                                   '::1' => { 'family' => 'inet6', 'prefixlen' => '128', 'scope' => 'Node' },
-                                   '2001:db8::1' => { 'family' => 'inet6', 'prefixlen' => '64', 'scope' => 'Node' } } },
-        'eth0' => { 'addresses' => { '10.0.0.2' => { 'family' => 'inet', 'prefixlen' => '32', 'netmask' => '255.255.255.255', 'scope' => 'Node' },
-                                     '10.0.0.3' => { 'family' => 'inet', 'prefixlen' => '24', 'netmask' => '255.255.255.0', 'scope' => 'Node' } } },
-      }
-
+    interfaces = {
+      'lo' => {
+        'addresses' => {
+          '127.0.0.1' => {
+            'family' => 'inet',
+            'prefixlen' => '8',
+            'netmask' => '255.0.0.0',
+            'scope' => 'Node',
+          },
+          '::1' => {
+            'family' => 'inet6',
+            'prefixlen' => '128',
+            'scope' => 'Node',
+          },
+          '2001:db8::1' => {
+            'family' => 'inet6',
+            'prefixlen' => '64',
+            'scope' => 'Node',
+          },
+        },
+      },
+      'eth0' => {
+        'addresses' => {
+          '10.0.0.2' => {
+            'family' => 'inet',
+            'prefixlen' => '32',
+            'netmask' => '255.255.255.255',
+            'scope' => 'Node',
+          },
+          '10.0.0.3' => {
+            'family' => 'inet',
+            'prefixlen' => '24',
+            'netmask' => '255.255.255.0',
+            'scope' => 'Node',
+          },
+        },
+      },
+    }
+    cached(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
+    cached(:node) { runner.node }
+    cached(:chef_run) do
+      node.automatic['network']['interfaces'] = interfaces
       runner.converge(described_recipe)
     end
 
@@ -48,9 +79,14 @@ describe 'openstack-common::default' do
       end
     end
 
-    describe '#address_for ipv6' do
-      it 'returns ipv6 address' do
+    context '#address_for ipv6' do
+      cached(:chef_run) do
+        node.automatic['network']['interfaces'] = interfaces
         node.override['openstack']['endpoints']['family'] = 'inet6'
+        runner.converge(described_recipe)
+      end
+
+      it 'returns ipv6 address' do
         expect(
           subject.address_for('lo')
         ).to eq('2001:db8::1')
@@ -81,9 +117,12 @@ describe 'openstack-common::default' do
             subject.bind_address(node['openstack']['bind_service']['mq'])
           ).to eq('127.0.0.1')
         end
-        describe 'mq interface set' do
-          before do
+        context 'mq interface set' do
+          cached(:chef_run) do
+            node.automatic['network']['interfaces'] = interfaces
+            node.override['openstack']['endpoints']['family'] = 'inet'
             node.override['openstack']['bind_service']['mq']['interface'] = 'eth0'
+            runner.converge(described_recipe)
           end
           it 'returns the interface address' do
             expect(
@@ -98,9 +137,12 @@ describe 'openstack-common::default' do
             subject.bind_address(node['openstack']['bind_service']['db'])
           ).to eq('127.0.0.1')
         end
-        describe 'interface set' do
-          before do
+        context 'interface set' do
+          cached(:chef_run) do
+            node.automatic['network']['interfaces'] = interfaces
+            node.override['openstack']['endpoints']['family'] = 'inet'
             node.override['openstack']['bind_service']['db']['interface'] = 'eth0'
+            runner.converge(described_recipe)
           end
           it 'returns the interface address' do
             expect(

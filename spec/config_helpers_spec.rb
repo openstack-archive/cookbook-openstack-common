@@ -6,7 +6,7 @@ describe 'openstack-common::default' do
   describe 'module Openstack config_helpers' do
     let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
-    let(:chef_run) do
+    cached(:chef_run) do
       runner.converge(described_recipe)
     end
     let(:subject) { Object.new.extend(Openstack) }

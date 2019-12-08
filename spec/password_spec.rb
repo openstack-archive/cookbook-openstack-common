@@ -7,7 +7,7 @@ describe 'openstack-common::default' do
   describe 'Passwords' do
     let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
-    let(:chef_run) { runner.converge(described_recipe) }
+    cached(:chef_run) { runner.converge(described_recipe) }
     let(:subject) { Object.new.extend(Openstack) }
 
     include_context 'library-stubs'
@@ -25,8 +25,9 @@ describe 'openstack-common::default' do
       end
 
       context 'using chef-vault' do
-        before do
+        cached(:chef_run) do
           node.override['openstack']['databag_type'] = 'vault'
+          runner.converge(described_recipe)
         end
         it 'returns the data from a chef vault item' do
           allow(ChefVault::Item).to receive(:load)
@@ -66,7 +67,10 @@ describe 'openstack-common::default' do
     end
 
     context 'stored in standard data bags' do
-      before { node.override['openstack']['databag_type'] = 'standard' }
+      cached(:chef_run) do
+        node.override['openstack']['databag_type'] = 'standard'
+        runner.converge(described_recipe)
+      end
       describe '#secret' do
         it 'returns databag' do
           value = { 'nova' => 'this' }
@@ -101,7 +105,10 @@ describe 'openstack-common::default' do
     end
 
     context 'stored in attributes as an alternative' do
-      before { node.override['openstack']['use_databags'] = false }
+      cached(:chef_run) do
+        node.override['openstack']['use_databags'] = false
+        runner.converge(described_recipe)
+      end
 
       describe '#get_password' do
         %w(service db user token).each do |type|

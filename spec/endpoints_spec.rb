@@ -7,7 +7,9 @@ describe 'openstack-common::default' do
   describe 'Openstack endpoints' do
     let(:runner) { ChefSpec::SoloRunner.new(CHEFSPEC_OPTS) }
     let(:node) { runner.node }
-    let(:chef_run) { runner.converge(described_recipe) }
+    cached(:chef_run) do
+      runner.converge(described_recipe)
+    end
     let(:subject) { Object.new.extend(Openstack) }
 
     %w(public internal).each do |ep_type|
@@ -109,19 +111,24 @@ describe 'openstack-common::default' do
         expect(subject.rabbit_transport_url('compute')).to eq(expected)
       end
 
-      it do
-        node.override['openstack']['mq']['service_type'] = 'rabbit'
-        node.override['openstack']['mq']['cluster'] = true
-        node.override['openstack']['mq']['compute']['rabbit']['userid'] = 'rabbit2'
-        node.override['openstack']['endpoints']['mq']['port'] = 1234
-        node.override['openstack']['mq']['servers'] = %w(10.0.0.1 10.0.0.2 10.0.0.3)
-        node.override['openstack']['mq']['vhost'] = '/anyhost'
-        allow(subject).to receive(:node).and_return(chef_run.node)
-        allow(subject).to receive(:get_password)
-          .with('user', 'rabbit2')
-          .and_return('mypass2')
-        expected = 'rabbit://rabbit2:mypass2@10.0.0.1:1234,rabbit2:mypass2@10.0.0.2:1234,rabbit2:mypass2@10.0.0.3:1234/anyhost'
-        expect(subject.rabbit_transport_url('compute')).to eq(expected)
+      context 'non-default mq attributes' do
+        cached(:chef_run) do
+          node.override['openstack']['mq']['service_type'] = 'rabbit'
+          node.override['openstack']['mq']['cluster'] = true
+          node.override['openstack']['mq']['compute']['rabbit']['userid'] = 'rabbit2'
+          node.override['openstack']['endpoints']['mq']['port'] = 1234
+          node.override['openstack']['mq']['servers'] = %w(10.0.0.1 10.0.0.2 10.0.0.3)
+          node.override['openstack']['mq']['vhost'] = '/anyhost'
+          runner.converge(described_recipe)
+        end
+        it do
+          allow(subject).to receive(:node).and_return(chef_run.node)
+          allow(subject).to receive(:get_password)
+            .with('user', 'rabbit2')
+            .and_return('mypass2')
+          expected = 'rabbit://rabbit2:mypass2@10.0.0.1:1234,rabbit2:mypass2@10.0.0.2:1234,rabbit2:mypass2@10.0.0.3:1234/anyhost'
+          expect(subject.rabbit_transport_url('compute')).to eq(expected)
+        end
       end
     end
 
@@ -164,15 +171,20 @@ describe 'openstack-common::default' do
         ).to eq(expected)
       end
 
-      it 'returns network db info hash when service found for sqlite with options' do
-        node.override['openstack']['db']['service_type'] = 'sqlite'
-        node.override['openstack']['db']['options'] = { 'sqlite' => '?options' }
-        node.override['openstack']['db']['network']['path'] = 'path'
-        allow(subject).to receive(:node).and_return(chef_run.node)
-        expected = 'sqlite:///path?options'
-        expect(
-          subject.db_uri('network', 'user', 'pass')
-        ).to eq(expected)
+      context 'sqlite' do
+        cached(:chef_run) do
+          node.override['openstack']['db']['service_type'] = 'sqlite'
+          node.override['openstack']['db']['options'] = { 'sqlite' => '?options' }
+          node.override['openstack']['db']['network']['path'] = 'path'
+          runner.converge(described_recipe)
+        end
+        it 'returns network db info hash when service found for sqlite with options' do
+          allow(subject).to receive(:node).and_return(chef_run.node)
+          expected = 'sqlite:///path?options'
+          expect(
+            subject.db_uri('network', 'user', 'pass')
+          ).to eq(expected)
+        end
       end
 
       it 'returns compute db info hash when service found for mariadb' do

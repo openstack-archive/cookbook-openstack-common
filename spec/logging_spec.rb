@@ -5,7 +5,7 @@ describe 'openstack-common::logging' do
   describe 'ubuntu' do
     let(:runner) { ChefSpec::SoloRunner.new(UBUNTU_OPTS) }
     let(:node) { runner.node }
-    let(:chef_run) { runner.converge(described_recipe) }
+    cached(:chef_run) { runner.converge(described_recipe) }
 
     describe '/etc/openstack' do
       let(:dir) { chef_run.directory('/etc/openstack') }

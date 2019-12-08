@@ -29,7 +29,7 @@ module ::Openstack
     recipe_query = "(chef_environment:#{node.chef_environment} AND recipes:#{r})".sub('::', '\:\:')
     query = "#{role_query} OR #{recipe_query}"
     count = 1
-    sum = 7
+    sum = node['openstack']['common']['search_count_max']
     while count < sum
       resp = search(:node, query, &block)
       break unless resp.nil?

@@ -1,10 +1,10 @@
 # encoding: UTF-8
 
 #
-# Cookbook Name:: openstack-common
+# Cookbook:: openstack-common
 # library:: parse
 #
-# Copyright 2013, Craig Tracey <craigtracey@gmail.com>
+# Copyright:: 2013, Craig Tracey <craigtracey@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ module ::Openstack
     # as Property Value pairs. If this is the case, then
     # flatten it as expected.
     newobj = {}
-    if indicies == ['Property', 'Value']
+    if indicies == %w(Property Value)
       ret.each { |x| newobj[x['Property']] = x['Value'] }
       [newobj]
     else

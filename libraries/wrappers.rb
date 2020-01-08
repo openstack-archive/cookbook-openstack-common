@@ -1,4 +1,4 @@
-# Cookbook Name:: openstack-common
+# Cookbook:: openstack-common
 # library:: wrappers
 #
 # Licensed under the Apache License, Version 2.0 (the "License");

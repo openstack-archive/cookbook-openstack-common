@@ -23,9 +23,9 @@ https://docs.openstack.org/latest/install/
 Requirements
 ============
 
--  Chef 14 or higher
--  chefdk 3.2.30 for testing (also includes berkshelf for cookbook
-   dependency resolution)
+- Chef 15 or higher
+- Chef Workstation 0.15.18 for testing (also includes berkshelf for
+  cookbook dependency resolution)
 
 Platform
 ========
@@ -39,12 +39,12 @@ Cookbooks
 
 The following cookbooks are dependencies:
 
--  'etcd', '~> 5.5'
--  'mariadb', '~> 3.1'
--  'memcached', '~> 4.1'
--  'mysql', '~> 8.2'
--  'selinux'
--  'yum-epel'
+- 'etcd', '~> 5.6'
+- 'mariadb', '~> 3.1'
+- 'memcached', '~> 4.1'
+- 'mysql', '~> 8.2'
+- 'selinux'
+- 'yum-epel'
 
 Attributes
 ==========
@@ -90,10 +90,20 @@ openstack-common::client
 
 -  Install the common python openstack client package
 
+openstack-common::completions
+-----------------------------
+
+-  Install bash completions for openstack client
+
 openstack-common::default
 -------------------------
 
 -  Installs/Configures common recipes
+
+openstack-common::etcd
+----------------------
+
+-  Installs and starts etcd
 
 openstack-common::logging
 -------------------------
@@ -104,7 +114,7 @@ openstack-common::sysctl
 ------------------------
 
 -  Iterates over the contents of the ``node['openstack']['sysctl']``
-   hash and writes the entries to ``/etc/sysctl.d/60-openstack.conf``.
+   hash and executes the ``sysctl`` resource.
 
 Data Bags
 =========

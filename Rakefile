@@ -1,25 +1,20 @@
 task default: ['test']
 
-task test: [:syntax, :lint, :unit]
+task test: [:syntax, :unit]
 
 desc 'Vendor the cookbooks in the Berksfile'
 task :berks_prep do
   sh %(chef exec berks vendor)
 end
 
-desc 'Run FoodCritic (syntax) tests'
+desc 'Run CookStyle (syntax & lint) tests'
 task :syntax do
-  sh %(chef exec foodcritic --exclude spec -f any .)
-end
-
-desc 'Run RuboCop (lint) tests'
-task :lint do
-  sh %(chef exec cookstyle)
+  sh %(delivery local lint)
 end
 
 desc 'Run RSpec (unit) tests'
 task unit: :berks_prep do
-  sh %(chef exec rspec --format documentation)
+  sh %(delivery local unit)
 end
 
 desc 'Remove the berks-cookbooks directory and the Berksfile.lock'

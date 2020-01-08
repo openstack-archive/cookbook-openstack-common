@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 describe 'openstack-common::sysctl' do
   describe 'ubuntu' do
     sysctl_kv = {
-      'systcl_key1' => 'sysctl_value1',
+      'sysctl_key1' => 'sysctl_value1',
       'sysctl_key2' => 'sysctl_value2',
     }
     let(:runner) { ChefSpec::SoloRunner.new(UBUNTU_OPTS) }
@@ -13,37 +13,11 @@ describe 'openstack-common::sysctl' do
       node.override['openstack']['sysctl'] = sysctl_kv
       runner.converge(described_recipe)
     end
-
-    describe 'sysctl.d directory' do
-      it 'should create /etc/systctl.d' do
-        expect(chef_run).to create_directory('/etc/sysctl.d')
-      end
+    it do
+      expect(chef_run).to apply_sysctl('sysctl_key1').with(value: 'sysctl_value1')
     end
-
-    describe '60-openstack.conf' do
-      let(:file) { chef_run.template('/etc/sysctl.d/60-openstack.conf') }
-
-      it 'should create the template /etc/systctl.d/60-openstack.conf' do
-        expect(chef_run).to create_template('/etc/sysctl.d/60-openstack.conf').with(
-          owner: 'root',
-          group: 'root',
-          mode: 0o644
-        )
-      end
-
-      it 'sets the sysctl attributes' do
-        sysctl_kv.each do |k, v|
-          expect(chef_run).to render_file(file.name).with_content(/^#{k} = #{v}$/)
-        end
-      end
-    end
-
-    describe 'execute sysctl' do
-      it 'should execute sysctl for 60-openstack' do
-        resource = chef_run.execute('sysctl -p /etc/sysctl.d/60-openstack.conf')
-        expect(resource).to do_nothing
-        expect(resource).to subscribe_to('template[/etc/sysctl.d/60-openstack.conf]').on(:run).immediately
-      end
+    it do
+      expect(chef_run).to apply_sysctl('sysctl_key2').with(value: 'sysctl_value2')
     end
   end
 end

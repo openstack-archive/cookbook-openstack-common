@@ -1,9 +1,9 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: openstack-common
+# Cookbook:: openstack-common
 # library:: logging
 #
-# Copyright 2012-2013, AT&T Services, Inc.
+# Copyright:: 2012-2013, AT&T Services, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 directory '/etc/openstack' do
   owner 'root'
   group 'root'
-  mode 0o0755
+  mode '755'
   action :create
 end
 
@@ -29,7 +29,7 @@ template '/etc/openstack/logging.conf' do
   source 'logging.conf.erb'
   owner 'root'
   group 'root'
-  mode 0o0644
+  mode '644'
   variables(
     loggers: node['openstack']['logging']['loggers'],
     formatters: node['openstack']['logging']['formatters'],

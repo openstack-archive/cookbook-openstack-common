@@ -15,19 +15,5 @@ AllCops:
     - berks-cookbooks/**/*
     - .bundle/**/*
 
-Encoding:
-  Exclude:
-    - ./metadata.rb
-    - ./Gemfile
-
-NumericLiterals:
+ChefModernize/DefinesChefSpecMatchers:
   Enabled: false
-
-LineLength:
-  Enabled: false
-
-WordArray:
-  MinSize: 3
-
-MethodLength:
-  Max: 16

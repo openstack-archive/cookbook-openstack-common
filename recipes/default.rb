@@ -1,9 +1,9 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: openstack-common
+# Cookbook:: openstack-common
 # library:: default
 #
-# Copyright 2012-2013, AT&T Services, Inc.
+# Copyright:: 2012-2013, AT&T Services, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ when 'debian'
   file '/etc/apt/apt.conf.d/confdef' do
     owner 'root'
     group 'root'
-    mode 00644
+    mode '644'
     content 'Dpkg::Options {
       "--force-confdef";
       "--force-confold";

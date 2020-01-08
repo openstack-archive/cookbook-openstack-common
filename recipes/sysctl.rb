@@ -1,9 +1,10 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: openstack-common
+# Cookbook:: openstack-common
 # recipe:: sysctl
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright:: 2013, Opscode, Inc.
+# Copyright:: 2020, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,21 +18,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-directory '/etc/sysctl.d' do
-  owner 'root'
-  group 'root'
-  mode 0o0755
-end
-
-template '/etc/sysctl.d/60-openstack.conf' do
-  source '60-openstack.conf.erb'
-  owner 'root'
-  group 'root'
-  mode 0o0644
-end
-
-execute 'sysctl -p /etc/sysctl.d/60-openstack.conf' do
-  action :nothing
-  subscribes :run, 'template[/etc/sysctl.d/60-openstack.conf]', :immediately
+node['openstack']['sysctl'].each do |name, value|
+  sysctl name do
+    value value
+  end
 end

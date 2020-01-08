@@ -14,7 +14,7 @@ describe 'openstack-common::logging' do
         expect(chef_run).to create_directory('/etc/openstack').with(
           owner: 'root',
           group: 'root',
-          mode: 0o0755
+          mode: '755'
         )
       end
     end
@@ -26,7 +26,7 @@ describe 'openstack-common::logging' do
         expect(chef_run).to create_template(file.name).with(
           owner: 'root',
           group: 'root',
-          mode: 0o0644
+          mode: '644'
         )
       end
 

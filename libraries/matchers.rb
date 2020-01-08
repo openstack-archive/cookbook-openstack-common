@@ -42,7 +42,7 @@ if defined?(ChefSpec)
   class RenderConfigFileMatcher < ChefSpec::Matchers::RenderFileMatcher
     def with_section_content(section, expected_content)
       @section = section
-      @expected_content = expected_content
+      @expected_content << expected_content
       self
     end
 
@@ -79,16 +79,26 @@ if defined?(ChefSpec)
 
       return false if @actual_content.nil?
 
-      if @expected_content.is_a?(Regexp)
-
-        @actual_content =~ @expected_content
-      elsif RSpec::Matchers.is_a_matcher?(@expected_content)
-        @expected_content.matches?(@actual_content)
-      else
-        @actual_content.include?(@expected_content)
+      # Knock out matches that pass. When we're done, we pass if the list is
+      # empty. Otherwise, @expected_content is the list of matchers that
+      # failed
+      @expected_content.delete_if do |expected|
+        if expected.is_a?(Regexp)
+          @actual_content =~ expected
+        elsif RSpec::Matchers.is_a_matcher?(expected)
+          expected.matches?(@actual_content)
+        elsif expected.is_a?(Proc)
+          expected.call(@actual_content)
+          # Weird RSpecish, but that block will return false for a negated check,
+          # so we always return true. The block will raise an exception if the
+          # assertion fails.
+          true
+        else
+          @actual_content.include?(expected)
+        end
       end
+      @expected_content.empty?
     end
-    # rubocop:enable MethodLength, CyclomaticComplexity
   end
 
   ## matchers for openstack_database LWRP

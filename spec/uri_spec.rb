@@ -12,7 +12,7 @@ describe 'Openstack uri' do
       hash = {
         'port' => 8888,
         'path' => '/path',
-        'uri'  => uri,
+        'uri' => uri,
       }
       result = subject.uri_from_hash(hash)
       expect(result).to be_a URI
@@ -23,9 +23,9 @@ describe 'Openstack uri' do
       uri = 'https://localhost:8888/path'
       hash = {
         'scheme' => 'https',
-        'port'   => 8888,
-        'path'   => '/path',
-        'host'   => 'localhost',
+        'port' => 8888,
+        'path' => '/path',
+        'host' => 'localhost',
       }
       expect(
         subject.uri_from_hash(hash).to_s
@@ -36,7 +36,7 @@ describe 'Openstack uri' do
       uri = 'https://localhost'
       hash = {
         'scheme' => 'https',
-        'host'   => 'localhost',
+        'host' => 'localhost',
       }
       expect(
         subject.uri_from_hash(hash).to_s
@@ -46,8 +46,8 @@ describe 'Openstack uri' do
     it 'constructs with extraneous keys' do
       uri = 'http://localhost'
       hash = {
-        'host'    => 'localhost',
-        'network' => 'public' # To emulate the osops-utils::ip_location way...
+        'host' => 'localhost',
+        'network' => 'public', # To emulate the osops-utils::ip_location way...
       }
       expect(
         subject.uri_from_hash(hash).to_s

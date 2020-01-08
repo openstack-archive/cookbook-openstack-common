@@ -1,10 +1,11 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: openstack-common
+# Cookbook:: openstack-common
 # Attributes:: default
 #
-# Copyright 2012-2013, AT&T Services, Inc.
-# Copyright 2013-2014, SUSE Linux GmbH
+# Copyright:: 2012-2013, AT&T Services, Inc.
+# Copyright:: 2013-2014, SUSE Linux GmbH
+# Copyright:: 2016-2020, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -124,7 +125,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'rocky'
+default['openstack']['release'] = 'stein'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.
@@ -292,28 +293,28 @@ case node['platform_family']
 when 'rhel'
   default['openstack']['common']['platform'] = {
     'common_client_packages' => ['python-openstackclient'],
-    'python_packages' => [
-      'python',
-      'python2-pip',
-      'python2-setuptools',
-      'python-devel',
-      'python-virtualenv',
-      'python-wheel',
-    ],
+    'python_packages' => %w(
+      python
+      python2-pip
+      python2-setuptools
+      python-devel
+      python-virtualenv
+      python-wheel
+    ),
     'package_overrides' => '',
   }
 when 'debian'
   default['openstack']['common']['platform'] = {
     'common_client_packages' => ['python3-openstackclient'],
-    'python_packages' => [
-      'python3',
-      'python3-dev',
-      'python3-pip',
-      'python3-setuptools',
-      'python3-virtualenv',
-      'python3-wheel',
-      'virtualenv',
-    ],
+    'python_packages' => %w(
+      python3
+      python3-dev
+      python3-pip
+      python3-setuptools
+      python3-virtualenv
+      python3-wheel
+      virtualenv
+    ),
     'package_overrides' => '',
   }
 end

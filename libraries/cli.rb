@@ -1,10 +1,10 @@
 # encoding: UTF-8
 
 #
-# Cookbook Name:: openstack-common
+# Cookbook:: openstack-common
 # library:: cli
 #
-# Copyright 2014, IBM Corp.
+# Copyright:: 2014, IBM Corp.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@ module ::Openstack
   # @param [String] optional uuid field to match
   # @return [String] uuid or nil
   #
-  def get_uuid(client, type, key, value, env, args = {}, uuid_field = 'id') # rubocop: disable ParameterLists
+  def get_uuid(client, type, key, value, env, args = {}, uuid_field = 'id') # rubocop: disable Metrics/ParameterLists
     begin
       output = openstack_command(client, "#{type} list", env, args)
       prettytable_to_array(output).each do |obj|

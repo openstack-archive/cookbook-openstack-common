@@ -82,10 +82,8 @@ describe 'openstack-common::default' do
       end
 
       it 'removes RDO yum repository' do
+        allow(FileTest).to receive(:exist?).and_call_original
         allow(FileTest).to receive(:exist?).with('/etc/yum.repos.d/RDO-testrelease.repo').and_return(true)
-
-        # Using cookbook(yum) LWRP custom matcher
-        # https://github.com/sethvargo/chefspec#packaging-custom-matchers
         expect(chef_run).to remove_yum_repository('RDO-testrelease')
       end
       it 'does include yum-epel recipe' do
@@ -104,6 +102,7 @@ describe 'openstack-common::default' do
         runner.converge(described_recipe)
       end
       it 'does nothing when RDO yum repository does not exist' do
+        allow(FileTest).to receive(:exist?).and_call_original
         allow(FileTest).to receive(:exist?).with('/etc/yum.repos.d/RDO-testrelease.repo').and_return(false)
         expect(chef_run).to nothing_yum_repository('RDO-testrelease')
       end

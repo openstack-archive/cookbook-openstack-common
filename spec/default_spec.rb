@@ -14,10 +14,6 @@ describe 'openstack-common::default' do
       expect { chef_run }.to_not raise_error
     end
 
-    it 'does not include apt for apt-get update' do
-      expect(chef_run).to_not include_recipe 'apt'
-    end
-
     context 'update_apt_cache true' do
       cached(:chef_run) do
         node.override['openstack']['apt']['update_apt_cache'] = true
@@ -33,7 +29,7 @@ describe 'openstack-common::default' do
         .with(
           owner: 'root',
           group: 'root',
-          mode: 00644,
+          mode: '644',
           content: "Dpkg::Options {\n      \"--force-confdef\";\n      \"--force-confold\";\n      }"
         )
     end
@@ -52,7 +48,7 @@ describe 'openstack-common::default' do
         # https://github.com/sethvargo/chefspec#packaging-custom-matchers
         expect(chef_run).to add_apt_repository('openstack-ppa').with(
           uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-          distribution: 'bionic-updates/rocky',
+          distribution: 'bionic-updates/stein',
           components: ['main'],
           cache_rebuild: true
         )
@@ -67,7 +63,7 @@ describe 'openstack-common::default' do
       it 'disables openstack live updates' do
         expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
           uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-          distribution: 'bionic-updates/rocky',
+          distribution: 'bionic-updates/stein',
           components: ['main']
         )
       end
@@ -76,7 +72,7 @@ describe 'openstack-common::default' do
     it 'configures openstack proposed repository' do
       expect(chef_run).to add_apt_repository('openstack-ppa-proposed').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'bionic-proposed/rocky',
+        distribution: 'bionic-proposed/stein',
         components: ['main'],
         cache_rebuild: true
       )
@@ -90,7 +86,7 @@ describe 'openstack-common::default' do
       it 'disables openstack proposed repository' do
         expect(chef_run).to_not add_apt_repository('openstack-ppa-proposed').with(
           uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-          distribution: 'bionic-proposed/rocky',
+          distribution: 'bionic-proposed/stein',
           components: ['main']
         )
       end

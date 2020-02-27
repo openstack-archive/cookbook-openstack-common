@@ -40,7 +40,7 @@ Cookbooks
 The following cookbooks are dependencies:
 
 -  'etcd', '~> 5.5'
--  'mariadb', '~> 1.5'
+-  'mariadb', '~> 3.1'
 -  'memcached', '~> 4.1'
 -  'mysql', '~> 8.2'
 -  'selinux'
@@ -126,10 +126,9 @@ repository.
 Resources
 =========
 
-This cookbook provides the ``openstack_common_database`` LWRP, which
-replaces the old database library function ``db_create_with_user``.
-When this cookbook is included as dependency, this LWRP can be used to
-create databases needed by the OpenStack services.
+This cookbook provides the ``openstack_database`` custom resource.  When
+this cookbook is included as dependency, this custom resource can be
+used to create databases needed by the OpenStack services.
 
 .. code-block:: ruby
 
@@ -137,8 +136,7 @@ create databases needed by the OpenStack services.
 
 .. code-block:: ruby
 
-    openstack_common_database 'compute' do
-      service 'compute' # name_attribute
+    openstack_database 'compute' do
       user 'nova'
       pass 'supersecret'
     end
@@ -292,22 +290,26 @@ License and Author
 +-----------------+-------------------------------------------------+
 | **Author**      | Jens Harbott (j.harbott@x-ion.de)               |
 +-----------------+-------------------------------------------------+
+| **Author**      | Lance Albertson (lance@osuosl.org)              |
++-----------------+-------------------------------------------------+
 
-+-----------------+-------------------------------------------------+
-| **Copyright**   | Copyright (c) 2012-2013, AT&T Services, Inc.    |
-+-----------------+-------------------------------------------------+
-| **Copyright**   | Copyright (c) 2013, Opscode, Inc.               |
-+-----------------+-------------------------------------------------+
-| **Copyright**   | Copyright (c) 2013, Craig Tracey                |
-+-----------------+-------------------------------------------------+
-| **Copyright**   | Copyright (c) 2013-2014, SUSE Linux GmbH        |
-+-----------------+-------------------------------------------------+
-| **Copyright**   | Copyright (c) 2013-2015, IBM, Corp.             |
-+-----------------+-------------------------------------------------+
-| **Copyright**   | Copyright (c) 2013-2014, Rackspace US, Inc.     |
-+-----------------+-------------------------------------------------+
-| **Copyright**   | Copyright (c) 2016-2019, x-ion GmbH             |
-+-----------------+-------------------------------------------------+
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2012-2013, AT&T Services, Inc.     |
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2013, Opscode, Inc.                |
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2013, Craig Tracey                 |
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2013-2014, SUSE Linux GmbH         |
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2013-2015, IBM, Corp.              |
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2013-2014, Rackspace US, Inc.      |
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2016-2019, x-ion GmbH              |
++-----------------+--------------------------------------------------+
+| **Copyright**   | Copyright (c) 2016-2020, Oregon State University |
++-----------------+--------------------------------------------------+
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may
 not use this file except in compliance with the License. You may obtain

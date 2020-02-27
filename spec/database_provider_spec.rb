@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 
 describe 'test-openstack-common-database::default' do
   let(:runner) do
-    ChefSpec::SoloRunner.new(CHEFSPEC_OPTS.dup.merge(step_into: ['openstack_common_database']))
+    ChefSpec::SoloRunner.new(CHEFSPEC_OPTS.dup.merge(step_into: %w(openstack_database)))
   end
   let(:node) { runner.node }
   cached(:chef_run) do
@@ -15,8 +15,7 @@ describe 'test-openstack-common-database::default' do
   end
 
   it 'uses the lwrp openstack_common_database' do
-    expect(chef_run).to create_openstack_common_database('service')
-      .with(user: 'db_user', pass: 'db_pass')
+    expect(chef_run).to create_openstack_database('service').with(user: 'db_user', pass: 'db_pass')
   end
 
   context 'specific root user db endpoint' do
@@ -28,46 +27,43 @@ describe 'test-openstack-common-database::default' do
       runner.converge(described_recipe)
     end
     it 'connects to the database via a specific endpoint for the root user' do
-      expect(chef_run).to create_database('create database service_db')
+      expect(chef_run).to create_mariadb_database('service_db')
         .with(
-          provider: ::Chef::Provider::Database::Mysql,
-          connection: { host: 'localhost123', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
           database_name: 'service_db',
-          encoding: 'utf8'
+          encoding: 'utf8',
+          password: 'root_pass'
         )
     end
   end
 
   it 'creates the database with the database resource' do
-    expect(chef_run).to create_database('create database service_db')
+    expect(chef_run).to create_mariadb_database('service_db')
       .with(
-        provider: ::Chef::Provider::Database::Mysql,
-        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
         database_name: 'service_db',
-        encoding: 'utf8'
+        encoding: 'utf8',
+        password: 'root_pass'
       )
   end
 
   it 'creates the database use with the database_user resource' do
-    expect(chef_run).to create_database_user('create database user db_user')
+    expect(chef_run).to create_mariadb_user('db_user')
       .with(
-        provider: ::Chef::Provider::Database::MysqlUser,
-        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
-        username: 'db_user',
-        password: 'db_pass'
+        password: 'db_pass',
+        database_name: 'service_db',
+        host: '%',
+        privileges: [:all],
+        ctrl_password: 'root_pass'
       )
   end
 
   it 'grants database privileges to the user with the database_user resource' do
-    expect(chef_run).to grant_database_user('grant database user db_user')
+    expect(chef_run).to grant_mariadb_user('db_user')
       .with(
-        provider: ::Chef::Provider::Database::MysqlUser,
-        connection: { host: 'localhost', port: 3306, username: 'root', password: 'root_pass', socket: '/var/run/mysqld/mysqld.sock' },
-        username: 'db_user',
         password: 'db_pass',
         database_name: 'service_db',
         host: '%',
-        privileges: [:all]
+        privileges: [:all],
+        ctrl_password: 'root_pass'
       )
   end
 

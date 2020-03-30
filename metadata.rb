@@ -12,7 +12,6 @@ end
 depends 'etcd', '~> 5.6'
 depends 'mariadb', '~> 3.1'
 depends 'memcached', '~> 4.1'
-depends 'mysql', '~> 8.2'
 depends 'selinux'
 depends 'yum-epel'
 

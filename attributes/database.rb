@@ -5,6 +5,7 @@
 #
 # Copyright:: 2012-2013, AT&T Services, Inc.
 # Copyright:: 2013-2014, SUSE Linux GmbH
+# Copyright:: 2020, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -122,13 +123,11 @@ default['openstack']['db']['python_packages'] = {
 case node['platform_family']
 when 'rhel'
   default['openstack']['db']['service_type'] = 'mariadb'
-  default['openstack']['db']['python_packages']['mysql'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['percona-cluster'] = ['MySQL-python']
   default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
 when 'debian'
   default['openstack']['db']['service_type'] = 'mariadb'
-  default['openstack']['db']['python_packages']['mysql'] = ['python3-mysqldb']
   default['openstack']['db']['python_packages']['mariadb'] = ['python3-mysqldb']
   default['openstack']['db']['python_packages']['percona-cluster'] = ['python3-mysqldb']
   default['openstack']['db']['python_packages']['galera'] = ['python3-mysqldb']

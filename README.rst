@@ -41,7 +41,7 @@ The following cookbooks are dependencies:
 
 - 'etcd', '~> 5.6'
 - 'mariadb', '~> 3.1'
-- 'memcached', '~> 5.1'
+- 'memcached', '~> 6.0'
 - 'selinux'
 - 'yum-epel'
 

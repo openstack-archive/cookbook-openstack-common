@@ -24,7 +24,7 @@ Requirements
 ============
 
 - Chef 15 or higher
-- Chef Workstation 0.15.18 for testing (also includes berkshelf for
+- Chef Workstation 0.18.3 for testing (also includes berkshelf for
   cookbook dependency resolution)
 
 Platform
@@ -40,7 +40,7 @@ Cookbooks
 The following cookbooks are dependencies:
 
 - 'etcd', '~> 5.6'
-- 'mariadb', '~> 3.1'
+- 'mariadb', '~> 4.0'
 - 'memcached', '~> 6.0'
 - 'selinux'
 - 'yum-epel'

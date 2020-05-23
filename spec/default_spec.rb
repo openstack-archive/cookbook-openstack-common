@@ -48,7 +48,7 @@ describe 'openstack-common::default' do
         # https://github.com/sethvargo/chefspec#packaging-custom-matchers
         expect(chef_run).to add_apt_repository('openstack-ppa').with(
           uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-          distribution: 'bionic-updates/stein',
+          distribution: 'bionic-updates/train',
           components: ['main'],
           cache_rebuild: true
         )
@@ -63,7 +63,7 @@ describe 'openstack-common::default' do
       it 'disables openstack live updates' do
         expect(chef_run).to_not add_apt_repository('openstack-ppa').with(
           uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-          distribution: 'bionic-updates/stein',
+          distribution: 'bionic-updates/train',
           components: ['main']
         )
       end
@@ -72,7 +72,7 @@ describe 'openstack-common::default' do
     it 'configures openstack proposed repository' do
       expect(chef_run).to add_apt_repository('openstack-ppa-proposed').with(
         uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-        distribution: 'bionic-proposed/stein',
+        distribution: 'bionic-proposed/train',
         components: ['main'],
         cache_rebuild: true
       )
@@ -86,7 +86,7 @@ describe 'openstack-common::default' do
       it 'disables openstack proposed repository' do
         expect(chef_run).to_not add_apt_repository('openstack-ppa-proposed').with(
           uri: 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-          distribution: 'bionic-proposed/stein',
+          distribution: 'bionic-proposed/train',
           components: ['main']
         )
       end

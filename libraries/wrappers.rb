@@ -23,6 +23,6 @@ module ::Openstack
 
   # Wrapper method to allow to easier spec testing
   def role_included?(role)
-    node['roles'].include?(role)
+    node.role?(role)
   end
 end

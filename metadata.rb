@@ -3,14 +3,14 @@ maintainer       'openstack-chef'
 maintainer_email 'openstack-discuss@lists.openstack.org'
 license          'Apache-2.0'
 description      'Common OpenStack attributes, libraries and recipes.'
-version          '19.0.0'
+version          '20.0.0'
 
 %w(ubuntu redhat centos).each do |os|
   supports os
 end
 
 depends 'etcd', '~> 5.6'
-depends 'mariadb', '~> 3.1'
+depends 'mariadb', '~> 4.0'
 depends 'memcached', '~> 6.0'
 depends 'selinux'
 depends 'yum-epel'

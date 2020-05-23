@@ -49,6 +49,7 @@ default['openstack']['common']['services'] = {
   'network' => 'neutron',
   'object_storage' => 'swift',
   'orchestration' => 'heat',
+  'placement' => 'placement',
   'telemetry' => 'ceilometer',
   'telemetry_metric' => 'gnocchi',
   'application_catalog' => 'murano',
@@ -125,7 +126,7 @@ default['openstack']['secret']['user_passwords_data_bag'] = 'user_passwords'
 # needs.
 
 # The coordinated release of OpenStack codename
-default['openstack']['release'] = 'stein'
+default['openstack']['release'] = 'train'
 
 # The Ubuntu Cloud Archive has packages for multiple Ubuntu releases. For
 # more information, see: https://wiki.ubuntu.com/ServerTeam/CloudArchive.

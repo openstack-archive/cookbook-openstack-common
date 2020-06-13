@@ -49,6 +49,7 @@ default['openstack']['common']['services'] = {
   'network' => 'neutron',
   'object_storage' => 'swift',
   'orchestration' => 'heat',
+  'placement' => 'placement',
   'telemetry' => 'ceilometer',
   'telemetry_metric' => 'gnocchi',
   'application_catalog' => 'murano',

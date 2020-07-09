@@ -27,6 +27,7 @@ class Chef
   class Resource
     class MysqlDatabase < Chef::Resource::Database
       resource_name :mysql_database
+      provides :mysql_database
 
       def initialize(name, run_context = nil)
         super

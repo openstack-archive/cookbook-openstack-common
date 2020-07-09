@@ -50,12 +50,11 @@ module ::Openstack
   # @param [Hash] service_config pointed to the set Hash
   def bind_address(service_config)
     iface = service_config['interface']
-    address = if iface
-                address_for(iface)
-              else
-                service_config['host']
-              end
-    address
+    if iface
+      address_for(iface)
+    else
+      service_config['host']
+    end
   end
 
   private

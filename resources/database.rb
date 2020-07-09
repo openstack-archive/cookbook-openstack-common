@@ -22,6 +22,7 @@
 # Original: https://github.com/chef-boneyard/database
 
 resource_name :openstack_database
+provides :openstack_database
 default_action :create
 
 property :service,  String, name_property: true

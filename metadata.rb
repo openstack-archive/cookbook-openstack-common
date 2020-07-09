@@ -9,7 +9,7 @@ version          '20.0.0'
   supports os
 end
 
-depends 'etcd', '~> 5.6'
+depends 'etcd', '~> 6.0'
 depends 'mariadb', '~> 4.0'
 depends 'memcached', '~> 6.0'
 depends 'selinux'

@@ -20,6 +20,7 @@
 #
 
 require 'uri'
+require 'addressable/uri'
 
 # URI methods
 module ::Openstack
@@ -29,7 +30,7 @@ module ::Openstack
   # keys are used directly from the hash.
   def uri_from_hash(hash)
     if hash['uri']
-      ::URI.parse ::URI.encode(hash['uri'])
+      ::URI.parse Addressable::URI.encode(hash['uri'])
     else
       host = hash['host']
       scheme = hash['scheme'] ? hash['scheme'] : 'http'

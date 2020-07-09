@@ -32,7 +32,7 @@ module ::Openstack
   # @return [Hash] environment
   def openstack_command_env(name, project, user_domain, project_domain)
     identity_endpoint = public_endpoint 'identity'
-    auth_url = ::URI.decode identity_endpoint.to_s
+    auth_url = identity_endpoint.to_s
 
     pass = get_password 'user', name
     {

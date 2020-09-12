@@ -15,6 +15,9 @@ describe 'openstack-common::completions' do
       expect(chef_run).to install_package('bash-completion')
     end
     it do
+      expect(chef_run).to create_directory('/etc/bash_completion.d/').with(mode: '755')
+    end
+    it do
       expect(chef_run).to run_execute('create OSC bash completions')
         .with(
           command: 'openstack complete > /etc/bash_completion.d/osc.bash_completion',

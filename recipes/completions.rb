@@ -20,6 +20,10 @@
 #
 package 'bash-completion'
 
+directory '/etc/bash_completion.d/' do
+  mode '755'
+end
+
 execute 'create OSC bash completions' do
   command "openstack complete > #{node['openstack']['common']['bash_complete']}"
   creates node['openstack']['common']['bash_complete']

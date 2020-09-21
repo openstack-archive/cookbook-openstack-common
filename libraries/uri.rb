@@ -20,7 +20,9 @@
 #
 
 require 'uri'
-require 'addressable/uri'
+# TODO(ramereth): Workaround for this issue https://github.com/chef/chef/issues/10452
+# require 'addressable/uri'
+autoload :Addressable, 'addressable/uri'
 
 # URI methods
 module ::Openstack

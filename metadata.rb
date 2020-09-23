@@ -3,7 +3,7 @@ maintainer       'openstack-chef'
 maintainer_email 'openstack-discuss@lists.openstack.org'
 license          'Apache-2.0'
 description      'Common OpenStack attributes, libraries and recipes.'
-version          '19.2.0'
+version          '19.2.1'
 
 %w(ubuntu redhat centos).each do |os|
   supports os

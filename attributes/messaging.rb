@@ -36,7 +36,7 @@ default['openstack']['bind_service']['mq']['interface'] = nil
 ###################################################################
 services = %w(aodh bare_metal block_storage compute database dns image
               identity telemetry network orchestration placement
-              baremetal block-storage)
+              baremetal block-storage load_balancer)
 
 ###################################################################
 # Generic default attributes

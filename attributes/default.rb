@@ -46,6 +46,7 @@ default['openstack']['common']['services'] = {
   'dns' => 'designate',
   'identity' => 'keystone',
   'image' => 'glance',
+  'load_balancer' => 'octavia',
   'network' => 'neutron',
   'object_storage' => 'swift',
   'orchestration' => 'heat',

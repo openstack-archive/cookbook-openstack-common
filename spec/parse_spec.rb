@@ -1,4 +1,3 @@
-# encoding: UTF-8
 require_relative 'spec_helper'
 require 'uri'
 require ::File.join ::File.dirname(__FILE__), '..', 'libraries', 'parse'

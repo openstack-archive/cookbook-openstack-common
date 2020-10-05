@@ -1,4 +1,3 @@
-# encoding: UTF-8
 #
 # Cookbook:: openstack-common
 # library:: search
@@ -36,7 +35,7 @@ module ::Openstack
       sleep 2**count
       count += 1
     end
-    resp ? resp : []
+    resp || []
   end
 
   # Returns the value for ['openstack']['memcached_servers'] when

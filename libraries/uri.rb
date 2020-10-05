@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 #
 # Cookbook:: openstack-common
 # library:: uri
@@ -35,7 +33,7 @@ module ::Openstack
       ::URI.parse Addressable::URI.encode(hash['uri'])
     else
       host = hash['host']
-      scheme = hash['scheme'] ? hash['scheme'] : 'http'
+      scheme = hash['scheme'] || 'http'
       port = hash['port']  # Returns nil if missing, which is fine.
       path = hash['path']  # Returns nil if missing, which is fine.
       ::URI::Generic.new scheme, nil, host, port, nil, path, nil, nil, nil
@@ -46,7 +44,7 @@ module ::Openstack
   # intended for joining URI relative path segments. This function merely
   # helps to accurately join supplied paths.
   def uri_join_paths(*paths)
-    return nil if paths.empty?
+    return if paths.empty?
     leadingslash = paths[0][0] == '/' ? '/' : ''
     trailingslash = paths[-1][-1] == '/' ? '/' : ''
     paths.map! { |path| path.sub(%r{^\/+}, '').sub(%r{\/+$}, '') }

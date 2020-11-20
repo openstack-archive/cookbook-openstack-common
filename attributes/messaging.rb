@@ -45,6 +45,7 @@ services =
     dns
     identity
     image
+    load_balancer
     network
     orchestration
     placement

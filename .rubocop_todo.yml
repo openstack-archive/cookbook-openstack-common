@@ -10,7 +10,7 @@
 # Cop supports --auto-correct.
 # Configuration parameters: Include.
 # Include: **/libraries/*.rb
-ChefModernize/DefinesChefSpecMatchers:
+Chef/Modernize/DefinesChefSpecMatchers:
   Exclude:
     - 'libraries/matchers.rb'
 

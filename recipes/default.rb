@@ -72,6 +72,9 @@ when 'debian'
   end
 
 when 'rhel'
+  # TODO(ramereth): These packages conflict with the RDO repo for Train
+  node.default['yum']['epel']['exclude'] = 'python2-qpid-proton python2-pyngus qpid-proton-c'
+
   include_recipe 'yum-epel'
 
   repo_action = if node['openstack']['yum']['rdo_enabled']

@@ -3,7 +3,7 @@
 # Cookbook:: openstack-common
 # Resource:: openstack_database
 #
-# Copyright:: 2020, Oregon State University
+# Copyright:: 2020-2021, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 
 resource_name :openstack_database
 provides :openstack_database
+unified_mode true
 default_action :create
 
 property :service,  String, name_property: true

@@ -2,8 +2,8 @@
 # Cookbook:: openstack-common
 # Recipe:: completions
 #
-# Copyright:: 2019, x-ion GmbH
-# Copyright:: 2020, Oregon State University
+# Copyright:: 2019-2021, x-ion GmbH
+# Copyright:: 2020-2021, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

@@ -9,12 +9,12 @@ version          '20.0.0'
   supports os
 end
 
-depends 'etcd', '~> 6.0'
-depends 'mariadb', '~> 4.0'
-depends 'memcached', '~> 6.0'
+depends 'etcd', '~> 7.0'
+depends 'mariadb', '~> 5.0'
+depends 'memcached', '~> 7.0'
 depends 'selinux'
 depends 'yum-epel'
 
 issues_url 'https://launchpad.net/openstack-chef'
 source_url 'https://opendev.org/openstack/cookbook-openstack-common'
-chef_version '>= 15.0'
+chef_version '>= 16.0'

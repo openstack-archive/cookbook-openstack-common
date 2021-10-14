@@ -2,9 +2,9 @@
 # Cookbook:: openstack-common
 # Attributes:: messaging
 #
-# Copyright:: 2012-2013, AT&T Services, Inc.
-# Copyright:: 2013-2014, SUSE Linux GmbH
-# Copyright:: 2013-2014, Rackspace US, Inc.
+# Copyright:: 2012-2021, AT&T Services, Inc.
+# Copyright:: 2013-2021, SUSE Linux GmbH
+# Copyright:: 2013-2021, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

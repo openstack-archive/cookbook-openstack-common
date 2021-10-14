@@ -23,8 +23,8 @@ https://docs.openstack.org/latest/install/
 Requirements
 ============
 
-- Chef 15 or higher
-- Chef Workstation 21.2.303 for testing (also includes berkshelf for
+- Chef 16 or higher
+- Chef Workstation 21.10.640 for testing (also includes berkshelf for
   cookbook dependency resolution)
 
 Platform
@@ -39,9 +39,9 @@ Cookbooks
 
 The following cookbooks are dependencies:
 
-- 'etcd', '~> 5.6'
-- 'mariadb', '~> 4.0'
-- 'memcached', '~> 6.0'
+- 'etcd', '~> 7.0'
+- 'mariadb', '~> 5.0'
+- 'memcached', '~> 7.0'
 - 'selinux'
 - 'yum-epel'
 
@@ -317,7 +317,7 @@ License and Author
 +-----------------+--------------------------------------------------+
 | **Copyright**   | Copyright (c) 2016-2019, x-ion GmbH              |
 +-----------------+--------------------------------------------------+
-| **Copyright**   | Copyright (c) 2016-2020, Oregon State University |
+| **Copyright**   | Copyright (c) 2016-2021, Oregon State University |
 +-----------------+--------------------------------------------------+
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may

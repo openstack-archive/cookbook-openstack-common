@@ -122,9 +122,15 @@ default['openstack']['db']['python_packages'] = {
 case node['platform_family']
 when 'rhel'
   default['openstack']['db']['service_type'] = 'mariadb'
-  default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
-  default['openstack']['db']['python_packages']['percona-cluster'] = ['MySQL-python']
-  default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
+  if node['platform_version'].to_i >= 8
+    default['openstack']['db']['python_packages']['mariadb'] = ['python3-PyMySQL']
+    default['openstack']['db']['python_packages']['percona-cluster'] = ['python3-PyMySQL']
+    default['openstack']['db']['python_packages']['galera'] = ['python3-PyMySQL']
+  else
+    default['openstack']['db']['python_packages']['mariadb'] = ['MySQL-python']
+    default['openstack']['db']['python_packages']['percona-cluster'] = ['MySQL-python']
+    default['openstack']['db']['python_packages']['galera'] = ['MySQL-python']
+  end
 when 'debian'
   default['openstack']['db']['service_type'] = 'mariadb'
   default['openstack']['db']['python_packages']['mariadb'] = ['python3-mysqldb']

@@ -292,18 +292,34 @@ default['openstack']['sysctl']['net.ipv4.conf.default.rp_filter'] = 0
 
 case node['platform_family']
 when 'rhel'
-  default['openstack']['common']['platform'] = {
-    'common_client_packages' => ['python-openstackclient'],
-    'python_packages' => %w(
-      python
-      python2-pip
-      python2-setuptools
-      python-devel
-      python-virtualenv
-      python-wheel
-    ),
-    'package_overrides' => '',
-  }
+  default['openstack']['common']['platform'] =
+    if node['platform_version'].to_i >= 8
+      {
+        'common_client_packages' => ['python3-openstackclient'],
+        'python_packages' => %w(
+          python3-pip
+          python3-setuptools
+          python3-virtualenv
+          python3-wheel
+          python36
+          python36-devel
+        ),
+        'package_overrides' => '',
+      }
+    else
+      {
+        'common_client_packages' => ['python-openstackclient'],
+        'python_packages' => %w(
+          python
+          python2-pip
+          python2-setuptools
+          python-devel
+          python-virtualenv
+          python-wheel
+        ),
+        'package_overrides' => '',
+      }
+    end
 when 'debian'
   default['openstack']['common']['platform'] = {
     'common_client_packages' => ['python3-openstackclient'],

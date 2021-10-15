@@ -13,6 +13,7 @@ depends 'etcd', '~> 7.0'
 depends 'mariadb', '~> 5.0'
 depends 'memcached', '~> 7.0'
 depends 'selinux'
+depends 'yum-centos', '>= 3.2.0'
 depends 'yum-epel'
 
 issues_url 'https://launchpad.net/openstack-chef'

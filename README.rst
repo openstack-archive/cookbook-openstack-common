@@ -43,6 +43,7 @@ The following cookbooks are dependencies:
 - 'mariadb', '~> 5.0'
 - 'memcached', '~> 7.0'
 - 'selinux'
+- 'yum-centos', '>= 3.2.0'
 - 'yum-epel'
 
 Attributes

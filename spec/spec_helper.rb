@@ -12,10 +12,20 @@ UBUNTU_OPTS = {
   version: '18.04',
 }.freeze
 
-REDHAT_OPTS = {
+REDHAT_7 = {
   platform: 'redhat',
   version: '7',
 }.freeze
+
+REDHAT_8 = {
+  platform: 'redhat',
+  version: '8',
+}.freeze
+
+ALL_RHEL = [
+  REDHAT_7,
+  REDHAT_8,
+].freeze
 
 # We set a default platform for non-platform specific test cases
 CHEFSPEC_OPTS = UBUNTU_OPTS

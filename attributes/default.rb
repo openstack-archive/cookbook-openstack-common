@@ -143,7 +143,14 @@ default['openstack']['apt']['components'] = ['main']
 
 default['openstack']['yum']['update_yum_cache'] = false
 default['openstack']['yum']['rdo_enabled'] = true
-default['openstack']['yum']['uri'] = "http://mirror.centos.org/centos/$releasever/cloud/$basearch/openstack-#{node['openstack']['release']}"
+default['openstack']['yum']['uri'] =
+  if node['platform_version'].to_i >= 8
+    # TODO: Train has been archived to vault for RHEL 8
+    # "http://mirror.centos.org/centos/$releasever/cloud/$basearch/openstack-#{node['openstack']['release']}"
+    "https://vault.centos.org/8.5.2111/cloud/x86_64/openstack-#{node['openstack']['release']}/"
+  else
+    "http://mirror.centos.org/centos/$releasever/cloud/$basearch/openstack-#{node['openstack']['release']}"
+  end
 default['openstack']['yum']['repo-key'] = "https://github.com/rdo-infra/rdo-release/raw/#{node['openstack']['release']}-rdo/RPM-GPG-KEY-CentOS-SIG-Cloud"
 # Enforcing GnuPG signature check for RDO repo. Set this to false if you want to disable the check.
 default['openstack']['yum']['gpgcheck'] = true
